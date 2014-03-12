@@ -2,8 +2,8 @@ package es.unileon.Payments;
 
 import java.util.Calendar;
 
-public abstract class Card {
-	private long number;
+public class Card {
+	private CardHandler cardId;
 	private int pin;
 	private int buyLimit;
 	private int cashLimit;
@@ -17,7 +17,7 @@ public abstract class Card {
 	 * @param type
 	 */
 	public Card(CardType type) {
-		this.number = this.generateCardNumber();
+		this.cardId = new CardHandler();
 		this.pin = this.generatePinCode();
 		this.buyLimit = 400;
 		this.cashLimit = 400;
@@ -25,69 +25,6 @@ public abstract class Card {
 		this.cardType = type;
 		this.cvv = this.generateCVV();
 		this.commission = 0;
-	}
-
-	/**
-	 * Genera el identificador de la tarjeta
-	 * @return
-	 */
-	private long generateCardNumber() {
-		int[] digits = new int[16];
-		int index = 5;
-		StringBuilder result = new StringBuilder();
-		
-		for (int i = 0; i < 5; i++) {
-			digits[i] = 4;
-		}
-		
-		while (index < 15) {
-			digits[index] = (int)(Math.random()*10);
-			index++;
-		}
-		
-		int controlDigit = 10 - ((sumOddPlaces(digits) + sumEvenPlaces(digits)) % 10);
-		
-		digits[index] = controlDigit;
-		
-		for (int i = 0; i < digits.length; i++) {
-			result.append(digits[i]);
-		}
-		
-		return Long.parseLong(result.toString());
-	}
-	
-	/**
-	 * Realiza la suma de las posiciones impares de izquierda a derecha del numero de la tarjeta
-	 * @param digits
-	 * @return
-	 */
-	private int sumOddPlaces(int[] digits) {
-		int sum = 0;
-		//Recorremos las posiciones impares
-		for (int i = 0; i < digits.length; i+=2) {
-			int aux = digits[i]*2;
-			if (aux > 9) {
-				aux = aux%9;
-			}
-			sum += aux;
-		}
-		
-		return sum;
-	}
-	
-	/**
-	 * Realiza la suma de las posiciones pares de izquierda a derecha del numero de la tarjeta
-	 * @param digits
-	 * @return
-	 */
-	private int sumEvenPlaces(int[] digits) {
-		int sum = 0;
-		//Recorremos las posiciones pares
-		for (int i = 1; i < digits.length; i+=2) {
-			sum += digits[i];
-		}
-		
-		return sum;
 	}
 	
 	/**
@@ -116,7 +53,6 @@ public abstract class Card {
 	 * @return
 	 */
 	private int generateCVV() {
-		// TODO Auto-generated method stub
 		return (int)(Math.random()*1000);
 	}
 	
@@ -124,16 +60,16 @@ public abstract class Card {
 	 * Devuelve el identificador de la tarjeta
 	 * @return
 	 */
-	public long getNumber() {
-		return this.number;
+	public long getCardId() {
+		return Long.parseLong(this.cardId.toString());
 	}
 	
 	/**
 	 * Cambia el numero de la tarjeta por el que recibe
 	 * @param cardNumner
 	 */
-	public void setNumber(long cardNumner) {
-		this.number = cardNumner;
+	public void setCardId(long cardNumber) {
+		this.cardId.setCardNumber(cardNumber);;
 	}
 	
 	/**

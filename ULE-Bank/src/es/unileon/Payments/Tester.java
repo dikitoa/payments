@@ -65,19 +65,17 @@ public class Tester {
 	
 	private static void createCard(int type, int buyLimit, int cashLimit) {
 		if (type == 1) {
-			createDevitCard(buyLimit, cashLimit);
+			createDevitCard();
 		} else if (type == 2) {
-			createCreditCard(buyLimit, cashLimit);
+			createCreditCard();
 		}
 	}
 	
-	private static void createDevitCard(int buyLimit, int cashLimit) {
+	private static void createDevitCard() {
 		DevitCard card = new DevitCard();
-		card.setBuyLimit(buyLimit);
-		card.setCashLimit(cashLimit);
 		System.out.println("CARD INFO:");
 		System.out.println("\t Card Type: " + card.getCardType());
-		System.out.println("\t Card Number: " + card.getNumber());
+		System.out.println("\t Card Number: " + card.getCardId());
 		System.out.println("\t PIN: " + card.getPin());
 		System.out.println("\t Cash limit: " + card.getCashLimit());
 		System.out.println("\t Buy limit: " + card.getBuyLimit());
@@ -86,13 +84,11 @@ public class Tester {
 		System.out.println("\t Commissions: " + card.getCommission());
 	}
 	
-	private static void createCreditCard(int buyLimit, int cashLimit) {
+	private static void createCreditCard() {
 		CreditCard card = new CreditCard();
-		card.setBuyLimit(buyLimit);
-		card.setCashLimit(cashLimit);
 		System.out.println("CARD INFO:");
 		System.out.println("\t Card Type: " + card.getCardType());
-		System.out.println("\t Card Number: " + card.getNumber());
+		System.out.println("\t Card Number: " + card.getCardId());
 		System.out.println("\t PIN: " + card.getPin());
 		System.out.println("\t Cash limit: " + card.getCashLimit());
 		System.out.println("\t Buy limit: " + card.getBuyLimit());
