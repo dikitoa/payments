@@ -12,20 +12,20 @@ public class TestCreditCard {
         creditCard = new CreditCard(); //generate a new credit card
 	}
     
-	@Test
-	public void testNumberIsShort() {
-		creditCard.setNumber(1234567890);
-//        assert.t;
-	}
-	
-	@Test
-	public void testNumberIsLong() {
-		creditCard.setNumber(1234567890);
-	}
-    
-    @Test
-	public void testNumberOK() {
-		creditCard.setNumber(1234567890);
-	}
+//	@Test
+//	public void testNumberIsShort() {
+//		creditCard.setNumber(1234567890);
+////        assert.t;
+//	}
+//	
+//	@Test
+//	public void testNumberIsLong() {
+//		creditCard.setNumber(1234567890);
+//	}
+//    
+//    @Test
+//	public void testNumberOK() {
+//		creditCard.setNumber(1234567890);
+//	}
     
 }

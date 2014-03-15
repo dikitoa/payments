@@ -81,7 +81,6 @@ public class Tester {
 		System.out.println("\t Buy limit: " + card.getBuyLimit());
 		System.out.println("\t Expiration Date: " + card.getExpirationDate());
 		System.out.println("\t CVV: " + card.getCvv());
-		System.out.println("\t Commissions: " + card.getCommission());
 	}
 	
 	private static void createCreditCard() {
@@ -94,6 +93,5 @@ public class Tester {
 		System.out.println("\t Buy limit: " + card.getBuyLimit());
 		System.out.println("\t Expiration Date: " + card.getExpirationDate());
 		System.out.println("\t CVV: " + card.getCvv());
-		System.out.println("\t Commissions: " + card.getCommission());
 	}
 }

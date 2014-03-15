@@ -10,7 +10,9 @@ public class Card {
 	private String expirationDate;
 	private CardType cardType;
 	private int cvv;
-	private int commission;
+	private StrategyCommission commission;
+//	private Handler ownerId;
+//	private Account account;
 	
 	/**
 	 * Crea una nueva tarjeta del tipo indicado
@@ -24,7 +26,6 @@ public class Card {
 		this.expirationDate = generateExpirationDate();
 		this.cardType = type;
 		this.cvv = this.generateCVV();
-		this.commission = 0;
 	}
 	
 	/**
@@ -89,6 +90,16 @@ public class Card {
 	}
 	
 	/**
+	 * Comprueba que el pin sea correcto
+	 * @param pin
+	 * @return
+	 */
+	public boolean checkPin(int pin) {
+		//TODO rellenar metodo
+		return false;
+	}
+	
+	/**
 	 * Devuelve el limite de la tarjeta para compras
 	 * @return
 	 */
@@ -105,6 +116,19 @@ public class Card {
 	}
 	
 	/**
+	 * Comprueba que el precio no exceda el limite de la tarjeta
+	 * @param price
+	 * @return
+	 */
+	public boolean checkBuyLimit(int price) {
+		if (price > buyLimit) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	/**
 	 * Devuelve el limite de la tarjeta para extracciones en cajeros
 	 * @return
 	 */
@@ -117,6 +141,19 @@ public class Card {
 	 */
 	public void setCashLimit(int cashLimit) {
 		this.cashLimit = cashLimit;
+	}
+	
+	/**
+	 * Comprueba que la cantidad solicitada para extraer en cajero no exceda el limite de la tarjeta
+	 * @param cash
+	 * @return
+	 */
+	public boolean checkCashLimit(int cash) {
+		if (cash > this.cashLimit) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 	
 	/**
@@ -171,15 +208,31 @@ public class Card {
 	 * Devuelve la comision de la tarjeta
 	 * @return
 	 */
-	public int getCommission() {
-		return this.commission;
-	}
+//	public float getCommission() {
+//		return this.commission;
+//	}
+	
+	/**
+	 * Devuelve la cuenta de usuario actual
+	 * @return
+	 */
+//	public Account getAccount() {
+//		return this.account;
+//	}
+	
+	/**
+	 * Cambia la cuenta actual por la que recibe por parametro
+	 * @param account
+	 */
+//	public void setAccount(Account account) {
+//		this.account = account;
+//	}
 
 	/**
 	 * Cambia la comision de la tarjeta por la que se indica
 	 * @param commission
 	 */
-	public void setCommission(int commission) {
+	public void setCommission(StrategyCommission commission) {
 		this.commission = commission;
 	}
 	
