@@ -4,6 +4,7 @@ public class CardHandler implements Handler {
 	
 	private final int CARD_LENGTH = 16;
 	private int bankId;
+	private int cardId;
 	private long cardNumber;
 	private int officeId;
 	private int controlDigit;
@@ -21,66 +22,63 @@ public class CardHandler implements Handler {
 	}
 	
 	/**
-	 * Genera el identificador de la tarjeta
+	 * Genera el numero completo de la tarjeta
 	 * @return
 	 */
 	private long generateCardNumber() {
-		int[] digits = new int[CARD_LENGTH];
-		int index = 4;
-		int[] bank = intToArray(this.bankId);
-		int[] office = intToArray(this.officeId);
 		StringBuilder result = new StringBuilder();
 		
-		//Agnadimos el numero identificador de nuestro banco
-		for (int i = 0; i < 4; i++) {
-			digits[i] = bank[i];
+		//Agnadimos el identificador de nuestro banco
+		result.append(String.valueOf(this.bankId));
+		//Agnadimos la oficina actual asegurandonos de que tiene 2 digitos
+		if (this.officeId < 10) {
+			result.append(0);
+			result.append(this.officeId);
+		} else {
+			result.append(this.officeId);
 		}
-		
-		//Agnadimos la oficina actual
-		for (int i = 0; i < office.length; i++) {
-			if (office.length == 1) {
-				digits[index] = 0;
-				digits[index+1] = office[i];
-				index++;
-			} else {
-				digits[index] = office[i];
-			}
-			index++;
-		}
-		
-		//Generamos 9 numeros aleatorios que seran el identificador de la tarjeta
-		while (index < 15) {
-			digits[index] = (int)(Math.random()*10);
-			index++;
-		}
-		
-		//Para terminar se genera el digito de control
-		this.controlDigit = generateControlDigit(digits);
-		
-		digits[index] = controlDigit;
-		
-		for (int i = 0; i < digits.length; i++) {
-			result.append(digits[i]);
-		}
+		//Generamos el identificador de la tarjeta rellenando los digitos restantes menos 
+		//el ultimo que es el digito de control
+		this.cardId = generateCardId(CARD_LENGTH - (result.toString().length()+1));
+		result.append(String.valueOf(this.cardId));
+		//Por ultimo generamos el digito de control
+		this.controlDigit = generateControlDigit(stringToIntArray(result.toString()));
+		result.append(String.valueOf(this.controlDigit));
 		
 		return Long.parseLong(result.toString());
 	}
 	
 	/**
-	 * Convierte el int que recibe en un array
-	 * @param number
+	 * Genera el identificador de la tarjeta rellenandolo con n numeros aleatorios
+	 * @param n
 	 * @return
 	 */
-	private int[] intToArray(int number) {
-		String numberString = Integer.toString(number);
-		String substring;
-		int[] result = new int[numberString.length()];
+	private int generateCardId(int n) {
+		int index = 0;
+		StringBuilder result = new StringBuilder();
 		
-		for (int i = 0; i < numberString.length(); i++) {
-			if (i != numberString.length()) {
-				substring = numberString.substring(i, i+1);
+		while (index < n) {
+			result.append((int)(Math.random()*10));
+			index++;
+		}
+		
+		return Integer.parseInt(result.toString());
+	}
+	
+	/**
+	 * Convierte el String que recibe a un array de enteros
+	 * @param string
+	 * @return
+	 */
+	private int[] stringToIntArray(String string) {
+		int[] result = new int[string.length()];
+		String substring;
+		
+		for (int i = 0; i < string.length(); i++) {
+			if (i != string.length()) {
+				substring = string.substring(i, i+1);
 			} else {
-				substring = numberString.substring(i);
+				substring = string.substring(i);
 			}
 			result[i] = Integer.parseInt(substring);
 		}
@@ -193,6 +191,22 @@ public class CardHandler implements Handler {
 	 */
 	public void setControlDigit(int controlDigit) {
 		this.controlDigit = controlDigit;
+	}
+	
+	/**
+	 * Devuelve el identificador de la tarjeta
+	 * @return
+	 */
+	public int getCardId() {
+		return cardId;
+	}
+	
+	/**
+	 * Cambia el identificador de la tarjeta por el que recibe
+	 * @param cardId
+	 */
+	public void setCardId(int cardId) {
+		this.cardId = cardId;
 	}
 
 	/**

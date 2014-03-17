@@ -33,7 +33,13 @@ public class Card {
 	 * @return
 	 */
 	private int generatePinCode() {
-		return (int)(Math.random()*(10000-1000+1) + 1000);
+		StringBuilder result = new StringBuilder();
+		
+		for (int i = 0; i < 4; i++) {
+			result.append((int) (Math.random()*10));
+		}
+		
+		return Integer.parseInt(result.toString());
 	}
 	
 	/**
@@ -54,7 +60,13 @@ public class Card {
 	 * @return
 	 */
 	private int generateCVV() {
-		return (int)(Math.random()*1000);
+		StringBuilder result = new StringBuilder();
+		
+		for (int i = 0; i < 3; i++) {
+			result.append((int) (Math.random()*10));
+		}
+		
+		return Integer.parseInt(result.toString());
 	}
 	
 	/**

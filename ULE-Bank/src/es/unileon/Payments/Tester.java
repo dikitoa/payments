@@ -6,8 +6,6 @@ public class Tester {
 	public static void main(String[] args) {
 		boolean exit = false;
 		int option = 0;
-		int buyLimit = 0;
-		int cashLimit = 0;
 		Scanner scan = new Scanner(System.in);
 		
 		showPresentation();
@@ -21,13 +19,7 @@ public class Tester {
 				System.out.println("Choose card type: \n\t 1-Devit Card \n\t 2-Credit Card \n\t 3-Return");
 				prompt();
 				option = scan.nextInt();
-				if (option == 1 || option == 2) {
-					System.out.print("Write your buy limit: ");
-					buyLimit = scan.nextInt();
-					System.out.print("Write your cash limit: ");
-					cashLimit = scan.nextInt();
-					createCard(option, buyLimit, cashLimit);
-				}
+				createCard(option);
 				
 				break;
 			case 2:
@@ -63,7 +55,7 @@ public class Tester {
 		System.out.println();
 	}
 	
-	private static void createCard(int type, int buyLimit, int cashLimit) {
+	private static void createCard(int type) {
 		if (type == 1) {
 			createDevitCard();
 		} else if (type == 2) {
