@@ -4,12 +4,14 @@ import java.util.Calendar;
 
 public class Card {
 	private CardHandler cardId;
-	private int pin;
-	private int buyLimit;
-	private int cashLimit;
+	private String pin;
+	private int buyLimitDiary;
+	private int buyLimitMonthly;
+	private int cashLimitDiary;
+	private int cashLimitMonthly;
 	private String expirationDate;
 	private CardType cardType;
-	private int cvv;
+	private String cvv;
 	private StrategyCommission commission;
 //	private Handler ownerId;
 //	private Account account;
@@ -21,8 +23,22 @@ public class Card {
 	public Card(CardType type) {
 		this.cardId = new CardHandler();
 		this.pin = this.generatePinCode();
-		this.buyLimit = 400;
-		this.cashLimit = 400;
+		this.buyLimitDiary = 400;
+		this.cashLimitDiary = 400;
+		this.expirationDate = generateExpirationDate();
+		this.cardType = type;
+		this.cvv = this.generateCVV();
+	}
+	
+	/**
+	 * Crea una nueva tarjeta asignando los limites que se indican
+	 * @param type
+	 */
+	public Card(CardType type, int buyLimit, int cashLimit) {
+		this.cardId = new CardHandler();
+		this.pin = this.generatePinCode();
+		this.buyLimitDiary = buyLimit;
+		this.cashLimitDiary = cashLimit;
 		this.expirationDate = generateExpirationDate();
 		this.cardType = type;
 		this.cvv = this.generateCVV();
@@ -32,14 +48,14 @@ public class Card {
 	 * Genera el codigo pin de la tarjeta
 	 * @return
 	 */
-	private int generatePinCode() {
+	private String generatePinCode() {
 		StringBuilder result = new StringBuilder();
 		
 		for (int i = 0; i < 4; i++) {
 			result.append((int) (Math.random()*10));
 		}
 		
-		return Integer.parseInt(result.toString());
+		return result.toString();
 	}
 	
 	/**
@@ -59,37 +75,37 @@ public class Card {
 	 * Genera el codigo de validacion CVV
 	 * @return
 	 */
-	private int generateCVV() {
+	private String generateCVV() {
 		StringBuilder result = new StringBuilder();
 		
 		for (int i = 0; i < 3; i++) {
 			result.append((int) (Math.random()*10));
 		}
 		
-		return Integer.parseInt(result.toString());
+		return result.toString();
 	}
 	
 	/**
 	 * Devuelve el identificador de la tarjeta
 	 * @return
 	 */
-	public long getCardId() {
-		return Long.parseLong(this.cardId.toString());
+	public String getCardId() {
+		return this.cardId.toString();
 	}
 	
 	/**
 	 * Cambia el numero de la tarjeta por el que recibe
 	 * @param cardNumner
 	 */
-	public void setCardId(long cardNumber) {
-		this.cardId.setCardNumber(cardNumber);;
+	public void setCardId(String cardNumber) {
+		this.cardId.setCardNumber(cardNumber);
 	}
 	
 	/**
 	 * Devuelve el codigo PIN de la tarjeta
 	 * @return
 	 */
-	public int getPin() {
+	public String getPin() {
 		return this.pin;
 	}
 	
@@ -97,7 +113,7 @@ public class Card {
 	 * Cambia el codigo PIN de la tarjeta por el que recibe
 	 * @param pin
 	 */
-	public void setPin(int pin) {
+	public void setPin(String pin) {
 		this.pin = pin;
 	}
 	
@@ -106,25 +122,28 @@ public class Card {
 	 * @param pin
 	 * @return
 	 */
-	public boolean checkPin(int pin) {
-		//TODO rellenar metodo
-		return false;
+	public boolean checkPin(String pin) {
+		if (pin.equals(this.pin)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	/**
-	 * Devuelve el limite de la tarjeta para compras
+	 * Devuelve el limite de la tarjeta diario para compras
 	 * @return
 	 */
-	public int getBuyLimit() {
-		return this.buyLimit;
+	public int getBuyLimitDiary() {
+		return this.buyLimitDiary;
 	}
 	
 	/**
-	 * Cambia el linmite de la tarjeta para compras
+	 * Cambia el linmite de la tarjeta diario para compras
 	 * @param buyLimit
 	 */
-	public void setBuyLimit(int buyLimit) {
-		this.buyLimit = buyLimit;
+	public void setBuyLimitDiary(int buyLimit) {
+		this.buyLimitDiary = buyLimit;
 	}
 	
 	/**
@@ -132,8 +151,8 @@ public class Card {
 	 * @param price
 	 * @return
 	 */
-	public boolean checkBuyLimit(int price) {
-		if (price > buyLimit) {
+	public boolean checkBuyLimitDiary(int price) {
+		if (price > buyLimitDiary) {
 			return false;
 		} else {
 			return true;
@@ -141,18 +160,34 @@ public class Card {
 	}
 	
 	/**
+	 * Devuelve el limite de la tarjeta mensual para compras
+	 * @return
+	 */
+	public int getBuyLimitMonthly() {
+		return buyLimitMonthly;
+	}
+
+	/**
+	 * Cambia el linmite de la tarjeta mensual para compras
+	 * @param buyLimit
+	 */
+	public void setBuyLimitMonthly(int buyLimitMonthly) {
+		this.buyLimitMonthly = buyLimitMonthly;
+	}
+
+	/**
 	 * Devuelve el limite de la tarjeta para extracciones en cajeros
 	 * @return
 	 */
-	public int getCashLimit() {
-		return this.cashLimit;
+	public int getCashLimitDiary() {
+		return this.cashLimitDiary;
 	}
 	
 	/**
 	 * Cambia el limite de la tarjeta para extracciones en cajeros
 	 */
-	public void setCashLimit(int cashLimit) {
-		this.cashLimit = cashLimit;
+	public void setCashLimitDiary(int cashLimit) {
+		this.cashLimitDiary = cashLimit;
 	}
 	
 	/**
@@ -160,14 +195,30 @@ public class Card {
 	 * @param cash
 	 * @return
 	 */
-	public boolean checkCashLimit(int cash) {
-		if (cash > this.cashLimit) {
+	public boolean checkCashLimitDiary(int cash) {
+		if (cash > this.cashLimitDiary) {
 			return false;
 		} else {
 			return true;
 		}
 	}
 	
+	/**
+	 * Devuelve la cantidad maxima para extraer en cajero mensual
+	 * @return
+	 */
+	public int getCashLimitMonthly() {
+		return cashLimitMonthly;
+	}
+
+	/**
+	 * Cambia la cantidad maxima para extraer en un cajero al mes
+	 * @param cashLimitMonthly
+	 */
+	public void setCashLimitMonthly(int cashLimitMonthly) {
+		this.cashLimitMonthly = cashLimitMonthly;
+	}
+
 	/**
 	 * Devuelve la fecha de caducidad de la tarjeta
 	 * @return
@@ -204,7 +255,7 @@ public class Card {
 	 * Devuelve el codigo de validacion CVV
 	 * @return
 	 */
-	public int getCvv() {
+	public String getCvv() {
 		return this.cvv;
 	}
 
@@ -212,7 +263,7 @@ public class Card {
 	 * Cambia el CVV por el nuevo que ha recibido
 	 * @param cvv
 	 */
-	public void setCvv(int cvv) {
+	public void setCvv(String cvv) {
 		this.cvv = cvv;
 	}
 

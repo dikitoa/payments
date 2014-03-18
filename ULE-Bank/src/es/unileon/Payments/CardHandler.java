@@ -3,19 +3,24 @@ package es.unileon.Payments;
 public class CardHandler implements Handler {
 	
 	private final int CARD_LENGTH = 16;
-	private int bankId;
-	private int cardId;
-	private long cardNumber;
-	private int officeId;
+	//Identificador de nuestro banco
+	private String bankId;
+	//Identificador de la tarjeta
+	private String cardId;
+	//Numero completo de la tarjeta
+	private String cardNumber;
+	//Identificador de la oficina
+	private String officeId;
+	//Digito de control
 	private int controlDigit;
 	
 	public CardHandler() {
-		this.bankId = 1234;
-		this.officeId = 01;
+		this.bankId = "1234";
+		this.officeId = "01";
 		this.cardNumber = generateCardNumber();
 	}
 	
-	public CardHandler(int bankId, int officeId) {
+	public CardHandler(String bankId, String officeId) {
 		this.bankId = bankId;
 		this.officeId = officeId;
 		this.cardNumber = generateCardNumber();
@@ -25,13 +30,13 @@ public class CardHandler implements Handler {
 	 * Genera el numero completo de la tarjeta
 	 * @return
 	 */
-	private long generateCardNumber() {
+	protected String generateCardNumber() {
 		StringBuilder result = new StringBuilder();
 		
 		//Agnadimos el identificador de nuestro banco
-		result.append(String.valueOf(this.bankId));
+		result.append(this.bankId);
 		//Agnadimos la oficina actual asegurandonos de que tiene 2 digitos
-		if (this.officeId < 10) {
+		if (this.officeId.length() < 2) {
 			result.append(0);
 			result.append(this.officeId);
 		} else {
@@ -40,12 +45,12 @@ public class CardHandler implements Handler {
 		//Generamos el identificador de la tarjeta rellenando los digitos restantes menos 
 		//el ultimo que es el digito de control
 		this.cardId = generateCardId(CARD_LENGTH - (result.toString().length()+1));
-		result.append(String.valueOf(this.cardId));
+		result.append(this.cardId);
 		//Por ultimo generamos el digito de control
 		this.controlDigit = generateControlDigit(stringToIntArray(result.toString()));
-		result.append(String.valueOf(this.controlDigit));
+		result.append(this.controlDigit);
 		
-		return Long.parseLong(result.toString());
+		return result.toString();
 	}
 	
 	/**
@@ -53,7 +58,7 @@ public class CardHandler implements Handler {
 	 * @param n
 	 * @return
 	 */
-	private int generateCardId(int n) {
+	protected String generateCardId(int n) {
 		int index = 0;
 		StringBuilder result = new StringBuilder();
 		
@@ -62,7 +67,7 @@ public class CardHandler implements Handler {
 			index++;
 		}
 		
-		return Integer.parseInt(result.toString());
+		return result.toString();
 	}
 	
 	/**
@@ -91,7 +96,7 @@ public class CardHandler implements Handler {
 	 * @param digits
 	 * @return
 	 */
-	private int generateControlDigit(int[] digits) {
+	protected int generateControlDigit(int[] digits) {
 		return 10 - ((sumOddPlaces(digits) + sumEvenPlaces(digits)) % 10);
 	}
 	
@@ -133,7 +138,7 @@ public class CardHandler implements Handler {
 	 * Devuelve el identificador del banco
 	 * @return
 	 */
-	public int getBankId() {
+	public String getBankId() {
 		return bankId;
 	}
 
@@ -141,7 +146,7 @@ public class CardHandler implements Handler {
 	 * Cambia el identificador del banco
 	 * @param bankId
 	 */
-	public void setBankId(int bankId) {
+	public void setBankId(String bankId) {
 		this.bankId = bankId;
 	}
 
@@ -149,7 +154,7 @@ public class CardHandler implements Handler {
 	 * Devuelve el numero de la tarjeta completo
 	 * @return
 	 */
-	public long getCardNumber() {
+	public String getCardNumber() {
 		return cardNumber;
 	}
 
@@ -157,7 +162,7 @@ public class CardHandler implements Handler {
 	 * Cambia el numero de la tarjeta por el que se indica
 	 * @param cardNumber
 	 */
-	public void setCardNumber(long cardNumber) {
+	public void setCardNumber(String cardNumber) {
 		this.cardNumber = cardNumber;
 	}
 
@@ -165,7 +170,7 @@ public class CardHandler implements Handler {
 	 * Devuelve el identificador de la sucursal
 	 * @return
 	 */
-	public int getOfficeId() {
+	public String getOfficeId() {
 		return officeId;
 	}
 
@@ -173,7 +178,7 @@ public class CardHandler implements Handler {
 	 * Cambia el identificador de la sucursal por el que se recibe
 	 * @param officeId
 	 */
-	public void setOfficeId(int officeId) {
+	public void setOfficeId(String officeId) {
 		this.officeId = officeId;
 	}
 
@@ -197,7 +202,7 @@ public class CardHandler implements Handler {
 	 * Devuelve el identificador de la tarjeta
 	 * @return
 	 */
-	public int getCardId() {
+	public String getCardId() {
 		return cardId;
 	}
 	
@@ -205,7 +210,7 @@ public class CardHandler implements Handler {
 	 * Cambia el identificador de la tarjeta por el que recibe
 	 * @param cardId
 	 */
-	public void setCardId(int cardId) {
+	public void setCardId(String cardId) {
 		this.cardId = cardId;
 	}
 
@@ -220,9 +225,25 @@ public class CardHandler implements Handler {
 	}
 	
 	/**
-	 * Devuelve el identificador en forma de String
+	 * Devuelve el identificador con el formato de la tarjeta dividido en bloques de 4
 	 */
 	public String toString() {
-		return String.valueOf(this.cardNumber);
+		StringBuilder result = new StringBuilder();
+		String substring;
+		
+		for (int i = 0; i < cardNumber.length(); i++) {
+			if (i != cardNumber.length()) {
+				substring = cardNumber.substring(i, i+1);
+			} else {
+				substring = cardNumber.substring(i);
+			}
+			result.append(substring);
+			
+			if ((i+1)%4 == 0) {
+				result.append(" ");
+			}
+		}
+		
+		return result.toString();
 	}
 }
