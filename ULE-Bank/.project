@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>doc/Diagrama Clases Métodos Pago.png</name>
+			<type>1</type>
+			<location>C:/Users/Rober dCR/Dropbox/Informática/Diagrama Clases Métodos Pago.png</location>
+		</link>
+	</linkedResources>
 </projectDescription>
