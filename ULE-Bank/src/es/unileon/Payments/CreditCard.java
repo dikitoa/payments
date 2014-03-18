@@ -1,7 +1,7 @@
 package es.unileon.Payments;
 
 public class CreditCard extends Card {
-	private StrategyCommissionCredit commission;
+	private StrategyCommission commission;
 	
 	public CreditCard() {
 		super(CardType.CREDIT);
