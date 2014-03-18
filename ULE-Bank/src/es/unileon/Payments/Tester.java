@@ -69,8 +69,8 @@ public class Tester {
 		System.out.println("\t Card Type: " + card.getCardType());
 		System.out.println("\t Card Number: " + card.getCardId());
 		System.out.println("\t PIN: " + card.getPin());
-		System.out.println("\t Cash limit: " + card.getCashLimit());
-		System.out.println("\t Buy limit: " + card.getBuyLimit());
+		System.out.println("\t Cash limit: " + card.getCashLimitDiary());
+		System.out.println("\t Buy limit: " + card.getBuyLimitDiary());
 		System.out.println("\t Expiration Date: " + card.getExpirationDate());
 		System.out.println("\t CVV: " + card.getCvv());
 	}
@@ -81,8 +81,8 @@ public class Tester {
 		System.out.println("\t Card Type: " + card.getCardType());
 		System.out.println("\t Card Number: " + card.getCardId());
 		System.out.println("\t PIN: " + card.getPin());
-		System.out.println("\t Cash limit: " + card.getCashLimit());
-		System.out.println("\t Buy limit: " + card.getBuyLimit());
+		System.out.println("\t Cash limit: " + card.getCashLimitDiary());
+		System.out.println("\t Buy limit: " + card.getBuyLimitDiary());
 		System.out.println("\t Expiration Date: " + card.getExpirationDate());
 		System.out.println("\t CVV: " + card.getCvv());
 	}

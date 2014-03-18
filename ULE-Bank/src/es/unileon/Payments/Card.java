@@ -24,7 +24,9 @@ public class Card {
 		this.cardId = new CardHandler();
 		this.pin = this.generatePinCode();
 		this.buyLimitDiary = 400;
+		this.buyLimitMonthly = 1000;
 		this.cashLimitDiary = 400;
+		this.cashLimitMonthly = 1000;
 		this.expirationDate = generateExpirationDate();
 		this.cardType = type;
 		this.cvv = this.generateCVV();
@@ -38,7 +40,9 @@ public class Card {
 		this.cardId = new CardHandler();
 		this.pin = this.generatePinCode();
 		this.buyLimitDiary = buyLimit;
+		this.buyLimitMonthly = 1000;
 		this.cashLimitDiary = cashLimit;
+		this.cashLimitMonthly = 1000;
 		this.expirationDate = generateExpirationDate();
 		this.cardType = type;
 		this.cvv = this.generateCVV();
@@ -48,7 +52,7 @@ public class Card {
 	 * Genera el codigo pin de la tarjeta
 	 * @return
 	 */
-	private String generatePinCode() {
+	public String generatePinCode() {
 		StringBuilder result = new StringBuilder();
 		
 		for (int i = 0; i < 4; i++) {
@@ -62,7 +66,7 @@ public class Card {
 	 * Genera una fecha de caducidad para la tarjeta
 	 * @return
 	 */
-	private String generateExpirationDate() {
+	public String generateExpirationDate() {
 		Calendar calendar = Calendar.getInstance();
 		
 		String month = Integer.toString(calendar.get(Calendar.MONTH));
@@ -75,7 +79,7 @@ public class Card {
 	 * Genera el codigo de validacion CVV
 	 * @return
 	 */
-	private String generateCVV() {
+	public String generateCVV() {
 		StringBuilder result = new StringBuilder();
 		
 		for (int i = 0; i < 3; i++) {
