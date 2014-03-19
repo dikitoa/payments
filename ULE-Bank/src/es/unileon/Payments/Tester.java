@@ -16,7 +16,7 @@ public class Tester {
 			option = scan.nextInt();
 			switch (option) {
 			case 1:
-				System.out.println("Choose card type: \n\t 1-Devit Card \n\t 2-Credit Card \n\t 3-Return");
+				System.out.println("Choose card type: \n\t 1-Debit Card \n\t 2-Credit Card \n\t 3-Return");
 				prompt();
 				option = scan.nextInt();
 				createCard(option);
@@ -57,13 +57,13 @@ public class Tester {
 	
 	private static void createCard(int type) {
 		if (type == 1) {
-			createDevitCard();
+			createDebitCard();
 		} else if (type == 2) {
 			createCreditCard();
 		}
 	}
 	
-	private static void createDevitCard() {
+	private static void createDebitCard() {
 		DebitCard card = new DebitCard();
 		System.out.println("CARD INFO:");
 		System.out.println("\t Card Type: " + card.getCardType());

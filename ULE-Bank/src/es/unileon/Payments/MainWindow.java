@@ -108,7 +108,7 @@ public class MainWindow extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         this.jDesktopPane1.removeAll();
         this.jDesktopPane1.repaint();
-        DevitWindow window = new DevitWindow();
+        DebitWindow window = new DebitWindow();
         window.setVisible(true);
         window.show();
         this.jDesktopPane1.add(window);

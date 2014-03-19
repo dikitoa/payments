@@ -92,12 +92,23 @@ public class CardHandler implements Handler {
 	}
 	
 	/**
-	 * Genera el digito de control
+	 * Genera el digito de control empleando el algoritmo de Luhn
 	 * @param digits
 	 * @return
 	 */
 	protected int generateControlDigit(int[] digits) {
-		return 10 - ((sumOddPlaces(digits) + sumEvenPlaces(digits)) % 10);
+		return 10 - verifyCardNumber(digits);
+	}
+	
+	/**
+	 * Verifica que el número de tarjeta es correcto si el resultado es 0,
+	 * tambien se puede emplear para generar el dígito de control realizando 
+	 * la operación 10-verifyCardNumber(digits[])
+	 * @param digits
+	 * @return
+	 */
+	protected int verifyCardNumber(int[] digits) {
+		return ((sumOddPlaces(digits) + sumEvenPlaces(digits)) % 10);
 	}
 	
 	/**
@@ -109,11 +120,14 @@ public class CardHandler implements Handler {
 		int sum = 0;
 		//Recorremos las posiciones impares
 		for (int i = 0; i < digits.length; i+=2) {
-			int aux = digits[i]*2;
-			if (aux > 9) {
-				aux = aux%9;
+			//Doblamos el digito y lo guardamos
+			int aux = digits[i] << 1;
+			//Si el numero tiene 2 dígitos los sumamos juntos
+			if (aux >= 10) {
+				sum += 1 + aux - 10;
+			} else {
+				sum += aux;
 			}
-			sum += aux;
 		}
 		
 		return sum;
@@ -126,7 +140,7 @@ public class CardHandler implements Handler {
 	 */
 	private int sumEvenPlaces(int[] digits) {
 		int sum = 0;
-		//Recorremos las posiciones pares
+		//Recorremos las posiciones pares y sumamos los dígitos
 		for (int i = 1; i < digits.length; i+=2) {
 			sum += digits[i];
 		}
