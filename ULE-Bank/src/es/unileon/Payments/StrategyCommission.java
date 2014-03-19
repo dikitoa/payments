@@ -1,5 +1,19 @@
 package es.unileon.Payments;
 
-public abstract class StrategyCommission {
-	public abstract void calculateCommission(float commission);
+/**
+ * Interface for Strategy Pattern
+ * @author Rober dCR
+ * @date 19/03/2014
+ * @brief Interface which stablish the methods for calculate commission in cards.
+ */
+
+public interface StrategyCommission {
+	
+	/**
+	 * Method that calculate the commission
+	 * @param ownerAge
+	 * @return Commission for the card 
+	 */
+	public int calculateCommission(int ownerAge);
+	
 }

@@ -64,7 +64,7 @@ public class Tester {
 	}
 	
 	private static void createDevitCard() {
-		DevitCard card = new DevitCard();
+		DebitCard card = new DebitCard();
 		System.out.println("CARD INFO:");
 		System.out.println("\t Card Type: " + card.getCardType());
 		System.out.println("\t Card Number: " + card.getCardId());

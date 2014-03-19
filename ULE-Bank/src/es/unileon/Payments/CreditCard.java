@@ -1,7 +1,7 @@
 package es.unileon.Payments;
 
 public class CreditCard extends Card {
-	private StrategyCommissionCredit commission;
+
 	private int limitDebt;
 	
 	public CreditCard() {
@@ -12,22 +12,6 @@ public class CreditCard extends Card {
 	public CreditCard(int payroll) {
 		super(CardType.CREDIT);
 		this.limitDebt = payroll*3;
-	}
-	
-	/**
-	 * Devuelve la comisión de la tarjeta de crédito
-	 * @return
-	 */
-	public StrategyCommissionCredit getCommission() {
-		return commission;
-	}
-
-	/**
-	 * Cambia la comisión de la tarjeta de crédito por la que se indica
-	 * @param commission
-	 */
-	public void setCommission(StrategyCommissionCredit commission) {
-		this.commission = commission;
 	}
 
 	/**
