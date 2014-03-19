@@ -21,12 +21,12 @@ import es.unileon.Payments.MainWindow;
  *
  * @author Fernando
  */
-public class DevitWindow extends javax.swing.JInternalFrame {
+public class DebitWindow extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form DevitWindow
      */
-    public DevitWindow() {
+    public DebitWindow() {
         initComponents();
     }
 
@@ -280,7 +280,7 @@ public class DevitWindow extends javax.swing.JInternalFrame {
          if (found == false) {
              String msg = "This DNI is not found";
              JOptionPane.showMessageDialog(null, msg, "Error", 0);
-             new DevitWindow().setVisible(true);
+             new DebitWindow().setVisible(true);
          } else {
              jTextField2.setText(name);
              jTextField3.setText(surname1);
@@ -298,9 +298,9 @@ public class DevitWindow extends javax.swing.JInternalFrame {
 
             
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(DevitWindow.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DebitWindow.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(DevitWindow.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DebitWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
