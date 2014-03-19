@@ -1,7 +1,19 @@
 package es.unileon.Payments;
 
-public interface StrategyCommission {
+/**
+ * Interface for Strategy Pattern
+ * @author Rober dCR
+ * @date 19/03/2014
+ * @brief Interface which stablish the methods for calculate commission in cards.
+ */
 
-	public int calculateCommission();
+public interface StrategyCommission {
+	
+	/**
+	 * Method that calculate the commission
+	 * @param ownerAge
+	 * @return Commission for the card 
+	 */
+	public int calculateCommission(int ownerAge);
 	
 }
