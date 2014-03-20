@@ -1,10 +1,15 @@
 package es.unileon.Payments;
 
+/**
+ * @class StrategyCommissionEmissionRevolving
+ * @author Rober dCR
+ * @date 20/03/2014
+ * @brief Class that obtain Commision of Emission in Revolving Cards
+ */
 public class StrategyCommissionEmissionRevolving implements StrategyCommission {
 
 	@Override
 	public int calculateCommission(int ownerAge) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

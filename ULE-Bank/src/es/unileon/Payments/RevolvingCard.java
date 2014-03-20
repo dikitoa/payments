@@ -2,7 +2,7 @@ package es.unileon.Payments;
 
 public class RevolvingCard extends Card {
 
-	private float interest;
+	private float interest = 1;
 	
 	public RevolvingCard() {
 		super(CardType.REVOLVING);

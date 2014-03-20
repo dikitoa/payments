@@ -1,5 +1,11 @@
 package es.unileon.Payments;
 
+/**
+ * @class StrategyCommissionCheckerRemoval
+ * @author Rober dCR
+ * @date 20/03/2014
+ * @brief Class that obtain Commision of Removal in Checker
+ */
 public class StrategyCommissionCheckerRemoval implements StrategyCommission {
 
 	@Override
