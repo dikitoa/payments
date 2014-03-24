@@ -254,7 +254,7 @@ public class DebitWindow extends javax.swing.JInternalFrame {
         String DNI = jTextField1.getText();
         String name = null, surname1 = null, surname2 = null, dateOfBirth = null, address = null, phoneNumber = null, eMail = null, salary = null, accountNumber = null, availableBalance = null;
         boolean found = false;
-        File archive = new File ("C:\\Users\\Fernando\\workspace\\payments-master\\usuarios.txt");
+        File archive = new File ("/home/david/Escritorio/usuarios.txt");
         try {
             FileReader doc = new FileReader (archive);
             BufferedReader line = new BufferedReader(doc);
