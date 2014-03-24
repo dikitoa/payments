@@ -15,7 +15,7 @@ public class CreditCard extends Card {
 	}
 
 	/**
-	 * Devuelve el límite de deuda de la tarjeta
+	 * Devuelve el limite de deuda de la tarjeta
 	 * @return
 	 */
 	public int getLimitDebt() {
@@ -23,7 +23,7 @@ public class CreditCard extends Card {
 	}
 
 	/**
-	 * Cambia el límite de deuda por el que recibe
+	 * Cambia el limite de deuda por el que recibe
 	 * @param limitDebt
 	 */
 	public void setLimitDebt(int limitDebt) {

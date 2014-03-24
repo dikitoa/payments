@@ -101,9 +101,9 @@ public class CardHandler implements Handler {
 	}
 	
 	/**
-	 * Verifica que el número de tarjeta es correcto si el resultado es 0,
-	 * tambien se puede emplear para generar el dígito de control realizando 
-	 * la operación 10-verifyCardNumber(digits[])
+	 * Verifica que el numero de tarjeta es correcto si el resultado es 0,
+	 * tambien se puede emplear para generar el digito de control realizando 
+	 * la operacion 10-verifyCardNumber(digits[])
 	 * @param digits
 	 * @return
 	 */
@@ -122,7 +122,7 @@ public class CardHandler implements Handler {
 		for (int i = 0; i < digits.length; i+=2) {
 			//Doblamos el digito y lo guardamos
 			int aux = digits[i] << 1;
-			//Si el numero tiene 2 dígitos los sumamos juntos
+			//Si el numero tiene 2 dï¿½gitos los sumamos juntos
 			if (aux >= 10) {
 				sum += 1 + aux - 10;
 			} else {
@@ -140,7 +140,7 @@ public class CardHandler implements Handler {
 	 */
 	private int sumEvenPlaces(int[] digits) {
 		int sum = 0;
-		//Recorremos las posiciones pares y sumamos los dígitos
+		//Recorremos las posiciones pares y sumamos los digitos
 		for (int i = 1; i < digits.length; i+=2) {
 			sum += digits[i];
 		}
