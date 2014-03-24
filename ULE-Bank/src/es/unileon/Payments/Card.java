@@ -12,7 +12,6 @@ public class Card {
 	private String expirationDate;
 	private CardType cardType;
 	private String cvv;
-	private StrategyCommission commission;
 //	private Handler ownerId;
 //	private Account account;
 	
@@ -270,14 +269,6 @@ public class Card {
 	public void setCvv(String cvv) {
 		this.cvv = cvv;
 	}
-
-	/**
-	 * Devuelve la comision de la tarjeta
-	 * @return
-	 */
-//	public float getCommission() {
-//		return this.commission;
-//	}
 	
 	/**
 	 * Devuelve la cuenta de usuario actual
@@ -294,14 +285,4 @@ public class Card {
 //	public void setAccount(Account account) {
 //		this.account = account;
 //	}
-
-	/**
-	 * Cambia la comision de la tarjeta por la que se indica
-	 * @param commission
-	 */
-	public void setCommission(StrategyCommission commission) {
-		this.commission = commission;
-	}
-	
-	
 }
