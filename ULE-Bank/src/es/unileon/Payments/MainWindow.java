@@ -75,11 +75,6 @@ public class MainWindow extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Remove Card");
-        jMenu2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu2ActionPerformed(evt);
-            }
-        });
 
         jMenuItem2.setText("Remove Card");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -137,15 +132,6 @@ public class MainWindow extends javax.swing.JFrame {
         window.show();
         this.jDesktopPane1.add(window);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
-        this.jDesktopPane1.removeAll();
-        this.jDesktopPane1.repaint();
-        RemoveCardWindow window = new RemoveCardWindow();
-        window.setVisible(true);
-        window.show();
-        this.jDesktopPane1.add(window);
-    }//GEN-LAST:event_jMenu2ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
                this.jDesktopPane1.removeAll();
