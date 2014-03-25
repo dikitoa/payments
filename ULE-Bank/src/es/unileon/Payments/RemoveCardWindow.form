@@ -47,7 +47,7 @@
                       <Component id="button2" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="169" max="32767" attributes="0"/>
+              <EmptySpace pref="111" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -112,7 +112,7 @@
     </Component>
     <Component class="java.awt.Label" name="label2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Search Card for DNI :"/>
+        <Property name="text" type="java.lang.String" value="Search Card for bank account :"/>
       </Properties>
     </Component>
     <Component class="java.awt.Button" name="button3">

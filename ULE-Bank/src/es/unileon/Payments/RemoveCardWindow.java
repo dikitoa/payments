@@ -45,7 +45,7 @@ public class RemoveCardWindow extends javax.swing.JInternalFrame {
 
         button1.setLabel("Accept");
 
-        label2.setText("Search Card for DNI :");
+        label2.setText("Search Card for bank account :");
 
         button3.setLabel("Accept");
 
@@ -74,7 +74,7 @@ public class RemoveCardWindow extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(8, 8, 8)
                         .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(169, Short.MAX_VALUE))
+                .addContainerGap(111, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
