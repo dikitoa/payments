@@ -122,7 +122,7 @@ public class CardHandler implements Handler {
 		for (int i = 0; i < digits.length; i+=2) {
 			//Doblamos el digito y lo guardamos
 			int aux = digits[i] << 1;
-			//Si el numero tiene 2 d�gitos los sumamos juntos
+			//Si el numero tiene 2 d���gitos los sumamos juntos
 			if (aux >= 10) {
 				sum += 1 + aux - 10;
 			} else {
@@ -260,4 +260,9 @@ public class CardHandler implements Handler {
 		
 		return result.toString();
 	}
+
+	public int getCardLength() {
+		return CARD_LENGTH;
+	}
+	
 }
