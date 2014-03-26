@@ -3,6 +3,7 @@ package es.unileon.Payments;
 /**
  * SecurityCardException Class
  * @author Rober dCR
+ * @date 26/03/2014
  * @brief Exception that is thrown if the security conditions are not accepted 
  */
 public class SecurityCardException extends Exception{

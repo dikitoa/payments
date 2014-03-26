@@ -45,9 +45,13 @@ public class SecurityCard {
 	 * @param row
 	 * @param column
 	 * @return coordinate
+	 * @throws SecurityCardException 
 	 */
-	private Integer getCoordinate(int row, int column){
-		return this.coordinates[row][column];
+	private Integer getCoordinate(int row, int column) throws SecurityCardException{
+		if ( ( (row >= 0) && (row < this.ROW) ) && ( (column >= 0) && (column < this.COLUMNS) ) )
+			return this.coordinates[row][column];
+		else
+			throw new SecurityCardException("Index out of range");
 	}
 	
 	/**
@@ -56,8 +60,9 @@ public class SecurityCard {
 	 * @param column
 	 * @param coordinate
 	 * @return true if coordinate is correct / false another case
+	 * @throws SecurityCardException 
 	 */
-	public boolean checkCoordinates(int row, int column, int coordinate){
+	public boolean checkCoordinates(int row, int column, int coordinate) throws SecurityCardException{
 		return this.getCoordinate(row, column).equals(coordinate);
 	}
 	
@@ -73,8 +78,18 @@ public class SecurityCard {
 			throw new SecurityCardException("This Security Card has activated yet");
 		else if(!this.associatedCard.checkPin(cardPin))
 			throw new SecurityCardException("Invalid pin or this Security Card has activated yet");
-		else
-			return this.coordinates;		
+		else {
+			this.activate = true;
+			return this.coordinates;
+		}
+	}
+	
+	/**
+	 * Getter of the associated Card
+	 * @return associatedCard
+	 */
+	public Card getAssociatedCard(){
+		return this.associatedCard;
 	}
 		
 }
