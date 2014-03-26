@@ -12,12 +12,12 @@ import com.sun.org.apache.xalan.internal.xsltc.runtime.BasisLibrary;
  *
  * @author David Gómez Riesgo
  */
-public class NewCard extends javax.swing.JFrame {
+public class NewCardWindow extends javax.swing.JFrame {
 
     /**
      * Creates new form NewCard
      */
-    public NewCard() {
+    public NewCardWindow() {
         initComponents();
     }
 
@@ -91,7 +91,7 @@ public class NewCard extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-                System.out.print("w");
+       
         int buyLimit = Integer.parseInt(jTextField1.getText());
         int cashLimit = Integer.parseInt(jTextField2.getText());
         new InformationDebitCard(buyLimit, cashLimit).setVisible(true);

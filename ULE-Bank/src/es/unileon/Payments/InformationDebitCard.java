@@ -6,6 +6,10 @@
 
 package es.unileon.Payments;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+
 /**
  *
  * @author David Gómez Riesgo
@@ -102,6 +106,11 @@ public class InformationDebitCard extends javax.swing.JFrame {
         jLabel7.setText("CVV: ");
 
         jButton1.setText("Finish and generate the Devit Card agreement");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel8.setText("Commissions: ");
 
@@ -195,6 +204,16 @@ public class InformationDebitCard extends javax.swing.JFrame {
     private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField8ActionPerformed
+//Abrimos el contrato de la tarjeta de débito
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+     File path = new File ("contratos/debitcontract.pdf");
+     Desktop.getDesktop().open(path);
+     System.out.println("Abierto archivo");
+}catch (IOException ex) {
+     ex.printStackTrace();
+}
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

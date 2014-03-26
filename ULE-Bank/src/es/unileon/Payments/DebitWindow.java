@@ -260,7 +260,7 @@ public class DebitWindow extends javax.swing.JInternalFrame {
         String DNI = jTextField1.getText();
         String name = null, surname1 = null, surname2 = null, dateOfBirth = null, address = null, phoneNumber = null, eMail = null, salary = null, accountNumber = null, availableBalance = null;
         boolean found = false;
-        File archive = new File ("/home/david/Escritorio/usuarios.txt");
+        File archive = new File ("contratos/usuarios.txt");
         try {
             FileReader doc = new FileReader (archive);
             BufferedReader line = new BufferedReader(doc);
@@ -328,7 +328,7 @@ public class DebitWindow extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextField11ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        NewCard dialogo = new NewCard();
+        NewCardWindow dialogo= new NewCardWindow();
         dialogo.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
