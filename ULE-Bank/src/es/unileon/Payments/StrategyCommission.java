@@ -4,7 +4,7 @@ package es.unileon.Payments;
  * Interface for Strategy Pattern
  * @author Rober dCR
  * @date 19/03/2014
- * @brief Interface which stablish the methods for calculate commission in cards.
+ * @brief Interface which establish the methods for calculate commission in cards.
  */
 
 public interface StrategyCommission {
