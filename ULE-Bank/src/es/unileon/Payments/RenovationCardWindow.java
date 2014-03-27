@@ -13,7 +13,7 @@ package es.unileon.Payments;
 public class RenovationCardWindow extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form RenovationCardWindow
+     * Creates new  form RenovationCardWindow
      */
     public RenovationCardWindow() {
         initComponents();
