@@ -5,6 +5,11 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import es.unileon.UleBank.Payments.Card;
+import es.unileon.UleBank.Payments.CardType;
+import es.unileon.UleBank.Payments.SecurityCard;
+import es.unileon.UleBank.Payments.SecurityCardException;
+
 /**
  * Test about SecurityCard Class
  * @author Rober dCR

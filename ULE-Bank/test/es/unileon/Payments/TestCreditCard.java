@@ -3,6 +3,8 @@ package es.unileon.Payments;
 import org.junit.Before;
 import org.junit.Test;
 
+import es.unileon.UleBank.Payments.CreditCard;
+
 public class TestCreditCard {
     
 	CreditCard creditCard;
