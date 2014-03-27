@@ -265,9 +265,11 @@ public class DebitWindow extends javax.swing.JInternalFrame {
             FileReader doc = new FileReader (archive);
             BufferedReader line = new BufferedReader(doc);
             String linea;
-         while((linea=line.readLine())!=null) {
+         while((linea=line.readLine()) != null && DNI.length() != 0) {
              if (DNI.toString().equals(linea.toString())) 
              {
+                 System.out.print(DNI.toString());
+                 System.out.print(linea.toString());
                  name = line.readLine();
                  surname1 = line.readLine();
                  surname2 = line.readLine();
