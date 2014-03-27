@@ -124,7 +124,7 @@ public class InformationDebitCard extends javax.swing.JFrame {
 
         jLabel9.setText("Cash Limit Monthly:  ");
 
-        jLabel10.setText("Buy Limit Diary: ");
+        jLabel10.setText("Buy Limit Monthly: ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
