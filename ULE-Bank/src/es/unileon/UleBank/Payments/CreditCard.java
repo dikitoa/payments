@@ -1,5 +1,8 @@
 package es.unileon.UleBank.Payments;
 
+import es.unileon.UleBank.Strategy.StrategyCommission;
+import es.unileon.UleBank.Strategy.StrategyCommissionEmissionCredit;
+
 public class CreditCard extends Card {
 
 	private StrategyCommission commission;

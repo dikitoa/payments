@@ -1,4 +1,4 @@
-package es.unileon.UleBank.Payments;
+package es.unileon.UleBank.Strategy;
 
 /**
  * @class StrategyCommissionRenovateDebit
@@ -6,11 +6,15 @@ package es.unileon.UleBank.Payments;
  * @date 19/03/2014
  * @brief Class that obtain Commision of Renovate (substitution, theft or damage) in Debit Cards
  */
-public class StrategyCommissionRenovateDebit implements StrategyCommission {
+public class StrategyCommissionRenovateCredit implements StrategyCommission {
 
 	@Override
 	public int calculateCommission(int ownerAge) {
-		return 20;
+
+		return 30;
+		
 	}
+
+
 
 }

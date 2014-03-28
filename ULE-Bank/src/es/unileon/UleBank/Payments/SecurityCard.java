@@ -19,7 +19,7 @@ public class SecurityCard {
 	/**
 	 * @brief Security Card constructor
 	 */
-	SecurityCard(Card card){
+	public SecurityCard(Card card){
 		this.coordinates = new Integer[ROW][COLUMNS];
 		this.createCoordinates(this.coordinates);
 		this.associatedCard = card;

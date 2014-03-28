@@ -1,4 +1,4 @@
-package es.unileon.UleBank.Payments;
+package es.unileon.UleBank.Strategy;
 
 /**
  * @class StrategyCommissionCheckerRemoval
