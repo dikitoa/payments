@@ -1,7 +1,7 @@
 package es.unileon.ulebank.command;
 
+import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.payments.Card;
-import es.unileon.ulebank.payments.CardHandler;
 import es.unileon.ulebank.strategy.StrategyCommissionRenovateCredit;
 import es.unileon.ulebank.strategy.StrategyCommissionRenovateDebit;
 

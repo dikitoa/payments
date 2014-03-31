@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package es.unileon.ulebank.payments;
+package es.unileon.ulebank.GUI.payments;
 
 import java.io.BufferedReader;
 import java.io.File;

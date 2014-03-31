@@ -7,7 +7,7 @@ import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 
-import es.unileon.ulebank.payments.CardHandler;
+import es.unileon.ulebank.handler.CardHandler;
 
 public class CardHandlerTest {
 	

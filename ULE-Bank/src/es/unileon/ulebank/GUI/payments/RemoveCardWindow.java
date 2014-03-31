@@ -1,4 +1,4 @@
-package es.unileon.ulebank.payments;
+package es.unileon.ulebank.GUI.payments;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

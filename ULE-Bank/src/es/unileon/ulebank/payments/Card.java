@@ -2,6 +2,7 @@ package es.unileon.ulebank.payments;
 
 import java.util.Calendar;
 
+import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.strategy.StrategyCommission;
 
 public class Card {

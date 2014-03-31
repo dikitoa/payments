@@ -4,11 +4,13 @@
  * and open the template in the editor.
  */
 
-package es.unileon.ulebank.payments;
+package es.unileon.ulebank.GUI.payments;
 
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+
+import es.unileon.ulebank.payments.DebitCard;
 
 /**
  *

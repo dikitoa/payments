@@ -1,4 +1,4 @@
-package es.unileon.ulebank.payments;
+package es.unileon.ulebank.handler;
 /**
  * Interface para implementar el patron Handler permitiendo tener identificadores unicos
  */
