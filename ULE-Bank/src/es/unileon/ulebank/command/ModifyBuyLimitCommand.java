@@ -1,5 +1,9 @@
 package es.unileon.ulebank.command;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import es.unileon.ulebank.exceptions.ExcesiveLimitException;
 import es.unileon.ulebank.payments.Card;
 
 public class ModifyBuyLimitCommand implements Command {
@@ -13,6 +17,10 @@ public class ModifyBuyLimitCommand implements Command {
 	
 	@Override
 	public void execute() {
-		this.card.setBuyLimitDiary(amount);
+		try {
+			this.card.setBuyLimitDiary(amount);
+		} catch (ExcesiveLimitException e) {
+			Logger.getLogger(ModifyBuyLimitCommand.class.toString()).log(Level.SEVERE, null);
+		}
 	}
 }

@@ -2,9 +2,13 @@ package es.unileon.ulebank.payments;
 
 import java.util.Calendar;
 
+import es.unileon.ulebank.exceptions.ExcesiveLimitException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.strategy.StrategyCommission;
 
+/**
+ * @author Israel
+ */
 public class Card {
 	private CardHandler cardId;
 	private String pin;
@@ -138,9 +142,14 @@ public class Card {
 	/**
 	 * Cambia el linmite de la tarjeta diario para compras
 	 * @param buyLimit
+	 * @throws ExcesiveLimitException 
 	 */
-	public void setBuyLimitDiary(int buyLimit) {
-		this.buyLimitDiary = buyLimit;
+	public void setBuyLimitDiary(int buyLimit) throws ExcesiveLimitException {
+		if (this.buyLimitMonthly < buyLimit) {
+			this.buyLimitDiary = buyLimit;
+		} else {
+			throw new ExcesiveLimitException("The limit is bigger than current monthly limit");
+		}
 	}
 	
 	/**
@@ -182,9 +191,14 @@ public class Card {
 	
 	/**
 	 * Cambia el limite de la tarjeta para extracciones en cajeros
+	 * @throws ExcesiveLimitException 
 	 */
-	public void setCashLimitDiary(int cashLimit) {
-		this.cashLimitDiary = cashLimit;
+	public void setCashLimitDiary(int cashLimit) throws ExcesiveLimitException {
+		if (this.cashLimitMonthly < cashLimit) {
+			this.cashLimitDiary = cashLimit;
+		} else {
+			throw new ExcesiveLimitException("The limit is bigger than current monthly limit");
+		}
 	}
 	
 	/**

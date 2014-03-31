@@ -1,8 +1,18 @@
 package es.unileon.ulebank.handler;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import es.unileon.ulebank.exceptions.MalformedHandlerException;
+
+/**
+ * @author Israel
+ */
 public class CardHandler implements Handler {
 	
 	private final int CARD_LENGTH = 16;
+	private final int BANk_ID_LENGTH = 4;
+	private final int OFFICE_ID_LENGTH = 2;
 	//Identificador de nuestro banco
 	private String bankId;
 	//Identificador de la tarjeta
@@ -20,7 +30,33 @@ public class CardHandler implements Handler {
 		this.cardNumber = generateCardNumber();
 	}
 	
-	public CardHandler(String bankId, String officeId) {
+	public CardHandler(String bankId, String officeId) throws MalformedHandlerException {
+		StringBuilder errors = new StringBuilder();
+		//Creo un patron de comprobacion para verificar que no se introducen caracteres en los numeros de la tarjeta
+		Pattern pattern = Pattern.compile("^[0-9]*$");
+		
+		Matcher matcher = pattern.matcher(bankId);
+		if (!matcher.find()) {
+			errors.append("The bank ID must only contains numbers");
+		}
+		
+		if (bankId.length() != BANk_ID_LENGTH) {
+			errors.append("The bank ID must be " + BANk_ID_LENGTH + "\n");
+		}
+		
+		matcher = pattern.matcher(officeId);
+		if (!matcher.find()) {
+			errors.append("The office ID must only contains numbers");
+		}
+		
+		if (officeId.length() != OFFICE_ID_LENGTH) {
+			errors.append("The office ID must be " + OFFICE_ID_LENGTH + "\n");
+		}
+		
+		if (errors.length() != 0) {
+			throw new MalformedHandlerException(errors.toString());
+		}
+		
 		this.bankId = bankId;
 		this.officeId = officeId;
 		this.cardNumber = generateCardNumber();
