@@ -20,7 +20,7 @@ public class Card {
 	private CardType cardType;
 	private String cvv;
 	private StrategyCommission commission;
-//	private Handler ownerId;
+//	private Client owner;
 //	private Account account;
 	
 	/**
