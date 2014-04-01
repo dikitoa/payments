@@ -20,7 +20,7 @@ public class ModifyCashLimitCommand implements Command {
 		try {
 			this.card.setCashLimitDiary(amount);
 		} catch (ExcesiveLimitException e) {
-			Logger.getLogger(ModifyCashLimitCommand.class.toString()).log(Level.SEVERE, null);
+			Logger.getLogger(ModifyCashLimitCommand.class.toString()).log(Level.SEVERE, null, e);
 		}
 	}
 

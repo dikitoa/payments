@@ -6,6 +6,15 @@
 
 package es.unileon.ulebank.GUI.payments;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author david
@@ -72,6 +81,11 @@ public class RenovationCardWindow extends javax.swing.JInternalFrame {
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         button1.setLabel("Accept");
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
 
         label2.setText("Search Card for bank account :");
 
@@ -287,6 +301,58 @@ public class RenovationCardWindow extends javax.swing.JInternalFrame {
     private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField11ActionPerformed
+
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+        // TODO add your handling code here:
+                String DNI = textField1.getText();
+        String name = null, surname1 = null, surname2 = null, dateOfBirth = null, address = null, phoneNumber = null, eMail = null, salary = null, accountNumber = null, availableBalance = null;
+        boolean found = false;
+        File archive = new File ("contratos/usuarios.txt");
+        try {
+            FileReader doc = new FileReader (archive);
+            BufferedReader line = new BufferedReader(doc);
+            String linea;
+            while((linea=line.readLine())!=null) {
+                if (DNI.toString().equals(linea.toString()))
+                {
+                    name = line.readLine();
+                    surname1 = line.readLine();
+                    surname2 = line.readLine();
+                    dateOfBirth = line.readLine();
+                    address = line.readLine();
+                    phoneNumber = line.readLine();
+                    eMail = line.readLine();
+                    salary = line.readLine();
+                    accountNumber = line.readLine();
+                    availableBalance = line.readLine();
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found == false) {
+                String msg = "This DNI is not found";
+                JOptionPane.showMessageDialog(null, msg, "Error", 0);
+                new DebitWindow().setVisible(true);
+            } else {
+                jTextField2.setText(name);
+                jTextField3.setText(surname1);
+                jTextField4.setText(surname2);
+                jTextField5.setText(dateOfBirth);
+                jTextField6.setText(address);
+                jTextField7.setText(phoneNumber);
+                jTextField8.setText(eMail);
+                jTextField9.setText(salary);
+                jTextField10.setText(accountNumber);
+                jTextField11.setText(availableBalance);
+            }
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(DebitWindow.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(DebitWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_button1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

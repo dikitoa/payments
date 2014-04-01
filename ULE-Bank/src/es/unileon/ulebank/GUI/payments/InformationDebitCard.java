@@ -31,11 +31,13 @@ public class InformationDebitCard extends javax.swing.JFrame {
     public InformationDebitCard(int buyLimitDiary, int cashLimitDiary, int buyLimitMonthly, int cashLimitMonthly) {
         initComponents();
         DebitCard card = new DebitCard();
+        card.create();
         try {
 			card.setBuyLimitDiary(buyLimitDiary);
 			card.setCashLimitDiary(cashLimitDiary);
-		} catch (ExcesiveLimitException e) {
-			Logger.getLogger(InformationDebitCard.class.toString()).log(Level.SEVERE, null);
+		} catch (ExcesiveLimitException ex) {
+			Logger.getLogger(InformationDebitCard.class.toString()).log(Level.SEVERE, null, ex);
+
 		}
         card.setBuyLimitMonthly(buyLimitMonthly);
         card.setCashLimitMonthly(cashLimitMonthly);

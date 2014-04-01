@@ -32,7 +32,7 @@ public class Card {
 	}
 	
 	/**
-	 * Añade los atributos a la nueva tarjeta
+	 * Aniade los atributos a la nueva tarjeta
 	 */
 	public void create() {
 		this.cardId = new CardHandler();
@@ -279,7 +279,7 @@ public class Card {
 	}
 	
 	/**
-	 * Devuelve la comisión actual para la tarjeta de crédito
+	 * Devuelve la comision actual para la tarjeta de credito
 	 * @return
 	 */
 	public StrategyCommission getCommission() {
@@ -287,7 +287,7 @@ public class Card {
 	}
 
 	/**
-	 * Cambia la comisión de la tarjeta empleando el patrón Strategy
+	 * Cambia la comision de la tarjeta empleando el patron Strategy
 	 * @param commission
 	 */
 	public void setStrategy(StrategyCommission commission) {
