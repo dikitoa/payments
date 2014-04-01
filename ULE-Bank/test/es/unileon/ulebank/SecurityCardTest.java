@@ -7,10 +7,10 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import es.unileon.ulebank.exceptions.SecurityCardException;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.CardType;
 import es.unileon.ulebank.payments.SecurityCard;
-import es.unileon.ulebank.payments.SecurityCardException;
 
 /**
  * Test about SecurityCard Class

@@ -1,4 +1,4 @@
-package es.unileon.ulebank.payments;
+package es.unileon.ulebank.exceptions;
 
 /**
  * SecurityCardException Class
@@ -16,7 +16,7 @@ public class SecurityCardException extends Exception{
 	/**
 	 * Class constructor
 	 */
-	SecurityCardException(){
+	public SecurityCardException(){
 		
 	}
 	
@@ -24,7 +24,7 @@ public class SecurityCardException extends Exception{
 	 * Class constructor
 	 * @param message
 	 */
-	SecurityCardException(String message){
+	public SecurityCardException(String message){
 		super(message);
 	}
 	

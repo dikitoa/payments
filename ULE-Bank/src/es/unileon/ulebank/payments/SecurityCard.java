@@ -2,6 +2,8 @@ package es.unileon.ulebank.payments;
 
 import java.util.Random;
 
+import es.unileon.ulebank.exceptions.SecurityCardException;
+
 /**
  * SecurityCard Class
  * @author Rober dCR
