@@ -71,4 +71,15 @@ public class Transfer {
 	public void setQuantity(float quantity) {
 		this.quantity = quantity;
 	}
+	
+	/**
+	 * Method that transfers money from sender to receiver
+	 * @param sender
+	 * @param receiver
+	 * @param quantity
+	 */
+	/*public void transferMoney(Account sender, Account receiver, float quantity){
+		
+		//TODO Implementar cuando este la clase conectada con Account
+	}*/
 }

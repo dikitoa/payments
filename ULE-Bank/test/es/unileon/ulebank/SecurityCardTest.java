@@ -19,8 +19,8 @@ import es.unileon.ulebank.payments.SecurityCard;
  */
 public class SecurityCardTest {
 
-	Card card;
-	SecurityCard secCard;
+	public Card card;
+	public SecurityCard secCard;
 
 	@Before
 	public void setUp(){
