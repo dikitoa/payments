@@ -86,20 +86,27 @@ public class InformationDebitCard extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTextField3.setEditable(false);
+
         jLabel1.setText("CardType: ");
 
+        jTextField2.setEditable(false);
+
+        jTextField1.setEditable(false);
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
             }
         });
 
+        jTextField6.setEditable(false);
         jTextField6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField6ActionPerformed(evt);
             }
         });
 
+        jTextField7.setEditable(false);
         jTextField7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField7ActionPerformed(evt);
@@ -110,12 +117,17 @@ public class InformationDebitCard extends javax.swing.JFrame {
 
         jLabel3.setText("PIN: ");
 
+        jTextField4.setEditable(false);
+
+        jTextField5.setEditable(false);
+
         jLabel4.setText("Cash Limit Diary:  ");
 
         jLabel5.setText("Buy Limit Diary: ");
 
         jLabel6.setText("Expiration Date: ");
 
+        jTextField8.setEditable(false);
         jTextField8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField8ActionPerformed(evt);
@@ -135,7 +147,11 @@ public class InformationDebitCard extends javax.swing.JFrame {
 
         jLabel9.setText("Cash Limit Monthly:  ");
 
+        jTextField9.setEditable(false);
+
         jLabel10.setText("Buy Limit Monthly: ");
+
+        jTextField10.setEditable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

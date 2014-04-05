@@ -26,8 +26,29 @@ public class DebitWindow extends javax.swing.JInternalFrame {
     /**
      * Creates new form DevitWindow
      */
-    public DebitWindow() {
+    public DebitWindow() { 
         initComponents();
+         jTextField2.setVisible(false);
+        jTextField3.setVisible(false);
+        jTextField4.setVisible(false);
+        jTextField5.setVisible(false);
+        jTextField6.setVisible(false);
+        jTextField7.setVisible(false);
+        jTextField8.setVisible(false);
+        jTextField9.setVisible(false);
+        jTextField10.setVisible(false);
+        jTextField11.setVisible(false);
+        jButton2.setVisible(false);
+        jLabel3.setVisible(false);
+        jLabel4.setVisible(false);
+        jLabel5.setVisible(false);
+        jLabel6.setVisible(false);
+        jLabel7.setVisible(false);
+        jLabel8.setVisible(false);
+        jLabel9.setVisible(false);
+        jLabel10.setVisible(false);
+        jLabel11.setVisible(false);
+        jLabel12.setVisible(false);
     }
 
     /**
@@ -102,24 +123,40 @@ public class DebitWindow extends javax.swing.JInternalFrame {
 
         jLabel12.setText("Available balance:");
 
+        jTextField2.setEditable(false);
+
+        jTextField3.setEditable(false);
+
+        jTextField4.setEditable(false);
+
+        jTextField5.setEditable(false);
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField5ActionPerformed(evt);
             }
         });
 
+        jTextField6.setEditable(false);
+
+        jTextField7.setEditable(false);
         jTextField7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField7ActionPerformed(evt);
             }
         });
 
+        jTextField8.setEditable(false);
+
+        jTextField9.setEditable(false);
+
+        jTextField10.setEditable(false);
         jTextField10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField10ActionPerformed(evt);
             }
         });
 
+        jTextField11.setEditable(false);
         jTextField11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField11ActionPerformed(evt);
@@ -298,6 +335,27 @@ public class DebitWindow extends javax.swing.JInternalFrame {
              jTextField9.setText(salary);
              jTextField10.setText(accountNumber);
              jTextField11.setText(availableBalance);
+             jTextField2.setVisible(true);
+        jTextField3.setVisible(true);
+        jTextField4.setVisible(true);
+        jTextField5.setVisible(true);
+        jTextField6.setVisible(true);
+        jTextField7.setVisible(true);
+        jTextField8.setVisible(true);
+        jTextField9.setVisible(true);
+        jTextField10.setVisible(true);
+        jTextField11.setVisible(true);
+        jButton2.setVisible(true);
+        jLabel3.setVisible(true);
+        jLabel4.setVisible(true);
+        jLabel5.setVisible(true);
+        jLabel6.setVisible(true);
+        jLabel7.setVisible(true);
+        jLabel8.setVisible(true);
+        jLabel9.setVisible(true);
+        jLabel10.setVisible(true);
+        jLabel11.setVisible(true);
+        jLabel12.setVisible(true);
          }
 
          

@@ -14,7 +14,6 @@ import javax.swing.JOptionPane;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author david
@@ -26,9 +25,33 @@ public class RemoveCardWindow extends javax.swing.JInternalFrame {
      */
     public RemoveCardWindow() {
         initComponents();
+        jTextField2.setVisible(false);
+        jTextField3.setVisible(false);
+        jTextField4.setVisible(false);
+        jTextField5.setVisible(false);
+        jTextField6.setVisible(false);
+        jTextField7.setVisible(false);
+        jTextField8.setVisible(false);
+        jTextField9.setVisible(false);
+        jTextField10.setVisible(false);
+        jTextField11.setVisible(false);
+        button2.setVisible(false);
+        jLabel3.setVisible(false);
+        jLabel4.setVisible(false);
+        jLabel5.setVisible(false);
+        jLabel6.setVisible(false);
+        jLabel7.setVisible(false);
+        jLabel8.setVisible(false);
+        jLabel9.setVisible(false);
+        jLabel10.setVisible(false);
+        jLabel11.setVisible(false);
+        jLabel12.setVisible(false);
+        jLabel1.setVisible(false);
+        jTextArea1.setVisible(false);
+        jScrollPane1.setVisible(false);
+        jComboBox1.setVisible(false);
+        jLabel2.setVisible(false);
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -70,6 +93,7 @@ public class RemoveCardWindow extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         label1.setText("Search Card for DNI :");
 
@@ -87,27 +111,44 @@ public class RemoveCardWindow extends javax.swing.JInternalFrame {
         label2.setText("Search Card for bank account :");
 
         button3.setLabel("Accept");
+        button3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button3ActionPerformed(evt);
+            }
+        });
 
+        jTextField6.setEditable(false);
+
+        jTextField7.setEditable(false);
         jTextField7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField7ActionPerformed(evt);
             }
         });
 
+        jTextField4.setEditable(false);
+
+        jTextField5.setEditable(false);
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField5ActionPerformed(evt);
             }
         });
 
+        jTextField10.setEditable(false);
         jTextField10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField10ActionPerformed(evt);
             }
         });
 
+        jTextField8.setEditable(false);
+
+        jTextField9.setEditable(false);
+
         jLabel3.setText("Name:");
 
+        jTextField11.setEditable(false);
         jTextField11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField11ActionPerformed(evt);
@@ -132,11 +173,17 @@ public class RemoveCardWindow extends javax.swing.JInternalFrame {
 
         jLabel12.setText("Available balance:");
 
+        jTextField3.setEditable(false);
+
+        jTextField2.setEditable(false);
+
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
         jLabel1.setText(" Reasons to delete the card :");
+
+        jLabel2.setText("Select the card:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -146,8 +193,7 @@ public class RemoveCardWindow extends javax.swing.JInternalFrame {
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(176, 176, 176)
+                        .addGap(298, 298, 298)
                         .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
@@ -161,10 +207,6 @@ public class RemoveCardWindow extends javax.swing.JInternalFrame {
                                 .addComponent(jTextField10))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(jLabel12)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel8)
@@ -197,7 +239,15 @@ public class RemoveCardWindow extends javax.swing.JInternalFrame {
                                                     .addComponent(jTextField2)
                                                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                             .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(281, 281, 281)))
+                                        .addGap(281, 281, 281))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel12)
+                                            .addComponent(jLabel2))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(110, 110, 110))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -264,14 +314,16 @@ public class RemoveCardWindow extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39)
+                .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27))
         );
 
@@ -298,14 +350,13 @@ public class RemoveCardWindow extends javax.swing.JInternalFrame {
         String DNI = textField1.getText();
         String name = null, surname1 = null, surname2 = null, dateOfBirth = null, address = null, phoneNumber = null, eMail = null, salary = null, accountNumber = null, availableBalance = null;
         boolean found = false;
-        File archive = new File ("contratos/usuarios.txt");
+        File archive = new File("contratos/usuarios.txt");
         try {
-            FileReader doc = new FileReader (archive);
+            FileReader doc = new FileReader(archive);
             BufferedReader line = new BufferedReader(doc);
             String linea;
-            while((linea=line.readLine())!=null) {
-                if (DNI.toString().equals(linea.toString()))
-                {
+            while ((linea = line.readLine()) != null && DNI.length() != 0) {
+                if (DNI.toString().equals(linea.toString())) {
                     name = line.readLine();
                     surname1 = line.readLine();
                     surname2 = line.readLine();
@@ -336,6 +387,32 @@ public class RemoveCardWindow extends javax.swing.JInternalFrame {
                 jTextField9.setText(salary);
                 jTextField10.setText(accountNumber);
                 jTextField11.setText(availableBalance);
+                jTextField2.setVisible(true);
+                jTextField3.setVisible(true);
+                jTextField4.setVisible(true);
+                jTextField5.setVisible(true);
+                jTextField6.setVisible(true);
+                jTextField7.setVisible(true);
+                jTextField8.setVisible(true);
+                jTextField9.setVisible(true);
+                jTextField10.setVisible(true);
+                jTextField11.setVisible(true);
+                button2.setVisible(true);
+                jLabel3.setVisible(true);
+                jLabel4.setVisible(true);
+                jLabel5.setVisible(true);
+                jLabel6.setVisible(true);
+                jLabel7.setVisible(true);
+                jLabel8.setVisible(true);
+                jLabel9.setVisible(true);
+                jLabel10.setVisible(true);
+                jLabel11.setVisible(true);
+                jLabel12.setVisible(true);
+                jLabel1.setVisible(true);
+                jTextArea1.setVisible(true);
+                jScrollPane1.setVisible(true);
+                jComboBox1.setVisible(true);
+                jLabel2.setVisible(true);
             }
 
         } catch (FileNotFoundException ex) {
@@ -344,6 +421,11 @@ public class RemoveCardWindow extends javax.swing.JInternalFrame {
             Logger.getLogger(DebitWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button1ActionPerformed
+    //En este metodo cuando busquemos por numero de cuenta, recordar mostrar 
+    //todos los campos con la información del cliente.
+    private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_button3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -355,6 +437,7 @@ public class RemoveCardWindow extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
