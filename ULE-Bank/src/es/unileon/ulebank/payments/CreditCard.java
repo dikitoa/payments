@@ -1,6 +1,8 @@
 package es.unileon.ulebank.payments;
 
-
+/**
+ * @author Israel
+ */
 public class CreditCard extends Card {
 
 	private int limitDebt;

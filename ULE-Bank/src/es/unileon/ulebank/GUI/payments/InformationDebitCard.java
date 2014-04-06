@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import es.unileon.ulebank.exceptions.ExcesiveLimitException;
+import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.payments.DebitCard;
 
 /**
@@ -35,12 +35,13 @@ public class InformationDebitCard extends javax.swing.JFrame {
         try {
 			card.setBuyLimitDiary(buyLimitDiary);
 			card.setCashLimitDiary(cashLimitDiary);
-		} catch (ExcesiveLimitException ex) {
+			card.setBuyLimitMonthly(buyLimitMonthly);
+			card.setCashLimitMonthly(cashLimitMonthly);
+		} catch (IncorrectLimitException ex) {
 			Logger.getLogger(InformationDebitCard.class.toString()).log(Level.SEVERE, null, ex);
 
 		}
-        card.setBuyLimitMonthly(buyLimitMonthly);
-        card.setCashLimitMonthly(cashLimitMonthly);
+        
         this.jTextField1.setText(card.getCardType().toString());
         this.jTextField2.setText(card.getCardId());
         this.jTextField3.setText(card.getPin());

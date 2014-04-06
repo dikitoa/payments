@@ -1,6 +1,7 @@
 package es.unileon.ulebank.handler;
 /**
- * Interface para implementar el patron Handler permitiendo tener identificadores unicos
+ * @author Israel
+ *  Interface para implementar el patron Handler permitiendo tener identificadores unicos
  */
 public interface Handler {
 	/**

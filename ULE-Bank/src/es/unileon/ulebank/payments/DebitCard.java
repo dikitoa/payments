@@ -1,6 +1,8 @@
 package es.unileon.ulebank.payments;
 
-
+/**
+ * @author Israel
+ */
 public class DebitCard extends Card {
 	
 	public DebitCard() {

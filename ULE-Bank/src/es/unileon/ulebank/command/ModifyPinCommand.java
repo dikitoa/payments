@@ -2,6 +2,9 @@ package es.unileon.ulebank.command;
 
 import es.unileon.ulebank.payments.Card;
 
+/**
+ * @author Israel
+ */
 public class ModifyPinCommand implements Command {
 	private Card card;
 	private String newPin;

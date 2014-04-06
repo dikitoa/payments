@@ -1,8 +1,7 @@
 package es.unileon.ulebank.payments;
 
 import java.util.Calendar;
-
-import es.unileon.ulebank.exceptions.ExcesiveLimitException;
+import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.strategy.StrategyCommission;
 
@@ -67,6 +66,10 @@ public class Card {
 		Calendar calendar = Calendar.getInstance();
 		
 		String month = Integer.toString(calendar.get(Calendar.MONTH));
+		if (month.length() == 1) {
+			month = "0" + month;
+		}
+		
 		String year = Integer.toString(3 + calendar.get(Calendar.YEAR)).substring(2);
 		
 		return month + "/" + year;
@@ -142,13 +145,13 @@ public class Card {
 	/**
 	 * Cambia el linmite de la tarjeta diario para compras
 	 * @param buyLimit
-	 * @throws ExcesiveLimitException 
+	 * @throws IncorrectLimitException 
 	 */
-	public void setBuyLimitDiary(int buyLimit) throws ExcesiveLimitException {
-		if (this.buyLimitMonthly < buyLimit) {
+	public void setBuyLimitDiary(int buyLimit) throws IncorrectLimitException {
+		if (this.buyLimitMonthly > buyLimit) {
 			this.buyLimitDiary = buyLimit;
 		} else {
-			throw new ExcesiveLimitException("The limit is bigger than current monthly limit");
+			throw new IncorrectLimitException("The limit is bigger than current monthly limit");
 		}
 	}
 	
@@ -176,9 +179,14 @@ public class Card {
 	/**
 	 * Cambia el linmite de la tarjeta mensual para compras
 	 * @param buyLimit
+	 * @throws IncorrectLimitException 
 	 */
-	public void setBuyLimitMonthly(int buyLimitMonthly) {
-		this.buyLimitMonthly = buyLimitMonthly;
+	public void setBuyLimitMonthly(int buyLimitMonthly) throws IncorrectLimitException {
+		if (buyLimitMonthly > this.buyLimitDiary) {
+			this.buyLimitMonthly = buyLimitMonthly;
+		} else {
+			throw new IncorrectLimitException("Monthly limit must be greater than diary limit");
+		}
 	}
 
 	/**
@@ -191,13 +199,13 @@ public class Card {
 	
 	/**
 	 * Cambia el limite de la tarjeta para extracciones en cajeros
-	 * @throws ExcesiveLimitException 
+	 * @throws IncorrectLimitException 
 	 */
-	public void setCashLimitDiary(int cashLimit) throws ExcesiveLimitException {
-		if (this.cashLimitMonthly < cashLimit) {
+	public void setCashLimitDiary(int cashLimit) throws IncorrectLimitException {
+		if (this.cashLimitMonthly > cashLimit) {
 			this.cashLimitDiary = cashLimit;
 		} else {
-			throw new ExcesiveLimitException("The limit is bigger than current monthly limit");
+			throw new IncorrectLimitException("The limit is bigger than current monthly limit");
 		}
 	}
 	
@@ -225,9 +233,14 @@ public class Card {
 	/**
 	 * Cambia la cantidad maxima para extraer en un cajero al mes
 	 * @param cashLimitMonthly
+	 * @throws IncorrectLimitException 
 	 */
-	public void setCashLimitMonthly(int cashLimitMonthly) {
-		this.cashLimitMonthly = cashLimitMonthly;
+	public void setCashLimitMonthly(int cashLimitMonthly) throws IncorrectLimitException {
+		if (cashLimitMonthly > this.cashLimitDiary) {
+			this.cashLimitMonthly = cashLimitMonthly;
+		} else {
+			throw new IncorrectLimitException("Monthly limit must be greater than diary limit");
+		}
 	}
 
 	/**

@@ -4,14 +4,18 @@ import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.strategy.StrategyCommissionEmissionCredit;
 import es.unileon.ulebank.strategy.StrategyCommissionEmissionDebit;
 
+/**
+ * @author Israel
+ */
 public class NewCardCommand implements Command {
 
 	private Card card;
 //	private Handler owner;
 //	private Account account;
 	
-	public NewCardCommand(Card card) {
+	public NewCardCommand(Card card/*, Account account*/) {
 		this.card = card;
+//		this.account = account;
 	}
 	
 	@Override

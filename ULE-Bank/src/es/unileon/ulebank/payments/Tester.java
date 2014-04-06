@@ -2,6 +2,9 @@ package es.unileon.ulebank.payments;
 
 import java.util.Scanner;
 
+/**
+ * @author Israel
+ */
 public class Tester {
 	public static void main(String[] args) {
 		boolean exit = false;
