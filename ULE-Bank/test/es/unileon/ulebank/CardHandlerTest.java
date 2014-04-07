@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import es.unileon.ulebank.exceptions.MalformedHandlerException;
 import es.unileon.ulebank.handler.CardHandler;
 
 public class CardHandlerTest {
@@ -41,13 +42,13 @@ public class CardHandlerTest {
 		assertTrue(!test2.getBankId().equals("1234")); //bankID is diferent
 	}
 	
-	@Test
+	@Test (expected = MalformedHandlerException.class)
 	public void testGetBankIdLenghtFAIL() {
 		test2 = new CardHandler("12345", "01");
-		assertTrue(test2.getBankId().length() != 4); //bankID is too long
+		assertTrue(test2.getBankId().length() == 4); //bankID is too long
 		
 		test2.setBankId("123");
-		assertTrue(test2.getBankId().length() != 4); //bankID is too short
+		assertTrue(test2.getBankId().length() == 4); //bankID is too short
 	}
 
 	@Test
@@ -59,13 +60,13 @@ public class CardHandlerTest {
 		assertTrue(test2.getBankId().equals("1234"));
 	}
 	
-	@Test
+	@Test (expected = MalformedHandlerException.class)
 	public void testGetCardNumberLenghtFAIL() {
 		test.setCardNumber("12345678901234567"); 
-		assertTrue(test.getCardNumber().length() != test.getCardLength()); //too long
+		assertTrue(test.getCardNumber().length() == test.getCardLength()); //too long
 		
 		test.setCardNumber("123456789012345");
-		assertTrue(test.getCardNumber().length() != test.getCardLength()); //too short
+		assertTrue(test.getCardNumber().length() == test.getCardLength()); //too short
 	}
 
 	@Test
@@ -97,13 +98,13 @@ public class CardHandlerTest {
 		assertTrue(!test2.getOfficeId().equals("01")); //bankID is diferent
 	}
 	
-	@Test
+	@Test (expected = MalformedHandlerException.class)
 	public void testGetOfficeIdLenghtFAIL() {
 		test2 = new CardHandler("1234", "012");
-		assertTrue(test2.getOfficeId().length() != 2); //bankID is too long
+		assertTrue(test2.getOfficeId().length() == 2); //bankID is too long
 		
 		test2.setBankId("1");
-		assertTrue(test2.getOfficeId().length() != 2); //bankID is too short
+		assertTrue(test2.getOfficeId().length() == 2); //bankID is too short
 	}
 
 	@Test
@@ -117,6 +118,7 @@ public class CardHandlerTest {
 	
 	@Test
 	public void testGetCardIdOK() {
+		//TODO hacer con las constantes
 		assertTrue(test.getCardId().length() == test.getCardLength()-test.getBankId().length()-test.getOfficeId().length()-1); //lenght of cardId is equals to cardLength-bankIdLength-officeIdLength-digitControlLength
 	}
 
@@ -158,7 +160,7 @@ public class CardHandlerTest {
 	public void testToString() {
 		test = new CardHandler("1234", "01");
 		test.setCardNumber("1234011234567890");
-		assertEquals("1234 0112 3456 7890 ", test.toString());
+		assertEquals("1234 0112 3456 7890", test.toString());
 		
 	}
 

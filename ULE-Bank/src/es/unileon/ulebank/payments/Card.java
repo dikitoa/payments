@@ -65,7 +65,7 @@ public class Card {
 	public String generateExpirationDate() {
 		Calendar calendar = Calendar.getInstance();
 		
-		String month = Integer.toString(calendar.get(Calendar.MONTH));
+		String month = Integer.toString(calendar.get(Calendar.MONTH) + 1);
 		if (month.length() == 1) {
 			month = "0" + month;
 		}

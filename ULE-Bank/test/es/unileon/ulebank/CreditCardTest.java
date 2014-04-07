@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.payments.CardType;
 import es.unileon.ulebank.payments.CreditCard;
 
@@ -16,6 +17,7 @@ public class CreditCardTest {
 	@Before
 	public void setUp() throws Exception {
 		testCard = new CreditCard();
+		testCard.create();
 	}
 	
 	@Test (expected = NullPointerException.class)
@@ -36,7 +38,7 @@ public class CreditCardTest {
 
 	@Test
 	public void testGenerateExpirationDate() {
-		assertTrue(testCard.generateExpirationDate().equals("3/17"));
+		assertTrue(testCard.generateExpirationDate().equals("04/17"));
 	}
 
 	@Test
@@ -47,17 +49,17 @@ public class CreditCardTest {
 	@Test
 	public void testGetCardId() {
 		System.out.println(testCard.getCardId());
-		assertTrue(testCard.getCardId().length() == 16 + 4); // anadir trim al devolver el cardID y restar 1
+		assertTrue(testCard.getCardId().length() == 16 + 3); //add +3 because the cardId have 3 white spaces
 		
 		testCard.setCardId("1234019876543210");
 		
-		assertTrue(testCard.getCardId().equals("1234 0198 7654 3210 "));
+		assertTrue(testCard.getCardId().equals("1234 0198 7654 3210"));
 	}
 
 	@Test
 	public void testSetCardId() {
 		testCard.setCardId("1234019876543210");
-		assertTrue(testCard.getCardId().equals("1234 0198 7654 3210 "));
+		assertTrue(testCard.getCardId().equals("1234 0198 7654 3210"));
 	}
 
 	@Test
@@ -86,13 +88,13 @@ public class CreditCardTest {
 	}
 
 	@Test
-	public void testSetBuyLimitDiary() {
+	public void testSetBuyLimitDiary() throws IncorrectLimitException {
 		testCard.setBuyLimitDiary(800);
 		assertEquals(800, testCard.getBuyLimitDiary());
 	}
 
 	@Test
-	public void testCheckBuyLimitDiary() {
+	public void testCheckBuyLimitDiary() throws IncorrectLimitException {
 		testCard.setBuyLimitDiary(500);
 		assertTrue(testCard.checkBuyLimitDiary(500));
 	}
@@ -103,7 +105,7 @@ public class CreditCardTest {
 	}
 
 	@Test
-	public void testSetBuyLimitMonthly() {
+	public void testSetBuyLimitMonthly() throws IncorrectLimitException {
 		testCard.setBuyLimitMonthly(1500);
 		assertEquals(1500, testCard.getBuyLimitMonthly());
 	}
@@ -114,13 +116,13 @@ public class CreditCardTest {
 	}
 
 	@Test
-	public void testSetCashLimitDiary() {
+	public void testSetCashLimitDiary() throws IncorrectLimitException {
 		testCard.setCashLimitDiary(800);
 		assertEquals(800, testCard.getCashLimitDiary());
 	}
 
 	@Test
-	public void testCheckCashLimitDiary() {
+	public void testCheckCashLimitDiary() throws IncorrectLimitException {
 		testCard.setBuyLimitDiary(500);
 		assertTrue(testCard.checkBuyLimitDiary(500));
 	}
@@ -131,31 +133,31 @@ public class CreditCardTest {
 	}
 
 	@Test
-	public void testSetCashLimitMonthly() {
+	public void testSetCashLimitMonthly() throws IncorrectLimitException {
 		testCard.setCashLimitMonthly(1200);
 		assertEquals(1200, testCard.getCashLimitMonthly());
 	}
 
 	@Test
 	public void testGetExpirationDate() {
-		assertTrue(testCard.getExpirationDate().equals("3/17"));
+		assertTrue(testCard.getExpirationDate().equals("04/17"));
 	}
 
 	@Test
 	public void testSetExpirationDate() {
-		testCard.setExpirationDate("5/17");
-		assertTrue(testCard.getExpirationDate().equals("5/17"));
+		testCard.setExpirationDate("05/17");
+		assertTrue(testCard.getExpirationDate().equals("05/17"));
 	}
 
 	@Test
 	public void testGetCardType() {
-		assertTrue(testCard.getCardType().equals(CardType.CREDIT.toString()));
+		assertTrue(testCard.getCardType().toString().equals(CardType.CREDIT.toString()));
 	}
 
 	@Test
 	public void testSetCardType() {
 		testCard.setCardType(CardType.DEBIT);
-		assertTrue(testCard.getCardType().equals(CardType.DEBIT.toString()));
+		assertTrue(testCard.getCardType().toString().equals(CardType.DEBIT.toString()));
 	}
 
 	@Test
