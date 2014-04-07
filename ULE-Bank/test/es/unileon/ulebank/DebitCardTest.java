@@ -7,23 +7,23 @@ import org.junit.Before;
 import org.junit.Test;
 
 import es.unileon.ulebank.payments.CardType;
-import es.unileon.ulebank.payments.CreditCard;
+import es.unileon.ulebank.payments.DebitCard;
 
-public class CreditCardTest {
+public class DebitCardTest {
 
-	CreditCard testCard;
-
+	DebitCard testCard;
+	
 	@Before
 	public void setUp() throws Exception {
-		testCard = new CreditCard();
+		testCard = new DebitCard();
 	}
-	
+
 	@Test (expected = NullPointerException.class)
 	public void cardNull() {
 		testCard = null;
 		testCard.getCardId();
 	}
-
+	
 	@Test
 	public void cardOk() {
 		assertTrue(testCard != null);
@@ -49,35 +49,35 @@ public class CreditCardTest {
 		System.out.println(testCard.getCardId());
 		assertTrue(testCard.getCardId().length() == 16 + 4); // anadir trim al devolver el cardID y restar 1
 		
-		testCard.setCardId("1234019876543210");
+		testCard.setCardId("1234011234567890");
 		
-		assertTrue(testCard.getCardId().equals("1234 0198 7654 3210 "));
+		assertTrue(testCard.getCardId().equals("1234 0112 3456 7890 "));
 	}
 
 	@Test
 	public void testSetCardId() {
-		testCard.setCardId("1234019876543210");
-		assertTrue(testCard.getCardId().equals("1234 0198 7654 3210 "));
+		testCard.setCardId("1234011029384756");
+		assertTrue(testCard.getCardId().equals("1234 0110 2938 4756 "));
 	}
 
 	@Test
 	public void testGetPin() {
 		assertTrue(testCard.getPin().length() == 4);
 		
-		testCard.setPin("9182");
-		assertTrue(testCard.getPin().equals("9182"));
+		testCard.setPin("5647");
+		assertTrue(testCard.getPin().equals("5647"));
 	}
 
 	@Test
 	public void testSetPin() {
-		testCard.setPin("1357");
-		assertTrue(testCard.getPin().equals("1357"));
+		testCard.setPin("9876");
+		assertTrue(testCard.getPin().equals("9876"));
 	}
 
 	@Test
 	public void testCheckPin() {
-		testCard.setPin("1357");
-		assertTrue(testCard.checkPin("1357"));
+		testCard.setPin("1245");
+		assertTrue(testCard.checkPin("1245"));
 	}
 
 	@Test
@@ -143,19 +143,19 @@ public class CreditCardTest {
 
 	@Test
 	public void testSetExpirationDate() {
-		testCard.setExpirationDate("5/17");
-		assertTrue(testCard.getExpirationDate().equals("5/17"));
+		testCard.setExpirationDate("7/18");
+		assertTrue(testCard.getExpirationDate().equals("7/18"));
 	}
 
 	@Test
 	public void testGetCardType() {
-		assertTrue(testCard.getCardType().equals(CardType.CREDIT.toString()));
+		assertTrue(testCard.getCardType().equals(CardType.DEVIT.toString()));
 	}
 
 	@Test
 	public void testSetCardType() {
-		testCard.setCardType(CardType.DEVIT);
-		assertTrue(testCard.getCardType().equals(CardType.DEVIT.toString()));
+		testCard.setCardType(CardType.REVOLVING);
+		assertTrue(testCard.getCardType().equals(CardType.REVOLVING.toString()));
 	}
 
 	@Test
@@ -165,8 +165,8 @@ public class CreditCardTest {
 
 	@Test
 	public void testSetCvv() {
-		testCard.setCvv("195");
-		assertTrue(testCard.getCvv().equals("195"));
+		testCard.setCvv("246");
+		assertTrue(testCard.getCvv().equals("246"));
 	}
 
 	@Test

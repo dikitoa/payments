@@ -2,7 +2,6 @@ package es.unileon.ulebank;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -139,19 +138,28 @@ public class CardHandlerTest {
 
 	@Test
 	public void testSetControlDigit() {
-		fail("Not yet implemented");
+		test2 = new CardHandler();
+		test2.setControlDigit(7);
+		
+		assertEquals(7, test2.getControlDigit());
 	}
 
 	@Test
 	public void testCompareTo() {
 		test = new CardHandler("1234", "01");
 		test2 = new CardHandler("1234", "01");
-		test.setCardNumber("1234567890");
+		test.setCardNumber("1234017890123456");
+		test2.setCardNumber("9876543210123456");
+		
+		assertTrue(test.compareTo(test2) != 0);
 	}
 
 	@Test
 	public void testToString() {
-		fail("Not yet implemented");
+		test = new CardHandler("1234", "01");
+		test.setCardNumber("1234011234567890");
+		assertEquals("1234 0112 3456 7890 ", test.toString());
+		
 	}
 
 }
