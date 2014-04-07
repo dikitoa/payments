@@ -154,8 +154,8 @@ public class CreditCardTest {
 
 	@Test
 	public void testSetCardType() {
-		testCard.setCardType(CardType.DEVIT);
-		assertTrue(testCard.getCardType().equals(CardType.DEVIT.toString()));
+		testCard.setCardType(CardType.DEBIT);
+		assertTrue(testCard.getCardType().equals(CardType.DEBIT.toString()));
 	}
 
 	@Test

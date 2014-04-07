@@ -149,7 +149,7 @@ public class DebitCardTest {
 
 	@Test
 	public void testGetCardType() {
-		assertTrue(testCard.getCardType().equals(CardType.DEVIT.toString()));
+		assertTrue(testCard.getCardType().equals(CardType.DEBIT.toString()));
 	}
 
 	@Test
