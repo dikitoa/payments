@@ -52,7 +52,6 @@ public class DebitCardTest {
 		assertTrue(testCard.getCardId().length() == 16 + 3); 
 		
 		testCard.setCardId("1234011234567890");
-		
 		assertTrue(testCard.getCardId().equals("1234 0112 3456 7890"));
 	}
 

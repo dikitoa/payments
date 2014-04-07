@@ -161,7 +161,6 @@ public class CardHandlerTest {
 		test = new CardHandler("1234", "01");
 		test.setCardNumber("1234011234567890");
 		assertEquals("1234 0112 3456 7890", test.toString());
-		
 	}
 
 }

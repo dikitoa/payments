@@ -300,7 +300,7 @@ public class Card {
 	}
 
 	/**
-	 * Cambia la comision de la tarjeta empleando el patron Strategy
+	 * Cambia la comision de la tarjeta empleando el patron Strategy.
 	 * @param commission
 	 */
 	public void setStrategy(StrategyCommission commission) {

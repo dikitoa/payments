@@ -52,7 +52,6 @@ public class CreditCardTest {
 		assertTrue(testCard.getCardId().length() == 16 + 3); //add +3 because the cardId have 3 white spaces
 		
 		testCard.setCardId("1234019876543210");
-		
 		assertTrue(testCard.getCardId().equals("1234 0198 7654 3210"));
 	}
 
