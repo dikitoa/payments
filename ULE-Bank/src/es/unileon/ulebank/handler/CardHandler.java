@@ -161,7 +161,7 @@ public class CardHandler implements Handler {
 		for (int i = 0; i < digits.length; i+=2) {
 			//Doblamos el digito y lo guardamos
 			int aux = digits[i] << 1;
-			//Si el numero tiene 2 d���gitos los sumamos juntos
+			//Si el numero tiene 2 d���������gitos los sumamos juntos
 			if (aux >= 10) {
 				sum += 1 + aux - 10;
 			} else {
@@ -216,7 +216,11 @@ public class CardHandler implements Handler {
 	 * @param cardNumber
 	 */
 	public void setCardNumber(String cardNumber) {
-		this.cardNumber = cardNumber;
+		if (cardNumber.length() == CARD_LENGTH) {
+			this.cardNumber = cardNumber;
+		} else {
+			throw new MalformedHandlerException("Incorrect length");
+		}
 	}
 
 	/**
@@ -298,7 +302,7 @@ public class CardHandler implements Handler {
 			}
 		}
 		
-		return result.toString();
+		return result.toString().trim();
 	}
 
 	public int getCardLength() {
