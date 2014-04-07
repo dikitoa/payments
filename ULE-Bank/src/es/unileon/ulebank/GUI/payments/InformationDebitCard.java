@@ -14,6 +14,9 @@ import java.util.logging.Logger;
 
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.payments.DebitCard;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import javax.smartcardio.CardTerminals;
 
 /**
  *
@@ -21,6 +24,10 @@ import es.unileon.ulebank.payments.DebitCard;
  */
 public class InformationDebitCard extends javax.swing.JFrame {
 
+    String dni;
+    String accountNumber;
+    DebitCard card = new DebitCard();
+    
     /**
      * Creates new form InformationDevitCard1
      */
@@ -28,29 +35,31 @@ public class InformationDebitCard extends javax.swing.JFrame {
         initComponents();
     }
 
-    public InformationDebitCard(int buyLimitDiary, int cashLimitDiary, int buyLimitMonthly, int cashLimitMonthly) {
+    public InformationDebitCard(int buyLimitDiary, int cashLimitDiary, int buyLimitMonthly, int cashLimitMonthly, String dni, String accountNumber) {
         initComponents();
-        DebitCard card = new DebitCard();
-        card.create();
+        this.dni=dni;
+        this.accountNumber=accountNumber;
+        
+        this.card.create();
         try {
-			card.setBuyLimitDiary(buyLimitDiary);
-			card.setCashLimitDiary(cashLimitDiary);
-			card.setBuyLimitMonthly(buyLimitMonthly);
-			card.setCashLimitMonthly(cashLimitMonthly);
+			this.card.setBuyLimitDiary(buyLimitDiary);
+			this.card.setCashLimitDiary(cashLimitDiary);
+			this.card.setBuyLimitMonthly(buyLimitMonthly);
+			this.card.setCashLimitMonthly(cashLimitMonthly);
 		} catch (IncorrectLimitException ex) {
 			Logger.getLogger(InformationDebitCard.class.toString()).log(Level.SEVERE, null, ex);
 
 		}
         
-        this.jTextField1.setText(card.getCardType().toString());
-        this.jTextField2.setText(card.getCardId());
-        this.jTextField3.setText(card.getPin());
-        this.jTextField4.setText(String.valueOf(card.getCashLimitDiary()));
-        this.jTextField5.setText(String.valueOf(card.getBuyLimitDiary()));
-        this.jTextField6.setText(card.getExpirationDate());
-        this.jTextField7.setText(card.getCvv());
-        this.jTextField9.setText(String.valueOf(card.getCashLimitMonthly()));
-        this.jTextField10.setText(String.valueOf(card.getBuyLimitMonthly()));
+        this.jTextField1.setText(this.card.getCardType().toString());
+        this.jTextField2.setText(this.card.getCardId());
+        this.jTextField3.setText(this.card.getPin());
+        this.jTextField4.setText(String.valueOf(this.card.getCashLimitDiary()));
+        this.jTextField5.setText(String.valueOf(this.card.getBuyLimitDiary()));
+        this.jTextField6.setText(this.card.getExpirationDate());
+        this.jTextField7.setText(this.card.getCvv());
+        this.jTextField9.setText(String.valueOf(this.card.getCashLimitMonthly()));
+        this.jTextField10.setText(String.valueOf(this.card.getBuyLimitMonthly()));
 //        this.jTextField8.setText(String.valueOf(card.getCommission()));
     }
     
@@ -272,6 +281,38 @@ public class InformationDebitCard extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField8ActionPerformed
 //Abrimos el contrato de la tarjeta de débito
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        //Creamos un fichero de nombre el dni del usuario y dentro tendrá el número de cuenta y  toda la informacion de la tarjeta.
+
+        FileWriter fichero = null;
+        PrintWriter pw = null;
+        try
+        {
+            fichero = new FileWriter("contratos/"+dni+".txt");
+            pw = new PrintWriter(fichero);
+            pw.println(accountNumber+"\n");
+            pw.println(card.getCardType());
+            pw.println(card.getCardId());
+            pw.println(card.getPin());
+            pw.println(card.getCashLimitDiary());
+            pw.println(card.getBuyLimitDiary());
+            pw.println(card.getCashLimitMonthly());
+            pw.println(card.getBuyLimitMonthly());
+            pw.println(card.getExpirationDate());
+            pw.println(card.getCvv());
+            pw.println(card.getCommission());
+   
+        } catch (IOException ex) {
+            Logger.getLogger(InformationDebitCard.class.getName()).log(Level.SEVERE, null, ex);
+        }finally {
+           try {
+           // Nuevamente aprovechamos el finally para
+           // asegurarnos que se cierra el fichero.
+           if (null != fichero)
+              fichero.close();
+           } catch (Exception e2) {
+              e2.printStackTrace();
+           }
+        }
         try {
      File path = new File ("contratos/debitcontract.pdf");
      Desktop.getDesktop().open(path);

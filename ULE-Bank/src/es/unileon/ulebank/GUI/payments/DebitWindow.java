@@ -23,6 +23,7 @@ import javax.swing.JOptionPane;
  */
 public class DebitWindow extends javax.swing.JInternalFrame {
 
+
     /**
      * Creates new form DevitWindow
      */
@@ -130,38 +131,18 @@ public class DebitWindow extends javax.swing.JInternalFrame {
         jTextField4.setEditable(false);
 
         jTextField5.setEditable(false);
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
-            }
-        });
 
         jTextField6.setEditable(false);
 
         jTextField7.setEditable(false);
-        jTextField7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
-            }
-        });
 
         jTextField8.setEditable(false);
 
         jTextField9.setEditable(false);
 
         jTextField10.setEditable(false);
-        jTextField10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField10ActionPerformed(evt);
-            }
-        });
 
         jTextField11.setEditable(false);
-        jTextField11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField11ActionPerformed(evt);
-            }
-        });
 
         jButton2.setText("New Card");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -325,6 +306,7 @@ public class DebitWindow extends javax.swing.JInternalFrame {
              JOptionPane.showMessageDialog(null, msg, "Error", 0);
              new DebitWindow().setVisible(true);
          } else {
+             jTextField1.setEditable(false);
              jTextField2.setText(name);
              jTextField3.setText(surname1);
              jTextField4.setText(surname2);
@@ -369,24 +351,9 @@ public class DebitWindow extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
-
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
-
-    private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField10ActionPerformed
-
-    private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField11ActionPerformed
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        NewCardWindow dialogo= new NewCardWindow();
+        //Le pasamos el dni y el número de cuenta
+        NewCardWindow dialogo= new NewCardWindow(jTextField1.getText(),jTextField10.getText());
         dialogo.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
