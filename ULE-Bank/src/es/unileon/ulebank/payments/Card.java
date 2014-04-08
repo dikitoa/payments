@@ -314,6 +314,10 @@ public class Card {
 	public void setStrategy(StrategyCommission commission) {
 		this.commission = commission;
 	}
+        
+        public String getCardNumber() {
+            return cardId.getCardNumber();
+        }
 	
 	/**
 	 * Devuelve la cuenta de usuario actual

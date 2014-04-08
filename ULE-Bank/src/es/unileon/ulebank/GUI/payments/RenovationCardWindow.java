@@ -6,11 +6,18 @@
 
 package es.unileon.ulebank.GUI.payments;
 
+import es.unileon.ulebank.command.RenovateCardCommand;
+import es.unileon.ulebank.exceptions.IncorrectLimitException;
+import es.unileon.ulebank.payments.Card;
+import es.unileon.ulebank.payments.CardType;
+import es.unileon.ulebank.payments.DebitCard;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -106,8 +113,6 @@ public class RenovationCardWindow extends javax.swing.JInternalFrame {
                 button2ActionPerformed(evt);
             }
         });
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         button1.setLabel("Accept");
         button1.addActionListener(new java.awt.event.ActionListener() {
@@ -336,6 +341,85 @@ public class RenovationCardWindow extends javax.swing.JInternalFrame {
 //Al darle a este botón y dependiendo de la tarjeta seleccionada en el combobox
 //renovaremos la tarjeta, modificando la fecha, el cvv.
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
+        String DNI = textField1.getText();
+        File archiveCard = new File("contratos/"+DNI+".txt");
+        String accountNumber, cardType, cardNumber, pinNumber, expirationDate, cvv, commission;
+        int  cashLimitDiary, buyLimitDiary, cashLimitMonthly, buyLimitMonthly;
+        try {
+            FileReader doc1 = new FileReader(archiveCard);
+            BufferedReader line = new BufferedReader(doc1);
+            accountNumber=line.readLine();
+            cardType=line.readLine();
+            cardNumber=line.readLine();
+            pinNumber=line.readLine();
+            cashLimitDiary=Integer.valueOf(line.readLine());
+            buyLimitDiary=Integer.valueOf(line.readLine());
+            cashLimitMonthly=Integer.valueOf(line.readLine());
+            buyLimitMonthly=Integer.valueOf(line.readLine());
+            expirationDate=line.readLine();
+            cvv=line.readLine();
+            commission=line.readLine();
+
+            DebitCard debitCard = new DebitCard();
+            debitCard.create();
+            try {
+                debitCard.setBuyLimitDiary(buyLimitDiary);
+                debitCard.setCashLimitDiary(cashLimitDiary);
+                debitCard.setCardId(cardNumber);
+                debitCard.setCardType(CardType.DEBIT);
+                debitCard.setCashLimitDiary(cashLimitDiary);
+                debitCard.setCashLimitMonthly(cashLimitMonthly);
+                debitCard.setCvv(cvv);
+                debitCard.setExpirationDate(expirationDate);
+                debitCard.setPin(pinNumber);
+                debitCard.setStrategy(null);
+                
+                debitCard.setCvv(debitCard.generateCVV());
+                debitCard.setExpirationDate(debitCard.generateExpirationDate());
+                
+                FileWriter fichero = null;
+        PrintWriter pw = null;
+        try
+        {
+            fichero = new FileWriter("contratos/"+DNI+".txt");
+            pw = new PrintWriter(fichero);
+            pw.println(accountNumber);
+            pw.println(debitCard.getCardType());
+            pw.println(debitCard.getCardNumber());
+            pw.println(debitCard.getPin());
+            pw.println(debitCard.getCashLimitDiary());
+            pw.println(debitCard.getBuyLimitDiary());
+            pw.println(debitCard.getCashLimitMonthly());
+            pw.println(debitCard.getBuyLimitMonthly());
+            pw.println(debitCard.getExpirationDate());
+            pw.println(debitCard.getCvv());
+            pw.println(debitCard.getCommission());
+   
+        } catch (IOException ex) {
+            Logger.getLogger(InformationDebitCard.class.getName()).log(Level.SEVERE, null, ex);
+        }finally {
+           try {
+           // Nuevamente aprovechamos el finally para
+           // asegurarnos que se cierra el fichero.
+           if (null != fichero)
+              fichero.close();
+           } catch (Exception e2) {
+              e2.printStackTrace();
+           }
+        }
+                
+                
+            } catch (IncorrectLimitException ex) {
+                Logger.getLogger(RenovationCardWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(DebitWindow.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(DebitWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }//GEN-LAST:event_button2ActionPerformed
 
@@ -424,6 +508,27 @@ public class RenovationCardWindow extends javax.swing.JInternalFrame {
             }
 
         } catch (FileNotFoundException ex) {
+            Logger.getLogger(DebitWindow.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(DebitWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        //Leemos del fichero de tarjetas nombrado con el dni los campos de la tarjeta
+        File archiveCard = new File("contratos/"+DNI+".txt");
+        String cardType, cardNumber = null;
+        try {
+            FileReader doc1 = new FileReader(archiveCard);
+            BufferedReader line = new BufferedReader(doc1);
+            
+                    //--Leemos hasta el número de tarjeta que es lo que queremos mostrar en el comboBox
+                    accountNumber=line.readLine();
+                    cardType=line.readLine();
+                    cardNumber=line.readLine();
+                    //---------------------------------------
+                
+                    jComboBox1.addItem(cardNumber);
+            
+        }catch(FileNotFoundException ex) {
             Logger.getLogger(DebitWindow.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(DebitWindow.class.getName()).log(Level.SEVERE, null, ex);

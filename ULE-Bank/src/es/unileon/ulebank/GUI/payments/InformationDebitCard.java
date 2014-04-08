@@ -279,10 +279,10 @@ public class InformationDebitCard extends javax.swing.JFrame {
     private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField8ActionPerformed
-//Abrimos el contrato de la tarjeta de débito
+    //Abrimos el contrato de la tarjeta de débito
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //Creamos un fichero de nombre el dni del usuario y dentro tendrá el número de cuenta y  toda la informacion de la tarjeta.
-
+        // Creamos un fichero de nombre el dni del usuario y dentro tendrá el numero de cuenta y  toda la informacion de la tarjeta.
+        
         FileWriter fichero = null;
         PrintWriter pw = null;
         try
@@ -291,7 +291,7 @@ public class InformationDebitCard extends javax.swing.JFrame {
             pw = new PrintWriter(fichero);
             pw.println(accountNumber);
             pw.println(card.getCardType());
-            pw.println(card.getCardId());
+            pw.println(card.getCardNumber());
             pw.println(card.getPin());
             pw.println(card.getCashLimitDiary());
             pw.println(card.getBuyLimitDiary());
@@ -320,8 +320,9 @@ public class InformationDebitCard extends javax.swing.JFrame {
 }catch (IOException ex) {
      ex.printStackTrace();
 }
+        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
-
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

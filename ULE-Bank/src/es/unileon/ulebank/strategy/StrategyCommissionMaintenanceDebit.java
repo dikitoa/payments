@@ -17,4 +17,10 @@ public class StrategyCommissionMaintenanceDebit implements StrategyCommission {
 			return 0;
 	}
 
+	@Override
+	public float calculateCommission(float interest, float quantity) {
+		// Not necessary in this Strategy
+		return 0;
+	}
+
 }
