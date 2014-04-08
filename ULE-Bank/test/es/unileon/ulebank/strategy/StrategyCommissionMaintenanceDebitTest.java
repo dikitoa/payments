@@ -10,10 +10,16 @@ public class StrategyCommissionMaintenanceDebitTest {
 	int ownerage = 15;
 	
 	@Test
-	public void testCalculateCommission() {
+	public void testCalculateCommissionLessThan26() {
 		
-		
+		//comprobamos que para los menores de 26 da como solucion 15
 		assertEquals(15, comision.calculateCommission(ownerage));
+		
+	}
+	
+	@Test
+	public void testCalculateCommissionMoreThan26() {
+		//comprobamos que para mayores de 26 su solucion es 0
 		ownerage = 30;
 		assertEquals(0, comision.calculateCommission(ownerage));
 		
