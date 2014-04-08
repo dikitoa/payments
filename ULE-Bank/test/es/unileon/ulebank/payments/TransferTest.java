@@ -1,4 +1,4 @@
-package es.unileon.ulebank;
+package es.unileon.ulebank.payments;
 
 import static org.junit.Assert.*;
 
