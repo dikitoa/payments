@@ -32,7 +32,7 @@ public class CardHandlerTest {
 
 	@Test
 	public void testGetBankIdOK() {
-		assertTrue(test.getBankId().length() == 4);
+		assertTrue(test.getBankId().length() == test.getBankIdLength());
 		assertEquals("1234", test.getBankId());
 	}
 	
@@ -45,10 +45,10 @@ public class CardHandlerTest {
 	@Test (expected = MalformedHandlerException.class)
 	public void testGetBankIdLenghtFAIL() {
 		test2 = new CardHandler("12345", "01");
-		assertTrue(test2.getBankId().length() == 4); //bankID is too long
+		assertTrue(test2.getBankId().length() == test.getBankIdLength()); //bankID is too long
 		
 		test2.setBankId("123");
-		assertTrue(test2.getBankId().length() == 4); //bankID is too short
+		assertTrue(test2.getBankId().length() == test.getBankIdLength()); //bankID is too short
 	}
 
 	@Test
@@ -73,8 +73,8 @@ public class CardHandlerTest {
 	public void testGetCardNumberOK() {
 		test2 = new CardHandler("1234", "01");
 		assertTrue(test2.getCardNumber().length() == test2.getCardLength());
-		assertTrue(test2.getCardNumber().substring(0, 4).equals(test2.getBankId())); //first 4 digits are equals to bankId
-		assertTrue(test2.getCardNumber().substring(4, 6).equals(test2.getOfficeId())); //digits 5 and 6 are equals to officeId
+		assertTrue(test2.getCardNumber().substring(0, test.getBankIdLength()).equals(test2.getBankId())); //first test.getBankIdLength() digits are equals to bankId
+		assertTrue(test2.getCardNumber().substring(test.getBankIdLength(), test.getBankIdLength() + test.getOfficeIdLength()).equals(test2.getOfficeId())); //digits test.getBankIdLength() + test.getOfficeIdLength() are equals to officeId
 	}
 
 	@Test
@@ -88,23 +88,23 @@ public class CardHandlerTest {
 
 	@Test
 	public void testGetOfficeIdOK() {
-		assertTrue(test.getOfficeId().length() == 2);
+		assertTrue(test.getOfficeId().length() == test.getOfficeIdLength());
 		assertEquals("01", test.getOfficeId());
 	}
 	
 	@Test 
 	public void testGetOfficeIdDifferentFAIL() {
 		test2 = new CardHandler("1234", "05");
-		assertTrue(!test2.getOfficeId().equals("01")); //bankID is diferent
+		assertTrue(!test2.getOfficeId().equals("01")); //officeID is diferent
 	}
 	
 	@Test (expected = MalformedHandlerException.class)
 	public void testGetOfficeIdLenghtFAIL() {
 		test2 = new CardHandler("1234", "012");
-		assertTrue(test2.getOfficeId().length() == 2); //bankID is too long
+		assertTrue(test2.getOfficeId().length() == test.getOfficeIdLength()); //officeID is too long
 		
 		test2.setBankId("1");
-		assertTrue(test2.getOfficeId().length() == 2); //bankID is too short
+		assertTrue(test2.getOfficeId().length() == test.getOfficeIdLength()); //officeID is too short
 	}
 
 	@Test
@@ -118,8 +118,7 @@ public class CardHandlerTest {
 	
 	@Test
 	public void testGetCardIdOK() {
-		//TODO hacer con las constantes
-		assertTrue(test.getCardId().length() == test.getCardLength()-test.getBankId().length()-test.getOfficeId().length()-1); //lenght of cardId is equals to cardLength-bankIdLength-officeIdLength-digitControlLength
+		assertTrue(test.getCardId().length() == test.getCardLength()-test.getBankIdLength()-test.getOfficeIdLength()-1); //lenght of cardId is equals to cardLength-bankIdLength-officeIdLength-digitControlLength
 	}
 
 	@Test
