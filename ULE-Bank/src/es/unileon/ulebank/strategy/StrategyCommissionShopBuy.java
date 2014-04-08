@@ -10,15 +10,13 @@ package es.unileon.ulebank.strategy;
  */
 public class StrategyCommissionShopBuy implements StrategyCommissionShop {
 
-	//private Client shop;
 	private float quantity;
 	private float interest;
 	
-	/*public StrategyCommissionShopBuy(Client shop, float quantity, float interest){
-		this.shop = shop;
+	public StrategyCommissionShopBuy(float quantity, float interest){
 		this.quantity = quantity;
 		this.interest = interest;
-	}*/
+	}
 	
 	@Override
 	public float calculateCommission() {		
