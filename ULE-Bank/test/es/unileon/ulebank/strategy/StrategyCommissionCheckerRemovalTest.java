@@ -13,19 +13,22 @@ public class StrategyCommissionCheckerRemovalTest {
 	
 	@Before
 	public void SetUp(){
-		
+		interest = 5;
+		quantity = 25;
+		owner = 20;
 	}
 	
 	@Test
 	public void testCalculateCommissionInt() {
 		
-		
+		assertEquals(0, comision.calculateCommission(owner));
 	}
 
 	
 	@Test
 	public void testCalculateCommissionFloatFloat() {
-		fail("Not yet implemented");
+		
+		assertEquals(0, comision.calculateCommission(interest, quantity));
 	}
 
 }
