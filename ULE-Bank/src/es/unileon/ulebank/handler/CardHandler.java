@@ -301,7 +301,7 @@ public class CardHandler implements Handler {
 				result.append(" ");
 			}
 		}
-		
+		 //trim() because cut white space after the number
 		return result.toString().trim();
 	}
 
