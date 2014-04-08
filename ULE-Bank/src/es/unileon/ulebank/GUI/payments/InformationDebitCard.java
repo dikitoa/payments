@@ -291,7 +291,7 @@ public class InformationDebitCard extends javax.swing.JFrame {
             pw = new PrintWriter(fichero);
             pw.println(accountNumber);
             pw.println(card.getCardType());
-            pw.println(card.getCardId());
+            pw.println(card.getCardNumber());
             pw.println(card.getPin());
             pw.println(card.getCashLimitDiary());
             pw.println(card.getBuyLimitDiary());
@@ -320,6 +320,7 @@ public class InformationDebitCard extends javax.swing.JFrame {
 }catch (IOException ex) {
      ex.printStackTrace();
 }
+        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
