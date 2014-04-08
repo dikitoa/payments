@@ -289,7 +289,7 @@ public class InformationDebitCard extends javax.swing.JFrame {
         {
             fichero = new FileWriter("contratos/"+dni+".txt");
             pw = new PrintWriter(fichero);
-            pw.println(accountNumber+"\n");
+            pw.println(accountNumber);
             pw.println(card.getCardType());
             pw.println(card.getCardId());
             pw.println(card.getPin());
