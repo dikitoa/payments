@@ -459,7 +459,6 @@ public class RemoveCardWindow extends javax.swing.JInternalFrame {
 
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
         // TODO add your handling code here:
-        System.out.print(textField1.getText().toString()+".txt");
         File fichero = new File("contratos/"+textField1.getText().toString()+".txt");
         fichero.delete();
     }//GEN-LAST:event_button2ActionPerformed
