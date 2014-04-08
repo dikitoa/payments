@@ -3,6 +3,8 @@ package es.unileon.ulebank.payments;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -62,7 +64,7 @@ public class CreditCardTest {
 	}
 
 	@Test
-	public void testGetPin() {
+	public void testGetPin() throws IOException {
 		assertTrue(testCard.getPin().length() == 4);
 		
 		testCard.setPin("9182");
@@ -70,13 +72,13 @@ public class CreditCardTest {
 	}
 
 	@Test
-	public void testSetPin() {
+	public void testSetPin() throws IOException {
 		testCard.setPin("1357");
 		assertTrue(testCard.getPin().equals("1357"));
 	}
 
 	@Test
-	public void testCheckPin() {
+	public void testCheckPin() throws IOException {
 		testCard.setPin("1357");
 		assertTrue(testCard.checkPin("1357"));
 	}
