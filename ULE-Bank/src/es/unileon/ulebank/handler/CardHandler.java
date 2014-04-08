@@ -309,4 +309,12 @@ public class CardHandler implements Handler {
 		return CARD_LENGTH;
 	}
 	
+	public int getBankIdLength() {
+		return BANk_ID_LENGTH;
+	}
+	
+	public int getOfficeIdLength() {
+		return OFFICE_ID_LENGTH;
+	}
+	
 }
