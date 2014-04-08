@@ -16,4 +16,11 @@ public interface StrategyCommission {
 	 */
 	public int calculateCommission(int ownerAge);
 	
+	/**
+	 * Method that calculate the commission over a quantity 
+	 * @param interest in percentage (example: 0.04 -> 4%)
+	 * @param quantity
+	 * @return
+	 */
+	public float calculateCommission(float interest, float quantity);
 }

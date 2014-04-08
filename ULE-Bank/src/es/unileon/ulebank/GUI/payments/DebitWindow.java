@@ -355,6 +355,7 @@ public class DebitWindow extends javax.swing.JInternalFrame {
         //Le pasamos el dni y el número de cuenta
         NewCardWindow dialogo= new NewCardWindow(jTextField1.getText(),jTextField10.getText());
         dialogo.setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
 

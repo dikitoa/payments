@@ -15,4 +15,11 @@ public class StrategyCommissionMaintenanceCredit implements StrategyCommission {
 		
 	}
 
+	@Override
+	public float calculateCommission(float interest, float quantity) {
+		// Not necessary in this Strategy
+		return 0;
+	}
+
+
 }
