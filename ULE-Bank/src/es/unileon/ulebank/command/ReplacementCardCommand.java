@@ -3,8 +3,6 @@ package es.unileon.ulebank.command;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.strategy.StrategyCommissionRenovateCredit;
 import es.unileon.ulebank.strategy.StrategyCommissionRenovateDebit;
@@ -21,8 +19,6 @@ public class ReplacementCardCommand implements Command {
 	
 	@Override
 	public void execute() {
-		CardHandler newCard = new CardHandler();
-		this.card.setCardId(newCard.getCardNumber());
 		try {
 			this.card.setPin(card.generatePinCode());
 		} catch (IOException e) {

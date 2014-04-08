@@ -101,14 +101,6 @@ public class Card {
 	}
 	
 	/**
-	 * Cambia el numero de la tarjeta por el que recibe
-	 * @param cardNumner
-	 */
-	public void setCardId(String cardNumber) {
-		this.cardId.setCardNumber(cardNumber);
-	}
-	
-	/**
 	 * Devuelve el codigo PIN de la tarjeta
 	 * @return
 	 */

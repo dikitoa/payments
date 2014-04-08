@@ -1,5 +1,11 @@
 package es.unileon.ulebank.command;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.strategy.StrategyCommissionEmissionCredit;
 import es.unileon.ulebank.strategy.StrategyCommissionEmissionDebit;
@@ -10,12 +16,13 @@ import es.unileon.ulebank.strategy.StrategyCommissionEmissionDebit;
 public class NewCardCommand implements Command {
 
 	private Card card;
-//	private Handler owner;
+//	private Client owner;
 //	private Account account;
 	
-	public NewCardCommand(Card card/*, Account account*/) {
+	public NewCardCommand(/*Client owner, */Card card/*, Account account*/) {
 		this.card = card;
 //		this.account = account;
+//		this.owner = owner;
 	}
 	
 	@Override
@@ -41,21 +48,30 @@ public class NewCardCommand implements Command {
 	}
 	
 	public void generateContract(Card card) {
-		switch (card.getCardType()) {
-		case DEBIT:
-			
-			break;
-		case CREDIT:
-			
-			break;
-		case PURSE:
-			
-			break;
-		case REVOLVING:
-			
-			break;
-		default:
-			break;
+		File file = null;
+		Desktop desktop = Desktop.getDesktop();
+		try {
+			switch (card.getCardType()) {
+			case DEBIT:
+				file = new File ("contratos/debitcontract.pdf");
+				desktop.open(file);
+				break;
+			case CREDIT:
+				file = new File ("contratos/creditcontract.pdf");
+				desktop.open(file);
+				break;
+			case PURSE:
+				
+				break;
+			case REVOLVING:
+				
+				break;
+			default:
+				break;
+			}
+		} catch (IOException e) {
+			Logger.getLogger(NewCardCommand.class.toString()).log(Level.SEVERE, null, e);
 		}
+		
 	}
 }

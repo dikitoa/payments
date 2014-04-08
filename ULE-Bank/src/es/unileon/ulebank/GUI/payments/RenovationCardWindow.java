@@ -338,7 +338,7 @@ public class RenovationCardWindow extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-//Al darle a este botón y dependiendo de la tarjeta seleccionada en el combobox
+//Al darle a este bot��n y dependiendo de la tarjeta seleccionada en el combobox
 //renovaremos la tarjeta, modificando la fecha, el cvv.
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
         String DNI = textField1.getText();
@@ -365,7 +365,6 @@ public class RenovationCardWindow extends javax.swing.JInternalFrame {
             try {
                 debitCard.setBuyLimitDiary(buyLimitDiary);
                 debitCard.setCashLimitDiary(cashLimitDiary);
-                debitCard.setCardId(cardNumber);
                 debitCard.setCardType(CardType.DEBIT);
                 debitCard.setCashLimitDiary(cashLimitDiary);
                 debitCard.setCashLimitMonthly(cashLimitMonthly);
@@ -520,7 +519,7 @@ public class RenovationCardWindow extends javax.swing.JInternalFrame {
             FileReader doc1 = new FileReader(archiveCard);
             BufferedReader line = new BufferedReader(doc1);
             
-                    //--Leemos hasta el número de tarjeta que es lo que queremos mostrar en el comboBox
+                    //--Leemos hasta el n��mero de tarjeta que es lo que queremos mostrar en el comboBox
                     accountNumber=line.readLine();
                     cardType=line.readLine();
                     cardNumber=line.readLine();
