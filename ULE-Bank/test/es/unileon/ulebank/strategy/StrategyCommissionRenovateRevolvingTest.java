@@ -20,7 +20,7 @@ public class StrategyCommissionRenovateRevolvingTest {
 	}
 	
 	@Test
-	public void testCalculateCommission() {
+	public void testCalculateCommission2() {
 		
 		ownerage = 30;
 		assertEquals(0, renovate.calculateCommission(ownerage));
