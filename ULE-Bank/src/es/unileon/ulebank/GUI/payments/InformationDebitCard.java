@@ -281,7 +281,7 @@ public class InformationDebitCard extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField8ActionPerformed
 //Abrimos el contrato de la tarjeta de débito
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //Creamos un fichero de nombre el dni del usuario y dentro tendrá el numero de cuenta y  toda la informacion de la tarjeta.
+        //Creamos un fichero de nombre el dni del usuario y dentro tendrá el número de cuenta y  toda la informacion de la tarjeta.
         
         FileWriter fichero = null;
         PrintWriter pw = null;
