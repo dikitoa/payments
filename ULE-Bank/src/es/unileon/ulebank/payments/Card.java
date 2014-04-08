@@ -1,6 +1,8 @@
 package es.unileon.ulebank.payments;
 
+import java.io.IOException;
 import java.util.Calendar;
+
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.strategy.StrategyCommission;
@@ -9,6 +11,7 @@ import es.unileon.ulebank.strategy.StrategyCommission;
  * @author Israel
  */
 public class Card {
+	private final int MINIMUM_LIMIT = 200;
 	private CardHandler cardId;
 	private String pin;
 	private int buyLimitDiary;
@@ -116,9 +119,14 @@ public class Card {
 	/**
 	 * Cambia el codigo PIN de la tarjeta por el que recibe
 	 * @param pin
+	 * @throws IOException 
 	 */
-	public void setPin(String pin) {
-		this.pin = pin;
+	public void setPin(String pin) throws IOException {
+		if (pin.length() == 4) {
+			this.pin = pin;
+		} else {
+			throw new IOException("Incorrect length");
+		}
 	}
 	
 	/**
@@ -148,7 +156,7 @@ public class Card {
 	 * @throws IncorrectLimitException 
 	 */
 	public void setBuyLimitDiary(int buyLimit) throws IncorrectLimitException {
-		if (this.buyLimitMonthly > buyLimit) {
+		if (this.buyLimitMonthly > buyLimit && buyLimit >= MINIMUM_LIMIT) {
 			this.buyLimitDiary = buyLimit;
 		} else {
 			throw new IncorrectLimitException("The limit is bigger than current monthly limit");
@@ -161,7 +169,7 @@ public class Card {
 	 * @return
 	 */
 	public boolean checkBuyLimitDiary(int price) {
-		if (price > buyLimitDiary) {
+		if (price >= buyLimitDiary) {
 			return false;
 		} else {
 			return true;
@@ -182,7 +190,7 @@ public class Card {
 	 * @throws IncorrectLimitException 
 	 */
 	public void setBuyLimitMonthly(int buyLimitMonthly) throws IncorrectLimitException {
-		if (buyLimitMonthly > this.buyLimitDiary) {
+		if (buyLimitMonthly >= this.buyLimitDiary && buyLimitMonthly >= MINIMUM_LIMIT) {
 			this.buyLimitMonthly = buyLimitMonthly;
 		} else {
 			throw new IncorrectLimitException("Monthly limit must be greater than diary limit");
@@ -202,7 +210,7 @@ public class Card {
 	 * @throws IncorrectLimitException 
 	 */
 	public void setCashLimitDiary(int cashLimit) throws IncorrectLimitException {
-		if (this.cashLimitMonthly > cashLimit) {
+		if (this.cashLimitMonthly >= cashLimit && cashLimit >= MINIMUM_LIMIT) {
 			this.cashLimitDiary = cashLimit;
 		} else {
 			throw new IncorrectLimitException("The limit is bigger than current monthly limit");
@@ -215,7 +223,7 @@ public class Card {
 	 * @return
 	 */
 	public boolean checkCashLimitDiary(int cash) {
-		if (cash > this.cashLimitDiary) {
+		if (cash >= this.cashLimitDiary) {
 			return false;
 		} else {
 			return true;
@@ -236,7 +244,7 @@ public class Card {
 	 * @throws IncorrectLimitException 
 	 */
 	public void setCashLimitMonthly(int cashLimitMonthly) throws IncorrectLimitException {
-		if (cashLimitMonthly > this.cashLimitDiary) {
+		if (cashLimitMonthly >= this.cashLimitDiary && cashLimitMonthly >= MINIMUM_LIMIT) {
 			this.cashLimitMonthly = cashLimitMonthly;
 		} else {
 			throw new IncorrectLimitException("Monthly limit must be greater than diary limit");

@@ -1,5 +1,9 @@
 package es.unileon.ulebank.command;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import es.unileon.ulebank.payments.Card;
 
 /**
@@ -16,6 +20,10 @@ public class ModifyPinCommand implements Command {
 	
 	@Override
 	public void execute() {
-		this.card.setPin(newPin);
+		try {
+			this.card.setPin(newPin);
+		} catch (IOException e) {
+			Logger.getLogger(ModifyBuyLimitCommand.class.toString()).log(Level.SEVERE, "Incorrect Pin");
+		}
 	}
 }

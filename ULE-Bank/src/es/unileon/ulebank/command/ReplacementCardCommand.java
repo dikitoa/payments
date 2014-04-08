@@ -1,5 +1,9 @@
 package es.unileon.ulebank.command;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.strategy.StrategyCommissionRenovateCredit;
@@ -19,7 +23,11 @@ public class ReplacementCardCommand implements Command {
 	public void execute() {
 		CardHandler newCard = new CardHandler();
 		this.card.setCardId(newCard.getCardNumber());
-		this.card.setPin(card.generatePinCode());
+		try {
+			this.card.setPin(card.generatePinCode());
+		} catch (IOException e) {
+			Logger.getLogger(ReplacementCardCommand.class.toString()).log(Level.SEVERE, "Incorrect Pin");
+		}
 		this.card.setCvv(card.generateCVV());
 		
 		switch (card.getCardType()) {

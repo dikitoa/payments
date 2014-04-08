@@ -11,7 +11,7 @@ import es.unileon.ulebank.exceptions.MalformedHandlerException;
 public class CardHandler implements Handler {
 	
 	private final int CARD_LENGTH = 16;
-	private final int BANk_ID_LENGTH = 4;
+	private final int BANK_ID_LENGTH = 4;
 	private final int OFFICE_ID_LENGTH = 2;
 	//Identificador de nuestro banco
 	private String bankId;
@@ -40,8 +40,8 @@ public class CardHandler implements Handler {
 			errors.append("The bank ID must only contains numbers");
 		}
 		
-		if (bankId.length() != BANk_ID_LENGTH) {
-			errors.append("The bank ID must be " + BANk_ID_LENGTH + "\n");
+		if (bankId.length() != BANK_ID_LENGTH) {
+			errors.append("The bank ID must be " + BANK_ID_LENGTH + "\n");
 		}
 		
 		matcher = pattern.matcher(officeId);
@@ -136,7 +136,7 @@ public class CardHandler implements Handler {
 	 * @return
 	 */
 	protected int generateControlDigit(int[] digits) {
-		return 10 - verifyCardNumber(digits);
+		return (10 - verifyCardNumber(digits)) % 10;
 	}
 	
 	/**
@@ -161,7 +161,7 @@ public class CardHandler implements Handler {
 		for (int i = 0; i < digits.length; i+=2) {
 			//Doblamos el digito y lo guardamos
 			int aux = digits[i] << 1;
-			//Si el numero tiene 2 d���������gitos los sumamos juntos
+			//Si el numero tiene 2 digitos los sumamos juntos
 			if (aux >= 10) {
 				sum += 1 + aux - 10;
 			} else {
@@ -310,7 +310,7 @@ public class CardHandler implements Handler {
 	}
 	
 	public int getBankIdLength() {
-		return BANk_ID_LENGTH;
+		return BANK_ID_LENGTH;
 	}
 	
 	public int getOfficeIdLength() {
