@@ -6,6 +6,7 @@ package es.unileon.ulebank.strategy;
  * @date 19/03/2014
  * @brief Class that obtain Commision of Renovate (substitution, theft or damage) in Debit Cards
  */
+
 public class StrategyCommissionRenovateCredit implements StrategyCommission {
 
 	@Override
