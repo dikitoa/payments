@@ -1,5 +1,7 @@
 package es.unileon.ulebank.strategy;
 
+import es.unileon.ulebank.payments.Card;
+
 /**
  * @class StrategyCommissionCheckerRemoval
  * @author Rober dCR
@@ -8,16 +10,17 @@ package es.unileon.ulebank.strategy;
  */
 public class StrategyCommissionCheckerRemoval implements StrategyCommission {
 
+	private Card card;
+	
+	public StrategyCommissionCheckerRemoval(Card card){
+		this.card = card;
+	}
+	
 	@Override
-	public int calculateCommission(int ownerAge) {
-		// TODO Auto-generated method stub
+	public float calculateCommission() {
 		return 0;
 	}
 
-	@Override
-	public float calculateCommission(float interest, float quantity) {
-		// Not necessary in this Strategy
-		return 0;
-	}
+
 
 }

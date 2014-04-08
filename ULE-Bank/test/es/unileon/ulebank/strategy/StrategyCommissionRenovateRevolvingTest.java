@@ -7,7 +7,7 @@ import org.junit.Test;
 public class StrategyCommissionRenovateRevolvingTest {
 
 	
-	StrategyCommissionRenovateRevolving renovate = new StrategyCommissionRenovateRevolving();
+	StrategyCommissionRevolvingRenovate renovate = new StrategyCommissionRevolvingRenovate();
 	int ownerage = 18;
 	
 	@Test

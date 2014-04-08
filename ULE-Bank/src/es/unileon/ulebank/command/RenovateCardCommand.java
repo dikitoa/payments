@@ -1,8 +1,8 @@
 package es.unileon.ulebank.command;
 
 import es.unileon.ulebank.payments.Card;
-import es.unileon.ulebank.strategy.StrategyCommissionRenovateCredit;
-import es.unileon.ulebank.strategy.StrategyCommissionRenovateDebit;
+import es.unileon.ulebank.strategy.StrategyCommissionCreditRenovate;
+import es.unileon.ulebank.strategy.StrategyCommissionDebitRenovate;
 
 /**
  * @author Israel
@@ -21,10 +21,10 @@ public class RenovateCardCommand implements Command {
 		
 		switch (card.getCardType()) {
 		case DEBIT:
-			this.card.setStrategy(new StrategyCommissionRenovateDebit());
+			this.card.setStrategy(new StrategyCommissionDebitRenovate());
 			break;
 		case CREDIT:
-			this.card.setStrategy(new StrategyCommissionRenovateCredit());
+			this.card.setStrategy(new StrategyCommissionCreditRenovate());
 			break;
 		case PURSE:
 			

@@ -1,5 +1,7 @@
 package es.unileon.ulebank.strategy;
 
+import es.unileon.ulebank.payments.Card;
+
 /**
  * @class StrategyCommissionCheckerConsultation
  * @author Rober dCR
@@ -7,18 +9,20 @@ package es.unileon.ulebank.strategy;
  * @brief Class that obtain Commision of Consultation in Checker
  */
 public class StrategyCommissionCheckerConsultation implements
-		StrategyCommission {
+		StrategyCommissionChecker {
 
+	private Card card;
+	
+	public StrategyCommissionCheckerConsultation(Card card){
+		this.card = card;
+	}
+	
 	@Override
-	public int calculateCommission(int ownerAge) {
+	public float calculateCommission() {
 		return 0;
 	}
 
-	@Override
-	public float calculateCommission(float interest, float quantity) {
-		// Not necessary in this Strategy
-		return 0;
-	}
+
 
 
 }

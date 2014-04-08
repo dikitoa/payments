@@ -7,7 +7,7 @@ import org.junit.Test;
 public class StrategyCommissionRenovateDebitTest {
 
 	
-	StrategyCommissionRenovateDebit renovate = new StrategyCommissionRenovateDebit();
+	StrategyCommissionDebitRenovate renovate = new StrategyCommissionDebitRenovate();
 	int ownerage = 18;
 	
 	@Test

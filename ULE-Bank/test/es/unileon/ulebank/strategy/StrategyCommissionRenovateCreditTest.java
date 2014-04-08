@@ -12,7 +12,7 @@ import org.junit.Test;
 
 public class StrategyCommissionRenovateCreditTest {
 
-	StrategyCommissionRenovateCredit renovate = new StrategyCommissionRenovateCredit();
+	StrategyCommissionCreditRenovate renovate = new StrategyCommissionCreditRenovate();
 	int ownerage = 18;
 	
 	@Test
