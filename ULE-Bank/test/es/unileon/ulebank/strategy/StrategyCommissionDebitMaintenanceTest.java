@@ -7,7 +7,7 @@ import org.junit.Test;
 /**
  * @author Marta
  * 
- * Comprobamos que la comision para esta tarjeta siempre es 25
+ * Comprobamos que la comision para esta tarjeta siempre es 0
  */
 
 public class StrategyCommissionDebitMaintenanceTest {
