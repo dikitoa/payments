@@ -11,17 +11,26 @@ import es.unileon.ulebank.payments.Card;
  */
 public class StrategyCommissionDebitEmission implements StrategyCommissionDebit {
 
-	/*private Client owner;
+	//private Client owner;
 	private Card card;
+	private float quantity;
+	private final float DEFAULT_COMMISSION = 0;
 	
-	public StrategyCommissionDebitEmission(Client owner, Card card){
+	/**
+	 * Class constructor
+	 * @param owner
+	 * @param card
+	 * @param quantity
+	 */
+	public StrategyCommissionDebitEmission(/*Client owner,*/ Card card, float quantity){
 		this.card = card;
-		this.owner = owner;
-	}*/
+		//this.owner = owner;
+		this.quantity = quantity;
+	}
 
 	@Override
 	public float calculateCommission() {
-		return 0;
+		return this.DEFAULT_COMMISSION + this.quantity;
 	}
 
 }

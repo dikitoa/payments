@@ -14,8 +14,8 @@ import es.unileon.ulebank.exceptions.SecurityCardException;
 public class SecurityCard {
 
 	private boolean activate; //Value that indicates if the SecurityCard is given to the owner
-	private int ROW = 4;
-	private int COLUMNS = 10;
+	private final int ROW = 4;
+	private final int COLUMNS = 10;
 	private Integer[][] coordinates;
 	private Card associatedCard; //Card which owns this security card
 	
