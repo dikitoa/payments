@@ -26,7 +26,7 @@ public class StrategyCommissionShopBuyTest {
 	//REVISAR
 	@Test
 	public void testCalculateCommissionFloatFloat() {
-		assertEquals(0, comision.calculateCommission());
+		assertEquals(0.75, comision.calculateCommission(),0);
 	}
 
 }

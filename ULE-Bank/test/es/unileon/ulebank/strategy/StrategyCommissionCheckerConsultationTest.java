@@ -9,6 +9,12 @@ import es.unileon.ulebank.payments.Card;
 
 public class StrategyCommissionCheckerConsultationTest {
 
+	/**
+	 * @author Marta
+	 * 
+	 * Comprobamos que la comision para la consulta es 0
+	 */
+	
 	StrategyCommissionCheckerConsultation consulta;
 	private Card card;
 	
