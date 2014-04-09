@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class StrategyCommissionMaintenanceRevolvingTest {
 
-	StrategyCommissionMaintenanceRevolving comision = new StrategyCommissionMaintenanceRevolving();
+	StrategyCommissionRevolvingMaintenance comision = new StrategyCommissionRevolvingMaintenance();
 	
 	@Test
 	public void testCalculateCommission() {

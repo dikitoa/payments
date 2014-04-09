@@ -7,8 +7,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import es.unileon.ulebank.payments.Card;
-import es.unileon.ulebank.strategy.StrategyCommissionEmissionCredit;
-import es.unileon.ulebank.strategy.StrategyCommissionEmissionDebit;
+import es.unileon.ulebank.strategy.StrategyCommissionCreditEmission;
+import es.unileon.ulebank.strategy.StrategyCommissionDebitEmission;
 
 /**
  * @author Israel
@@ -31,10 +31,10 @@ public class NewCardCommand implements Command {
 //		account.addCard(this.card);
 		switch (card.getCardType()) {
 		case DEBIT:
-			this.card.setStrategy(new StrategyCommissionEmissionDebit());
+			this.card.setStrategy(new StrategyCommissionDebitEmission());
 			break;
 		case CREDIT:
-			this.card.setStrategy(new StrategyCommissionEmissionCredit());
+			this.card.setStrategy(new StrategyCommissionCreditEmission());
 			break;
 		case PURSE:
 			

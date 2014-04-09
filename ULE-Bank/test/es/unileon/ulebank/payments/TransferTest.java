@@ -25,12 +25,14 @@ public class TransferTest {
 		this.senderAccount = new Account();
 		this.receiverAccount = new Account();
 		this.quantity = (float) 20.5;
-		this.transfer = new Transfer(this.senderAccount, this.receiverAccount, this.quantity);
 	}
 	
 	@Test
 	public void test() {
-		fail("Not yet implemented");
+		float beforeMoney = this.receiverAccount.getBalance();
+		this.transfer = new Transfer(this.senderAccount, this.receiverAccount, this.quantity);
+		float afterMoney = this.receiverAccount.getBalance();
+		assertEquals(beforeMoney - afterMoney, this.quantity, 0.001);
 	}*/
 
 }

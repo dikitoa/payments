@@ -7,7 +7,7 @@ import org.junit.Test;
 
 public class StrategyCommissionCheckerRemovalTest {
 
-	StrategyCommissionRenovateRevolving comision = new StrategyCommissionRenovateRevolving();
+	StrategyCommissionRevolvingRenovate comision = new StrategyCommissionRevolvingRenovate();
 	int owner;
 	float interest, quantity;
 	

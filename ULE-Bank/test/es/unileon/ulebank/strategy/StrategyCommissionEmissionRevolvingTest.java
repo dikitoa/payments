@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class StrategyCommissionEmissionRevolvingTest {
 
-	StrategyCommissionRenovateRevolving emision = new StrategyCommissionRenovateRevolving();
+	StrategyCommissionRevolvingRenovate emision = new StrategyCommissionRevolvingRenovate();
 	int ownerage = 18;
 	
 	/**

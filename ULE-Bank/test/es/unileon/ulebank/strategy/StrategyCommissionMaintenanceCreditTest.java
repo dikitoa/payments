@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class StrategyCommissionMaintenanceCreditTest {
 
-	StrategyCommissionMaintenanceCredit comision = new StrategyCommissionMaintenanceCredit();
+	StrategyCommissionCreditMaintenance comision = new StrategyCommissionCreditMaintenance();
 	
 	
 	@Test

@@ -4,6 +4,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,7 +25,7 @@ public class SecurityCardTest {
 	public SecurityCard secCard;
 
 	@Before
-	public void setUp(){
+	public void setUp() throws IOException{
 		this.card = new Card(CardType.CREDIT);
 		this.card.setPin("0000");
 		this.secCard = new SecurityCard(this.card);
