@@ -11,42 +11,66 @@ import es.unileon.ulebank.strategy.StrategyCommission;
  * @author Israel
  */
 public class Card {
+	private final int BUY_LIMIT_DIARY_DEFAULT = 400;
+	private final int BUY_LIMIT_MONTHLY_DEFAULT = 1000;
+	private final int CASH_LIMIT_DIARY_DEFAULT = 400;
+	private final int CASH_LIMIT_MONTHLY_DEFAULT = 1000;
 	private final int MINIMUM_LIMIT = 200;
+	private final int EXPIRATION_YEAR = 3;
+	private final int CVV_SIZE = 3;
+	private final int PIN_SIZE = 4;
+	
 	private CardHandler cardId;
 	private String pin;
 	private int buyLimitDiary;
 	private int buyLimitMonthly;
 	private int cashLimitDiary;
 	private int cashLimitMonthly;
+	private Calendar emissionDate;
 	private String expirationDate;
 	private CardType cardType;
 	private String cvv;
-	private StrategyCommission commission;
-//	private Client owner;
-//	private Account account;
+	private StrategyCommission commissionEmission;
+	private StrategyCommission commissionMaintenance;
+	private StrategyCommission commissionRenovate;
+	private Client owner;
+	private Account account;
+	private float limitDebt;
 	
 	/**
-	 * Crea una nueva tarjeta del tipo indicado
+	 * Crea una nueva tarjeta con los parametros indicados
+	 * @param cardId
+	 * @param owner
+	 * @param account
 	 * @param type
+	 * @param commissionEmission
+	 * @param commissionMaintenance
+	 * @param commissionRenovate
 	 */
+	public Card(CardHandler cardId, Client owner, Account account, CardType type,
+			StrategyCommission commissionEmission, StrategyCommission commissionMaintenance, 
+			StrategyCommission commissionRenovate) {
+		this.cardId = cardId;
+		this.owner = owner;
+		this.account = account;
+		this.cardType = type;
+		this.pin = generatePinCode();
+		this.buyLimitDiary = BUY_LIMIT_DIARY_DEFAULT;
+		this.buyLimitMonthly = BUY_LIMIT_MONTHLY_DEFAULT;
+		this.cashLimitDiary = CASH_LIMIT_DIARY_DEFAULT;
+		this.cashLimitMonthly = CASH_LIMIT_MONTHLY_DEFAULT;
+		this.emissionDate = generateEmissionDate();
+		this.expirationDate = generateExpirationDate();
+		this.cvv = this.generateCVV();
+		this.commissionEmission = commissionEmission;
+		this.commissionMaintenance = commissionMaintenance;
+		this.commissionRenovate = commissionRenovate;
+	}
+	
 	public Card(CardType type) {
 		this.cardType = type;
 	}
-	
-	/**
-	 * Aniade los atributos a la nueva tarjeta
-	 */
-	public void create() {
-		this.cardId = new CardHandler();
-		this.pin = this.generatePinCode();
-		this.buyLimitDiary = 400;
-		this.buyLimitMonthly = 1000;
-		this.cashLimitDiary = 400;
-		this.cashLimitMonthly = 1000;
-		this.expirationDate = generateExpirationDate();
-		this.cvv = this.generateCVV();
-	}
-	
+
 	/**
 	 * Genera el codigo pin de la tarjeta
 	 * @return
@@ -54,11 +78,19 @@ public class Card {
 	public String generatePinCode() {
 		StringBuilder result = new StringBuilder();
 		
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < PIN_SIZE; i++) {
 			result.append((int) (Math.random()*10));
 		}
 		
 		return result.toString();
+	}
+	
+	/**
+	 * Genera la fecha de emision de la tarjeta
+	 * @return
+	 */
+	private Calendar generateEmissionDate() {
+		return Calendar.getInstance();
 	}
 	
 	/**
@@ -73,7 +105,7 @@ public class Card {
 			month = "0" + month;
 		}
 		
-		String year = Integer.toString(3 + calendar.get(Calendar.YEAR)).substring(2);
+		String year = Integer.toString(EXPIRATION_YEAR + calendar.get(Calendar.YEAR)).substring(2);
 		
 		return month + "/" + year;
 	}
@@ -85,7 +117,7 @@ public class Card {
 	public String generateCVV() {
 		StringBuilder result = new StringBuilder();
 		
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < CVV_SIZE; i++) {
 			result.append((int) (Math.random()*10));
 		}
 		
@@ -114,7 +146,7 @@ public class Card {
 	 * @throws IOException 
 	 */
 	public void setPin(String pin) throws IOException {
-		if (pin.length() == 4) {
+		if (pin.length() == PIN_SIZE) {
 			this.pin = pin;
 		} else {
 			throw new IOException("Incorrect length");
@@ -242,6 +274,14 @@ public class Card {
 			throw new IncorrectLimitException("Monthly limit must be greater than diary limit");
 		}
 	}
+	
+	/**
+	 * Devuelve la fecha de emision de la tarjeta
+	 * @return
+	 */
+	public Calendar getEmissionDate() {
+		return emissionDate;
+	}
 
 	/**
 	 * Devuelve la fecha de caducidad de la tarjeta
@@ -286,44 +326,117 @@ public class Card {
 	/**
 	 * Cambia el CVV por el nuevo que ha recibido
 	 * @param cvv
+	 * @throws IOException 
 	 */
-	public void setCvv(String cvv) {
-		this.cvv = cvv;
-	}
-	
-	/**
-	 * Devuelve la comision actual para la tarjeta de credito
-	 * @return
-	 */
-	public StrategyCommission getCommission() {
-		return commission;
+	public void setCvv(String cvv) throws IOException {
+		if (cvv.length() == CVV_SIZE) {
+			this.cvv = cvv;
+		} else {
+			throw new IOException("Incorrect length");
+		}
 	}
 
 	/**
-	 * Cambia la comision de la tarjeta empleando el patron Strategy.
-	 * @param commission
-	 */
-	public void setStrategy(StrategyCommission commission) {
-		this.commission = commission;
-	}
-        
-        public String getCardNumber() {
-            return cardId.getCardNumber();
-        }
-	
-	/**
-	 * Devuelve la cuenta de usuario actual
+	 * Devuelve el numero de la tarjeta
 	 * @return
 	 */
-//	public Account getAccount() {
-//		return this.account;
-//	}
-	
+	public String getCardNumber() {
+		return cardId.getCardNumber();
+	}
+
 	/**
-	 * Cambia la cuenta actual por la que recibe por parametro
-	 * @param account
+	 * Devuelve el limite diario de compra por defecto
+	 * @return
 	 */
-//	public void setAccount(Account account) {
-//		this.account = account;
-//	}
+	public int getBuyLimitDiaryDefault() {
+		return BUY_LIMIT_DIARY_DEFAULT;
+	}
+
+	/**
+	 * Devuelve el limite mensual de compra por defecto
+	 * @return
+	 */
+	public int getBuyLimitMonthlyDefault() {
+		return BUY_LIMIT_MONTHLY_DEFAULT;
+	}
+
+	/**
+	 * Devuelve el limite diario de extraccion en cajero por defecto
+	 * @return
+	 */
+	public int getCashLimitDiaryDefault() {
+		return CASH_LIMIT_DIARY_DEFAULT;
+	}
+
+	/**
+	 * Devuelve el limite mensual de extraccion en cajero por defecto
+	 * @return
+	 */
+	public int getCashLimitMonthlyDefault() {
+		return CASH_LIMIT_MONTHLY_DEFAULT;
+	}
+
+	/**
+	 * Devuelve la comision de emision de la tarjeta
+	 * @return
+	 */
+	public StrategyCommission getCommissionEmission() {
+		return commissionEmission;
+	}
+
+	/**
+	 * Cambia la comision de emision por la que recibe
+	 * @param commissionEmission
+	 */
+	public void setCommissionEmission(StrategyCommission commissionEmission) {
+		this.commissionEmission = commissionEmission;
+	}
+
+	/**
+	 * Devuelve la comisionde mantenimiento de la tarjeta
+	 * @return
+	 */
+	public StrategyCommission getCommissionMaintenance() {
+		return commissionMaintenance;
+	}
+
+	/**
+	 * Cambia la comision de mantenimiento por la que se indica
+	 * @param commissionMaintenance
+	 */
+	public void setCommissionMaintenance(StrategyCommission commissionMaintenance) {
+		this.commissionMaintenance = commissionMaintenance;
+	}
+
+	/**
+	 * Devuelve la comision de renovacion de la tarjeta
+	 * @return
+	 */
+	public StrategyCommission getCommissionRenovate() {
+		return commissionRenovate;
+	}
+
+	/**
+	 * Cambia la comision de renovacion por la que se recibe
+	 * @param commissionRenovate
+	 */
+	public void setCommissionRenovate(StrategyCommission commissionRenovate) {
+		this.commissionRenovate = commissionRenovate;
+	}
+
+	public Client getOwner() {
+		return owner;
+	}
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public float getLimitDebt() {
+		return limitDebt;
+	}
+
+	public void setLimitDebt(float limitDebt) {
+		this.limitDebt = limitDebt;
+	}
 }
