@@ -1,5 +1,7 @@
 package es.unileon.ulebank.handler;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -11,7 +13,7 @@ import java.util.Calendar;
 public class CommandHandler implements Handler {
 
 	private Handler id;
-	private Calendar date;
+	private String date;
 	
 	/**
 	 * Class constructor
@@ -19,7 +21,8 @@ public class CommandHandler implements Handler {
 	 */
 	public CommandHandler(Handler id){
 		this.id = id;
-		this.date = Calendar.getInstance();
+		DateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
+		this.date = dateFormat.format(Calendar.getInstance().toString());
 	}
 	
 	@Override

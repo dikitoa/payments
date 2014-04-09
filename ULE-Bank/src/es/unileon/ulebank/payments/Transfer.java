@@ -1,5 +1,8 @@
 package es.unileon.ulebank.payments;
 
+import es.unileon.ulebank.handler.Handler;
+import es.unileon.ulebank.handler.TransferHandler;
+
 /**
  * Transfer Class
  * @author Rober dCR
@@ -8,9 +11,10 @@ package es.unileon.ulebank.payments;
  */
 public class Transfer {
 
-	//private Account senderAccount;
-	//private Account receiverAccount;
+	private Account senderAccount;
+	private Account receiverAccount;
 	private float quantity;
+	private Handler id;
 
 	/**
 	 * Class constructor
@@ -18,43 +22,28 @@ public class Transfer {
 	 * @param receiver
 	 * @param quantity
 	 */
-	/*public Transfer(Account sender, Account receiver, float quantity){
-		this.setSenderAccount(sender);
-		this.setReceiverAccount(receiver);
-		this.setQuantity(quantity);
-	}*/
+	public Transfer(Account sender, Account receiver, float quantity){
+		this.senderAccount = sender;
+		this.receiverAccount = receiver;
+		this.quantity = quantity;
+		this.id = new TransferHandler(sender.getId(), receiver.getId());
+	}
 	
 	/**
 	 * Getter senderAccount
 	 * @return senderAccount
 	 */
-	/*public Account getSenderAccount() {
+	public Account getSenderAccount() {
 		return senderAccount;
-	}*/
-	
-	/**
-	 * Setter senderAccount
-	 * @param senderAccount
-	 */
-	/*public void setSenderAccount(Account senderAccount) {
-		this.senderAccount = senderAccount;
-	}*/
+	}
 	
 	/**
 	 * Getter receiverAccount
 	 * @return receiverAccount
 	 */
-	/*public Account getReceiverAccount() {
+	public Account getReceiverAccount() {
 		return receiverAccount;
-	}*/
-	
-	/**
-	 * Setter receiverAccount
-	 * @param receiverAccount
-	 */
-	/*public void setReceiverAccount(Account receiverAccount) {
-		this.receiverAccount = receiverAccount;
-	}*/
+	}
 
 	/**
 	 * Getter quantity
@@ -78,8 +67,17 @@ public class Transfer {
 	 * @param receiver
 	 * @param quantity
 	 */
-	/*public void transferMoney(Account sender, Account receiver, float quantity){
+	public void transferMoney(Account sender, Account receiver, float quantity){
 		
 		//TODO Implementar cuando este la clase conectada con Account
-	}*/
+	}
+
+	/**
+	 * Getter id
+	 * @return id
+	 */
+	public String getId() {
+		return id.toString();
+	}
+
 }

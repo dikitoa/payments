@@ -1,6 +1,7 @@
 package es.unileon.ulebank.strategy;
 
 import es.unileon.ulebank.payments.Card;
+import es.unileon.ulebank.payments.Client;
 //import es.unileon.ulebank.client.Client;
 
 /**
@@ -11,7 +12,7 @@ import es.unileon.ulebank.payments.Card;
  */
 public class StrategyCommissionCreditEmission implements StrategyCommissionCredit {
 
-	//private Client owner;
+	private Client owner;
 	private Card card;
 	private float quantity;
 	private final float DEFAULT_COMMISSION = 0;
@@ -21,9 +22,9 @@ public class StrategyCommissionCreditEmission implements StrategyCommissionCredi
 	 * @param card
 	 * @param quantity
 	 */
-	public StrategyCommissionCreditEmission(/*Client owner, */Card card, float quantity){
+	public StrategyCommissionCreditEmission(Client owner, Card card, float quantity){
 		this.card = card;
-		//this.owner = owner;
+		this.owner = owner;
 		this.quantity = quantity;
 	}
 	
