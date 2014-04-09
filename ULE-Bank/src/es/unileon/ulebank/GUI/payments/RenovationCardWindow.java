@@ -6,9 +6,7 @@
 
 package es.unileon.ulebank.GUI.payments;
 
-import es.unileon.ulebank.command.RenovateCardCommand;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
-import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.CardType;
 import es.unileon.ulebank.payments.DebitCard;
 import java.io.BufferedReader;
