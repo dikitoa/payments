@@ -11,17 +11,25 @@ import es.unileon.ulebank.payments.Card;
  */
 public class StrategyCommissionRevolvingEmission implements StrategyCommissionRevolving {
 
-	/*private Client owner;
+	//private Client owner;
 	private Card card;
+	private float quantity;
 	
-	public StrategyCommissionRevolvingEmission(Client owner, Card card){
+	/**
+	 * Class constructor
+	 * @param owner
+	 * @param card
+	 * @param quantity
+	 */
+	public StrategyCommissionRevolvingEmission(/*Client owner,*/ Card card, float quantity){
 		this.card = card;
-		this.owner = owner;
-	}*/
+		//this.owner = owner;
+		this.quantity = quantity;
+	}
 
 	@Override
 	public float calculateCommission() {
-		return 0;
+		return this.quantity;
 	}
 	
 }

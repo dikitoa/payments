@@ -16,7 +16,6 @@ import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.payments.DebitCard;
 import java.io.FileWriter;
 import java.io.PrintWriter;
-import javax.smartcardio.CardTerminals;
 
 /**
  *

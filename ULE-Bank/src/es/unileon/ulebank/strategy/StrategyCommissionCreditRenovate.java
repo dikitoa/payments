@@ -12,17 +12,26 @@ import es.unileon.ulebank.payments.Card;
 
 public class StrategyCommissionCreditRenovate implements StrategyCommissionCredit {
 
-	/*private Client owner;
+	//private Client owner;
 	private Card card;
+	private float quantity;
+	private final float DEFAULT_COMMISSION = 30;
 	
-	public StrategyCommissionCreditRenovate(Client owner, Card card){
+	/**
+	 * Class constructor
+	 * @param owner
+	 * @param card
+	 * @param quantity
+	 */
+	public StrategyCommissionCreditRenovate(/*Client owner,*/ Card card, float quantity){
 		this.card = card;
-		this.owner = owner;
-	}*/
+		//this.owner = owner;
+		this.quantity = quantity;
+	}
 
 	@Override
 	public float calculateCommission() {
-		return 30;
+		return this.DEFAULT_COMMISSION + this.quantity;
 	}
 
 }
