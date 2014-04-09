@@ -4,18 +4,21 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class StrategyCommissionMaintenanceCreditTest {
+/**
+ * @author Marta
+ * 
+ * Comprobamos que la comision para esta tarjeta siempre es 25
+ */
+
+public class StrategyCommissionCreditMaintenanceTest {
 
 	StrategyCommissionCreditMaintenance comision = new StrategyCommissionCreditMaintenance();
 	
 	
 	@Test
 	public void testCalculateCommission() {
-
-		int ownerage = 18;
 		
-		assertEquals(25, comision.calculateCommission(ownerage));
-		
+		assertEquals(25, comision.calculateCommission(), 0);
 	}
 
 }
