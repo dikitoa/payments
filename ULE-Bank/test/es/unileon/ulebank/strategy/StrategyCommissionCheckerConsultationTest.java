@@ -5,29 +5,23 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import es.unileon.ulebank.payments.Card;
+
 public class StrategyCommissionCheckerConsultationTest {
 
-	StrategyCommissionCheckerConsultation consulta = new StrategyCommissionCheckerConsultation();
-	int ownerage;
-	float interest, quantity; 
+	StrategyCommissionCheckerConsultation consulta;
+	private Card card;
+	
 	
 	@Before
 	public void SetUp(){
 		
-		ownerage = 18;
-		interest = 5;
-		quantity = 100;
+		consulta = new StrategyCommissionCheckerConsultation(card);
 	}
 	
 	@Test
-	public void testCalculateCommissionInt() {
-		assertEquals(0, consulta.calculateCommission(ownerage));
-	}
-
-	@Test
-	public void testCalculateCommissionFloatFloat() {
-
-		assertEquals(0, consulta.calculateCommission(interest, quantity));
+	public void testCalculateCommission() {
+		assertTrue(0==consulta.calculateCommission());
 	}
 
 }
