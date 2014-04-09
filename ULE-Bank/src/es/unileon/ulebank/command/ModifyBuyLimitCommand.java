@@ -3,6 +3,7 @@ package es.unileon.ulebank.command;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
+import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.payments.Card;
 
 /**
@@ -36,5 +37,23 @@ public class ModifyBuyLimitCommand implements Command {
 		} else {
 			Logger.getLogger(ModifyBuyLimitCommand.class.toString()).log(Level.SEVERE, "Limit type not defined");
 		}
+	}
+
+	@Override
+	public void undo() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void redo() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Handler getId() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

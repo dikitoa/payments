@@ -1,5 +1,6 @@
 package es.unileon.ulebank.command;
 
+import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.payments.Card;
 
 /**
@@ -17,5 +18,23 @@ public class CancelCardCommand implements Command {
 	@Override
 	public void execute() {
 //		account.removeCard(this.card);
+	}
+
+	@Override
+	public void undo() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void redo() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Handler getId() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

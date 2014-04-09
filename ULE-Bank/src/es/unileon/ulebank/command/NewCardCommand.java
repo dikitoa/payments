@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.strategy.StrategyCommissionCreditEmission;
 import es.unileon.ulebank.strategy.StrategyCommissionDebitEmission;
@@ -73,5 +74,23 @@ public class NewCardCommand implements Command {
 			Logger.getLogger(NewCardCommand.class.toString()).log(Level.SEVERE, null, e);
 		}
 		
+	}
+
+	@Override
+	public void undo() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void redo() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Handler getId() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

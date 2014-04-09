@@ -1,5 +1,6 @@
 package es.unileon.ulebank.command;
 
+import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.strategy.StrategyCommissionCreditRenovate;
 import es.unileon.ulebank.strategy.StrategyCommissionDebitRenovate;
@@ -35,5 +36,23 @@ public class RenovateCardCommand implements Command {
 		default:
 			break;
 		}
+	}
+
+	@Override
+	public void undo() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void redo() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Handler getId() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

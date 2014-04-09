@@ -4,6 +4,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import es.unileon.ulebank.exceptions.PaymentHandlerException;
+import es.unileon.ulebank.handler.Handler;
+import es.unileon.ulebank.handler.PaymentHandler;
+
 /**
  * Payment Class
  * @author Rober dCR
@@ -16,18 +20,21 @@ public class Payment {
 	private String concept;
 	private Calendar paymentDate;
 	private Card payCard;
+	private Handler id_payment;
 	
 	/**
 	 * Class constructor
 	 * @param card
 	 * @param payQuantity
 	 * @param payConcept
+	 * @throws PaymentHandlerException 
 	 */
-	Payment(Card card, float payQuantity, String payConcept){
+	Payment(Card card, float payQuantity, String payConcept) throws PaymentHandlerException{
 		this.setPayCard(card);
 		this.setQuantity(payQuantity);
 		this.setConcept(payConcept);
 		this.setPaymentDate(Calendar.getInstance());
+		this.id_payment = new PaymentHandler(card.getCardId(), payConcept, this.getPaymentDate());
 	}
 
 	/**
@@ -95,4 +102,13 @@ public class Payment {
 	public void setPayCard(Card payCard) {
 		this.payCard = payCard;
 	}
+
+	/**
+	 * Getter of id
+	 * @return id
+	 */
+	public Handler getId_payment() {
+		return id_payment;
+	}
+	
 }
