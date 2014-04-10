@@ -86,5 +86,4 @@ public class ModifyCashLimitCommand implements Command {
 	public Handler getId() {
 		return this.id;
 	}
-
 }

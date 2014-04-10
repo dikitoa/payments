@@ -2,12 +2,17 @@ package es.unileon.ulebank.payments;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-
 import es.unileon.ulebank.handler.CardHandler;
+import es.unileon.ulebank.handler.Handler;
 
 public class Account {
 	
 	private ArrayList<Card> cards;
+	private Handler id;
+
+	public String getId() {
+		return id.toString();
+	}
 	
 	public void addCard(Card card) {
 		this.cards.add(card);
