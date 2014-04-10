@@ -1,21 +1,39 @@
 package es.unileon.ulebank.command;
 
-import es.unileon.ulebank.payments.Card;
+import es.unileon.ulebank.handler.CardHandler;
+import es.unileon.ulebank.handler.Handler;
+import es.unileon.ulebank.payments.Account;
 
 /**
  * @author Israel
  */
 public class CancelCardCommand implements Command {
-	private Card card;
-//	private Account account;
+	private Handler id;
+	private CardHandler cardId;
+	private Account account;
 	
-	public CancelCardCommand(Card card/*, Account account*/) {
-		this.card = card;
-//		this.account = account;
+	public CancelCardCommand(CardHandler cardId, Account account) {
+		this.cardId = cardId;
+		this.account = account;
 	}
 	
 	@Override
 	public void execute() {
-//		account.removeCard(this.card);
+		account.removeCard(this.cardId);
+	}
+
+	@Override
+	public void undo() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void redo() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Handler getId() {
+		return this.id;
 	}
 }

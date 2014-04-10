@@ -3,44 +3,68 @@ package es.unileon.ulebank.command;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import es.unileon.ulebank.handler.CardHandler;
+import es.unileon.ulebank.handler.Handler;
+import es.unileon.ulebank.payments.Account;
 import es.unileon.ulebank.payments.Card;
-import es.unileon.ulebank.strategy.StrategyCommissionCreditRenovate;
-import es.unileon.ulebank.strategy.StrategyCommissionDebitRenovate;
 
 /**
  * @author Israel
  */
 public class ReplacementCardCommand implements Command {
+	private Handler id;
 	private Card card;
+	private CardHandler cardId;
+	private Account account;
+	private String oldPin;
+	private String newPin;
+	private String oldCvv;
+	private String newCvv;
 	
-	public ReplacementCardCommand(Card card) {
-		this.card = card;
+	public ReplacementCardCommand(CardHandler cardId, Account account) {
+		this.cardId = cardId;
+		this.account = account;
 	}
 	
 	@Override
 	public void execute() {
 		try {
-			this.card.setPin(card.generatePinCode());
+			this.card = account.searchCard(cardId);
+			this.oldPin = card.getPin();
+			this.newPin = card.generatePinCode();
+			this.card.setPin(newPin);
+			this.oldCvv = card.getCvv();
+			this.newCvv = card.generateCVV();
+			this.card.setCvv(newCvv);
 		} catch (IOException e) {
 			Logger.getLogger(ReplacementCardCommand.class.toString()).log(Level.SEVERE, "Incorrect Pin");
 		}
-		this.card.setCvv(card.generateCVV());
 		
-		switch (card.getCardType()) {
-		case DEBIT:
-			this.card.setStrategy(new StrategyCommissionDebitRenovate());
-			break;
-		case CREDIT:
-			this.card.setStrategy(new StrategyCommissionCreditRenovate());
-			break;
-		case PURSE:
-			
-			break;
-		case REVOLVING:
-			
-			break;
-		default:
-			break;
+	}
+
+	@Override
+	public void undo() {
+		try {
+			this.card.setCvv(oldCvv);
+			this.card.setPin(oldPin);
+		} catch (IOException e) {
+			Logger.getLogger(ReplacementCardCommand.class.toString()).log(Level.SEVERE, null, e);
 		}
+	}
+
+	@Override
+	public void redo() {
+		try {
+			this.card.setCvv(newCvv);
+			this.card.setPin(newPin);
+		} catch (IOException e) {
+			Logger.getLogger(ReplacementCardCommand.class.toString()).log(Level.SEVERE, null, e);
+		}
+	}
+
+	@Override
+	public Handler getId() {
+		return this.id;
 	}
 }

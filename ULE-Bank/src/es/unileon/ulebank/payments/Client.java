@@ -1,5 +1,6 @@
 package es.unileon.ulebank.payments;
 
-public class Client {
 
+public class Client {
+	
 }

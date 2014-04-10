@@ -11,10 +11,10 @@ import es.unileon.ulebank.strategy.StrategyCommission;
  * @author Israel
  */
 public class Card {
-	private final int BUY_LIMIT_DIARY_DEFAULT = 400;
-	private final int BUY_LIMIT_MONTHLY_DEFAULT = 1000;
-	private final int CASH_LIMIT_DIARY_DEFAULT = 400;
-	private final int CASH_LIMIT_MONTHLY_DEFAULT = 1000;
+	private final float BUY_LIMIT_DIARY_DEFAULT = 400F;
+	private final float BUY_LIMIT_MONTHLY_DEFAULT = 1000F;
+	private final float CASH_LIMIT_DIARY_DEFAULT = 400F;
+	private final float CASH_LIMIT_MONTHLY_DEFAULT = 1000F;
 	private final int MINIMUM_LIMIT = 200;
 	private final int EXPIRATION_YEAR = 3;
 	private final int CVV_SIZE = 3;
@@ -22,10 +22,10 @@ public class Card {
 	
 	private CardHandler cardId;
 	private String pin;
-	private int buyLimitDiary;
-	private int buyLimitMonthly;
-	private int cashLimitDiary;
-	private int cashLimitMonthly;
+	private float buyLimitDiary;
+	private float buyLimitMonthly;
+	private float cashLimitDiary;
+	private float cashLimitMonthly;
 	private Calendar emissionDate;
 	private String expirationDate;
 	private CardType cardType;
@@ -35,7 +35,7 @@ public class Card {
 	private StrategyCommission commissionRenovate;
 	private Client owner;
 	private Account account;
-	private float limitDebt;
+	private float limitDebit;
 	
 	/**
 	 * Crea una nueva tarjeta con los parametros indicados
@@ -43,28 +43,35 @@ public class Card {
 	 * @param owner
 	 * @param account
 	 * @param type
+	 * @param buyLimitDiary
+	 * @param buyLimitMonthly
+	 * @param cashLimitDiary
+	 * @param cashLimitMonthly
 	 * @param commissionEmission
 	 * @param commissionMaintenance
 	 * @param commissionRenovate
+	 * @param limitDebit
 	 */
 	public Card(CardHandler cardId, Client owner, Account account, CardType type,
+			int buyLimitDiary, int buyLimitMonthly, int cashLimitDiary, int cashLimitMonthly,
 			StrategyCommission commissionEmission, StrategyCommission commissionMaintenance, 
-			StrategyCommission commissionRenovate) {
+			StrategyCommission commissionRenovate, float limitDebit) {
 		this.cardId = cardId;
 		this.owner = owner;
 		this.account = account;
 		this.cardType = type;
 		this.pin = generatePinCode();
-		this.buyLimitDiary = BUY_LIMIT_DIARY_DEFAULT;
-		this.buyLimitMonthly = BUY_LIMIT_MONTHLY_DEFAULT;
-		this.cashLimitDiary = CASH_LIMIT_DIARY_DEFAULT;
-		this.cashLimitMonthly = CASH_LIMIT_MONTHLY_DEFAULT;
+		this.buyLimitDiary = buyLimitDiary;
+		this.buyLimitMonthly = buyLimitMonthly;
+		this.cashLimitDiary = cashLimitDiary;
+		this.cashLimitMonthly = cashLimitMonthly;
 		this.emissionDate = generateEmissionDate();
 		this.expirationDate = generateExpirationDate();
 		this.cvv = this.generateCVV();
 		this.commissionEmission = commissionEmission;
 		this.commissionMaintenance = commissionMaintenance;
 		this.commissionRenovate = commissionRenovate;
+		this.limitDebit = limitDebit;
 	}
 	
 	public Card(CardType type) {
@@ -170,18 +177,18 @@ public class Card {
 	 * Devuelve el limite de la tarjeta diario para compras
 	 * @return
 	 */
-	public int getBuyLimitDiary() {
+	public float getBuyLimitDiary() {
 		return this.buyLimitDiary;
 	}
 	
 	/**
 	 * Cambia el linmite de la tarjeta diario para compras
-	 * @param buyLimit
+	 * @param newAmount
 	 * @throws IncorrectLimitException 
 	 */
-	public void setBuyLimitDiary(int buyLimit) throws IncorrectLimitException {
-		if (this.buyLimitMonthly > buyLimit && buyLimit >= MINIMUM_LIMIT) {
-			this.buyLimitDiary = buyLimit;
+	public void setBuyLimitDiary(float newAmount) throws IncorrectLimitException {
+		if (this.buyLimitMonthly > newAmount && newAmount >= MINIMUM_LIMIT) {
+			this.buyLimitDiary = newAmount;
 		} else {
 			throw new IncorrectLimitException("The limit is bigger than current monthly limit");
 		}
@@ -204,7 +211,7 @@ public class Card {
 	 * Devuelve el limite de la tarjeta mensual para compras
 	 * @return
 	 */
-	public int getBuyLimitMonthly() {
+	public float getBuyLimitMonthly() {
 		return buyLimitMonthly;
 	}
 
@@ -213,9 +220,9 @@ public class Card {
 	 * @param buyLimit
 	 * @throws IncorrectLimitException 
 	 */
-	public void setBuyLimitMonthly(int buyLimitMonthly) throws IncorrectLimitException {
-		if (buyLimitMonthly >= this.buyLimitDiary && buyLimitMonthly >= MINIMUM_LIMIT) {
-			this.buyLimitMonthly = buyLimitMonthly;
+	public void setBuyLimitMonthly(float newAmount) throws IncorrectLimitException {
+		if (newAmount >= this.buyLimitDiary && newAmount >= MINIMUM_LIMIT) {
+			this.buyLimitMonthly = newAmount;
 		} else {
 			throw new IncorrectLimitException("Monthly limit must be greater than diary limit");
 		}
@@ -225,7 +232,7 @@ public class Card {
 	 * Devuelve el limite de la tarjeta para extracciones en cajeros
 	 * @return
 	 */
-	public int getCashLimitDiary() {
+	public float getCashLimitDiary() {
 		return this.cashLimitDiary;
 	}
 	
@@ -233,9 +240,9 @@ public class Card {
 	 * Cambia el limite de la tarjeta para extracciones en cajeros
 	 * @throws IncorrectLimitException 
 	 */
-	public void setCashLimitDiary(int cashLimit) throws IncorrectLimitException {
-		if (this.cashLimitMonthly >= cashLimit && cashLimit >= MINIMUM_LIMIT) {
-			this.cashLimitDiary = cashLimit;
+	public void setCashLimitDiary(float newAmount) throws IncorrectLimitException {
+		if (this.cashLimitMonthly >= newAmount && newAmount >= MINIMUM_LIMIT) {
+			this.cashLimitDiary = newAmount;
 		} else {
 			throw new IncorrectLimitException("The limit is bigger than current monthly limit");
 		}
@@ -258,18 +265,18 @@ public class Card {
 	 * Devuelve la cantidad maxima para extraer en cajero mensual
 	 * @return
 	 */
-	public int getCashLimitMonthly() {
+	public float getCashLimitMonthly() {
 		return cashLimitMonthly;
 	}
 
 	/**
 	 * Cambia la cantidad maxima para extraer en un cajero al mes
-	 * @param cashLimitMonthly
+	 * @param newAmount
 	 * @throws IncorrectLimitException 
 	 */
-	public void setCashLimitMonthly(int cashLimitMonthly) throws IncorrectLimitException {
-		if (cashLimitMonthly >= this.cashLimitDiary && cashLimitMonthly >= MINIMUM_LIMIT) {
-			this.cashLimitMonthly = cashLimitMonthly;
+	public void setCashLimitMonthly(float newAmount) throws IncorrectLimitException {
+		if (newAmount >= this.cashLimitDiary && newAmount >= MINIMUM_LIMIT) {
+			this.cashLimitMonthly = newAmount;
 		} else {
 			throw new IncorrectLimitException("Monthly limit must be greater than diary limit");
 		}
@@ -340,15 +347,15 @@ public class Card {
 	 * Devuelve el numero de la tarjeta
 	 * @return
 	 */
-	public String getCardNumber() {
-		return cardId.getCardNumber();
+	public CardHandler getCardNumber() {
+		return cardId;
 	}
 
 	/**
 	 * Devuelve el limite diario de compra por defecto
 	 * @return
 	 */
-	public int getBuyLimitDiaryDefault() {
+	public float getBuyLimitDiaryDefault() {
 		return BUY_LIMIT_DIARY_DEFAULT;
 	}
 
@@ -356,7 +363,7 @@ public class Card {
 	 * Devuelve el limite mensual de compra por defecto
 	 * @return
 	 */
-	public int getBuyLimitMonthlyDefault() {
+	public float getBuyLimitMonthlyDefault() {
 		return BUY_LIMIT_MONTHLY_DEFAULT;
 	}
 
@@ -364,7 +371,7 @@ public class Card {
 	 * Devuelve el limite diario de extraccion en cajero por defecto
 	 * @return
 	 */
-	public int getCashLimitDiaryDefault() {
+	public float getCashLimitDiaryDefault() {
 		return CASH_LIMIT_DIARY_DEFAULT;
 	}
 
@@ -372,7 +379,7 @@ public class Card {
 	 * Devuelve el limite mensual de extraccion en cajero por defecto
 	 * @return
 	 */
-	public int getCashLimitMonthlyDefault() {
+	public float getCashLimitMonthlyDefault() {
 		return CASH_LIMIT_MONTHLY_DEFAULT;
 	}
 
@@ -432,11 +439,11 @@ public class Card {
 		return account;
 	}
 
-	public float getLimitDebt() {
-		return limitDebt;
+	public float getLimitDebit() {
+		return limitDebit;
 	}
 
-	public void setLimitDebt(float limitDebt) {
-		this.limitDebt = limitDebt;
+	public void setLimitDebit(float limitDebt) {
+		this.limitDebit = limitDebt;
 	}
 }
