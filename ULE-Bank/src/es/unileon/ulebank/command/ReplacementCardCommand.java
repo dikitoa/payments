@@ -3,7 +3,9 @@ package es.unileon.ulebank.command;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import es.unileon.ulebank.handler.CardHandler;
+import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.payments.Account;
 import es.unileon.ulebank.payments.Card;
@@ -22,6 +24,7 @@ public class ReplacementCardCommand implements Command {
 	private String newCvv;
 	
 	public ReplacementCardCommand(CardHandler cardId, Account account) {
+		this.id = new CommandHandler(cardId);
 		this.cardId = cardId;
 		this.account = account;
 	}

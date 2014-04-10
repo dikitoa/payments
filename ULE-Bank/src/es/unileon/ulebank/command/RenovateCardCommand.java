@@ -3,7 +3,9 @@ package es.unileon.ulebank.command;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import es.unileon.ulebank.handler.CardHandler;
+import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.payments.Account;
 import es.unileon.ulebank.payments.Card;
@@ -22,14 +24,17 @@ public class RenovateCardCommand implements Command {
 	private String newExpirationDate;
 	
 	public RenovateCardCommand(CardHandler cardId, Account account) {
+		this.id = new CommandHandler(cardId);
 		this.cardId = cardId;
+		this.account = account;
 	}
 	
 	@Override
 	public void execute() {
 		try {
 			this.account.searchCard(cardId);
-			this.newCvv = this.card.getCvv();
+			this.oldCvv = this.card.getCvv();
+			this.oldExpirationDate = card.getExpirationDate();
 			this.newExpirationDate = card.generateExpirationDate();
 			this.card.setExpirationDate(newExpirationDate);
 			this.newCvv = card.generateCVV();

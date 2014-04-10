@@ -9,8 +9,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
-import es.unileon.ulebank.payments.CardType;
-import es.unileon.ulebank.payments.DebitCard;
+import es.unileon.ulebank.handler.CardHandler;
+import es.unileon.ulebank.strategy.StrategyCommission;
+import es.unileon.ulebank.strategy.StrategyCommissionDebitEmission;
+import es.unileon.ulebank.strategy.StrategyCommissionDebitMaintenance;
+import es.unileon.ulebank.strategy.StrategyCommissionDebitRenovate;
 
 public class DebitCardTest {
 
@@ -18,8 +21,13 @@ public class DebitCardTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		testCard = new DebitCard();
-		testCard.create();
+		CardHandler handler = new CardHandler();
+		Client client = new Client();
+		Account account = new Account();
+		StrategyCommission commissionEmission = new StrategyCommissionDebitEmission(client, testCard, 25);
+		StrategyCommission commissionMaintenance = new StrategyCommissionDebitMaintenance(client, testCard, 0);
+		StrategyCommission commissionRenovate = new StrategyCommissionDebitRenovate(client, testCard, 0);
+		testCard = new DebitCard(handler, client, account, 400F, 1000F, 400F, 1000F, commissionEmission, commissionMaintenance, commissionRenovate, 0);
 	}
 
 	@Test (expected = NullPointerException.class)
@@ -52,15 +60,6 @@ public class DebitCardTest {
 	public void testGetCardId() {
 		System.out.println(testCard.getCardId());
 		assertTrue(testCard.getCardId().length() == 16 + 3); 
-		
-		testCard.setCardId("1234011234567890");
-		assertTrue(testCard.getCardId().equals("1234 0112 3456 7890"));
-	}
-
-	@Test
-	public void testSetCardId() {
-		testCard.setCardId("1234011029384756");
-		assertTrue(testCard.getCardId().equals("1234 0110 2938 4756"));
 	}
 
 	@Test
@@ -85,58 +84,58 @@ public class DebitCardTest {
 
 	@Test
 	public void testGetBuyLimitDiary() {
-		assertEquals(400, testCard.getBuyLimitDiary());
+		assertEquals("400.0", Float.toString(testCard.getBuyLimitDiary()));
 	}
 
 	@Test
 	public void testSetBuyLimitDiary() throws IncorrectLimitException {
-		testCard.setBuyLimitDiary(800);
-		assertEquals(800, testCard.getBuyLimitDiary());
+		testCard.setBuyLimitDiary(800F);
+		assertEquals("800.0", Float.toString(testCard.getBuyLimitDiary()));
 	}
 
 	@Test
 	public void testCheckBuyLimitDiary() throws IncorrectLimitException {
-		testCard.setBuyLimitDiary(500);
-		assertTrue(testCard.checkBuyLimitDiary(500));
+		testCard.setBuyLimitDiary(500F);
+		assertTrue(testCard.checkBuyLimitDiary(500F));
 	}
 
 	@Test
 	public void testGetBuyLimitMonthly() {
-		assertEquals(1000, testCard.getBuyLimitMonthly());
+		assertEquals("1000.0", Float.toString(testCard.getBuyLimitMonthly()));
 	}
 
 	@Test
 	public void testSetBuyLimitMonthly() throws IncorrectLimitException {
 		testCard.setBuyLimitMonthly(1500);
-		assertEquals(1500, testCard.getBuyLimitMonthly());
+		assertEquals("1500.0", Float.toString(testCard.getBuyLimitMonthly()));
 	}
 
 	@Test
 	public void testGetCashLimitDiary() {
-		assertEquals(400, testCard.getCashLimitDiary());
+		assertEquals("400.0", Float.toString(testCard.getCashLimitDiary()));
 	}
 
 	@Test
 	public void testSetCashLimitDiary() throws IncorrectLimitException {
-		testCard.setCashLimitDiary(800);
-		assertEquals(800, testCard.getCashLimitDiary());
+		testCard.setCashLimitDiary(800F);
+		assertEquals("800.0", Float.toString(testCard.getCashLimitDiary()));
 	}
 
 	@Test
 	public void testCheckCashLimitDiary() throws IncorrectLimitException {
-		testCard.setBuyLimitDiary(500);
-		assertTrue(testCard.checkBuyLimitDiary(500));
+		testCard.setBuyLimitDiary(500F);
+		assertTrue(testCard.checkBuyLimitDiary(500F));
 	}
 
 	@Test
 	public void testGetCashLimitMonthly() {
-		assertEquals(1000, testCard.getCashLimitMonthly());
+		assertEquals("1000.0", Float.toString(testCard.getCashLimitMonthly()));
 	}
 
 	@Test
 	public void testSetCashLimitMonthly() throws IncorrectLimitException {
 		testCard.setCashLimitMonthly(1200);
-		assertEquals(1200, testCard.getCashLimitMonthly());
+		assertEquals("1200.0", Float.toString(testCard.getCashLimitMonthly()));
 	}
 
 	@Test
@@ -168,7 +167,11 @@ public class DebitCardTest {
 
 	@Test
 	public void testSetCvv() {
-		testCard.setCvv("246");
+		try {
+			testCard.setCvv("246");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		assertTrue(testCard.getCvv().equals("246"));
 	}
 

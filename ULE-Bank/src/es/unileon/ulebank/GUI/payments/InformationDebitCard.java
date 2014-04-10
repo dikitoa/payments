@@ -8,29 +8,45 @@ package es.unileon.ulebank.GUI.payments;
 
 import java.awt.Desktop;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
+import es.unileon.ulebank.handler.CardHandler;
+import es.unileon.ulebank.payments.Account;
+import es.unileon.ulebank.payments.Client;
 import es.unileon.ulebank.payments.DebitCard;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+import es.unileon.ulebank.strategy.StrategyCommission;
+import es.unileon.ulebank.strategy.StrategyCommissionCreditRenovate;
+import es.unileon.ulebank.strategy.StrategyCommissionDebitEmission;
+import es.unileon.ulebank.strategy.StrategyCommissionDebitMaintenance;
+import es.unileon.ulebank.strategy.StrategyCommissionDebitRenovate;
 
 /**
  *
- * @author David Gómez Riesgo
+ * @author David Gomez Riesgo
  */
 public class InformationDebitCard extends javax.swing.JFrame {
 
     String dni;
     String accountNumber;
-    DebitCard card = new DebitCard();
+    DebitCard card;
+    CardHandler handler = new CardHandler();
+	Client client = new Client();
+	Account account = new Account();
+	StrategyCommission commissionEmission = new StrategyCommissionDebitEmission(client, card, 25);
+	StrategyCommission commissionMaintenance = new StrategyCommissionDebitMaintenance(client, card, 0);
+	StrategyCommission commissionRenovate = new StrategyCommissionDebitRenovate(client, card, 0);
+	
     
     /**
      * Creates new form InformationDevitCard1
      */
     public InformationDebitCard() {
+    	card = new DebitCard(handler, client, account, 400F, 1000F, 400F, 1000F, commissionEmission, commissionMaintenance, commissionRenovate, 0);
         initComponents();
     }
 
@@ -39,7 +55,6 @@ public class InformationDebitCard extends javax.swing.JFrame {
         this.dni=dni;
         this.accountNumber=accountNumber;
         
-        this.card.create();
         try {
 			this.card.setBuyLimitDiary(buyLimitDiary);
 			this.card.setCashLimitDiary(cashLimitDiary);
@@ -278,9 +293,9 @@ public class InformationDebitCard extends javax.swing.JFrame {
     private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField8ActionPerformed
-    //Abrimos el contrato de la tarjeta de débito
+    //Abrimos el contrato de la tarjeta de d��bito
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // Creamos un fichero de nombre el dni del usuario y dentro tendrá el numero de cuenta y  toda la informacion de la tarjeta.
+        // Creamos un fichero de nombre el dni del usuario y dentro tendr�� el numero de cuenta y  toda la informacion de la tarjeta.
         
         FileWriter fichero = null;
         PrintWriter pw = null;
@@ -298,7 +313,6 @@ public class InformationDebitCard extends javax.swing.JFrame {
             pw.println(card.getBuyLimitMonthly());
             pw.println(card.getExpirationDate());
             pw.println(card.getCvv());
-            pw.println(card.getCommission());
    
         } catch (IOException ex) {
             Logger.getLogger(InformationDebitCard.class.getName()).log(Level.SEVERE, null, ex);

@@ -3,7 +3,9 @@ package es.unileon.ulebank.command;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import es.unileon.ulebank.handler.CardHandler;
+import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.payments.Account;
 import es.unileon.ulebank.payments.Card;
@@ -20,6 +22,7 @@ public class ModifyPinCommand implements Command {
 	private String oldPin;
 	
 	public ModifyPinCommand(CardHandler cardId, Account account, String newPin) {
+		this.id = new CommandHandler(cardId);
 		this.cardId = cardId;
 		this.account = account;
 		this.newPin = newPin;
@@ -30,7 +33,7 @@ public class ModifyPinCommand implements Command {
 		try {
 			this.card = account.searchCard(cardId);
 			this.oldPin = card.getPin();
-			card.setPin(newPin);
+			this.card.setPin(newPin);
 		} catch (IOException e) {
 			Logger.getLogger(ModifyBuyLimitCommand.class.toString()).log(Level.SEVERE, "Incorrect Pin", e);
 		}

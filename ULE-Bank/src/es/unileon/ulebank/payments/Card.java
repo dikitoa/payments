@@ -1,7 +1,9 @@
 package es.unileon.ulebank.payments;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.CardHandler;
@@ -26,7 +28,7 @@ public class Card {
 	private float buyLimitMonthly;
 	private float cashLimitDiary;
 	private float cashLimitMonthly;
-	private Calendar emissionDate;
+	private String emissionDate;
 	private String expirationDate;
 	private CardType cardType;
 	private String cvv;
@@ -53,7 +55,7 @@ public class Card {
 	 * @param limitDebit
 	 */
 	public Card(CardHandler cardId, Client owner, Account account, CardType type,
-			int buyLimitDiary, int buyLimitMonthly, int cashLimitDiary, int cashLimitMonthly,
+			float buyLimitDiary, float buyLimitMonthly, float cashLimitDiary, float cashLimitMonthly,
 			StrategyCommission commissionEmission, StrategyCommission commissionMaintenance, 
 			StrategyCommission commissionRenovate, float limitDebit) {
 		this.cardId = cardId;
@@ -96,8 +98,10 @@ public class Card {
 	 * Genera la fecha de emision de la tarjeta
 	 * @return
 	 */
-	private Calendar generateEmissionDate() {
-		return Calendar.getInstance();
+	public String generateEmissionDate() {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		
+		return dateFormat.format(new Date());
 	}
 	
 	/**
@@ -199,8 +203,8 @@ public class Card {
 	 * @param price
 	 * @return
 	 */
-	public boolean checkBuyLimitDiary(int price) {
-		if (price >= buyLimitDiary) {
+	public boolean checkBuyLimitDiary(float price) {
+		if (price > buyLimitDiary) {
 			return false;
 		} else {
 			return true;
@@ -209,6 +213,14 @@ public class Card {
 	
 	/**
 	 * Devuelve el limite de la tarjeta mensual para compras
+	 * @return
+	 */
+	public float getCashLimitMonthly() {
+		return cashLimitMonthly;
+	}
+	
+	/**
+	 * Devuelve el limite de compra mensual
 	 * @return
 	 */
 	public float getBuyLimitMonthly() {
@@ -253,20 +265,12 @@ public class Card {
 	 * @param cash
 	 * @return
 	 */
-	public boolean checkCashLimitDiary(int cash) {
-		if (cash >= this.cashLimitDiary) {
+	public boolean checkCashLimitDiary(float cash) {
+		if (cash > this.cashLimitDiary) {
 			return false;
 		} else {
 			return true;
 		}
-	}
-	
-	/**
-	 * Devuelve la cantidad maxima para extraer en cajero mensual
-	 * @return
-	 */
-	public float getCashLimitMonthly() {
-		return cashLimitMonthly;
 	}
 
 	/**
@@ -286,7 +290,7 @@ public class Card {
 	 * Devuelve la fecha de emision de la tarjeta
 	 * @return
 	 */
-	public Calendar getEmissionDate() {
+	public String getEmissionDate() {
 		return emissionDate;
 	}
 
