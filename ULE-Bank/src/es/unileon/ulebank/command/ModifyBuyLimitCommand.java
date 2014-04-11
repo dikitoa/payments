@@ -18,11 +18,11 @@ public class ModifyBuyLimitCommand implements Command {
 	private CardHandler cardId;
 	private Account account;
 	private Card card;
-	private float newAmount;
-	private float oldAmount;
+	private double newAmount;
+	private double oldAmount;
 	private String type;
 	
-	public ModifyBuyLimitCommand(CardHandler cardId, Account account, float amount, String type) {
+	public ModifyBuyLimitCommand(CardHandler cardId, Account account, double amount, String type) {
 		this.id = new CommandHandler(cardId);
 		this.cardId = cardId;
 		this.account = account;

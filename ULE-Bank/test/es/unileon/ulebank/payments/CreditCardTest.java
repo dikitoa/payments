@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +31,7 @@ public class CreditCardTest {
 		StrategyCommission commissionEmission = new StrategyCommissionCreditEmission(client, testCard, 25);
 		StrategyCommission commissionMaintenance = new StrategyCommissionCreditMaintenance(client, testCard, 0);
 		StrategyCommission commissionRenovate = new StrategyCommissionCreditRenovate(client, testCard, 0);
-		testCard = new CreditCard(handler, client, account, 400F, 1000F, 400F, 1000F, commissionEmission, commissionMaintenance, commissionRenovate, 3000);
+		testCard = new CreditCard(handler, client, account, 400.0, 1000.0, 400.0, 1000.0, commissionEmission, commissionMaintenance, commissionRenovate, 3000.0);
 	}
 	
 	@Test (expected = NullPointerException.class)
@@ -50,7 +52,9 @@ public class CreditCardTest {
 
 	@Test
 	public void testGenerateEmissionDate() {
-		assertTrue(testCard.generateEmissionDate().equals("10/04/2014"));
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		String today = dateFormat.format(new Date());
+		assertTrue(testCard.generateEmissionDate().equals(today));
 	}
 	
 	@Test
@@ -90,58 +94,58 @@ public class CreditCardTest {
 
 	@Test
 	public void testGetBuyLimitDiary() {
-		assertEquals("400.0", Float.toString(testCard.getBuyLimitDiary()));
+		assertEquals(400.0, testCard.getBuyLimitDiary(), 0.0001);
 	}
 
 	@Test
 	public void testSetBuyLimitDiary() throws IncorrectLimitException {
-		testCard.setBuyLimitDiary(800F);
-		assertEquals("800.0", Float.toString(testCard.getBuyLimitDiary()));
+		testCard.setBuyLimitDiary(800.0);
+		assertEquals(800.0, testCard.getBuyLimitDiary(), 0.0001);
 	}
 
 	@Test
 	public void testCheckBuyLimitDiary() throws IncorrectLimitException {
-		testCard.setBuyLimitDiary(500F);
-		assertTrue(testCard.checkBuyLimitDiary(500F));
+		testCard.setBuyLimitDiary(500.0);
+		assertTrue(testCard.checkBuyLimitDiary(500.0));
 	}
 
 	@Test
 	public void testGetBuyLimitMonthly() {
-		assertEquals("1000.0", Float.toString(testCard.getBuyLimitMonthly()));
+		assertEquals(1000.0, testCard.getBuyLimitMonthly(), 0.0001);
 	}
 
 	@Test
 	public void testSetBuyLimitMonthly() throws IncorrectLimitException {
-		testCard.setBuyLimitMonthly(1500);
-		assertEquals("1500.0", Float.toString(testCard.getBuyLimitMonthly()));
+		testCard.setBuyLimitMonthly(1500.0);
+		assertEquals(1500.0, testCard.getBuyLimitMonthly(), 0.0001);
 	}
 
 	@Test
 	public void testGetCashLimitDiary() {
-		assertEquals("400.0", Float.toString(testCard.getCashLimitDiary()));
+		assertEquals(400.0, testCard.getCashLimitDiary(), 0.0001);
 	}
 
 	@Test
 	public void testSetCashLimitDiary() throws IncorrectLimitException {
-		testCard.setCashLimitDiary(800);
-		assertEquals("800.0", Float.toString(testCard.getCashLimitDiary()));
+		testCard.setCashLimitDiary(800.0);
+		assertEquals(800.0, testCard.getCashLimitDiary(), 0.0001);
 	}
 
 	@Test
 	public void testCheckCashLimitDiary() throws IncorrectLimitException {
-		testCard.setCashLimitDiary(500F);
-		assertTrue(testCard.checkCashLimitDiary(500F));
+		testCard.setCashLimitDiary(500.0);
+		assertTrue(testCard.checkCashLimitDiary(500.0));
 	}
 
 	@Test
 	public void testGetCashLimitMonthly() {
-		assertEquals("1000.0", Float.toString(testCard.getCashLimitMonthly()));
+		assertEquals(1000.0, testCard.getCashLimitMonthly(), 0.0001);
 	}
 
 	@Test
 	public void testSetCashLimitMonthly() throws IncorrectLimitException {
-		testCard.setCashLimitMonthly(1200);
-		assertEquals("1200.0", Float.toString(testCard.getCashLimitMonthly()));
+		testCard.setCashLimitMonthly(1200.0);
+		assertEquals(1200.0, testCard.getCashLimitMonthly(), 0.0001);
 	}
 
 	@Test

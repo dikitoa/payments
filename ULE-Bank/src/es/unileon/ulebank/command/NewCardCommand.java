@@ -18,19 +18,19 @@ public class NewCardCommand implements Command {
 	private Account account;
 	private CardType type;
 	private CardHandler cardId;
-	private int buyLimitDiary;
-	private int buyLimitMonthly;
-	private int cashLimitDiary;
-	private int cashLimitMonthly;
+	private double buyLimitDiary;
+	private double buyLimitMonthly;
+	private double cashLimitDiary;
+	private double cashLimitMonthly;
 	private StrategyCommission commissionEmission;
 	private StrategyCommission commissionMaintenance;
 	private StrategyCommission commissionRenovate;
-	private float limitDebit;
+	private double limitDebit;
 	
 	public NewCardCommand(Client owner, Account account, CardType type, 
-			int buyLimitDiary, int buyLimitMonthly, int cashLimitDiary, int cashLimitMonthly,
+			double buyLimitDiary, double buyLimitMonthly, double cashLimitDiary, double cashLimitMonthly,
 			StrategyCommission commissionEmission, StrategyCommission commissionMaintenance, 
-			StrategyCommission commissionRenovate, float limitDebit) {
+			StrategyCommission commissionRenovate, double limitDebit) {
 		this.account = account;
 		this.owner = owner;
 		this.type = type;

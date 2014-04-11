@@ -9,9 +9,9 @@ import es.unileon.ulebank.strategy.StrategyCommission;
 public class DebitCard extends Card {
 	
 	public DebitCard(CardHandler cardId, Client owner, Account account,
-			float buyLimitDiary, float buyLimitMonthly, float cashLimitDiary, float cashLimitMonthly,
+			double buyLimitDiary, double buyLimitMonthly, double cashLimitDiary, double cashLimitMonthly,
 			StrategyCommission commissionEmission, StrategyCommission commissionMaintenance, 
-			StrategyCommission commissionRenovate, float limitDebit) {
+			StrategyCommission commissionRenovate, double limitDebit) {
 		super(cardId, owner, account, CardType.DEBIT,
 				buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly,
 				commissionEmission, commissionMaintenance, commissionRenovate,
