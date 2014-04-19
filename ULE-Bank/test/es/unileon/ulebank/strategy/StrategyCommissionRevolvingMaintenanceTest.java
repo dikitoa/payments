@@ -5,6 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import es.unileon.ulebank.payments.Card;
+import es.unileon.ulebank.payments.Client;
+
 public class StrategyCommissionRevolvingMaintenanceTest {
 
 	/**
@@ -12,20 +15,25 @@ public class StrategyCommissionRevolvingMaintenanceTest {
 	 * 
 	 * Comprobamos que la comision para esta tarjeta siempre es 0
 	 */
-	
+	private Client owner;
+	private Card card;
+	private float quantity;
 	StrategyCommissionRevolvingMaintenance comision;
 	
 	@Before
 	public void SetUp(){
 		
-		comision  = new StrategyCommissionRevolvingMaintenance();
+		owner = new Client();
+		quantity = 1500;
+		comision  = new StrategyCommissionRevolvingMaintenance(owner, card, quantity);
 	}
 	
 	
 	@Test
 	public void testCalculateCommission() {
 		
-		assertEquals(0, comision.calculateCommission(),0);
+		
+		assertEquals(quantity, comision.calculateCommission(),0);
 	}
 
 }
