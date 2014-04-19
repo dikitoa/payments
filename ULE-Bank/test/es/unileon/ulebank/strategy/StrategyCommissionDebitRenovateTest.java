@@ -45,7 +45,8 @@ public class StrategyCommissionDebitRenovateTest {
 	public void testCalculateCommission2() {
 	
 		quantity = 3000;
-		assertEquals(DEFAULT_COMMISSION + quantity, renovate.calculateCommission(),0);
+		renovate = new StrategyCommissionDebitRenovate(owner, card, quantity);
+		assertEquals(renovate.calculateCommission(),DEFAULT_COMMISSION + quantity,0);
 	
 	}
 }

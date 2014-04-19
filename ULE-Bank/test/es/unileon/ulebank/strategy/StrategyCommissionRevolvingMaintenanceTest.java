@@ -32,8 +32,7 @@ public class StrategyCommissionRevolvingMaintenanceTest {
 	@Test
 	public void testCalculateCommission() {
 		
-		
-		assertEquals(quantity, comision.calculateCommission(),0);
+		assertEquals(quantity, comision.calculateCommission(), 0);
 	}
 
 }

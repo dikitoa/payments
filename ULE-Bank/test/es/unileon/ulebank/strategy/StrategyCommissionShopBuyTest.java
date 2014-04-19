@@ -25,8 +25,12 @@ public class StrategyCommissionShopBuyTest {
 
 	//REVISAR
 	@Test
-	public void testCalculateCommissionFloatFloat() {
-		assertEquals(0.75, comision.calculateCommission(),0);
+	public void testCalculateCommissionFloat() {
+		
+		this.interest = (float) 0.025; //Equals 2.5%
+		this.quantity = 30F;
+		this.comision = new StrategyCommissionShopBuy(quantity, interest);
+		assertEquals(this.comision.calculateCommission(), 0.75,0);
 	}
 
 }

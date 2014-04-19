@@ -46,6 +46,7 @@ public class StrategyCommissionCreditMaintenanceTest {
 	public void testCalculateCommission2() {
 		
 		quantity=3000;
+		comision = new StrategyCommissionCreditMaintenance(owner, card, quantity);
 		assertEquals(DEFAULT_COMMISSION + quantity, comision.calculateCommission(), 0);
 	}
 }

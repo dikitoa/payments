@@ -35,33 +35,47 @@ public class StrategyCommissionDebitMaintenanceTest {
 	}
 	
 	/**
-	 * Comprobamos que  el resultado de la emision de la comision
-	 * es siempre cero.
+	 * Comprobamos que si el cliente tiene menos de 26 anos 
+	 * su comision no consta.
 	 */
 	
 	@Test
 	public void testCalculateCommission1() {
+		
 		owner.setAge(18);
-		assertTrue(emision.calculateCommission()==0);
+		emision = new StrategyCommissionDebitMaintenance(owner, card, quantity);
+		assertTrue(emision.calculateCommission()!=0);
 	}
 
+	
 	@Test
 	public void testCalculateCommission2() {
+		
 		owner.setAge(18);
-		assertEquals(DEFAULT_COMMISSION+quantity, emision.calculateCommission(), 0);
+		emision = new StrategyCommissionDebitMaintenance(owner, card, quantity);
+		assertTrue(emision.calculateCommission()==quantity);
 	}
 	
 	
+	/**
+	 * Comprobamos que para un cliente mayor de 26 anos 
+	 * su emision de comision es la cuantia mas la comision.
+	 */
 	@Test
 	public void testCalculateCommission3() {
+		
 		owner.setAge(30);
-		assertFalse(emision.calculateCommission()!=0);
+		emision = new StrategyCommissionDebitMaintenance(owner, card, quantity);
+		assertFalse(emision.calculateCommission()==0);
 	}
 
+	
 	@Test
 	public void testCalculateCommission4() {
+		
 		owner.setAge(30);
-		assertTrue(emision.calculateCommission()==quantity);
+		emision = new StrategyCommissionDebitMaintenance(owner, card, quantity);
+		assertTrue(emision.calculateCommission()==(DEFAULT_COMMISSION+quantity));
 	}
 	
 
