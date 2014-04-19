@@ -2,6 +2,10 @@ package es.unileon.ulebank.handler;
 
 import static org.junit.Assert.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,32 +17,36 @@ public class TransferHandlerTest {
 	private String receiver;
 	TransferHandler transferencia;
 	
+	
 	@Before
 	public void SetUp(){
 		
-		this.sender = sender.substring(sender.length()/2);
-		this.receiver = receiver.substring(receiver.length()/2);
-		this.id = this.sender + this.receiver + this.date;
 		transferencia = new TransferHandler(sender, receiver);
 	}
 	
-	
-
 
 	@Test
-	public void testCompareTo() {
-		String a = "3";
-		String b = "3";
-		assertTrue(a.compareTo(b)==0);
+	public void testCompareTo1() {
+		
+		TransferHandler transferencia1 = new TransferHandler(sender, receiver);
+		TransferHandler transferencia2 = new TransferHandler(sender, receiver);
+		
+		assertTrue(transferencia1.compareTo(transferencia2)==0);
 	}
 
+	
+	@Test
+	public void testCompareTo2() {
+		
+		TransferHandler transferencia1 = new TransferHandler(sender, sender);
+		TransferHandler transferencia2 = new TransferHandler(sender, receiver);
+		
+		assertFalse(transferencia1.compareTo(transferencia2)==0);
+	}
+	
 	
 	@Test
 	public void testGetId() {
-		this.sender = sender.substring(sender.length()/2);
-		this.receiver = receiver.substring(receiver.length()/2);
-		this.id = this.sender + this.receiver + this.date;
-		transferencia = new TransferHandler(sender, receiver);
 		
 		assertTrue(transferencia.getId()==id);
 	}
