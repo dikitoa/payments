@@ -47,7 +47,7 @@ public class TransferHandler implements Handler {
 	 * Method that obtains the code from the date
 	 */
 	private void setDateCode(){
-		DateFormat dateFormat = new SimpleDateFormat("ddMMyyyyHH:mm:ss");
+		DateFormat dateFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
 		this.date = dateFormat.format(Calendar.getInstance().toString());
 	}
 }
