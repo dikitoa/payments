@@ -9,6 +9,10 @@ public class Account {
 	
 	private ArrayList<Card> cards;
 	private Handler id;
+	
+	public Account() {
+		this.cards = new ArrayList<Card>();
+	}
 
 	public String getId() {
 		return id.toString();

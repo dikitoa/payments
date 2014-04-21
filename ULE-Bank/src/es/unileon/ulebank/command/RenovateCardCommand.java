@@ -32,7 +32,7 @@ public class RenovateCardCommand implements Command {
 	@Override
 	public void execute() {
 		try {
-			this.account.searchCard(cardId);
+			this.card = this.account.searchCard(cardId);
 			this.oldCvv = this.card.getCvv();
 			this.oldExpirationDate = card.getExpirationDate();
 			this.newExpirationDate = card.generateExpirationDate();

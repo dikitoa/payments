@@ -25,6 +25,7 @@ public class ModifyCashLimitCommand implements Command {
 	public ModifyCashLimitCommand(CardHandler cardId, Account account, double amount, String type) {
 		this.id = new CommandHandler(cardId);
 		this.cardId = cardId;
+		this.account = account;
 		this.newAmount = amount;
 		this.type = type;
 	}
