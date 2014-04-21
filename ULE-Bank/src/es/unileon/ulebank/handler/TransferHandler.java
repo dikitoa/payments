@@ -31,8 +31,7 @@ public class TransferHandler implements Handler {
 	
 	@Override
 	public int compareTo(Handler another) {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.toString().compareTo(another.toString());
 	}
 	
 	/**

@@ -28,13 +28,12 @@ public class PaymentHandler implements Handler {
 	public PaymentHandler(String cardNumber, String concept, String date) throws PaymentHandlerException{
 		this.id = this.obtainInitials(cardNumber) + this.obtainChars(concept) + this.obtainFinals(date);
 		if (this.id.length() != this.LENGTH)
-			throw new PaymentHandlerException("Longitud de Payment Handler errónea");
+			throw new PaymentHandlerException("Longitud de Payment Handler errï¿½nea");
 	}
 
 	@Override
 	public int compareTo(Handler another) {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.toString().compareTo(another.toString());
 	}
 
 	/**

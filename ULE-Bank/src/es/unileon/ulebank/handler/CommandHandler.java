@@ -2,7 +2,6 @@ package es.unileon.ulebank.handler;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -28,8 +27,7 @@ public class CommandHandler implements Handler {
 	
 	@Override
 	public int compareTo(Handler another) {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.toString().compareTo(another.toString());
 	}
 	
 	/**
