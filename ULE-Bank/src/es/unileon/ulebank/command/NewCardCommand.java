@@ -1,6 +1,7 @@
 package es.unileon.ulebank.command;
 
 import es.unileon.ulebank.handler.CardHandler;
+import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.payments.Account;
 import es.unileon.ulebank.payments.Card;
@@ -12,7 +13,7 @@ import es.unileon.ulebank.strategy.StrategyCommission;
  * @author Israel
  */
 public class NewCardCommand implements Command {
-	
+	private Card card;
 	private Handler id;
 	private Client owner;
 	private Account account;
@@ -31,6 +32,8 @@ public class NewCardCommand implements Command {
 			double buyLimitDiary, double buyLimitMonthly, double cashLimitDiary, double cashLimitMonthly,
 			StrategyCommission commissionEmission, StrategyCommission commissionMaintenance, 
 			StrategyCommission commissionRenovate, double limitDebit) {
+		cardId = new CardHandler();
+		this.id = new CommandHandler(cardId);
 		this.account = account;
 		this.owner = owner;
 		this.type = type;
@@ -46,14 +49,14 @@ public class NewCardCommand implements Command {
 	
 	@Override
 	public void execute() {
-		cardId = new CardHandler();
-		Card card = new Card(cardId, owner, account, type, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, commissionMaintenance, commissionRenovate, limitDebit);
+		this.card = new Card(cardId, owner, account, type, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, commissionMaintenance, commissionRenovate, limitDebit);
 		account.addCard(card);
 	}
 
 	@Override
 	public void undo() {
-		new CancelCardCommand(cardId, account);
+		CancelCardCommand cancel = new CancelCardCommand(cardId, account);
+		cancel.execute();
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import es.unileon.ulebank.handler.CardHandler;
+import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.payments.Account;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.Client;
@@ -33,7 +34,7 @@ public class RenovateCardCommandTest {
 	
 	@Before
 	public void setUp() {
-		handler1= new CardHandler();
+		handler1 = new CardHandler();
 		handler2 = new CardHandler();
 		client = new Client();
 		account = new Account();
@@ -66,11 +67,12 @@ public class RenovateCardCommandTest {
 	@Test
 	public void testCommandId() {
 		test = new RenovateCardCommand(handler1, account);
-		assertTrue(this.handler1.compareTo(card1.getCardNumber()) == 0);
+		CommandHandler handler = (CommandHandler) test.getId();
+		assertTrue(this.handler1.compareTo(handler.getId()) == 0);
 	}
 	
 	@Test
-	public void testRenovateCreditCardOK() {
+	public void testRenovateCreditCard() {
 		test = new RenovateCardCommand(handler2, account);
 		assertEquals("04/14", this.card2.getExpirationDate());
 		assertEquals("123", this.card2.getCvv());
@@ -80,7 +82,36 @@ public class RenovateCardCommandTest {
 	}
 	
 	@Test
-	public void testRenovateDebitCardOK() {
+	public void testUndoRenovateCreditCard() {
+		test = new RenovateCardCommand(handler2, account);
+		assertEquals("04/14", this.card2.getExpirationDate());
+		assertEquals("123", this.card2.getCvv());
+		test.execute();
+		assertTrue(!this.card2.getExpirationDate().equals("04/14"));
+		assertTrue(!this.card2.getCvv().equals("123"));
+		test.undo();
+		assertEquals("04/14", this.card2.getExpirationDate());
+		assertEquals("123", this.card2.getCvv());
+	}
+	
+	@Test
+	public void testRedoRenovateCreditCard() {
+		test = new RenovateCardCommand(handler2, account);
+		assertEquals("04/14", this.card2.getExpirationDate());
+		assertEquals("123", this.card2.getCvv());
+		test.execute();
+		assertTrue(!this.card2.getExpirationDate().equals("04/14"));
+		assertTrue(!this.card2.getCvv().equals("123"));
+		test.undo();
+		assertEquals("04/14", this.card2.getExpirationDate());
+		assertEquals("123", this.card2.getCvv());
+		test.redo();
+		assertTrue(!this.card2.getExpirationDate().equals("04/14"));
+		assertTrue(!this.card2.getCvv().equals("123"));
+	}
+	
+	@Test
+	public void testRenovateDebitCard() {
 		test = new RenovateCardCommand(handler1, account);
 		assertEquals("04/14", this.card1.getExpirationDate());
 		assertEquals("213", this.card1.getCvv());
@@ -89,5 +120,32 @@ public class RenovateCardCommandTest {
 		assertTrue(!this.card1.getCvv().equals("213"));
 	}
 	
+	@Test
+	public void testUndoRenovateDebitCard() {
+		test = new RenovateCardCommand(handler1, account);
+		assertEquals("04/14", this.card1.getExpirationDate());
+		assertEquals("213", this.card1.getCvv());
+		test.execute();
+		assertTrue(!this.card1.getExpirationDate().equals("04/14"));
+		assertTrue(!this.card1.getCvv().equals("213"));
+		test.undo();
+		assertEquals("04/14", this.card1.getExpirationDate());
+		assertEquals("213", this.card1.getCvv());
+	}
 	
+	@Test
+	public void testRedoRenovateDebitCard() {
+		test = new RenovateCardCommand(handler1, account);
+		assertEquals("04/14", this.card1.getExpirationDate());
+		assertEquals("213", this.card1.getCvv());
+		test.execute();
+		assertTrue(!this.card1.getExpirationDate().equals("04/14"));
+		assertTrue(!this.card1.getCvv().equals("213"));
+		test.undo();
+		assertEquals("04/14", this.card1.getExpirationDate());
+		assertEquals("213", this.card1.getCvv());
+		test.redo();
+		assertTrue(!this.card1.getExpirationDate().equals("04/14"));
+		assertTrue(!this.card1.getCvv().equals("213"));
+	}
 }

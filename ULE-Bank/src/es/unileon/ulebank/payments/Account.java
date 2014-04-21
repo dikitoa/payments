@@ -22,8 +22,9 @@ public class Account {
 		this.cards.add(card);
 	}
 
-	public void removeCard(CardHandler cardId) {
-		this.cards.remove(searchCard(cardId));
+	public boolean removeCard(CardHandler cardId) {
+		Card card = searchCard(cardId);
+		return this.cards.remove(card);
 	}
 	
 	public Card searchCard(CardHandler cardId) {
@@ -40,5 +41,8 @@ public class Account {
 		
 		return card;
 	}
-
+	
+	public int getCardAmount() {
+		return this.cards.size();
+	}
 }

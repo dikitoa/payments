@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.CardHandler;
@@ -157,10 +159,14 @@ public class Card {
 	 * @throws IOException 
 	 */
 	public void setPin(String pin) throws IOException {
-		if (pin.length() == PIN_SIZE) {
-			this.pin = pin;
+		if (checkStringNumber(pin)) {
+			if (pin.length() == PIN_SIZE) {
+				this.pin = pin;
+			} else {
+				throw new IOException("Incorrect length");
+			}
 		} else {
-			throw new IOException("Incorrect length");
+			throw new IOException("The pin must only contain numbers");
 		}
 	}
 	
@@ -340,10 +346,14 @@ public class Card {
 	 * @throws IOException 
 	 */
 	public void setCvv(String cvv) throws IOException {
-		if (cvv.length() == CVV_SIZE) {
-			this.cvv = cvv;
+		if (checkStringNumber(cvv)) {
+			if (cvv.length() == CVV_SIZE) {
+				this.cvv = cvv;
+			} else {
+				throw new IOException("Incorrect length");
+			}
 		} else {
-			throw new IOException("Incorrect length");
+			throw new IOException("The cvv must only contains numbers");
 		}
 	}
 
@@ -435,19 +445,51 @@ public class Card {
 		this.commissionRenovate = commissionRenovate;
 	}
 
+	/**
+	 * Devuelve el propietario de la tarjeta
+	 * @return
+	 */
 	public Client getOwner() {
 		return owner;
 	}
 
+	/**
+	 * Devuelve la cuenta a la que esta asociada la tarjeta
+	 * @return
+	 */
 	public Account getAccount() {
 		return account;
 	}
 
+	/**
+	 * Devuelve el limite de deuda de la tarjeta
+	 * @return
+	 */
 	public double getLimitDebit() {
 		return limitDebit;
 	}
 
+	/**
+	 * Cambia el limite de deuda de la tarjeta por el recibido
+	 * @param limitDebt
+	 */
 	public void setLimitDebit(double limitDebt) {
 		this.limitDebit = limitDebt;
+	}
+	
+	/**
+	 * Comprueba que el String recibido sea solo numerico
+	 * @param string
+	 * @return
+	 */
+	private boolean checkStringNumber(String string) {
+		Pattern pattern = Pattern.compile("^[0-9]*$");
+		Matcher matcher = pattern.matcher(string);
+		
+		if (matcher.find()) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
