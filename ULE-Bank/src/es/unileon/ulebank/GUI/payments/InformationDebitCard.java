@@ -24,6 +24,7 @@ import es.unileon.ulebank.strategy.StrategyCommissionCreditRenovate;
 import es.unileon.ulebank.strategy.StrategyCommissionDebitEmission;
 import es.unileon.ulebank.strategy.StrategyCommissionDebitMaintenance;
 import es.unileon.ulebank.strategy.StrategyCommissionDebitRenovate;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -323,7 +324,7 @@ public class InformationDebitCard extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
          // Creamos un fichero de nombre el dni del usuario y dentro tendr�� el numero de cuenta y  toda la informacion de la tarjeta.
-        
+        if(jCheckBox1.isSelected()==true){
         FileWriter fichero = null;
         PrintWriter pw = null;
         try
@@ -353,7 +354,15 @@ public class InformationDebitCard extends javax.swing.JFrame {
               e2.printStackTrace();
            }
         }
+         String msg = "The card has been created";
+             JOptionPane.showMessageDialog(null, msg, "Information", 1);
+             new DebitWindow().setVisible(true);
         dispose();
+        }else{
+             String msg = "The agreement is not accepted";
+             JOptionPane.showMessageDialog(null, msg, "Error", 0);
+             new DebitWindow().setVisible(true);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
  
 

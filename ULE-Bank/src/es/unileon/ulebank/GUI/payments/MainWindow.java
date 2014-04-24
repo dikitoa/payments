@@ -63,7 +63,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jMenu1.setText("New Card");
 
-        jMenuItem1.setText("New Devit Card");
+        jMenuItem1.setText("New Debit Card");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
