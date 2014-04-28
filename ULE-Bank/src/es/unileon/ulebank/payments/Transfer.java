@@ -75,9 +75,9 @@ public class Transfer {
 	 * @param quantity
 	 * @throws TransferException 
 	 */
-	public void transferMoney(Account sender, Account receiver, float quantity, String concept) throws TransferException{
-		if (sender.getBalance() >= quantity){
-			receiver.setBalance(receiver.getBalance() + quantity);
+	public void transferMoney(String concept) throws TransferException{
+		if (this.senderAccount.getBalance() >= quantity){
+			this.receiverAccount.setBalance(this.receiverAccount.getBalance() + quantity);
 			this.setAnnotation(new Transference(this, concept));
 		}
 		else
