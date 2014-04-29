@@ -1,8 +1,6 @@
 package es.unileon.ulebank.strategy;
 
-import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.Client;
-//import es.unileon.ulebank.client.Client;
 
 /**
  * @class StrategyCommissionDebitMaintenance
@@ -13,7 +11,6 @@ import es.unileon.ulebank.payments.Client;
 public class StrategyCommissionDebitMaintenance implements StrategyCommissionDebit {
 
 	private Client owner;
-	private Card card;
 	private float quantity;
 	private final int MAXIMUM_AGE = 26;
 	private final float DEFAULT_COMMISSION = 15;
@@ -21,11 +18,9 @@ public class StrategyCommissionDebitMaintenance implements StrategyCommissionDeb
 	/**
 	 * Class constructor
 	 * @param owner
-	 * @param card
 	 * @param quantity
 	 */
-	public StrategyCommissionDebitMaintenance(Client owner, Card card, float quantity){
-		this.card = card;
+	public StrategyCommissionDebitMaintenance(Client owner, float quantity){
 		this.owner = owner;
 		this.quantity = quantity;
 	}
@@ -33,7 +28,7 @@ public class StrategyCommissionDebitMaintenance implements StrategyCommissionDeb
 	@Override
 	public float calculateCommission() {
 		if (this.owner.getAge() >= this.MAXIMUM_AGE)
-			return this.DEFAULT_COMMISSION + this.quantity;
+			return this.DEFAULT_COMMISSION;
 		else
 			return this.quantity;
 	}

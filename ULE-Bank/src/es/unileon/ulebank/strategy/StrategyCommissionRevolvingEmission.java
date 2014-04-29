@@ -1,8 +1,5 @@
 package es.unileon.ulebank.strategy;
 
-import es.unileon.ulebank.payments.Card;
-import es.unileon.ulebank.payments.Client;
-//import es.unileon.ulebank.client.Client;
 
 /**
  * @class StrategyCommissionRevolvingEmission
@@ -12,19 +9,13 @@ import es.unileon.ulebank.payments.Client;
  */
 public class StrategyCommissionRevolvingEmission implements StrategyCommissionRevolving {
 
-	private Client owner;
-	private Card card;
 	private float quantity;
 	
 	/**
 	 * Class constructor
-	 * @param owner
-	 * @param card
 	 * @param quantity
 	 */
-	public StrategyCommissionRevolvingEmission(Client owner, Card card, float quantity){
-		this.card = card;
-		this.owner = owner;
+	public StrategyCommissionRevolvingEmission(float quantity){
 		this.quantity = quantity;
 	}
 

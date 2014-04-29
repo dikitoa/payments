@@ -21,8 +21,7 @@ public class CommandHandler implements Handler {
 	 */
 	public CommandHandler(Handler id){
 		this.id = id;
-		//TODO poner en formato con horas, minutos y segundos
-		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		DateFormat dateFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
 		this.date = dateFormat.format(new Date());
 	}
 	

@@ -1,8 +1,5 @@
 package es.unileon.ulebank.strategy;
 
-import es.unileon.ulebank.payments.Card;
-import es.unileon.ulebank.payments.Client;
-//import es.unileon.ulebank.client.Client;
 
 /**
  * @class StrategyCommissionCreditMaintenance
@@ -12,25 +9,20 @@ import es.unileon.ulebank.payments.Client;
  */
 public class StrategyCommissionCreditMaintenance implements StrategyCommissionCredit {
 
-	private Client owner;
-	private Card card;
-	private float quantity;
-	private final float DEFAULT_COMMISSION = 25;
+
+	private float quantity; ; //Commission quantity
 	
 	/**
 	 * Class constructor
-	 * @param card
 	 * @param quantity
 	 */
-	public StrategyCommissionCreditMaintenance(Client owner, Card card, float quantity){
-		this.card = card;
-		this.owner = owner;
+	public StrategyCommissionCreditMaintenance(float quantity){
 		this.quantity = quantity;
 	}
 
 	@Override
 	public float calculateCommission() {
-		return this.DEFAULT_COMMISSION + this.quantity;
+		return this.quantity;
 	}
 
 

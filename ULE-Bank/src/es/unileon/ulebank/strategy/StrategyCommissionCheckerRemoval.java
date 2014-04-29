@@ -1,6 +1,5 @@
 package es.unileon.ulebank.strategy;
 
-import es.unileon.ulebank.payments.Card;
 
 /**
  * @class StrategyCommissionCheckerRemoval
@@ -10,11 +9,9 @@ import es.unileon.ulebank.payments.Card;
  */
 public class StrategyCommissionCheckerRemoval implements StrategyCommission {
 
-	private Card card;
-	private float commission;
+	private float commission; ; //Commission quantity
 	
-	public StrategyCommissionCheckerRemoval(Card card, float commission){
-		this.card = card;
+	public StrategyCommissionCheckerRemoval(float commission){
 		this.commission = commission;
 	}
 	
@@ -22,7 +19,5 @@ public class StrategyCommissionCheckerRemoval implements StrategyCommission {
 	public float calculateCommission() {
 		return this.commission;
 	}
-
-
 
 }
