@@ -15,7 +15,7 @@ public class StrategyCommissionCheckerRemovalTest {
 	@Before
 	public void SetUp(){
 
-		comision = new StrategyCommissionCheckerRemoval(card);
+		comision = new StrategyCommissionCheckerRemoval(card, 0);
 	}
 	
 	@Test

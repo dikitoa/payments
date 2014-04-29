@@ -22,7 +22,7 @@ public class StrategyCommissionCheckerConsultationTest {
 	@Before
 	public void SetUp(){
 		
-		consulta = new StrategyCommissionCheckerConsultation(card);
+		consulta = new StrategyCommissionCheckerConsultation(card, 0);
 	}
 	
 	@Test

@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import es.unileon.ulebank.exceptions.SecurityCardException;
 import es.unileon.ulebank.exceptions.TransferException;
 import es.unileon.ulebank.payments.Transfer;
 

@@ -12,14 +12,16 @@ public class StrategyCommissionCheckerConsultation implements
 		StrategyCommissionChecker {
 
 	private Card card;
+	private float commission;
 	
-	public StrategyCommissionCheckerConsultation(Card card){
+	public StrategyCommissionCheckerConsultation(Card card, float commission){
 		this.card = card;
+		this.commission = commission;
 	}
 	
 	@Override
 	public float calculateCommission() {
-		return 0;
+		return this.commission;
 	}
 
 
