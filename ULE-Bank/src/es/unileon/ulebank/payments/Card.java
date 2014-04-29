@@ -14,7 +14,7 @@ import es.unileon.ulebank.strategy.StrategyCommission;
 /**
  * @author Israel
  */
-public class Card {
+public abstract class Card {
 	private final double BUY_LIMIT_DIARY_DEFAULT = 400.0;
 	private final double BUY_LIMIT_MONTHLY_DEFAULT = 1000.0;
 	private final double CASH_LIMIT_DIARY_DEFAULT = 400.0;

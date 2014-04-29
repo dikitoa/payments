@@ -15,22 +15,23 @@ public class StrategyCommissionCreditEmission implements StrategyCommissionCredi
 	private Client owner;
 	private Card card;
 	private float quantity;
-	private final float DEFAULT_COMMISSION = 0;
+	private float defaultCommission;
 	/**
 	 * Class constructor
 	 * @param owner
 	 * @param card
 	 * @param quantity
 	 */
-	public StrategyCommissionCreditEmission(Client owner, Card card, float quantity){
+	public StrategyCommissionCreditEmission(Client owner, Card card, float quantity, float defaultCommission){
 		this.card = card;
 		this.owner = owner;
 		this.quantity = quantity;
+		this.defaultCommission = defaultCommission;
 	}
 	
 	@Override
 	public float calculateCommission() {
-		return this.DEFAULT_COMMISSION + this.quantity;
+		return this.defaultCommission + this.quantity;
 	}
 
 

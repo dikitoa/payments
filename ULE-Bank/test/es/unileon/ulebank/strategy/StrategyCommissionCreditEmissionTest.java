@@ -24,7 +24,7 @@ public class StrategyCommissionCreditEmissionTest {
 
 		owner = new Client();
 		quantity = 1500;
-		emision = new StrategyCommissionCreditEmission(owner, null, quantity);
+		emision = new StrategyCommissionCreditEmission(owner, null, quantity, 0);
 		
 	}
 	
