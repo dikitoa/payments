@@ -1,5 +1,6 @@
 package es.unileon.ulebank.payments;
 
+import es.unileon.ulebank.exceptions.TransferException;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.handler.TransferHandler;
 
@@ -15,18 +16,24 @@ public class Transfer {
 	private Account receiverAccount;
 	private float quantity;
 	private Handler id;
+	private Transference annotation;
 
 	/**
 	 * Class constructor
 	 * @param sender
 	 * @param receiver
 	 * @param quantity
+	 * @throws TransferException 
 	 */
-	public Transfer(Account sender, Account receiver, float quantity){
-		this.senderAccount = sender;
-		this.receiverAccount = receiver;
-		this.quantity = quantity;
-		this.id = new TransferHandler(sender.getId(), receiver.getId());
+	public Transfer(Account sender, Account receiver, float quantity) throws TransferException{
+		if (!sender.equals(receiver)){
+			this.senderAccount = sender;
+			this.receiverAccount = receiver;
+			this.quantity = quantity;
+			this.id = new TransferHandler(sender.getId(), receiver.getId());
+		}
+		else
+			throw new TransferException("Sender Account number and Receiver Account number are the same.");
 	}
 	
 	/**
@@ -66,10 +73,15 @@ public class Transfer {
 	 * @param sender
 	 * @param receiver
 	 * @param quantity
+	 * @throws TransferException 
 	 */
-	public void transferMoney(Account sender, Account receiver, float quantity){
-		
-		//TODO Implementar cuando este la clase conectada con Account
+	public void transferMoney(String concept) throws TransferException{
+		if (this.senderAccount.getBalance() >= quantity){
+			this.receiverAccount.setBalance(this.receiverAccount.getBalance() + quantity);
+			this.setAnnotation(new Transference(this, concept));
+		}
+		else
+			throw new TransferException("Sender Account has not the balance necessary.");
 	}
 
 	/**
@@ -78,6 +90,22 @@ public class Transfer {
 	 */
 	public String getId() {
 		return id.toString();
+	}
+
+	/**
+	 * Getter annotation
+	 * @return the annotation of the transfer
+	 */
+	public Transference getAnnotation() {
+		return annotation;
+	}
+
+	/**
+	 * Setter annotation
+	 * @param annotation
+	 */
+	public void setAnnotation(Transference annotation) {
+		this.annotation = annotation;
 	}
 
 }

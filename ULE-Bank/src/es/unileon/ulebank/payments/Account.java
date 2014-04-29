@@ -9,6 +9,7 @@ public class Account {
 	
 	private ArrayList<Card> cards;
 	private Handler id;
+	private float balance;
 	
 	public Account() {
 		this.cards = new ArrayList<Card>();
@@ -44,5 +45,13 @@ public class Account {
 	
 	public int getCardAmount() {
 		return this.cards.size();
+	}
+
+	public float getBalance() {
+		return balance;
+	}
+
+	public void setBalance(float balance) {
+		this.balance = balance;
 	}
 }

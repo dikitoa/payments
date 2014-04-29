@@ -10,7 +10,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -40,6 +42,7 @@ public class EditCardWindow extends javax.swing.JInternalFrame {
         jTextField4.setVisible(false);
         jTextField5.setVisible(false);
         jTextField6.setVisible(false);
+        jButton1.setVisible(false);
     }
 
     /**
@@ -71,6 +74,7 @@ public class EditCardWindow extends javax.swing.JInternalFrame {
         textField2 = new java.awt.TextField();
         button3 = new java.awt.Button();
         label1 = new java.awt.Label();
+        jButton1 = new javax.swing.JButton();
 
         jLabel2.setText("Change the data you change:");
 
@@ -82,7 +86,6 @@ public class EditCardWindow extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Select your card:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -90,6 +93,11 @@ public class EditCardWindow extends javax.swing.JInternalFrame {
         });
 
         jButton2.setText("Save changes");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Cash limit monthy:");
 
@@ -113,6 +121,13 @@ public class EditCardWindow extends javax.swing.JInternalFrame {
 
         label1.setText("Search Card for DNI :");
 
+        jButton1.setText("Accept");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -120,29 +135,30 @@ public class EditCardWindow extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jButton2)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel8)
-                            .addGap(18, 18, 18)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE))
-                        .addComponent(jLabel2)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel7)
-                                .addComponent(jLabel5)
-                                .addComponent(jLabel4)
-                                .addComponent(jLabel3))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
-                                .addComponent(jTextField3)
-                                .addComponent(jTextField4)
-                                .addComponent(jTextField5))))
+                    .addComponent(jButton2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                            .addComponent(jTextField3)
+                            .addComponent(jTextField4)
+                            .addComponent(jTextField5)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -157,7 +173,7 @@ public class EditCardWindow extends javax.swing.JInternalFrame {
                                 .addComponent(textField2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(19, 19, 19)
                                 .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addContainerGap(98, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,10 +190,12 @@ public class EditCardWindow extends javax.swing.JInternalFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(textField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(17, 17, 17)
+                .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel6)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -200,9 +218,9 @@ public class EditCardWindow extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton2)
-                .addContainerGap())
+                .addContainerGap(96, Short.MAX_VALUE))
         );
 
         pack();
@@ -251,6 +269,30 @@ public class EditCardWindow extends javax.swing.JInternalFrame {
         } catch (IOException ex) {
             Logger.getLogger(DebitWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        //Leemos del fichero de tarjetas nombrado con el dni los campos de la tarjeta
+        File archiveCard = new File("contratos/"+DNI+".txt");
+        String cardType, cardNumber = null;
+        try {
+            FileReader doc1 = new FileReader(archiveCard);
+            BufferedReader line = new BufferedReader(doc1);
+            
+                    //--Leemos hasta el número de tarjeta que es lo que queremos mostrar en el comboBox
+                    accountNumber=line.readLine();
+                    cardType=line.readLine();
+                    cardNumber=line.readLine();
+                    //---------------------------------------
+                
+                    jComboBox1.addItem(cardNumber);
+            
+        }catch(FileNotFoundException ex) {
+            Logger.getLogger(DebitWindow.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(DebitWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        textField1.setEditable(false);
+        jButton1.setVisible(true);
     }//GEN-LAST:event_button1ActionPerformed
 
     //Cuando elija un numero de cuenta mostrar la etiqueta y el combo de tarjetas.
@@ -262,10 +304,134 @@ public class EditCardWindow extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String DNI = textField1.getText();
+        String PIN, cardNumber, cashLimitDiary, buyLimitDiary, cashLimitMonthly, buyLimitMonthly;
+        File archiveCard = new File("contratos/"+DNI+".txt");
+        try {
+            FileReader doc1 = new FileReader(archiveCard);
+            BufferedReader line = new BufferedReader(doc1);
+            
+            for (int i = 0; i <= 1 ; i++) {
+                line.readLine();
+            }
+            
+            cardNumber = line.readLine();
+            PIN = line.readLine();
+            cashLimitDiary = line.readLine();
+            buyLimitDiary = line.readLine();
+            cashLimitMonthly = line.readLine();
+            buyLimitMonthly = line.readLine();
+            
+            jTextField2.setText(PIN);
+            jTextField3.setText(cashLimitDiary);
+            jTextField4.setText(buyLimitDiary);
+            jTextField5.setText(cashLimitMonthly);
+            jTextField6.setText(buyLimitMonthly);
+            
+                    //--Leemos hasta el número de tarjeta que es lo que queremos mostrar en el comboBox
+                    /*accountNumber=line.readLine();
+                    cardType=line.readLine();
+                    cardNumber=line.readLine();*/
+                    //---------------------------------------
+                
+                    jComboBox1.addItem(cardNumber);
+            
+        }catch(FileNotFoundException ex) {
+            Logger.getLogger(DebitWindow.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(DebitWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        jLabel2.setVisible(true);
+        jLabel3.setVisible(true);
+        jLabel4.setVisible(true);
+        jLabel5.setVisible(true);
+        jLabel7.setVisible(true);
+        jLabel8.setVisible(true);
+        jTextField2.setVisible(true);
+        jTextField3.setVisible(true);
+        jTextField4.setVisible(true);
+        jTextField5.setVisible(true);
+        jTextField6.setVisible(true);
+        jButton2.setVisible(true);
+        
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
+        String DNI = textField1.getText();
+        String accountNumber, cardType, PIN, cardNumber, cashLimitDiary, buyLimitDiary, cashLimitMonthly, buyLimitMonthly, expirationDate, CVV;
+        File archiveCard = new File("contratos/"+DNI+".txt");
+        try {
+            FileReader doc1 = new FileReader(archiveCard);
+            BufferedReader line = new BufferedReader(doc1);
+            
+            accountNumber = line.readLine();
+            cardType = line.readLine();
+            cardNumber = line.readLine();
+            for(int i = 0; i < 5; i++)
+                line.readLine();
+            PIN = jTextField2.getText();
+            cashLimitDiary = jTextField3.getText();
+            buyLimitDiary = jTextField4.getText();
+            cashLimitMonthly = jTextField5.getText();
+            buyLimitMonthly = jTextField6.getText();
+            expirationDate = line.readLine();
+            CVV = line.readLine();
+            
+            
+                    FileWriter fichero = null;
+        PrintWriter pw = null;
+            try
+        {
+            fichero = new FileWriter("contratos/"+DNI+".txt");
+            pw = new PrintWriter(fichero);
+            pw.println(accountNumber);
+            pw.println(cardType);
+            pw.println(cardNumber);
+            pw.println(PIN);
+            pw.println(cashLimitDiary);
+            pw.println(buyLimitDiary);
+            pw.println(cashLimitMonthly);
+            pw.println(buyLimitMonthly);
+            pw.println(expirationDate);
+            pw.println(CVV);
+   
+        } catch (IOException ex) {
+            Logger.getLogger(InformationDebitCard.class.getName()).log(Level.SEVERE, null, ex);
+        }finally {
+           try {
+           // Nuevamente aprovechamos el finally para
+           // asegurarnos que se cierra el fichero.
+           if (null != fichero)
+              fichero.close();
+           } catch (Exception e2) {
+              e2.printStackTrace();
+           }
+        }
+            
+        }catch(FileNotFoundException ex) {
+            Logger.getLogger(DebitWindow.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(DebitWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        String msg = "The dates has been edited";
+             JOptionPane.showMessageDialog(null, msg, "Information", 1);
+             new DebitWindow().setVisible(true);
+
+        dispose();
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Button button1;
     private java.awt.Button button3;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel2;

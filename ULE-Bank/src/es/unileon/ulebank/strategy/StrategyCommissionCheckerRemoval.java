@@ -11,14 +11,16 @@ import es.unileon.ulebank.payments.Card;
 public class StrategyCommissionCheckerRemoval implements StrategyCommission {
 
 	private Card card;
+	private float commission;
 	
-	public StrategyCommissionCheckerRemoval(Card card){
+	public StrategyCommissionCheckerRemoval(Card card, float commission){
 		this.card = card;
+		this.commission = commission;
 	}
 	
 	@Override
 	public float calculateCommission() {
-		return 0;
+		return this.commission;
 	}
 
 
