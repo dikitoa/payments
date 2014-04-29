@@ -1,5 +1,7 @@
 package es.unileon.ulebank.strategy;
 
+import es.unileon.ulebank.exceptions.CommissionException;
+
 /**
  * @class StrategyCommissionDebitEmission
  * @author Rober dCR
@@ -15,9 +17,13 @@ public class StrategyCommissionDebitEmission implements StrategyCommissionDebit 
 	 * @param owner
 	 * @param card
 	 * @param quantity
+	 * @throws CommissionException 
 	 */
-	public StrategyCommissionDebitEmission(float quantity){
-		this.quantity = quantity;
+	public StrategyCommissionDebitEmission(float quantity) throws CommissionException{
+		if (quantity >= 0)
+			this.quantity = quantity;
+		else
+			throw new CommissionException("Commission can't been negative.");
 	}
 
 	@Override

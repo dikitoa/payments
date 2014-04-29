@@ -1,5 +1,7 @@
 package es.unileon.ulebank.strategy;
 
+import es.unileon.ulebank.exceptions.CommissionException;
+
 
 /**
  * @class StrategyCommissionRevolvingMaintenance
@@ -15,9 +17,13 @@ public class StrategyCommissionRevolvingMaintenance implements
 	/**
 	 * Class constructor
 	 * @param quantity
+	 * @throws CommissionException 
 	 */
-	public StrategyCommissionRevolvingMaintenance(float quantity){
-		this.quantity = quantity;
+	public StrategyCommissionRevolvingMaintenance(float quantity) throws CommissionException{
+		if (quantity >= 0)
+			this.quantity = quantity;
+		else
+			throw new CommissionException("Commission can't been negative.");
 	}
 	
 	@Override

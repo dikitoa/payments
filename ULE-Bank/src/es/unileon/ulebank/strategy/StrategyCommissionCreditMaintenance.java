@@ -1,5 +1,7 @@
 package es.unileon.ulebank.strategy;
 
+import es.unileon.ulebank.exceptions.CommissionException;
+
 
 /**
  * @class StrategyCommissionCreditMaintenance
@@ -15,9 +17,13 @@ public class StrategyCommissionCreditMaintenance implements StrategyCommissionCr
 	/**
 	 * Class constructor
 	 * @param quantity
+	 * @throws CommissionException 
 	 */
-	public StrategyCommissionCreditMaintenance(float quantity){
-		this.quantity = quantity;
+	public StrategyCommissionCreditMaintenance(float quantity) throws CommissionException{
+		if (quantity >= 0)
+			this.quantity = quantity;
+		else
+			throw new CommissionException("Commission can't been negative.");
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package es.unileon.ulebank.strategy;
 
+import es.unileon.ulebank.exceptions.CommissionException;
+
 
 /**
  * @class StrategyCommissionCheckerConsultation
@@ -12,8 +14,11 @@ public class StrategyCommissionCheckerConsultation implements
 
 	private float commission; ; //Commission quantity
 	
-	public StrategyCommissionCheckerConsultation(float commission){
-		this.commission = commission;
+	public StrategyCommissionCheckerConsultation(float commission) throws CommissionException{
+		if (commission >= 0)
+			this.commission = commission;
+		else
+			throw new CommissionException("Commission can't been negative.");
 	}
 	
 	@Override
