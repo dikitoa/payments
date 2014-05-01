@@ -1,0 +1,2 @@
+checker_consultation 0.00
+checker_removal 0.00
