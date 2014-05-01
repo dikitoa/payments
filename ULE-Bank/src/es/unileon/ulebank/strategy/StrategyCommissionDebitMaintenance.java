@@ -63,7 +63,7 @@ public class StrategyCommissionDebitMaintenance implements StrategyCommissionDeb
 
 		try {
 			// Open file
-			fileReader = new FileReader ("etc/maximum_ages.txt");
+			fileReader = new FileReader ("etc/commissions/maximum_ages.txt");
 			bufferReader = new BufferedReader(fileReader);
 
 			// Read file
@@ -112,7 +112,7 @@ public class StrategyCommissionDebitMaintenance implements StrategyCommissionDeb
 
 		try {
 			// Open file
-			fileReader = new FileReader ("etc/card_commissions.txt");
+			fileReader = new FileReader ("etc/commissions/card_commissions.txt");
 			bufferReader = new BufferedReader(fileReader);
 
 			// Read file
