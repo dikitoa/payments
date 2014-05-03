@@ -11,11 +11,11 @@ import es.unileon.ulebank.handler.TransferHandler;
  */
 public class Transfer {
 
-	private Account senderAccount;
-	private Account receiverAccount;
-	private float quantity;
-	private TransferHandler id;
-	private Transference annotation;
+	private Account senderAccount; //Account from transfer the money
+	private Account receiverAccount; //Account which receives the money
+	private float quantity; //Quantity of the transfer
+	private TransferHandler id; //Identifier
+	private Transference transaction; //Transaction of the transfer
 
 	/**
 	 * Class constructor
@@ -77,7 +77,7 @@ public class Transfer {
 	public void transferMoney(String concept) throws TransferException{
 		if (this.senderAccount.getBalance() >= quantity){
 			this.receiverAccount.setBalance(this.receiverAccount.getBalance() + quantity);
-			this.setAnnotation(new Transference(this, concept));
+			this.setTransaction(new Transference(this, concept)); //TODO - Actualizar a Transaction
 		}
 		else
 			throw new TransferException("Sender Account has not the balance necessary.");
@@ -92,19 +92,19 @@ public class Transfer {
 	}
 
 	/**
-	 * Getter annotation
+	 * Getter transaction
 	 * @return the annotation of the transfer
 	 */
-	public Transference getAnnotation() {
-		return annotation;
+	public Transference getTransaction() {
+		return transaction;
 	}
 
 	/**
-	 * Setter annotation
-	 * @param annotation
+	 * Setter transaction
+	 * @param transaction
 	 */
-	public void setAnnotation(Transference annotation) {
-		this.annotation = annotation;
+	public void setTransaction(Transference transaction) {
+		this.transaction = transaction;
 	}
 
 }

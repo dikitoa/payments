@@ -10,7 +10,7 @@ import es.unileon.ulebank.exceptions.CommissionException;
  */
 public class StrategyCommissionDebitEmission implements StrategyCommissionDebit {
 
-	private float quantity; ; //Commission quantity
+	private float quantity; //Commission establish by the employee
 
 	/**
 	 * Class constructor

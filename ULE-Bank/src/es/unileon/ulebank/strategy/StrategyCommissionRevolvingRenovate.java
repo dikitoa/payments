@@ -11,7 +11,7 @@ import es.unileon.ulebank.exceptions.CommissionException;
  */
 public class StrategyCommissionRevolvingRenovate implements StrategyCommissionRevolving {
 
-	private float quantity;
+	private float quantity; //Commission establish by the employee
 	
 	/**
 	 * Class constructor

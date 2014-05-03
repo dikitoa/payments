@@ -8,10 +8,9 @@ import es.unileon.ulebank.exceptions.CommissionException;
  * @date 19/03/2014
  * @brief Class that obtain Commision of Renovate (substitution, theft or damage) in Debit Cards
  */
-
 public class StrategyCommissionCreditRenovate implements StrategyCommissionCredit {
 
-	private float quantity; ; //Commission quantity
+	private float quantity; //Commission establish by the employee 
 
 	/**
 	 * Class constructor

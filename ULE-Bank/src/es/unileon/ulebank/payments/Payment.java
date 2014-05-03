@@ -8,6 +8,8 @@ import es.unileon.ulebank.exceptions.PaymentHandlerException;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.handler.PaymentHandler;
 
+//TODO - Cambiar a Transaction (Trabajo de Control)
+
 /**
  * Payment Class
  * @author Rober dCR
@@ -16,11 +18,11 @@ import es.unileon.ulebank.handler.PaymentHandler;
  */
 public class Payment {
 
-	private float quantity;
-	private String concept;
-	private Calendar paymentDate;
-	private Card payCard;
-	private Handler id_payment;
+	private float quantity; //Quantity of the payment
+	private String concept; //Concept of the payment
+	private Calendar paymentDate; //Date of the payment
+	private Card payCard; //Card with which is taken the payment
+	private Handler id_payment; //Identifier
 	
 	/**
 	 * Class constructor

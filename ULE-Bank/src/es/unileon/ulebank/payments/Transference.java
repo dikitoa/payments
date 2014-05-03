@@ -4,6 +4,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+//TODO - Cambiar a Transaction (Trabajo de Control)
+
 /**
  * Transference Class
  * @author Rober dCR

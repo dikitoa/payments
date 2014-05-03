@@ -18,7 +18,7 @@ import es.unileon.ulebank.payments.Client;
 public class StrategyCommissionDebitMaintenance implements StrategyCommissionDebit {
 
 	private Client owner; //Card owner
-	private float quantity; //Commission 
+	private float quantity; //Commission establish by the employee 
 	private int maximum_age; //Maximum age to differentiate commissions
 	private float default_commission; //Quantity of the default commission
 	//Strings for obtain the maximum age & default commission
