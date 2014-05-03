@@ -4,11 +4,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
+import es.unileon.ulebank.handler.AccountHandler;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.Handler;
+import es.unileon.ulebank.handler.IdDNI;
 import es.unileon.ulebank.payments.Account;
 import es.unileon.ulebank.payments.Card;
+import es.unileon.ulebank.payments.Office;
 
 /**
  * @author Israel
@@ -22,10 +25,10 @@ public class ModifyCashLimitCommand implements Command {
 	private double oldAmount;
 	private String type;
 	
-	public ModifyCashLimitCommand(CardHandler cardId, Account account, double amount, String type) {
+	public ModifyCashLimitCommand(CardHandler cardId, Office office, IdDNI dni, AccountHandler accountHandler, double amount, String type) {
 		this.id = new CommandHandler(cardId);
 		this.cardId = cardId;
-		this.account = account;
+		this.account = office.searchClient(dni).searchAccount(accountHandler);
 		this.newAmount = amount;
 		this.type = type;
 	}

@@ -37,8 +37,6 @@ public abstract class Card {
 	private StrategyCommission commissionEmission;
 	private StrategyCommission commissionMaintenance;
 	private StrategyCommission commissionRenovate;
-	private Client owner;
-	private Account account;
 	private double limitDebit;
 	
 	/**
@@ -56,13 +54,11 @@ public abstract class Card {
 	 * @param commissionRenovate
 	 * @param limitDebit
 	 */
-	public Card(CardHandler cardId, Client owner, Account account, CardType type,
+	public Card(CardHandler cardId, CardType type,
 			double buyLimitDiary, double buyLimitMonthly, double cashLimitDiary, double cashLimitMonthly,
 			StrategyCommission commissionEmission, StrategyCommission commissionMaintenance, 
 			StrategyCommission commissionRenovate, double limitDebit) {
 		this.cardId = cardId;
-		this.owner = owner;
-		this.account = account;
 		this.cardType = type;
 		this.pin = generatePinCode();
 		this.buyLimitDiary = buyLimitDiary;
@@ -76,10 +72,6 @@ public abstract class Card {
 		this.commissionMaintenance = commissionMaintenance;
 		this.commissionRenovate = commissionRenovate;
 		this.limitDebit = limitDebit;
-	}
-	
-	public Card(CardType type) {
-		this.cardType = type;
 	}
 
 	/**
@@ -325,14 +317,6 @@ public abstract class Card {
 	}
 
 	/**
-	 * Cambia el tipo de tarjeta por el indicado
-	 * @param cardType
-	 */
-	public void setCardType(CardType cardType) {
-		this.cardType = cardType;
-	}
-
-	/**
 	 * Devuelve el codigo de validacion CVV
 	 * @return
 	 */
@@ -401,8 +385,8 @@ public abstract class Card {
 	 * Devuelve la comision de emision de la tarjeta
 	 * @return
 	 */
-	public StrategyCommission getCommissionEmission() {
-		return commissionEmission;
+	public float getCommissionEmission() {
+		return commissionEmission.calculateCommission();
 	}
 
 	/**
@@ -417,8 +401,8 @@ public abstract class Card {
 	 * Devuelve la comisionde mantenimiento de la tarjeta
 	 * @return
 	 */
-	public StrategyCommission getCommissionMaintenance() {
-		return commissionMaintenance;
+	public float getCommissionMaintenance() {
+		return commissionMaintenance.calculateCommission();
 	}
 
 	/**
@@ -433,8 +417,8 @@ public abstract class Card {
 	 * Devuelve la comision de renovacion de la tarjeta
 	 * @return
 	 */
-	public StrategyCommission getCommissionRenovate() {
-		return commissionRenovate;
+	public float getCommissionRenovate() {
+		return commissionRenovate.calculateCommission();
 	}
 
 	/**
@@ -443,22 +427,6 @@ public abstract class Card {
 	 */
 	public void setCommissionRenovate(StrategyCommission commissionRenovate) {
 		this.commissionRenovate = commissionRenovate;
-	}
-
-	/**
-	 * Devuelve el propietario de la tarjeta
-	 * @return
-	 */
-	public Client getOwner() {
-		return owner;
-	}
-
-	/**
-	 * Devuelve la cuenta a la que esta asociada la tarjeta
-	 * @return
-	 */
-	public Account getAccount() {
-		return account;
 	}
 
 	/**

@@ -1,9 +1,12 @@
 package es.unileon.ulebank.command;
 
+import es.unileon.ulebank.handler.AccountHandler;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.Handler;
+import es.unileon.ulebank.handler.IdDNI;
 import es.unileon.ulebank.payments.Account;
+import es.unileon.ulebank.payments.Office;
 
 /**
  * @author Israel
@@ -13,10 +16,10 @@ public class CancelCardCommand implements Command {
 	private CardHandler cardId;
 	private Account account;
 	
-	public CancelCardCommand(CardHandler cardId, Account account) {
+	public CancelCardCommand(CardHandler cardId, Office office, IdDNI dni, AccountHandler account) {
 		this.id = new CommandHandler(cardId);
 		this.cardId = cardId;
-		this.account = account;
+		this.account = office.searchClient(dni).searchAccount(account);
 	}
 	
 	@Override

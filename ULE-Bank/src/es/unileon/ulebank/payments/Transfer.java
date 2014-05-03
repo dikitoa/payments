@@ -1,7 +1,6 @@
 package es.unileon.ulebank.payments;
 
 import es.unileon.ulebank.exceptions.TransferException;
-import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.handler.TransferHandler;
 
 /**
@@ -15,7 +14,7 @@ public class Transfer {
 	private Account senderAccount;
 	private Account receiverAccount;
 	private float quantity;
-	private Handler id;
+	private TransferHandler id;
 	private Transference annotation;
 
 	/**
@@ -30,7 +29,7 @@ public class Transfer {
 			this.senderAccount = sender;
 			this.receiverAccount = receiver;
 			this.quantity = quantity;
-			this.id = new TransferHandler(sender.getId(), receiver.getId());
+			this.id = new TransferHandler(sender.getId().toString(), receiver.getId().toString());
 		}
 		else
 			throw new TransferException("Sender Account number and Receiver Account number are the same.");
