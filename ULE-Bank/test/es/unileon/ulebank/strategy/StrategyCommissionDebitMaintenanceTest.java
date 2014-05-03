@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import es.unileon.ulebank.exceptions.CommissionException;
+import es.unileon.ulebank.handler.IdDNI;
 import es.unileon.ulebank.payments.Client;
 
 
@@ -34,7 +35,7 @@ public class StrategyCommissionDebitMaintenanceTest {
 	public void SetUp() throws NumberFormatException, CommissionException, IOException{
 	
 		quantity = 15;
-		owner.setAge(20);
+		this.owner = new Client(new IdDNI(71034506, 'H'), 20);
 		commission = new StrategyCommissionDebitMaintenance(owner, quantity);
 	}
 	
@@ -89,23 +90,15 @@ public class StrategyCommissionDebitMaintenanceTest {
 	
 	/**
 	 * Comprueba que se lanza la excepcion de la comision correctamente por el metodo try/catch
+	 * @throws IOException 
+	 * @throws CommissionException 
+	 * @throws NumberFormatException 
 	 */
-	@Test
-	public void testCalculateNegativeCommission() {
+	@Test (expected = CommissionException.class)
+	public void testCalculateNegativeCommission() throws NumberFormatException, CommissionException, IOException {
 		
 		quantity = -10;
-		try {
-			commission = new StrategyCommissionDebitMaintenance(owner, quantity);
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (CommissionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		commission = new StrategyCommissionDebitMaintenance(owner, quantity);
 	}
 	
 	

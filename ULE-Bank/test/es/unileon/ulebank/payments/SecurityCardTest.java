@@ -9,9 +9,11 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
+import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.SecurityCardException;
+import es.unileon.ulebank.handler.CardHandler;
+import es.unileon.ulebank.handler.IdDNI;
 import es.unileon.ulebank.payments.Card;
-import es.unileon.ulebank.payments.CardType;
 import es.unileon.ulebank.payments.SecurityCard;
 
 /**
@@ -25,8 +27,8 @@ public class SecurityCardTest {
 	public SecurityCard secCard;
 
 	@Before
-	public void setUp() throws IOException{
-		this.card = new Card(CardType.CREDIT);
+	public void setUp() throws IOException, CommissionException{
+		this.card = new CreditCard(new CardHandler(), new Client(new IdDNI(71034506,'H'),20), null, 0, 0, 0, 0, 0, 0, 0, 0);
 		this.card.setPin("0000");
 		this.secCard = new SecurityCard(this.card);
 	}
