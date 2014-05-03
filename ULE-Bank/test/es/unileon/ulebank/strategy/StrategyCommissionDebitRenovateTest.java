@@ -1,52 +1,82 @@
 package es.unileon.ulebank.strategy;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.*; 
 
 import org.junit.Before;
 import org.junit.Test;
 
-import es.unileon.ulebank.payments.Card;
-import es.unileon.ulebank.payments.Client;
+import es.unileon.ulebank.exceptions.CommissionException;
+
+/**
+ * @author Marta
+ * 
+ */
 
 public class StrategyCommissionDebitRenovateTest {
-
-	/**
-	 * @author Marta
-	 * 
-	 * Comprobamos que la comision para esta tarjeta siempre es 20 mas la cantidad del cliente
-	 */
 	
-	private Client owner;
-	private Card card;
+	StrategyCommissionDebitRenovate comission;	
 	private float quantity;
-	private final float DEFAULT_COMMISSION = 20;
-	StrategyCommissionDebitRenovate renovate;
 
 	
 	/**
 	 * Inicializamos los valores para la realización de los tests
+	 * @throws CommissionException 
 	 */
 	@Before
-	public void SetUp(){
+	public void SetUp() throws CommissionException{
 		
-		owner = new Client();
-		quantity = 1500;
-		renovate = new StrategyCommissionDebitRenovate(owner, card, quantity);
+		quantity = 15;
+		comission = new StrategyCommissionDebitRenovate(quantity);
 	}
 	
+	
+	/**
+	 * Comprueba que la comision se calcula correctamente
+	 */
 	@Test
-	public void testCalculateCommission1() {
-	
-		assertEquals(DEFAULT_COMMISSION + quantity, renovate.calculateCommission(),0);
-	
+	public void testCalculateCommissionTrue() {
+		
+		assertTrue(comission.calculateCommission()==quantity);
 	}
+
 	
+	/**
+	 * Comprueba que la comision se calcula correctamente
+	 */
 	@Test
-	public void testCalculateCommission2() {
-	
-		quantity = 3000;
-		renovate = new StrategyCommissionDebitRenovate(owner, card, quantity);
-		assertEquals(renovate.calculateCommission(),DEFAULT_COMMISSION + quantity,0);
-	
+	public void testCalculateCommissionFalse() {
+
+		assertFalse(comission.calculateCommission()==0);
 	}
+	
+	
+	/**
+	 * Comprueba que se lanza la excepcion de la comision correctamente por el metodo try/catch
+	 */
+	@Test
+	public void testCalculateNegativeCommission() {
+		
+		quantity = -10;
+		try {
+			comission = new StrategyCommissionDebitRenovate(quantity);
+		} catch (CommissionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	/**
+	 * Comprueba que la comision se actualiza correctamente
+	 * @throws CommissionException
+	 */
+	@Test
+	public void testCalculateCommissionActualize() throws CommissionException {
+
+		assertTrue(comission.calculateCommission()==15);
+		quantity = 3;
+		comission = new StrategyCommissionDebitRenovate(quantity);
+		assertTrue(comission.calculateCommission()==3);
+	}	
 }

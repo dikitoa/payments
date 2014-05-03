@@ -1,12 +1,11 @@
 package es.unileon.ulebank.strategy;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.*; 
 
 import org.junit.Before;
 import org.junit.Test;
 
-import es.unileon.ulebank.payments.Card;
-import es.unileon.ulebank.payments.Client;
+import es.unileon.ulebank.exceptions.CommissionException;
 
 
 /**
@@ -17,42 +16,71 @@ import es.unileon.ulebank.payments.Client;
 
 public class StrategyCommissionDebitEmissionTest {
 
-	private Client owner;
-	private Card card;
+	StrategyCommissionDebitEmission comission;
 	private float quantity;
-	private final float DEFAULT_COMMISSION = 0;
-	StrategyCommissionDebitEmission emision;
 	
 
 	/**
 	 * Inicialiamos las variables
+	 * @throws CommissionException 
 	 */
 	@Before
-	public void SetUp(){
+	public void SetUp() throws CommissionException{
 	
-		owner = new Client();
-		quantity = 1500;
-		emision = new StrategyCommissionDebitEmission(owner, card, quantity);
+		quantity = 15;
+		comission = new StrategyCommissionDebitEmission(quantity);
 	}
 	
 	
 	/**
-	 * Comprobamos que  el resultado de la emision final es la cantidad 
-	 * más la comision por defecto.
+	 * Comprueba que la comision se calcula correctamente
 	 */
 	@Test
-	public void testCalculateCommission1() {
-
-		assertTrue(emision.calculateCommission()==(DEFAULT_COMMISSION+quantity));
+	public void testCalculateCommission() {
+		
+		assertTrue(comission.calculateCommission()==quantity);
 	}
 
 	
+	/**
+	 * Comprueba que la comision se calcula correctamente
+	 */
 	@Test
-	public void testCalculateCommission2() {
-		
-		quantity = 3000;
-		emision = new StrategyCommissionDebitEmission(owner, card, quantity);
-		assertEquals(DEFAULT_COMMISSION+quantity, emision.calculateCommission(), 0);
-	}
+	public void testCalculateCommissionFalse() {
 
+		assertFalse(comission.calculateCommission()==0);
+	}
+	
+	
+	/**
+	 * Comprueba que se lanza la excepcion de la comision correctamente por el metodo try/catch
+	 */
+	@Test
+	public void testCalculateNegativeCommission() {
+		
+		quantity = -10;
+		try {
+			comission = new StrategyCommissionDebitEmission(quantity);
+		} catch (CommissionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	/**
+	 * Comprueba que la comision se actualiza correctamente
+	 * @throws CommissionException
+	 */
+	@Test
+	public void testCalculateCommissionActualize() throws CommissionException {
+
+		assertTrue(comission.calculateCommission()==15);
+		quantity = 3;
+		comission = new StrategyCommissionDebitEmission(quantity);
+		assertTrue(comission.calculateCommission()==3);
+	}	
+
+	
 }

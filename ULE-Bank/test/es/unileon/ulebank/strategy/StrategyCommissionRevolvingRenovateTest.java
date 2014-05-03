@@ -1,41 +1,85 @@
 package es.unileon.ulebank.strategy;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.*; 
 
 import org.junit.Before;
 import org.junit.Test;
 
-import es.unileon.ulebank.payments.Card;
-import es.unileon.ulebank.payments.Client;
+import es.unileon.ulebank.exceptions.CommissionException;
 
+
+/**
+ * 
+ * @author Marta
+ *
+ */
 public class StrategyCommissionRevolvingRenovateTest {
 
-	/**
-	 * @author Marta
-	 * 
-	 * Comprobamos que la comision para esta tarjeta siempre es 0
-	 */
-	private Client owner;
-	private Card card;
 	private float quantity;
-	StrategyCommissionRevolvingRenovate renovate;
+	StrategyCommissionRevolvingRenovate commission;
 
+	
+	/**
+	 * Inicializamos los valores para la realización de los tests
+	 * @throws CommissionException
+	 */
 	@Before 
-	public void SetUp(){
-		owner = new Client();
-		quantity = 1500;
-		renovate = new StrategyCommissionRevolvingRenovate(owner, card, quantity);
+	public void SetUp() throws CommissionException{
+
+		quantity = 15;
+		commission = new StrategyCommissionRevolvingRenovate(quantity);
 	}
 	
 	
+	/**
+	 * Comprueba que la comision se calcula correctamente
+	 */
 	@Test
-	public void testCalculateCommission1() {
+	public void testCalculateCommission() {
 		
-		assertEquals(quantity, renovate.calculateCommission(),0);
+		assertTrue(commission.calculateCommission()==quantity);
+	}
+
+	
+	/**
+	 * Comprueba que la comision se calcula correctamente
+	 */
+	@Test
+	public void testCalculateCommissionFalse() {
+
+		assertFalse(commission.calculateCommission()==0);
 	}
 	
+	
+	/**
+	 * Comprueba que se lanza la excepcion de la comision correctamente por el metodo try/catch
+	 */
 	@Test
-	public void testCalculateCommission2() {
-		assertFalse(renovate.calculateCommission()!=quantity);
+	public void testCalculateNegativeCommission() {
+		
+		quantity = -10;
+		try {
+			commission = new StrategyCommissionRevolvingRenovate(quantity);
+		} catch (CommissionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
+	
+	
+	
+	/**
+	 * Comprueba que la comision se actualiza correctamente
+	 * @throws CommissionException
+	 */
+	@Test
+	public void testCalculateCommissionActualize() throws CommissionException {
+
+		assertTrue(commission.calculateCommission()==15);
+		quantity = 3;
+		commission = new StrategyCommissionRevolvingRenovate(quantity);
+		assertTrue(commission.calculateCommission()==3);
+	}	
+
+	
 }

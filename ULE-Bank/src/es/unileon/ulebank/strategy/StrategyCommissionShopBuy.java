@@ -8,7 +8,7 @@ import es.unileon.ulebank.exceptions.CommissionException;
  * @class StrategyCommissionShopBuy
  * @author Rober dCR
  * @date 08/04/2014
- * @brief Class that obtain Commision of payment make by TPV
+ * @brief Class that obtain Commission of payment make by TPV
  */
 public class StrategyCommissionShopBuy implements StrategyCommissionShop {
 

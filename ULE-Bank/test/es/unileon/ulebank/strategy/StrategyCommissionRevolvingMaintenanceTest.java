@@ -5,34 +5,77 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import es.unileon.ulebank.payments.Card;
-import es.unileon.ulebank.payments.Client;
+import es.unileon.ulebank.exceptions.CommissionException;
+
+
+/**
+ * 
+ * @author Marta
+ *
+ */
 
 public class StrategyCommissionRevolvingMaintenanceTest {
 
-	/**
-	 * @author Marta
-	 * 
-	 * Comprobamos que la comision para esta tarjeta siempre es 0
-	 */
-	private Client owner;
-	private Card card;
 	private float quantity;
-	StrategyCommissionRevolvingMaintenance comision;
+	StrategyCommissionRevolvingMaintenance commission;
 	
 	@Before
-	public void SetUp(){
+	public void SetUp() throws CommissionException{
 		
-		owner = new Client();
-		quantity = 1500;
-		comision  = new StrategyCommissionRevolvingMaintenance(owner, card, quantity);
+		quantity = 15;
+		commission  = new StrategyCommissionRevolvingMaintenance(quantity);
 	}
 	
 	
+	/**
+	 * Comprueba que la comision se calcula correctamente
+	 */
 	@Test
 	public void testCalculateCommission() {
 		
-		assertEquals(quantity, comision.calculateCommission(), 0);
+		assertTrue(commission.calculateCommission()==quantity);
 	}
 
+	
+	/**
+	 * Comprueba que la comision se calcula correctamente
+	 */
+	@Test
+	public void testCalculateCommissionFalse() {
+
+		assertFalse(commission.calculateCommission()==0);
+	}
+	
+	
+	/**
+	 * Comprueba que se lanza la excepcion de la comision correctamente por el metodo try/catch
+	 */
+	@Test
+	public void testCalculateNegativeCommission() {
+		
+		quantity = -10;
+		try {
+			commission = new StrategyCommissionRevolvingMaintenance(quantity);
+		} catch (CommissionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	/**
+	 * Comprueba que la comision se actualiza correctamente
+	 * @throws CommissionException
+	 */
+	@Test
+	public void testCalculateCommissionActualize() throws CommissionException {
+
+		assertTrue(commission.calculateCommission()==15);
+		quantity = 3;
+		commission = new StrategyCommissionRevolvingMaintenance(quantity);
+		assertTrue(commission.calculateCommission()==3);
+	}	
+
+	
 }

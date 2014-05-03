@@ -1,11 +1,12 @@
 package es.unileon.ulebank.strategy;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.*; 
 
 import org.junit.Before;
 import org.junit.Test;
 
-import es.unileon.ulebank.payments.Card;
+import es.unileon.ulebank.exceptions.CommissionException;
+
 
 public class StrategyCommissionCheckerConsultationTest {
 
@@ -16,18 +17,64 @@ public class StrategyCommissionCheckerConsultationTest {
 	 */
 	
 	StrategyCommissionCheckerConsultation consulta;
-	private Card card;
-	
+	private float comission;
 	
 	@Before
-	public void SetUp(){
-		
-		consulta = new StrategyCommissionCheckerConsultation(card, 0);
+	public void SetUp() throws CommissionException{
+		comission = 5;
+		consulta = new StrategyCommissionCheckerConsultation(comission);
 	}
 	
+	
+	/**
+	 * Comprueba que la comision se calcula correctamente
+	 */
 	@Test
 	public void testCalculateCommission() {
-		assertTrue(0==consulta.calculateCommission());
+		
+		assertTrue(5==consulta.calculateCommission());
 	}
 
+	
+	/**
+	 * Comprueba que la comision se calcula correctamente
+	 */
+	@Test
+	public void testCalculateCommissionFalse() {
+
+		assertFalse(consulta.calculateCommission()==0);
+	}
+	
+	
+	/**
+	 * Comprueba que se lanza la excepcion de la comision correctamente por el metodo try/catch
+	 */
+	@Test
+	public void testCalculateNegativeCommission() {
+		
+		comission = -3;
+		try {
+			consulta = new StrategyCommissionCheckerConsultation(comission);
+		} catch (CommissionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	/**
+	 * Comprueba que la comision se actualiza correctamente
+	 * @throws CommissionException
+	 */
+	@Test
+	public void testCalculateCommissionActualize() throws CommissionException {
+
+		assertTrue(5==consulta.calculateCommission());
+		comission = 3;
+		consulta = new StrategyCommissionCheckerConsultation(comission);
+		assertTrue(consulta.calculateCommission()==3);
+	}	
+
+	
 }
