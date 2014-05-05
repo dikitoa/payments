@@ -1,8 +1,7 @@
 package es.unileon.ulebank.handler;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  * Class of Transfer Handler
@@ -16,7 +15,7 @@ public class TransferHandler implements Handler {
 	private String date;
 	private String sender;
 	private String receiver;
-	
+	private Calendar calendar;
 	/**
 	 * Class constructor
 	 * @param sender
@@ -25,6 +24,7 @@ public class TransferHandler implements Handler {
 	public TransferHandler(String sender, String receiver){
 		this.sender = sender.substring(sender.length()/2);
 		this.receiver = receiver.substring(receiver.length()/2);
+		this.calendar = new GregorianCalendar();
 		this.setDateCode();
 		this.id = this.sender + this.receiver + this.date;
 	}
@@ -46,7 +46,6 @@ public class TransferHandler implements Handler {
 	 * Method that obtains the code from the date
 	 */
 	private void setDateCode(){
-		DateFormat dateFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
-		this.date = dateFormat.format(Calendar.getInstance().toString());
+		this.date = this.calendar.get(Calendar.DAY_OF_MONTH) + Integer.toString(this.calendar.get(Calendar.MONTH) + 1) + this.calendar.get(Calendar.YEAR) + this.calendar.get(Calendar.HOUR_OF_DAY) + this.calendar.get(Calendar.MINUTE) + this.calendar.get(Calendar.SECOND);
 	}
 }

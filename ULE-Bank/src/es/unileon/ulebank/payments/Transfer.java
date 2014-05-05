@@ -76,6 +76,7 @@ public class Transfer {
 	 */
 	public void transferMoney(String concept) throws TransferException{
 		if (this.senderAccount.getBalance() >= quantity){
+			this.senderAccount.setBalance(this.senderAccount.getBalance() - quantity);
 			this.receiverAccount.setBalance(this.receiverAccount.getBalance() + quantity);
 			this.setTransaction(new Transference(this, concept)); //TODO - Actualizar a Transaction
 		}
