@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.CardHandler;
+import es.unileon.ulebank.handler.IdDNI;
 import es.unileon.ulebank.strategy.StrategyCommission;
 import es.unileon.ulebank.strategy.StrategyCommissionDebitEmission;
 import es.unileon.ulebank.strategy.StrategyCommissionDebitMaintenance;
@@ -24,12 +25,12 @@ public class DebitCardTest {
 	@Before
 	public void setUp() throws Exception {
 		CardHandler handler = new CardHandler();
-		Client client = new Client();
+		Client client = new Client(new IdDNI("71451559N"), 27);
 		Account account = new Account();
-		StrategyCommission commissionEmission = new StrategyCommissionDebitEmission(client, testCard, 25);
-		StrategyCommission commissionMaintenance = new StrategyCommissionDebitMaintenance(client, testCard, 0);
-		StrategyCommission commissionRenovate = new StrategyCommissionDebitRenovate(client, testCard, 0);
-		testCard = new DebitCard(handler, client, account, 400F, 1000F, 400F, 1000F, commissionEmission, commissionMaintenance, commissionRenovate, 0);
+		StrategyCommission commissionEmission = new StrategyCommissionDebitEmission(25);
+		StrategyCommission commissionMaintenance = new StrategyCommissionDebitMaintenance(client, 0);
+		StrategyCommission commissionRenovate = new StrategyCommissionDebitRenovate(0);
+		testCard = new DebitCard(handler, client, account, 400F, 1000F, 400F, 1000F, commissionEmission.calculateCommission(), commissionMaintenance.calculateCommission(), commissionRenovate.calculateCommission(), 0);
 	}
 
 	@Test (expected = NullPointerException.class)
@@ -161,12 +162,6 @@ public class DebitCardTest {
 	@Test
 	public void testGetCardType() {
 		assertTrue(testCard.getCardType().toString().equals(CardType.DEBIT.toString()));
-	}
-
-	@Test
-	public void testSetCardType() {
-		testCard.setCardType(CardType.REVOLVING);
-		assertTrue(testCard.getCardType().toString().equals(CardType.REVOLVING.toString()));
 	}
 
 	@Test

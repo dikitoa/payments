@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.CardHandler;
+import es.unileon.ulebank.handler.IdDNI;
 import es.unileon.ulebank.payments.CardType;
 import es.unileon.ulebank.payments.CreditCard;
 import es.unileon.ulebank.strategy.StrategyCommission;
@@ -26,12 +27,12 @@ public class CreditCardTest {
 	@Before
 	public void setUp() throws Exception {
 		CardHandler handler = new CardHandler();
-		Client client = new Client();
+		Client client = new Client(new IdDNI("71451559N"), 27);
 		Account account = new Account();
-		StrategyCommission commissionEmission = new StrategyCommissionCreditEmission(client, testCard, 25);
-		StrategyCommission commissionMaintenance = new StrategyCommissionCreditMaintenance(client, testCard, 0);
-		StrategyCommission commissionRenovate = new StrategyCommissionCreditRenovate(client, testCard, 0);
-		testCard = new CreditCard(handler, client, account, 400.0, 1000.0, 400.0, 1000.0, commissionEmission, commissionMaintenance, commissionRenovate, 3000.0);
+		StrategyCommission commissionEmission = new StrategyCommissionCreditEmission(25);
+		StrategyCommission commissionMaintenance = new StrategyCommissionCreditMaintenance(0);
+		StrategyCommission commissionRenovate = new StrategyCommissionCreditRenovate(0);
+		testCard = new CreditCard(handler, client, account, 400.0, 1000.0, 400.0, 1000.0, commissionEmission.calculateCommission(), commissionMaintenance.calculateCommission(), commissionRenovate.calculateCommission(), 3000.0);
 	}
 	
 	@Test (expected = NullPointerException.class)
@@ -59,7 +60,12 @@ public class CreditCardTest {
 	
 	@Test
 	public void testGenerateExpirationDate() {
-		assertTrue(testCard.generateExpirationDate().equals("04/17"));
+		SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
+		SimpleDateFormat yearFormat = new SimpleDateFormat("YY");
+		String currentMonth = monthFormat.format(new Date());
+		String currentYear = String.valueOf(Integer.parseInt(yearFormat.format(new Date()))+3);
+		System.out.println(currentMonth+"/"+currentYear);
+		assertTrue(testCard.generateExpirationDate().equals(currentMonth+"/"+currentYear));
 	}
 
 	@Test
@@ -150,7 +156,7 @@ public class CreditCardTest {
 
 	@Test
 	public void testGetExpirationDate() {
-		assertTrue(testCard.getExpirationDate().equals("04/17"));
+		assertTrue(testCard.getExpirationDate().equals("05/17"));
 	}
 
 	@Test
@@ -162,12 +168,6 @@ public class CreditCardTest {
 	@Test
 	public void testGetCardType() {
 		assertTrue(testCard.getCardType().toString().equals(CardType.CREDIT.toString()));
-	}
-
-	@Test
-	public void testSetCardType() {
-		testCard.setCardType(CardType.DEBIT);
-		assertTrue(testCard.getCardType().toString().equals(CardType.DEBIT.toString()));
 	}
 
 	@Test
