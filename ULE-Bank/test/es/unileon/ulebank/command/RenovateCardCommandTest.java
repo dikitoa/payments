@@ -8,44 +8,45 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
+import es.unileon.ulebank.exceptions.CommissionException;
+import es.unileon.ulebank.handler.AccountHandler;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
+import es.unileon.ulebank.handler.GenericHandler;
+import es.unileon.ulebank.handler.IdDNI;
+import es.unileon.ulebank.handler.IdOffice;
 import es.unileon.ulebank.payments.Account;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.Client;
 import es.unileon.ulebank.payments.CreditCard;
 import es.unileon.ulebank.payments.DebitCard;
-import es.unileon.ulebank.strategy.StrategyCommission;
-import es.unileon.ulebank.strategy.StrategyCommissionCreditEmission;
-import es.unileon.ulebank.strategy.StrategyCommissionCreditMaintenance;
-import es.unileon.ulebank.strategy.StrategyCommissionCreditRenovate;
-import es.unileon.ulebank.strategy.StrategyCommissionDebitEmission;
-import es.unileon.ulebank.strategy.StrategyCommissionDebitMaintenance;
-import es.unileon.ulebank.strategy.StrategyCommissionDebitRenovate;
+import es.unileon.ulebank.payments.Office;
 
 public class RenovateCardCommandTest {
 	private CardHandler handler1;
 	private CardHandler handler2;
+	private Office office;
+	private IdDNI dni;
 	private Client client;
+	private AccountHandler accountHandler;
 	private Account account;
 	private Card card1;
 	private Card card2;
 	private RenovateCardCommand test;
 	
 	@Before
-	public void setUp() {
+	public void setUp() throws NumberFormatException, CommissionException, IOException {
 		handler1 = new CardHandler();
 		handler2 = new CardHandler();
-		client = new Client();
-		account = new Account();
-		StrategyCommission commissionEmission = new StrategyCommissionDebitEmission(client, card1, 25);
-		StrategyCommission commissionMaintenance = new StrategyCommissionDebitMaintenance(client, card1, 0);
-		StrategyCommission commissionRenovate = new StrategyCommissionDebitRenovate(client, card1, 0);
-		this.card1 = new DebitCard(handler1, client, account, 400.0, 1000.0, 400.0, 1000.0, commissionEmission, commissionMaintenance, commissionRenovate, 0);
-		commissionEmission = new StrategyCommissionCreditEmission(client, card2, 25);
-		commissionMaintenance = new StrategyCommissionCreditMaintenance(client, card2, 0);
-		commissionRenovate = new StrategyCommissionCreditRenovate(client, card2, 0);
-		this.card2 = new CreditCard(handler2, client, account, 400.0, 1000.0, 400.0, 1000.0, commissionEmission, commissionMaintenance, commissionRenovate, 3000.0);
+		this.office = new Office();
+		this.dni = new IdDNI("71557005A");
+		client = new Client(dni, 20);
+		this.office.addClient(client);
+		this.accountHandler = new AccountHandler(new IdOffice("0001"), new GenericHandler("1234"), "9876543210");
+		account = new Account(accountHandler);
+		this.client.addAccount(account);
+		this.card1 = new DebitCard(handler1, client, account, 400.0, 1000.0, 400.0, 1000.0, 25, 0, 0, 0);
+		this.card2 = new CreditCard(handler2, client, account, 400.0, 1000.0, 400.0, 1000.0, 25, 0, 0, 3000.0);
 		account.addCard(card1);
 		account.addCard(card2);
 		try {
@@ -66,14 +67,14 @@ public class RenovateCardCommandTest {
 	
 	@Test
 	public void testCommandId() {
-		test = new RenovateCardCommand(handler1, account);
+		test = new RenovateCardCommand(handler1, office, dni, accountHandler);
 		CommandHandler handler = (CommandHandler) test.getId();
 		assertTrue(this.handler1.compareTo(handler.getId()) == 0);
 	}
 	
 	@Test
 	public void testRenovateCreditCard() {
-		test = new RenovateCardCommand(handler2, account);
+		test = new RenovateCardCommand(handler2, office, dni, accountHandler);
 		assertEquals("04/14", this.card2.getExpirationDate());
 		assertEquals("123", this.card2.getCvv());
 		test.execute();
@@ -82,8 +83,8 @@ public class RenovateCardCommandTest {
 	}
 	
 	@Test
-	public void testUndoRenovateCreditCard() {
-		test = new RenovateCardCommand(handler2, account);
+	public void testUndoRenovateCreditCardOk() {
+		test = new RenovateCardCommand(handler2, office, dni, accountHandler);
 		assertEquals("04/14", this.card2.getExpirationDate());
 		assertEquals("123", this.card2.getCvv());
 		test.execute();
@@ -94,9 +95,17 @@ public class RenovateCardCommandTest {
 		assertEquals("123", this.card2.getCvv());
 	}
 	
+	@Test (expected = NullPointerException.class)
+	public void testUndoRenovateCreditCardFail() {
+		test = new RenovateCardCommand(handler2, office, dni, accountHandler);
+		assertEquals("04/14", this.card2.getExpirationDate());
+		assertEquals("123", this.card2.getCvv());
+		test.undo();
+	}
+	
 	@Test
-	public void testRedoRenovateCreditCard() {
-		test = new RenovateCardCommand(handler2, account);
+	public void testRedoRenovateCreditCardOk() {
+		test = new RenovateCardCommand(handler2, office, dni, accountHandler);
 		assertEquals("04/14", this.card2.getExpirationDate());
 		assertEquals("123", this.card2.getCvv());
 		test.execute();
@@ -108,11 +117,19 @@ public class RenovateCardCommandTest {
 		test.redo();
 		assertTrue(!this.card2.getExpirationDate().equals("04/14"));
 		assertTrue(!this.card2.getCvv().equals("123"));
+	}
+	
+	@Test (expected = NullPointerException.class)
+	public void testRedoRenovateCreditCardFail() {
+		test = new RenovateCardCommand(handler2, office, dni, accountHandler);
+		assertEquals("04/14", this.card2.getExpirationDate());
+		assertEquals("123", this.card2.getCvv());
+		test.redo();
 	}
 	
 	@Test
 	public void testRenovateDebitCard() {
-		test = new RenovateCardCommand(handler1, account);
+		test = new RenovateCardCommand(handler1, office, dni, accountHandler);
 		assertEquals("04/14", this.card1.getExpirationDate());
 		assertEquals("213", this.card1.getCvv());
 		test.execute();
@@ -121,8 +138,8 @@ public class RenovateCardCommandTest {
 	}
 	
 	@Test
-	public void testUndoRenovateDebitCard() {
-		test = new RenovateCardCommand(handler1, account);
+	public void testUndoRenovateDebitCardOk() {
+		test = new RenovateCardCommand(handler1, office, dni, accountHandler);
 		assertEquals("04/14", this.card1.getExpirationDate());
 		assertEquals("213", this.card1.getCvv());
 		test.execute();
@@ -133,9 +150,17 @@ public class RenovateCardCommandTest {
 		assertEquals("213", this.card1.getCvv());
 	}
 	
+	@Test (expected = NullPointerException.class)
+	public void testUndoRenovateDebitCardFail() {
+		test = new RenovateCardCommand(handler1, office, dni, accountHandler);
+		assertEquals("04/14", this.card1.getExpirationDate());
+		assertEquals("213", this.card1.getCvv());
+		test.undo();
+	}
+	
 	@Test
-	public void testRedoRenovateDebitCard() {
-		test = new RenovateCardCommand(handler1, account);
+	public void testRedoRenovateDebitCardOk() {
+		test = new RenovateCardCommand(handler1, office, dni, accountHandler);
 		assertEquals("04/14", this.card1.getExpirationDate());
 		assertEquals("213", this.card1.getCvv());
 		test.execute();
@@ -147,5 +172,13 @@ public class RenovateCardCommandTest {
 		test.redo();
 		assertTrue(!this.card1.getExpirationDate().equals("04/14"));
 		assertTrue(!this.card1.getCvv().equals("213"));
+	}
+	
+	@Test (expected = NullPointerException.class)
+	public void testRedoRenovateDebitCardFail() {
+		test = new RenovateCardCommand(handler1, office, dni, accountHandler);
+		assertEquals("04/14", this.card1.getExpirationDate());
+		assertEquals("213", this.card1.getCvv());
+		test.redo();
 	}
 }

@@ -7,12 +7,12 @@ import es.unileon.ulebank.handler.AccountHandler;
 import es.unileon.ulebank.handler.CardHandler;
 
 public class Account {
-	
 	private ArrayList<Card> cards;
 	private AccountHandler id;
 	private float balance;
 	
-	public Account() {
+	public Account(AccountHandler handler) {
+		this.id = handler;
 		this.cards = new ArrayList<Card>();
 	}
 
@@ -51,6 +51,7 @@ public class Account {
 	public int getCardAmount() {
 		return this.cards.size();
 	}
+	
 
 	public float getBalance() {
 		return balance;

@@ -1,21 +1,31 @@
 package es.unileon.ulebank.command;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
+
 import org.junit.Before;
 import org.junit.Test;
+
+import es.unileon.ulebank.exceptions.CommissionException;
+import es.unileon.ulebank.handler.AccountHandler;
 import es.unileon.ulebank.handler.CardHandler;
+import es.unileon.ulebank.handler.CommandHandler;
+import es.unileon.ulebank.handler.GenericHandler;
+import es.unileon.ulebank.handler.IdDNI;
+import es.unileon.ulebank.handler.IdOffice;
 import es.unileon.ulebank.payments.Account;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.Client;
 import es.unileon.ulebank.payments.DebitCard;
-import es.unileon.ulebank.strategy.StrategyCommission;
-import es.unileon.ulebank.strategy.StrategyCommissionDebitEmission;
-import es.unileon.ulebank.strategy.StrategyCommissionDebitMaintenance;
-import es.unileon.ulebank.strategy.StrategyCommissionDebitRenovate;
+import es.unileon.ulebank.payments.Office;
 
 public class ModifyPinCommandTest {
 	private CardHandler handler;
+	private Office office;
+	private IdDNI dni;
+	private AccountHandler accountHandler;
 	private Client client;
 	private Account account;
 	private Card card;
@@ -23,14 +33,16 @@ public class ModifyPinCommandTest {
 	private String newPin;
 	
 	@Before
-	public void setUp() {
+	public void setUp() throws NumberFormatException, CommissionException, IOException {
 		handler = new CardHandler();
-		client = new Client();
-		account = new Account();
-		StrategyCommission commissionEmission = new StrategyCommissionDebitEmission(client, card, 25);
-		StrategyCommission commissionMaintenance = new StrategyCommissionDebitMaintenance(client, card, 0);
-		StrategyCommission commissionRenovate = new StrategyCommissionDebitRenovate(client, card, 0);
-		this.card = new DebitCard(handler, client, account, 400.0, 1000.0, 400.0, 1000.0, commissionEmission, commissionMaintenance, commissionRenovate, 0);
+		this.office = new Office();
+		this.dni = new IdDNI("71557005A");
+		client = new Client(dni, 20);
+		this.office.addClient(client);
+		this.accountHandler = new AccountHandler(new IdOffice("0001"), new GenericHandler("1234"), "9876543210");
+		account = new Account(accountHandler);
+		this.client.addAccount(account);
+		this.card = new DebitCard(handler, client, account, 400.0, 1000.0, 400.0, 1000.0, 25, 0, 0, 0);
 		this.account.addCard(card);
 		try {
 			this.card.setPin("1234");
@@ -47,8 +59,16 @@ public class ModifyPinCommandTest {
 	}
 	
 	@Test
+	public void testCommandId() {
+		test = new ModifyPinCommand(this.handler, office, dni, accountHandler, newPin);
+		CommandHandler commandId = (CommandHandler) test.getId();
+		String date = commandId.getDate();
+		assertTrue(test.getId().toString().compareTo(handler.toString() + " " + date) == 0);
+	}
+	
+	@Test
 	public void testModifyPinOk() {
-		test = new ModifyPinCommand(handler, account, newPin);
+		test = new ModifyPinCommand(handler, office, dni, accountHandler, newPin);
 		assertEquals("1234", card.getPin());
 		test.execute();
 		assertEquals("9876", card.getPin());
@@ -56,17 +76,17 @@ public class ModifyPinCommandTest {
 	
 	@Test
 	public void testModifyPinFail() {
-		test = new ModifyPinCommand(handler, account, "4s22");
+		test = new ModifyPinCommand(handler, office, dni, accountHandler, "4s22");
 		test.execute();
 		assertEquals("1234", card.getPin());
-		test = new ModifyPinCommand(handler, account, "34433");
+		test = new ModifyPinCommand(handler, office, dni, accountHandler, "34433");
 		test.execute();
 		assertEquals("1234", card.getPin());
 	}
 	
 	@Test
 	public void testUndoMofifyPinOk() {
-		test = new ModifyPinCommand(handler, account, newPin);
+		test = new ModifyPinCommand(handler, office, dni, accountHandler, newPin);
 		assertEquals("1234", card.getPin());
 		test.execute();
 		assertEquals("9876", card.getPin());
@@ -74,9 +94,16 @@ public class ModifyPinCommandTest {
 		assertEquals("1234", card.getPin());
 	}
 	
+	@Test (expected = NullPointerException.class)
+	public void testUndoMofifyPinFail() {
+		test = new ModifyPinCommand(handler, office, dni, accountHandler, newPin);
+		assertEquals("1234", card.getPin());
+		test.undo();
+	}
+	
 	@Test
 	public void testRedoModifyPinOk() {
-		test = new ModifyPinCommand(handler, account, newPin);
+		test = new ModifyPinCommand(handler, office, dni, accountHandler, newPin);
 		assertEquals("1234", card.getPin());
 		test.execute();
 		assertEquals("9876", card.getPin());
@@ -84,5 +111,12 @@ public class ModifyPinCommandTest {
 		assertEquals("1234", card.getPin());
 		test.redo();
 		assertEquals("9876", card.getPin());
+	}
+	
+	@Test (expected = NullPointerException.class)
+	public void testRedoModifyPinFail() {
+		test = new ModifyPinCommand(handler, office, dni, accountHandler, newPin);
+		assertEquals("1234", card.getPin());
+		test.redo();
 	}
 }

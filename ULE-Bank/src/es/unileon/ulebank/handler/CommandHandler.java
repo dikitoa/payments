@@ -45,4 +45,8 @@ public class CommandHandler implements Handler {
 	public String getDate(){
 		return this.date.toString();
 	}
+	
+	public String toString() {
+		return this.id.toString() + " " + date.toString();
+	}
 }
