@@ -4,7 +4,7 @@
 package es.unileon.ulebank.exceptions;
 
 /**
- * @author Israel
+ * @author Israel Garcia Centeno
  */
 public class MalformedHandlerException extends RuntimeException{
     

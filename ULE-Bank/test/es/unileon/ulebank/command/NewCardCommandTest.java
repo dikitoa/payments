@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import es.unileon.ulebank.exceptions.ClientNotFoundException;
 import es.unileon.ulebank.handler.AccountHandler;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
@@ -68,7 +69,7 @@ public class NewCardCommandTest {
 	}
 	
 	@Test
-	public void testCreateCreditCard() {
+	public void testCreateCreditCard() throws ClientNotFoundException {
 		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeCredit, buyLimitDiary, 
 				buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, 
 				commissionMaintenance, commissionRenovate, limitDebit);
@@ -88,7 +89,7 @@ public class NewCardCommandTest {
 	}
 	
 	@Test
-	public void testCreateDebitCard() {
+	public void testCreateDebitCard() throws ClientNotFoundException {
 		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeDebit, buyLimitDiary, 
 				buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, 
 				commissionMaintenance, commissionRenovate, 0.0);
@@ -108,7 +109,7 @@ public class NewCardCommandTest {
 	}
 	
 	@Test (expected = NullPointerException.class)
-	public void testUndoNewCreditCardCommand() {
+	public void testUndoNewCreditCardCommand() throws ClientNotFoundException {
 		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeCredit, buyLimitDiary, 
 				buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, 
 				commissionMaintenance, commissionRenovate, limitDebit);
@@ -123,7 +124,7 @@ public class NewCardCommandTest {
 	}
 	
 	@Test (expected = NullPointerException.class)
-	public void testUndoNewDebitCardCommand() {
+	public void testUndoNewDebitCardCommand() throws ClientNotFoundException {
 		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeDebit, buyLimitDiary, 
 				buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, 
 				commissionMaintenance, commissionRenovate, 0.0);

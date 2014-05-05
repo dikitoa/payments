@@ -3,6 +3,7 @@ package es.unileon.ulebank.command;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import es.unileon.ulebank.exceptions.ClientNotFoundException;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.AccountHandler;
 import es.unileon.ulebank.handler.CardHandler;
@@ -42,11 +43,15 @@ public class ModifyCashLimitCommand implements Command {
 	 * @param type
 	 */
 	public ModifyCashLimitCommand(CardHandler cardId, Office office, IdDNI dni, AccountHandler accountHandler, double amount, String type) {
-		this.id = new CommandHandler(cardId);
-		this.cardId = cardId;
-		this.account = office.searchClient(dni).searchAccount(accountHandler);
-		this.newAmount = amount;
-		this.type = type;
+		try {
+			this.id = new CommandHandler(cardId);
+			this.cardId = cardId;
+			this.account = office.searchClient(dni).searchAccount(accountHandler);
+			this.newAmount = amount;
+			this.type = type;
+		} catch (ClientNotFoundException e) {
+			Logger.getLogger(ModifyCashLimitCommand.class.toString()).log(Level.SEVERE, null, e);
+		}
 	}
 	
 	/**

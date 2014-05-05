@@ -1,5 +1,9 @@
 package es.unileon.ulebank.command;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import es.unileon.ulebank.exceptions.ClientNotFoundException;
 import es.unileon.ulebank.handler.AccountHandler;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
@@ -10,6 +14,7 @@ import es.unileon.ulebank.payments.Office;
 
 /**
  * @author Israel
+ * Comando para realizar la cancelacion de la tarjeta
  */
 public class CancelCardCommand implements Command {
 	//Identificador del comando
@@ -29,7 +34,11 @@ public class CancelCardCommand implements Command {
 	public CancelCardCommand(CardHandler cardId, Office office, IdDNI dni, AccountHandler account) {
 		this.id = new CommandHandler(cardId);
 		this.cardId = cardId;
-		this.account = office.searchClient(dni).searchAccount(account);
+		try {
+			this.account = office.searchClient(dni).searchAccount(account);
+		} catch (ClientNotFoundException e) {
+			Logger.getLogger(CancelCardCommand.class.toString()).log(Level.SEVERE, null, e);
+		}
 	}
 	
 	/**
