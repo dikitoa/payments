@@ -55,17 +55,13 @@ public class StrategyCommissionRevolvingEmissionTest {
 	
 	/**
 	 * Comprueba que se lanza la excepcion de la comision correctamente por el metodo try/catch
+	 * @throws CommissionException 
 	 */
-	@Test
-	public void testCalculateNegativeCommission() {
+	@Test (expected = CommissionException.class)
+	public void testCalculateNegativeCommission() throws CommissionException {
 		
 		quantity = -10;
-		try {
-			commission = new StrategyCommissionRevolvingEmission(quantity);
-		} catch (CommissionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		commission = new StrategyCommissionRevolvingEmission(quantity);
 	}
 	
 	

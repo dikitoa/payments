@@ -50,17 +50,13 @@ public class StrategyCommissionCheckerRemovalTest {
 	
 	/**
 	 * Comprueba que se lanza la excepcion de la comision correctamente por el metodo try/catch
+	 * @throws CommissionException 
 	 */
-	@Test
-	public void testCalculateNegativeCommission() {
+	@Test (expected = CommissionException.class)
+	public void testCalculateNegativeCommission() throws CommissionException {
 		
 		comission = -3;
-		try {
-			consulta = new StrategyCommissionCheckerRemoval(comission);
-		} catch (CommissionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		consulta = new StrategyCommissionCheckerRemoval(comission);
 	}
 	
 	

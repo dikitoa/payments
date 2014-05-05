@@ -51,17 +51,13 @@ public class StrategyCommissionCreditRenovateTest {
 	
 	/**
 	 * Comprueba que se lanza la excepcion de la comision correctamente por el metodo try/catch
+	 * @throws CommissionException 
 	 */
-	@Test
-	public void testCalculateNegativeCommission() {
+	@Test (expected = CommissionException.class)
+	public void testCalculateNegativeCommission() throws CommissionException {
 		
 		quantity = -10;
-		try {
-			renovate = new StrategyCommissionCreditRenovate(quantity);
-		} catch (CommissionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		renovate = new StrategyCommissionCreditRenovate(quantity);
 	}
 	
 	

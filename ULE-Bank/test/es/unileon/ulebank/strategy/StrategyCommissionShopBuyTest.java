@@ -50,48 +50,36 @@ public class StrategyCommissionShopBuyTest {
 
 
 	/**
-	 * Comprobamos que no acepta un tipo de interés negativo
+	 * Comprobamos que no acepta el tipo interest negativo
+	 * @throws CommissionException 
 	 */
-	@Test
-	public void testComprobeInterestNegative(){
+	@Test (expected = CommissionException.class)
+	public void testComprobeInterestNegative() throws CommissionException{
 		this.interest = (float)-0.1;
 		this.quantity = 20F;
-		try {
-			this.commission = new StrategyCommissionShopBuy(quantity, interest);
-		} catch (CommissionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.commission = new StrategyCommissionShopBuy(quantity, interest);
 	}
 	
 	
 	/**
 	 * Comprobamos que no acepta quantity negativo.
+	 * @throws CommissionException 
 	 */
-	@Test
-	public void testComprobeQuantityNegative(){
+	@Test (expected = CommissionException.class)
+	public void testComprobeQuantityNegative() throws CommissionException{
 		this.interest = (float)0.1;
 		this.quantity = -20;
-		try {
-			this.commission = new StrategyCommissionShopBuy(quantity, interest);
-		} catch (CommissionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.commission = new StrategyCommissionShopBuy(quantity, interest);
 	}
 	
 	/**
 	 * Comprobamos que no acepta quantity ni interest negativo
+	 * @throws CommissionException 
 	 */
-	@Test
-	public void testComprobeBothNegative(){
+	@Test (expected = CommissionException.class)
+	public void testComprobeBothNegative() throws CommissionException{
 		this.interest = (float)-0.1;
 		this.quantity = -20F;
-		try {
-			this.commission = new StrategyCommissionShopBuy(quantity, interest);
-		} catch (CommissionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.commission = new StrategyCommissionShopBuy(quantity, interest);
 	}
 }
