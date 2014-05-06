@@ -6,8 +6,11 @@
 
 package es.unileon.ulebank.GUI.payments;
 
+import es.unileon.ulebank.command.NewCardCommand;
+import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.CardHandler;
+import es.unileon.ulebank.handler.IdDNI;
 import es.unileon.ulebank.payments.Account;
 import es.unileon.ulebank.payments.CardType;
 import es.unileon.ulebank.payments.Client;
@@ -422,6 +425,7 @@ public class ReplacementWindow extends javax.swing.JInternalFrame {
                 jComboBox1.setVisible(true);
                 jLabel2.setVisible(true);
                 jButton3.setVisible(true);
+                textField1.setEditable(false);
             }
             
         } catch (FileNotFoundException ex) {
@@ -480,16 +484,26 @@ public class ReplacementWindow extends javax.swing.JInternalFrame {
 
             DebitCard debitCard = null;
             CardHandler handler = new CardHandler();
-        	Client client = new Client();
+            String number = "" + textField1.getText().charAt(0);
+            for(int i = 1; i < textField1.getText().length() - 1; i++)
+            {
+                number = number + textField1.getText().charAt(i);
+            }
+            Character letter = textField1.getText().charAt(textField1.getText().length()-1);
+            int numberDNI = Integer.valueOf(number);
+            IdDNI dni = new IdDNI(numberDNI, letter);
+                // Falta añadir correctamente la edad
+        	Client client = new Client(dni,25);
         	Account account = new Account();
-        	StrategyCommission commissionEmission = new StrategyCommissionDebitEmission(client, debitCard, 25);
-        	StrategyCommission commissionMaintenance = new StrategyCommissionDebitMaintenance(client, debitCard, 0);
-        	StrategyCommission commissionRenovate = new StrategyCommissionDebitRenovate(client, debitCard, 0);
-        	debitCard = new DebitCard(handler, client, account, 400F, 1000F, 400F, 1000F, commissionEmission, commissionMaintenance, commissionRenovate, 0);
+                StrategyCommission commissionEmission = new StrategyCommissionDebitEmission(25);
+                StrategyCommission commissionMaintenance = new StrategyCommissionDebitMaintenance(client, 0);
+                StrategyCommission commissionRenovate = new StrategyCommissionDebitRenovate(0);
+                // Falta el limitDebit, ultima argumento que se pasa al crear el DebitCard
+                debitCard = new DebitCard(handler, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission.calculateCommission(), commissionMaintenance.calculateCommission(), commissionRenovate.calculateCommission(), 0);
             try {
                 debitCard.setBuyLimitDiary(buyLimitDiary);
                 debitCard.setCashLimitDiary(cashLimitDiary);
-                debitCard.setCardType(CardType.DEBIT);
+                //debitCard.setCardType(CardType.DEBIT);
                 debitCard.setCashLimitDiary(cashLimitDiary);
                 debitCard.setCashLimitMonthly(cashLimitMonthly);
                 debitCard.setCvv(cvv);
@@ -540,6 +554,8 @@ public class ReplacementWindow extends javax.swing.JInternalFrame {
             Logger.getLogger(DebitWindow.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(DebitWindow.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (CommissionException ex) {
+            Logger.getLogger(ReplacementWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
         
          String msg = "The card "+ String.valueOf(jComboBox1.getSelectedItem())  + " has been replaced";
