@@ -6,6 +6,7 @@
 
 package es.unileon.ulebank.GUI.payments;
 
+import es.unileon.ulebank.exceptions.CommissionException;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileWriter;
@@ -16,6 +17,7 @@ import java.util.logging.Logger;
 
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.CardHandler;
+import es.unileon.ulebank.handler.IdDNI;
 import es.unileon.ulebank.payments.Account;
 import es.unileon.ulebank.payments.Client;
 import es.unileon.ulebank.payments.DebitCard;
@@ -36,26 +38,38 @@ public class InformationDebitCard extends javax.swing.JFrame {
     String accountNumber;
     DebitCard card;
     CardHandler handler = new CardHandler();
-	Client client = new Client();
-	Account account = new Account();
-	StrategyCommission commissionEmission = new StrategyCommissionDebitEmission(client, card, 25);
-	StrategyCommission commissionMaintenance = new StrategyCommissionDebitMaintenance(client, card, 0);
-	StrategyCommission commissionRenovate = new StrategyCommissionDebitRenovate(client, card, 0);
+	Client client;
+	Account account;
+	StrategyCommission commissionEmission = new StrategyCommissionDebitEmission(25);
+	StrategyCommission commissionMaintenance = new StrategyCommissionDebitMaintenance(client, 0);
+	StrategyCommission commissionRenovate = new StrategyCommissionDebitRenovate(0);
 	
     
     /**
      * Creates new form InformationDevitCard1
      */
-    public InformationDebitCard() {
-    	card = new DebitCard(handler, client, account, 400F, 1000F, 400F, 1000F, commissionEmission, commissionMaintenance, commissionRenovate, 0);
-        initComponents();
-    }
 
-    public InformationDebitCard(int buyLimitDiary, int cashLimitDiary, int buyLimitMonthly, int cashLimitMonthly, String dni, String accountNumber) {
-        card = new DebitCard(handler, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, commissionMaintenance, commissionRenovate, 0);
+    public InformationDebitCard(int buyLimitDiary, int cashLimitDiary, int buyLimitMonthly, int cashLimitMonthly, String dni, String accountNumber) throws NumberFormatException, CommissionException, IOException {
+        handler = new CardHandler();
+        account = new Account();
         initComponents();
         this.dni=dni;
         this.accountNumber=accountNumber;
+        
+        
+        String number = "" + dni.charAt(0);
+
+        for(int i = 1; i < dni.length() - 1; i++)
+            {
+                number = number + dni.charAt(i);
+            }
+        Character letter = dni.charAt(dni.length()-1);
+        int numberDNI = Integer.valueOf(number);
+        IdDNI Nif = new IdDNI(numberDNI, letter);
+        client = new Client(Nif, 25);
+        
+        card = new DebitCard(handler, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission.calculateCommission(), commissionMaintenance.calculateCommission(), commissionRenovate.calculateCommission(), 0);
+
         
         try {
 			this.card.setBuyLimitDiary(buyLimitDiary);
