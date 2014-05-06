@@ -11,8 +11,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
+import es.unileon.ulebank.handler.AccountHandler;
 import es.unileon.ulebank.handler.CardHandler;
+import es.unileon.ulebank.handler.GenericHandler;
+import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.handler.IdDNI;
+import es.unileon.ulebank.handler.IdOffice;
 import es.unileon.ulebank.payments.CardType;
 import es.unileon.ulebank.payments.CreditCard;
 import es.unileon.ulebank.strategy.StrategyCommission;
@@ -23,12 +27,13 @@ import es.unileon.ulebank.strategy.StrategyCommissionCreditRenovate;
 public class CreditCardTest {
 
 	CreditCard testCard;
+	CardHandler handler;
 
 	@Before
 	public void setUp() throws Exception {
-		CardHandler handler = new CardHandler();
+		handler = new CardHandler();
 		Client client = new Client(new IdDNI("71451559N"), 27);
-		Account account = new Account();
+		Account account = new Account(new AccountHandler(new IdOffice("0001"), new GenericHandler("1234"), "1234567890"));
 		StrategyCommission commissionEmission = new StrategyCommissionCreditEmission(25);
 		StrategyCommission commissionMaintenance = new StrategyCommissionCreditMaintenance(0);
 		StrategyCommission commissionRenovate = new StrategyCommissionCreditRenovate(0);
@@ -75,7 +80,7 @@ public class CreditCardTest {
 
 	@Test
 	public void testGetCardId() {
-		assertTrue(testCard.getCardId().length() == 16 + 3); //add +3 because the cardId have 3 white spaces
+		assertTrue(testCard.getCardId().length() == handler.getCardLength() + 3); //add +3 because the cardId have 3 white spaces
 	}
 
 	@Test
@@ -104,15 +109,41 @@ public class CreditCardTest {
 	}
 
 	@Test
-	public void testSetBuyLimitDiary() throws IncorrectLimitException {
+	public void testSetBuyLimitDiaryOKUpLimit() throws IncorrectLimitException {
+		assertEquals(testCard.getBuyLimitMonthly(), 1000.0, 0.0001);
+		
 		testCard.setBuyLimitDiary(800.0);
 		assertEquals(800.0, testCard.getBuyLimitDiary(), 0.0001);
 	}
+	
+	@Test
+	public void testSetBuyLimitDiaryOKDownLimit() throws IncorrectLimitException{
+		testCard.setBuyLimitDiary(200); //Ok because buy limit diary is 200
+		assertEquals(200.0, testCard.getBuyLimitDiary(), 0.0001);
+	}
+	
+	@Test (expected = IncorrectLimitException.class)
+	public void testSetBuyLimitDiaryFAILUp() throws IncorrectLimitException{
+		testCard.setBuyLimitDiary(2000); //fail because buy limit diary is greater than buy limit monthly
+		assertEquals(2000.0, testCard.getBuyLimitDiary(), 0.0001);
+	}
+	
+	@Test (expected = IncorrectLimitException.class)
+	public void testSetBuyLimitDiaryFAILDownMinimumLimit() throws IncorrectLimitException{
+		testCard.setBuyLimitDiary(199); //fail because buy limit diary under 200
+		assertEquals(199.0, testCard.getBuyLimitDiary(), 0.0001);
+	}
 
 	@Test
-	public void testCheckBuyLimitDiary() throws IncorrectLimitException {
+	public void testCheckBuyLimitDiaryTRUE() throws IncorrectLimitException {
 		testCard.setBuyLimitDiary(500.0);
 		assertTrue(testCard.checkBuyLimitDiary(500.0));
+	}
+	
+	@Test
+	public void testCheckBuyLimitDiaryFALSE() throws IncorrectLimitException {
+		testCard.setBuyLimitDiary(500.0);
+		assertTrue(!testCard.checkBuyLimitDiary(600.0));
 	}
 
 	@Test
@@ -122,8 +153,22 @@ public class CreditCardTest {
 
 	@Test
 	public void testSetBuyLimitMonthly() throws IncorrectLimitException {
+		assertEquals(1000.0, testCard.getBuyLimitMonthly(), 0.0001);
+		
 		testCard.setBuyLimitMonthly(1500.0);
 		assertEquals(1500.0, testCard.getBuyLimitMonthly(), 0.0001);
+	}
+	
+	@Test
+	public void testSetBuyLimitMonthlyOKDownLimit() throws IncorrectLimitException{
+		testCard.setBuyLimitMonthly(400.0); //Ok because buy limit diary is 400
+		assertEquals(400.0, testCard.getBuyLimitMonthly(), 0.0001);
+	}
+	
+	@Test  (expected = IncorrectLimitException.class)
+	public void testSetBuyLimitMonthlyFAILDownMinimumLimit() throws IncorrectLimitException{
+		testCard.setBuyLimitMonthly(399); //fail because buy limit diary is 400
+		assertEquals(399.0, testCard.getBuyLimitMonthly(), 0.0001);
 	}
 
 	@Test
@@ -132,15 +177,41 @@ public class CreditCardTest {
 	}
 
 	@Test
-	public void testSetCashLimitDiary() throws IncorrectLimitException {
+	public void testSetCashLimitDiaryOKUpLimit() throws IncorrectLimitException {
+		assertEquals(testCard.getCashLimitMonthly(), 1000.0, 0.0001);
+		
 		testCard.setCashLimitDiary(800.0);
 		assertEquals(800.0, testCard.getCashLimitDiary(), 0.0001);
 	}
+	
+	@Test
+	public void testSetCashLimitDiaryOKDownLimit() throws IncorrectLimitException{
+		testCard.setCashLimitDiary(200); //Ok because cash limit diary is 200
+		assertEquals(200.0, testCard.getCashLimitDiary(), 0.0001);
+	}
+	
+	@Test (expected = IncorrectLimitException.class)
+	public void testCashLimitDiaryFAILUp() throws IncorrectLimitException{
+		testCard.setCashLimitDiary(2000); //fail because cash limit diary is greater than cash limit monthly
+		assertEquals(2000.0, testCard.getCashLimitDiary(), 0.0001);
+	}
+	
+	@Test (expected = IncorrectLimitException.class)
+	public void testSetCashLimitDiaryFAILDownMinimumLimit() throws IncorrectLimitException{
+		testCard.setCashLimitDiary(199); //fail because cash limit diary under 200
+		assertEquals(199.0, testCard.getCashLimitDiary(), 0.0001);
+	}
 
 	@Test
-	public void testCheckCashLimitDiary() throws IncorrectLimitException {
+	public void testCheckCashLimitDiaryTRUE() throws IncorrectLimitException {
 		testCard.setCashLimitDiary(500.0);
 		assertTrue(testCard.checkCashLimitDiary(500.0));
+	}
+	
+	@Test
+	public void testCheckCashLimitDiaryFALSE() throws IncorrectLimitException {
+		testCard.setCashLimitDiary(500.0);
+		assertTrue(!testCard.checkCashLimitDiary(600.0));
 	}
 
 	@Test
@@ -149,14 +220,26 @@ public class CreditCardTest {
 	}
 
 	@Test
-	public void testSetCashLimitMonthly() throws IncorrectLimitException {
-		testCard.setCashLimitMonthly(1200.0);
-		assertEquals(1200.0, testCard.getCashLimitMonthly(), 0.0001);
+	public void testSetCashLimitMonthlyOKDownLimit() throws IncorrectLimitException{
+		testCard.setCashLimitMonthly(500.0); //Ok because cash limit diary is 500
+		assertEquals(500.0, testCard.getCashLimitMonthly(), 0.0001);
+	}
+	
+	@Test  (expected = IncorrectLimitException.class)
+	public void testSetCashLimitMonthlyFAILDownMinimumLimit() throws IncorrectLimitException{
+		testCard.setCashLimitMonthly(399); //fail because cash limit diary is 400
+		assertEquals(399.0, testCard.getCashLimitMonthly(), 0.0001);
 	}
 
 	@Test
 	public void testGetExpirationDate() {
-		assertTrue(testCard.getExpirationDate().equals("05/17"));
+		SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
+		SimpleDateFormat yearFormat = new SimpleDateFormat("YY");
+		String currentMonth = monthFormat.format(new Date());
+		String currentYear = String.valueOf(Integer.parseInt(yearFormat.format(new Date()))+3);
+		System.out.println(currentMonth+"/"+currentYear);
+		
+		assertTrue(testCard.getExpirationDate().equals(currentMonth+"/"+currentYear));
 	}
 
 	@Test
@@ -184,10 +267,4 @@ public class CreditCardTest {
 		}
 		assertTrue(testCard.getCvv().equals("195"));
 	}
-
-	@Test
-	public void testSetCommission() {
-		//TODO pendiente de hacer
-	}
-
 }
