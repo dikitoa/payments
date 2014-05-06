@@ -6,7 +6,6 @@
 
 package es.unileon.ulebank.GUI.payments;
 
-import es.unileon.ulebank.exceptions.CommissionException;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileWriter;
@@ -15,18 +14,22 @@ import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.JOptionPane;
+
+import es.unileon.ulebank.account.Account;
+import es.unileon.ulebank.account.AccountHandler;
+import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.CardHandler;
+import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.handler.IdDNI;
-import es.unileon.ulebank.payments.Account;
+import es.unileon.ulebank.handler.IdOffice;
 import es.unileon.ulebank.payments.Client;
 import es.unileon.ulebank.payments.DebitCard;
 import es.unileon.ulebank.strategy.StrategyCommission;
-import es.unileon.ulebank.strategy.StrategyCommissionCreditRenovate;
 import es.unileon.ulebank.strategy.StrategyCommissionDebitEmission;
 import es.unileon.ulebank.strategy.StrategyCommissionDebitMaintenance;
 import es.unileon.ulebank.strategy.StrategyCommissionDebitRenovate;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -51,7 +54,7 @@ public class InformationDebitCard extends javax.swing.JFrame {
 
     public InformationDebitCard(int buyLimitDiary, int cashLimitDiary, int buyLimitMonthly, int cashLimitMonthly, String dni, String accountNumber) throws NumberFormatException, CommissionException, IOException {
         handler = new CardHandler();
-        account = new Account();
+        account = new Account(new AccountHandler(new IdOffice("0001"), new GenericHandler("1234"), "1234567890"));
         initComponents();
         this.dni=dni;
         this.accountNumber=accountNumber;
@@ -364,7 +367,7 @@ public class InformationDebitCard extends javax.swing.JFrame {
     private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField8ActionPerformed
-    //Abrimos el contrato de la tarjeta de d��bito
+    //Abrimos el contrato de la tarjeta de d������bito
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        
         try {
@@ -378,7 +381,7 @@ public class InformationDebitCard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-         // Creamos un fichero de nombre el dni del usuario y dentro tendr�� el numero de cuenta y  toda la informacion de la tarjeta.
+         // Creamos un fichero de nombre el dni del usuario y dentro tendr������ el numero de cuenta y  toda la informacion de la tarjeta.
         if(jCheckBox1.isSelected()==true){
         FileWriter fichero = null;
         PrintWriter pw = null;

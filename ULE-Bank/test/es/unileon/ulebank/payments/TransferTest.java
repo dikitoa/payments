@@ -1,15 +1,15 @@
 package es.unileon.ulebank.payments;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import es.unileon.ulebank.account.Account;
+import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.exceptions.TransferException;
-import es.unileon.ulebank.handler.AccountHandler;
 import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.handler.IdOffice;
-import es.unileon.ulebank.payments.Transfer;
 
 /**
  * Test about Transfer Class

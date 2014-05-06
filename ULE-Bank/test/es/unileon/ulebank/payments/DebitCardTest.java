@@ -10,8 +10,9 @@ import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
 
+import es.unileon.ulebank.account.Account;
+import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
-import es.unileon.ulebank.handler.AccountHandler;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.handler.IdDNI;

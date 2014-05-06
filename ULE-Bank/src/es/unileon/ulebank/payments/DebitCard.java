@@ -2,6 +2,7 @@ package es.unileon.ulebank.payments;
 
 import java.io.IOException;
 
+import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.strategy.StrategyCommissionDebitEmission;

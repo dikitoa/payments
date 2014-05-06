@@ -3,14 +3,14 @@ package es.unileon.ulebank.command;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import es.unileon.ulebank.account.Account;
+import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.exceptions.ClientNotFoundException;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
-import es.unileon.ulebank.handler.AccountHandler;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.handler.IdDNI;
-import es.unileon.ulebank.payments.Account;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.Office;
 

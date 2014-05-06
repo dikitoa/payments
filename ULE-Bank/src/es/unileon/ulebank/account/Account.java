@@ -1,10 +1,10 @@
-package es.unileon.ulebank.payments;
+package es.unileon.ulebank.account;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import es.unileon.ulebank.handler.AccountHandler;
 import es.unileon.ulebank.handler.CardHandler;
+import es.unileon.ulebank.payments.Card;
 
 public class Account {
 	private ArrayList<Card> cards;

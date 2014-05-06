@@ -6,19 +6,6 @@
 
 package es.unileon.ulebank.GUI.payments;
 
-import es.unileon.ulebank.exceptions.CommissionException;
-import es.unileon.ulebank.exceptions.IncorrectLimitException;
-import es.unileon.ulebank.handler.CardHandler;
-import es.unileon.ulebank.handler.IdDNI;
-import es.unileon.ulebank.payments.Account;
-import es.unileon.ulebank.payments.CardType;
-import es.unileon.ulebank.payments.Client;
-import es.unileon.ulebank.payments.DebitCard;
-import es.unileon.ulebank.strategy.StrategyCommission;
-import es.unileon.ulebank.strategy.StrategyCommissionDebitEmission;
-import es.unileon.ulebank.strategy.StrategyCommissionDebitMaintenance;
-import es.unileon.ulebank.strategy.StrategyCommissionDebitRenovate;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -30,6 +17,21 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
+
+import es.unileon.ulebank.account.Account;
+import es.unileon.ulebank.account.AccountHandler;
+import es.unileon.ulebank.exceptions.CommissionException;
+import es.unileon.ulebank.exceptions.IncorrectLimitException;
+import es.unileon.ulebank.handler.CardHandler;
+import es.unileon.ulebank.handler.GenericHandler;
+import es.unileon.ulebank.handler.IdDNI;
+import es.unileon.ulebank.handler.IdOffice;
+import es.unileon.ulebank.payments.Client;
+import es.unileon.ulebank.payments.DebitCard;
+import es.unileon.ulebank.strategy.StrategyCommission;
+import es.unileon.ulebank.strategy.StrategyCommissionDebitEmission;
+import es.unileon.ulebank.strategy.StrategyCommissionDebitMaintenance;
+import es.unileon.ulebank.strategy.StrategyCommissionDebitRenovate;
 
 /**
  *
@@ -345,7 +347,7 @@ public class RenovationCardWindow extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-//Al darle a este bot������n y dependiendo de la tarjeta seleccionada en el combobox
+//Al darle a este bot������������������n y dependiendo de la tarjeta seleccionada en el combobox
 //renovaremos la tarjeta, modificando la fecha, el cvv.
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
         String DNI = textField1.getText();
@@ -380,7 +382,7 @@ public class RenovationCardWindow extends javax.swing.JInternalFrame {
             DebitCard debitCard = null;
             CardHandler handler = new CardHandler();
         	Client client = new Client(dni,25);
-        	Account account = new Account();
+        	Account account = new Account(new AccountHandler(new IdOffice("0001"), new GenericHandler("1234"), "1234567890"));
                 StrategyCommission commissionEmission = new StrategyCommissionDebitEmission(25);
                 StrategyCommission commissionMaintenance = new StrategyCommissionDebitMaintenance(client, 0);
                 StrategyCommission commissionRenovate = new StrategyCommissionDebitRenovate(0);
@@ -547,7 +549,7 @@ public class RenovationCardWindow extends javax.swing.JInternalFrame {
             FileReader doc1 = new FileReader(archiveCard);
             BufferedReader line = new BufferedReader(doc1);
             
-                    //--Leemos hasta el n������mero de tarjeta que es lo que queremos mostrar en el comboBox
+                    //--Leemos hasta el n������������������mero de tarjeta que es lo que queremos mostrar en el comboBox
                     accountNumber=line.readLine();
                     cardType=line.readLine();
                     cardNumber=line.readLine();

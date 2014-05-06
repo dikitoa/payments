@@ -1,8 +1,9 @@
 /* Application developed for AW subject, belonging to passive operations
  group.*/
-package es.unileon.ulebank.handler;
+package es.unileon.ulebank.account;
 
 import es.unileon.ulebank.exceptions.MalformedHandlerException;
+import es.unileon.ulebank.handler.Handler;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

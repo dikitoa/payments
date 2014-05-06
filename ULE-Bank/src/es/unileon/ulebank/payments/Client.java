@@ -3,7 +3,8 @@ package es.unileon.ulebank.payments;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import es.unileon.ulebank.handler.AccountHandler;
+import es.unileon.ulebank.account.Account;
+import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.handler.IdDNI;
 
 public class Client {
