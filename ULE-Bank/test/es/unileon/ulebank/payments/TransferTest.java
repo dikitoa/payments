@@ -34,12 +34,12 @@ public class TransferTest {
 	public void transferMoneyWithBalanceTest() throws TransferException {
 		this.senderAccount.setBalance(100);
 		this.receiverAccount.setBalance(0);
-		float beforeMoneyReceiver = this.receiverAccount.getBalance();
-		float beforeMoneySender = this.senderAccount.getBalance();
+		double beforeMoneyReceiver = this.receiverAccount.getBalance();
+		double beforeMoneySender = this.senderAccount.getBalance();
 		this.transfer = new Transfer(this.senderAccount, this.receiverAccount, this.quantity);
 		this.transfer.transferMoney("Concepto");
-		float afterMoneyReceiver = this.receiverAccount.getBalance();
-		float afterMoneySender = this.senderAccount.getBalance();
+		double afterMoneyReceiver = this.receiverAccount.getBalance();
+		double afterMoneySender = this.senderAccount.getBalance();
 		
 		assertEquals(afterMoneyReceiver - beforeMoneyReceiver, this.quantity, 0.01);
 		assertEquals(afterMoneyReceiver, this.quantity + beforeMoneyReceiver, 0.01);

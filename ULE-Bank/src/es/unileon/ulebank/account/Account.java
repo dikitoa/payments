@@ -9,7 +9,7 @@ import es.unileon.ulebank.payments.Card;
 public class Account {
 	private ArrayList<Card> cards;
 	private AccountHandler id;
-	private float balance;
+	private double balance;
 	
 	public Account(AccountHandler handler) {
 		this.id = handler;
@@ -53,11 +53,11 @@ public class Account {
 	}
 	
 
-	public float getBalance() {
+	public double getBalance() {
 		return balance;
 	}
 
-	public void setBalance(float balance) {
+	public void setBalance(double balance) {
 		this.balance = balance;
 	}
 }

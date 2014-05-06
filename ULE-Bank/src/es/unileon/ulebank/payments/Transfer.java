@@ -1,8 +1,11 @@
 package es.unileon.ulebank.payments;
 
+import java.util.Date;
+
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.exceptions.TransferException;
-import es.unileon.ulebank.handler.TransferHandler;
+import es.unileon.ulebank.history.GenericTransaction;
+import es.unileon.ulebank.history.TransactionType;
 
 /**
  * Transfer Class
@@ -14,9 +17,8 @@ public class Transfer {
 
 	private Account senderAccount; //Account from transfer the money
 	private Account receiverAccount; //Account which receives the money
-	private float quantity; //Quantity of the transfer
-	private TransferHandler id; //Identifier
-	private Transference transaction; //Transaction of the transfer
+	private double quantity; //Quantity of the transfer
+	private GenericTransaction transaction; //Transaction of the transfer
 
 	/**
 	 * Class constructor
@@ -25,12 +27,11 @@ public class Transfer {
 	 * @param quantity
 	 * @throws TransferException 
 	 */
-	public Transfer(Account sender, Account receiver, float quantity) throws TransferException{
+	public Transfer(Account sender, Account receiver, double quantity) throws TransferException{
 		if (!sender.equals(receiver)){
 			this.senderAccount = sender;
 			this.receiverAccount = receiver;
 			this.quantity = quantity;
-			this.id = new TransferHandler(sender.getId().toString(), receiver.getId().toString());
 		}
 		else
 			throw new TransferException("Sender Account number and Receiver Account number are the same.");
@@ -56,7 +57,7 @@ public class Transfer {
 	 * Getter quantity
 	 * @return quantity
 	 */
-	public float getQuantity() {
+	public double getQuantity() {
 		return quantity;
 	}
 	
@@ -64,7 +65,7 @@ public class Transfer {
 	 * Setter quantity
 	 * @param quantity
 	 */
-	public void setQuantity(float quantity) {
+	public void setQuantity(double quantity) {
 		this.quantity = quantity;
 	}
 	
@@ -79,25 +80,17 @@ public class Transfer {
 		if (this.senderAccount.getBalance() >= quantity){
 			this.senderAccount.setBalance(this.senderAccount.getBalance() - quantity);
 			this.receiverAccount.setBalance(this.receiverAccount.getBalance() + quantity);
-			this.setTransaction(new Transference(this, concept)); //TODO - Actualizar a Transaction
+			this.setTransaction(new GenericTransaction(this.quantity, new Date(), concept, TransactionType.TRANSFER));
 		}
 		else
 			throw new TransferException("Sender Account has not the balance necessary.");
 	}
 
 	/**
-	 * Getter id
-	 * @return id
-	 */
-	public String getId() {
-		return id.toString();
-	}
-
-	/**
 	 * Getter transaction
 	 * @return the annotation of the transfer
 	 */
-	public Transference getTransaction() {
+	public GenericTransaction getTransaction() {
 		return transaction;
 	}
 
@@ -105,7 +98,7 @@ public class Transfer {
 	 * Setter transaction
 	 * @param transaction
 	 */
-	public void setTransaction(Transference transaction) {
+	public void setTransaction(GenericTransaction transaction) {
 		this.transaction = transaction;
 	}
 
