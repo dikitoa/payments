@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import es.unileon.ulebank.exceptions.ClientNotFoundException;
-import es.unileon.ulebank.handler.IdDNI;
+import es.unileon.ulebank.handler.DNIHandler;
 
 /**
  * @author Israel Garcia Centeno
@@ -36,7 +36,7 @@ public class Office {
 	 * @return
 	 * @throws ClientNotFoundException 
 	 */
-	public boolean removeClient(IdDNI dni) throws ClientNotFoundException {
+	public boolean removeClient(DNIHandler dni) throws ClientNotFoundException {
 		//Comprueba si la lista de clientes esta vacia y lanza una excepcion en caso de que lo este
 		if (clients.isEmpty()) {
 			throw new NullPointerException("Client list is empty.");
@@ -54,7 +54,7 @@ public class Office {
 	 * @return
 	 * @throws ClientNotFoundException 
 	 */
-	public Client searchClient(IdDNI dni) throws ClientNotFoundException {
+	public Client searchClient(DNIHandler dni) throws ClientNotFoundException {
 		//Creamos un iterador para recorrer la lista
 		Iterator<Client> iterator = clients.iterator();
 		Client client = null;

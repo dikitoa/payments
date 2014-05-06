@@ -5,14 +5,14 @@ import java.util.Iterator;
 
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.account.AccountHandler;
-import es.unileon.ulebank.handler.IdDNI;
+import es.unileon.ulebank.handler.DNIHandler;
 
 public class Client {
 	private int age;
-	private IdDNI dni;
+	private DNIHandler dni;
 	private ArrayList<Account> accounts = new ArrayList<Account>();
 	
-	public Client(IdDNI dni, int age) {
+	public Client(DNIHandler dni, int age) {
 		this.dni = dni;
 		this.age = age;
 	}
@@ -25,11 +25,11 @@ public class Client {
 		this.age = age;
 	}
 
-	public IdDNI getDni() {
+	public DNIHandler getDni() {
 		return dni;
 	}
 
-	public void setDni(IdDNI dni) {
+	public void setDni(DNIHandler dni) {
 		this.dni = dni;
 	}
 	

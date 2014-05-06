@@ -10,7 +10,7 @@ import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.Handler;
-import es.unileon.ulebank.handler.IdDNI;
+import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.Office;
 
@@ -42,7 +42,7 @@ public class ModifyCashLimitCommand implements Command {
 	 * @param amount
 	 * @param type
 	 */
-	public ModifyCashLimitCommand(CardHandler cardId, Office office, IdDNI dni, AccountHandler accountHandler, double amount, String type) {
+	public ModifyCashLimitCommand(CardHandler cardId, Office office, DNIHandler dni, AccountHandler accountHandler, double amount, String type) {
 		try {
 			this.id = new CommandHandler(cardId);
 			this.cardId = cardId;

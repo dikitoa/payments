@@ -16,7 +16,7 @@ import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.handler.Handler;
-import es.unileon.ulebank.handler.IdDNI;
+import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.handler.IdOffice;
 import es.unileon.ulebank.payments.CardType;
 import es.unileon.ulebank.payments.CreditCard;
@@ -33,7 +33,7 @@ public class CreditCardTest {
 	@Before
 	public void setUp() throws Exception {
 		handler = new CardHandler();
-		Client client = new Client(new IdDNI("71451559N"), 27);
+		Client client = new Client(new DNIHandler("71451559N"), 27);
 		Account account = new Account(new AccountHandler(new IdOffice("0001"), new GenericHandler("1234"), "1234567890"));
 		StrategyCommission commissionEmission = new StrategyCommissionCreditEmission(25);
 		StrategyCommission commissionMaintenance = new StrategyCommissionCreditMaintenance(0);

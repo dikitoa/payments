@@ -14,7 +14,7 @@ import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.GenericHandler;
-import es.unileon.ulebank.handler.IdDNI;
+import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.handler.IdOffice;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.Client;
@@ -26,7 +26,7 @@ public class ReplacementCardCommandTest {
 	private CardHandler handler1;
 	private CardHandler handler2;
 	private Office office;
-	private IdDNI dni;
+	private DNIHandler dni;
 	private Client client;
 	private AccountHandler accountHandler;
 	private Account account;
@@ -39,7 +39,7 @@ public class ReplacementCardCommandTest {
 		handler1 = new CardHandler();
 		handler2 = new CardHandler();
 		this.office = new Office();
-		this.dni = new IdDNI("71557005A");
+		this.dni = new DNIHandler("71557005A");
 		client = new Client(dni, 20);
 		this.office.addClient(client);
 		this.accountHandler = new AccountHandler(new IdOffice("0001"), new GenericHandler("1234"), "9876543210");

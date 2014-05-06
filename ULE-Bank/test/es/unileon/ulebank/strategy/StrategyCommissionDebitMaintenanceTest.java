@@ -1,6 +1,7 @@
 package es.unileon.ulebank.strategy;
 
-import static org.junit.Assert.*; 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
@@ -8,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import es.unileon.ulebank.exceptions.CommissionException;
-import es.unileon.ulebank.handler.IdDNI;
+import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.payments.Client;
 
 
@@ -35,7 +36,7 @@ public class StrategyCommissionDebitMaintenanceTest {
 	public void SetUp() throws NumberFormatException, CommissionException, IOException{
 	
 		quantity = 15;
-		this.owner = new Client(new IdDNI(71034506, 'H'), 20);
+		this.owner = new Client(new DNIHandler(71034506, 'H'), 20);
 		commission = new StrategyCommissionDebitMaintenance(owner, quantity);
 	}
 	
@@ -61,7 +62,7 @@ public class StrategyCommissionDebitMaintenanceTest {
 	
 	
 	/**
-	 * Comprobamos que si tiene más de 25 anos, la comision es la estipulada por defecto
+	 * Comprobamos que si tiene mï¿½s de 25 anos, la comision es la estipulada por defecto
 	 * @throws IOException 
 	 * @throws CommissionException 
 	 * @throws NumberFormatException 
@@ -75,7 +76,7 @@ public class StrategyCommissionDebitMaintenanceTest {
 		
 	
 	/**
-	 * Comprobamos que si tiene más de 25 anos, la comision es la estipulada por defecto
+	 * Comprobamos que si tiene mï¿½s de 25 anos, la comision es la estipulada por defecto
 	 * @throws IOException 
 	 * @throws CommissionException 
 	 * @throws NumberFormatException 

@@ -24,7 +24,7 @@ import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.GenericHandler;
-import es.unileon.ulebank.handler.IdDNI;
+import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.handler.IdOffice;
 import es.unileon.ulebank.payments.Client;
 import es.unileon.ulebank.payments.DebitCard;
@@ -494,7 +494,7 @@ public class ReplacementWindow extends javax.swing.JInternalFrame {
             }
             Character letter = textField1.getText().charAt(textField1.getText().length()-1);
             int numberDNI = Integer.valueOf(number);
-            IdDNI dni = new IdDNI(numberDNI, letter);
+            DNIHandler dni = new DNIHandler(numberDNI, letter);
                 // Falta a��adir correctamente la edad
         	Client client = new Client(dni,25);
         	Account account = new Account(new AccountHandler(new IdOffice("0001"), new GenericHandler("1234"), "1234567890"));

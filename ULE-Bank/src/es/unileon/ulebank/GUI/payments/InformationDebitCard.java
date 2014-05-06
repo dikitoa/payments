@@ -22,7 +22,7 @@ import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.GenericHandler;
-import es.unileon.ulebank.handler.IdDNI;
+import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.handler.IdOffice;
 import es.unileon.ulebank.payments.Client;
 import es.unileon.ulebank.payments.DebitCard;
@@ -68,7 +68,7 @@ public class InformationDebitCard extends javax.swing.JFrame {
             }
         Character letter = dni.charAt(dni.length()-1);
         int numberDNI = Integer.valueOf(number);
-        IdDNI Nif = new IdDNI(numberDNI, letter);
+        DNIHandler Nif = new DNIHandler(numberDNI, letter);
         client = new Client(Nif, 25);
         
         card = new DebitCard(handler, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission.calculateCommission(), commissionMaintenance.calculateCommission(), commissionRenovate.calculateCommission(), 0);

@@ -15,7 +15,7 @@ import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.GenericHandler;
-import es.unileon.ulebank.handler.IdDNI;
+import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.handler.IdOffice;
 import es.unileon.ulebank.strategy.StrategyCommission;
 import es.unileon.ulebank.strategy.StrategyCommissionDebitEmission;
@@ -29,7 +29,7 @@ public class DebitCardTest {
 	@Before
 	public void setUp() throws Exception {
 		CardHandler handler = new CardHandler();
-		Client client = new Client(new IdDNI("71451559N"), 27);
+		Client client = new Client(new DNIHandler("71451559N"), 27);
 		Account account = new Account(new AccountHandler(new IdOffice("0001"), new GenericHandler("1234"), "1234567890") );
 		StrategyCommission commissionEmission = new StrategyCommissionDebitEmission(25);
 		StrategyCommission commissionMaintenance = new StrategyCommissionDebitMaintenance(client, 0);

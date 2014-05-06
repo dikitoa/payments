@@ -9,7 +9,7 @@ import es.unileon.ulebank.exceptions.ClientNotFoundException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.Handler;
-import es.unileon.ulebank.handler.IdDNI;
+import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.payments.Office;
 
 /**
@@ -31,7 +31,7 @@ public class CancelCardCommand implements Command {
 	 * @param dni
 	 * @param account
 	 */
-	public CancelCardCommand(CardHandler cardId, Office office, IdDNI dni, AccountHandler account) {
+	public CancelCardCommand(CardHandler cardId, Office office, DNIHandler dni, AccountHandler account) {
 		this.id = new CommandHandler(cardId);
 		this.cardId = cardId;
 		try {

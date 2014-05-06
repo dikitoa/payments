@@ -3,13 +3,13 @@ package es.unileon.ulebank.handler;
 import es.unileon.ulebank.exceptions.MalformedHandlerException;
 
 
-public class IdDNI implements Handler {
+public class DNIHandler implements Handler {
 	private static final String NIF_STRING_ASOCIATION = "TRWAGMYFPDXBNJZSQVHLCKE";
 
     private char letter;
     private int dni;
 
-    public IdDNI(Integer dni, Character letter) {
+    public DNIHandler(Integer dni, Character letter) {
         boolean correct = true;
         StringBuilder error = new StringBuilder();
 
@@ -61,7 +61,7 @@ public class IdDNI implements Handler {
         }
     }
 
-    public IdDNI(String dni) {
+    public DNIHandler(String dni) {
         boolean correct = true;
         StringBuilder error = new StringBuilder();
 
