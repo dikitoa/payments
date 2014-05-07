@@ -34,7 +34,7 @@ public class DebitCardTest {
 		StrategyCommission commissionEmission = new StrategyCommissionDebitEmission(25);
 		StrategyCommission commissionMaintenance = new StrategyCommissionDebitMaintenance(client, 0);
 		StrategyCommission commissionRenovate = new StrategyCommissionDebitRenovate(0);
-		testCard = new DebitCard(handler, client, account, 400F, 1000F, 400F, 1000F, commissionEmission.calculateCommission(), commissionMaintenance.calculateCommission(), commissionRenovate.calculateCommission(), 0);
+		testCard = new DebitCard(handler, client, account, 400F, 1000F, 400F, 1000F, commissionEmission.calculateCommission(), commissionMaintenance.calculateCommission(), commissionRenovate.calculateCommission());
 	}
 
 	@Test (expected = NullPointerException.class)

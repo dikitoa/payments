@@ -1,9 +1,0 @@
-debit_maintenance 15.00
-debit_renovate 20.00
-debit_emission 0.00
-credit_maintenance 25.00
-credit_renovate 30.00
-credit_emission 0.00
-revolving_maintenance 0.00
-revolving_renovate 0.00
-revolving_emission 0.00

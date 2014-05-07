@@ -52,7 +52,6 @@ public class NewCardCommandTest {
 		this.commissionEmission = 25;
 		this.commissionMaintenance = 0;
 		this.commissionRenovate = 0;
-		this.limitDebit = 3000.0;
 	}
 	
 	@Test (expected = NullPointerException.class)
@@ -85,7 +84,6 @@ public class NewCardCommandTest {
 		assertEquals(commissionEmission, card.getCommissionEmission(), 0.0001);
 		assertEquals(commissionMaintenance, card.getCommissionMaintenance(), 0.0001);
 		assertEquals(commissionRenovate, card.getCommissionRenovate(), 0.0001);
-		assertEquals(limitDebit, card.getLimitDebit(), 0.0001);
 	}
 	
 	@Test
@@ -105,7 +103,6 @@ public class NewCardCommandTest {
 		assertEquals(commissionEmission, card.getCommissionEmission(), 0.0001);
 		assertEquals(commissionMaintenance, card.getCommissionMaintenance(), 0.0001);
 		assertEquals(commissionRenovate, card.getCommissionRenovate(), 0.0001);
-		assertEquals(0.0, card.getLimitDebit(), 0.0001);
 	}
 	
 	@Test (expected = NullPointerException.class)

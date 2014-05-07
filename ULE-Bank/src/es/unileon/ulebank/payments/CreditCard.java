@@ -3,6 +3,7 @@ package es.unileon.ulebank.payments;
 import java.util.Date;
 
 import es.unileon.ulebank.account.Account;
+import es.unileon.ulebank.account.exception.TransactionException;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.PaymentException;
 import es.unileon.ulebank.handler.CardHandler;
@@ -37,11 +38,11 @@ public class CreditCard extends Card {
 	 */
 	public CreditCard(CardHandler cardId, Client owner, Account account, double buyLimitDiary, double buyLimitMonthly, 
 			double cashLimitDiary, double cashLimitMonthly, float commissionEmission, 
-			float commissionMaintenance, float commissionRenovate, double limitDebit) throws CommissionException {
+			float commissionMaintenance, float commissionRenovate) throws CommissionException {
 		super(cardId, CardType.CREDIT, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly,
 				new StrategyCommissionCreditEmission(commissionEmission),
 				new StrategyCommissionCreditMaintenance(commissionMaintenance),
-				new StrategyCommissionCreditRenovate(commissionRenovate), limitDebit);
+				new StrategyCommissionCreditRenovate(commissionRenovate));
 		this.account = account;
 	}
 		
@@ -51,10 +52,11 @@ public class CreditCard extends Card {
 	 * @param quantity Amount of the payment
 	 * @param payConcept Concept of the payment
 	 * @throws PaymentException
+	 * @throws TransactionException 
 	 */
-	public void makeTransaction(Account receiverAccount, double quantity, String payConcept) throws PaymentException{
+	public void makeTransaction(Account receiverAccount, double quantity, String payConcept) throws PaymentException, TransactionException{
 		//TODO - Actualizar con las nuevas transacciones
-		if (this.account.getBalance() + this.getLimitDebit() >= quantity ){
+		if (this.account.getBalance() >= quantity ){
 			this.account.setBalance(this.account.getBalance() - quantity);
 			receiverAccount.setBalance(receiverAccount.getBalance() + quantity);
 			this.addTransaction(new GenericTransaction(quantity, new Date(), payConcept, TransactionType.PAYMENT));

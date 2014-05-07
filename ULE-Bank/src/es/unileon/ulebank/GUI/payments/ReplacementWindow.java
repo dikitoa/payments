@@ -502,7 +502,7 @@ public class ReplacementWindow extends javax.swing.JInternalFrame {
                 StrategyCommission commissionMaintenance = new StrategyCommissionDebitMaintenance(client, 0);
                 StrategyCommission commissionRenovate = new StrategyCommissionDebitRenovate(0);
                 // Falta el limitDebit, ultima argumento que se pasa al crear el DebitCard
-                debitCard = new DebitCard(handler, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission.calculateCommission(), commissionMaintenance.calculateCommission(), commissionRenovate.calculateCommission(), 0);
+                debitCard = new DebitCard(handler, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission.calculateCommission(), commissionMaintenance.calculateCommission(), commissionRenovate.calculateCommission());
             try {
                 debitCard.setBuyLimitDiary(buyLimitDiary);
                 debitCard.setCashLimitDiary(cashLimitDiary);

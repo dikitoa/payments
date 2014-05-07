@@ -54,8 +54,6 @@ public class NewCardCommand implements Command {
 	private float commissionMaintenance;
 	//Comision de renovacion de la tarjeta
 	private float commissionRenovate;
-	//Limite de deuda de la tarjeta
-	private double limitDebit;
 	
 	/**
 	 * Constructor de la clase
@@ -89,7 +87,6 @@ public class NewCardCommand implements Command {
 		this.commissionEmission = commissionEmission;
 		this.commissionMaintenance = commissionMaintenance;
 		this.commissionRenovate = commissionRenovate;
-		this.limitDebit = limitDebit;
 	}
 	
 	/**
@@ -105,10 +102,10 @@ public class NewCardCommand implements Command {
 			//Crea una tarjeta en funcion del tipo indicado
 			switch (type) {
 			case CREDIT:
-				this.card = new CreditCard(cardId, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, commissionMaintenance, commissionRenovate, limitDebit);
+				this.card = new CreditCard(cardId, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, commissionMaintenance, commissionRenovate);
 				break;
 			case DEBIT:
-				this.card = new DebitCard(cardId, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, commissionMaintenance, commissionRenovate, limitDebit);
+				this.card = new DebitCard(cardId, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, commissionMaintenance, commissionRenovate);
 				break;
 			case REVOLVING:
 

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Date;
 
 import es.unileon.ulebank.account.Account;
+import es.unileon.ulebank.account.exception.TransactionException;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.PaymentException;
 import es.unileon.ulebank.handler.CardHandler;
@@ -40,13 +41,12 @@ public class DebitCard extends Card {
 	 */
 	public DebitCard(CardHandler cardId, Client owner, Account account,
 			double buyLimitDiary, double buyLimitMonthly, double cashLimitDiary, double cashLimitMonthly,
-			float commissionEmission, float commissionMaintenance, float commissionRenovate, double limitDebit) throws NumberFormatException, CommissionException, IOException {
+			float commissionEmission, float commissionMaintenance, float commissionRenovate) throws NumberFormatException, CommissionException, IOException {
 		super(cardId, CardType.DEBIT,
 				buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly,
 				new StrategyCommissionDebitEmission(commissionEmission), 
 				new StrategyCommissionDebitMaintenance(owner, commissionMaintenance), 
-				new StrategyCommissionDebitRenovate(commissionRenovate),
-				limitDebit);
+				new StrategyCommissionDebitRenovate(commissionRenovate));
 		this.account = account;
 	}
 	
@@ -56,8 +56,9 @@ public class DebitCard extends Card {
 	 * @param quantity Amount of the payment
 	 * @param payConcept Concept of the payment
 	 * @throws PaymentException
+	 * @throws TransactionException 
 	 */
-	public void makeTransaction(Account receiverAccount, double quantity, String payConcept) throws PaymentException{
+	public void makeTransaction(Account receiverAccount, double quantity, String payConcept) throws PaymentException, TransactionException{
 		//TODO - Actualizar con las nuevas transacciones
 		if (this.account.getBalance() >= quantity){
 			this.account.setBalance(this.account.getBalance() - quantity);

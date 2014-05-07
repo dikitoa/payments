@@ -37,7 +37,7 @@ public class CreditCardTest {
 		StrategyCommission commissionEmission = new StrategyCommissionCreditEmission(25);
 		StrategyCommission commissionMaintenance = new StrategyCommissionCreditMaintenance(0);
 		StrategyCommission commissionRenovate = new StrategyCommissionCreditRenovate(0);
-		testCard = new CreditCard(handler, client, account, 400.0, 1000.0, 400.0, 1000.0, commissionEmission.calculateCommission(), commissionMaintenance.calculateCommission(), commissionRenovate.calculateCommission(), 3000.0);
+		testCard = new CreditCard(handler, client, account, 400.0, 1000.0, 400.0, 1000.0, commissionEmission.calculateCommission(), commissionMaintenance.calculateCommission(), commissionRenovate.calculateCommission());
 	}
 	
 	@Test (expected = NullPointerException.class)

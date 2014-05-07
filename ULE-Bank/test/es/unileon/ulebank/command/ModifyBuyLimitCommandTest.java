@@ -40,7 +40,7 @@ public class ModifyBuyLimitCommandTest {
 		this.accountHandler = new AccountHandler(new OfficeHandler("0001"), new GenericHandler("1234"), "9876543210");
 		account = new Account(accountHandler);
 		this.client.addAccount(account);
-		testCard = new CreditCard(handler, client, account, 400.0, 1000.0, 400.0, 1000.0, 25, 0, 0, 3000.0);
+		testCard = new CreditCard(handler, client, account, 400.0, 1000.0, 400.0, 1000.0, 25, 0, 0);
 		account.addCard(testCard);
 	}
 	
