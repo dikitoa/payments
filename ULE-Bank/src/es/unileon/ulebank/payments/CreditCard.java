@@ -1,6 +1,8 @@
 package es.unileon.ulebank.payments;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.client.Client;
@@ -8,19 +10,20 @@ import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.PaymentException;
 import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.handler.Handler;
-import es.unileon.ulebank.history.GenericTransaction;
 import es.unileon.ulebank.history.TransactionType;
 import es.unileon.ulebank.strategy.StrategyCommissionCreditEmission;
 import es.unileon.ulebank.strategy.StrategyCommissionCreditMaintenance;
 import es.unileon.ulebank.strategy.StrategyCommissionCreditRenovate;
+import es.unileon.ulebank.history.CardTransaction;
 
 /**
- * @author Israel
+ * @author Israel, Rober dCR
  * Clase que representa la tarjeta de credito
  */
 public class CreditCard extends Card {
 	
 	private Account account;
+	List<CardTransaction> transactionList;
 	
 	/**
 	 * Constructor de la clase
@@ -44,6 +47,7 @@ public class CreditCard extends Card {
 				new StrategyCommissionCreditMaintenance(commissionMaintenance),
 				new StrategyCommissionCreditRenovate(commissionRenovate));
 		this.account = account;
+		this.transactionList = new ArrayList<CardTransaction>();
 	}
 		
 	/**
@@ -56,11 +60,9 @@ public class CreditCard extends Card {
 	 */
 	public void makeTransaction(Account receiverAccount, double quantity, String payConcept) throws PaymentException, TransactionException{
 		//TODO - Actualizar con las nuevas transacciones
-		if (this.account.getBalance() >= quantity ){
-			this.account.setBalance(this.account.getBalance() - quantity);
-			receiverAccount.setBalance(receiverAccount.getBalance() + quantity);
-			this.addTransaction(new GenericTransaction(quantity, new Date(), payConcept, TransactionType.PAYMENT));
-		}
-		else throw new PaymentException("Debit Card has not the balance necessary.");
+		//Añadimos la transaccion a la lista
+		this.transactionList.add(new CardTransaction(quantity, new Date(), payConcept, TransactionType.PAYMENT, receiverAccount, this.account));
+		//LLegada la fecha hay que descontar el dinero de la cuenta
+		//Pagar los importes a la cuenta
 	}
 }

@@ -9,14 +9,14 @@ import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.PaymentException;
 import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.handler.Handler;
-import es.unileon.ulebank.history.GenericTransaction;
+import es.unileon.ulebank.history.CardTransaction;
 import es.unileon.ulebank.history.TransactionType;
 import es.unileon.ulebank.strategy.StrategyCommissionDebitEmission;
 import es.unileon.ulebank.strategy.StrategyCommissionDebitMaintenance;
 import es.unileon.ulebank.strategy.StrategyCommissionDebitRenovate;
 
 /**
- * @author Israel
+ * @author Israel, Rober dCR
  * Clase que representa una tarjeta de Debito
  */
 public class DebitCard extends Card {
@@ -59,12 +59,14 @@ public class DebitCard extends Card {
 	 * @throws TransactionException 
 	 */
 	public void makeTransaction(Account receiverAccount, double quantity, String payConcept) throws PaymentException, TransactionException{
-		//TODO - Actualizar con las nuevas transacciones
-		if (this.account.getBalance() >= quantity){
-			this.account.setBalance(this.account.getBalance() - quantity);
-			receiverAccount.setBalance(receiverAccount.getBalance() + quantity);
-			this.addTransaction(new GenericTransaction(quantity, new Date(), payConcept, TransactionType.PAYMENT));
+
+		try{
+			this.account.doWithdrawal(new CardTransaction(quantity, new Date(), payConcept, TransactionType.PAYMENT, receiverAccount, this.account));
+			receiverAccount.doDeposit(new CardTransaction(quantity, new Date(), payConcept, TransactionType.PAYMENT, receiverAccount, this.account));
+		}catch(TransactionException e){
+			e.printStackTrace();
+			throw new PaymentException("Denegate Transaction");
 		}
-		else throw new PaymentException("Credit Card has not the balance necessary.");
+		
 	}
 }
