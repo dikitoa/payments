@@ -12,14 +12,12 @@ import org.junit.Test;
 
 import es.unileon.ulebank.Office;
 import es.unileon.ulebank.account.Account;
-import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.bank.Bank;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.CardHandler;
-import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.handler.DNIHandler;
-import es.unileon.ulebank.handler.OfficeHandler;
+import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.strategy.StrategyCommission;
 import es.unileon.ulebank.strategy.StrategyCommissionDebitEmission;
 import es.unileon.ulebank.strategy.StrategyCommissionDebitMaintenance;
@@ -73,7 +71,11 @@ public class DebitCardTest {
 	
 	@Test
 	public void testGenerateExpirationDate() {
-		assertTrue(testCard.generateExpirationDate().equals("04/17"));
+		SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
+		SimpleDateFormat yearFormat = new SimpleDateFormat("YY");
+		String currentMonth = monthFormat.format(new Date());
+		String currentYear = String.valueOf(Integer.parseInt(yearFormat.format(new Date()))+3);
+		assertTrue(testCard.generateExpirationDate().equals(currentMonth+"/"+currentYear));
 	}
 
 	@Test
@@ -83,7 +85,6 @@ public class DebitCardTest {
 
 	@Test
 	public void testGetCardId() {
-		System.out.println(testCard.getCardId());
 		assertTrue(testCard.getCardId().length() == 16 + 3); 
 	}
 
@@ -165,7 +166,11 @@ public class DebitCardTest {
 
 	@Test
 	public void testGetExpirationDate() {
-		assertTrue(testCard.getExpirationDate().equals("04/17"));
+		SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
+		SimpleDateFormat yearFormat = new SimpleDateFormat("YY");
+		String currentMonth = monthFormat.format(new Date());
+		String currentYear = String.valueOf(Integer.parseInt(yearFormat.format(new Date()))+3);
+		assertTrue(testCard.getExpirationDate().equals(currentMonth+"/"+currentYear));
 	}
 
 	@Test

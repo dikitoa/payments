@@ -94,6 +94,7 @@ public class Account {
         this.balance = 0.0d;
         this.titulars = new ArrayList<>();
         this.authorizeds = new ArrayList<>();
+        this.cards = new ArrayList<Card>();
         this.lastLiquidation = new Date(System.currentTimeMillis());
         this.liquidationFrecuency = DEFAULT_LIQUIDATION_FREQUENCY;
         this.liquidationStrategies = new ArrayList<>();

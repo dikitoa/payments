@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 
 import es.unileon.ulebank.Office;
 import es.unileon.ulebank.account.Account;
-import es.unileon.ulebank.exceptions.ClientNotFoundException;
 import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.payments.Card;
@@ -43,7 +42,7 @@ public class ModifyPinCommand implements Command {
 			this.cardId = cardId;
 			this.account = office.searchClient(dni).searchAccount(accountHandler);
 			this.newPin = newPin;
-		} catch (ClientNotFoundException e) {
+		} catch (Exception e) {
 			Logger.getLogger(ModifyPinCommand.class.toString()).log(Level.SEVERE, null, e);
 		}
 	}

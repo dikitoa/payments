@@ -10,24 +10,23 @@ import org.junit.Test;
 
 import es.unileon.ulebank.Office;
 import es.unileon.ulebank.account.Account;
-import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.bank.Bank;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
-import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.handler.DNIHandler;
-import es.unileon.ulebank.handler.OfficeHandler;
+import es.unileon.ulebank.handler.GenericHandler;
+import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.DebitCard;
 import es.unileon.ulebank.transacionManager.TransactionManager;
 
 public class ModifyPinCommandTest {
-	private CardHandler handler;
+	private Handler handler;
 	private Office office;
-	private DNIHandler dni;
-	private AccountHandler accountHandler;
+	private Handler dni;
+	private Handler accountHandler;
 	private Client client;
 	private Account account;
 	private Card card;
@@ -47,8 +46,8 @@ public class ModifyPinCommandTest {
 		this.dni = new DNIHandler("71557005A");
 		client = new Client(dni, 20);
 		this.office.addClient(client);
-		this.accountHandler = new AccountHandler(new OfficeHandler("0001"), new GenericHandler("1234"), "9876543210");
 		account = new Account(office, bank, accountNumber);
+		this.accountHandler = account.getID();
 		this.client.add(account);
 		this.card = new DebitCard(handler, client, account, 400.0, 1000.0, 400.0, 1000.0, 25, 0, 0);
 		this.account.addCard(card);

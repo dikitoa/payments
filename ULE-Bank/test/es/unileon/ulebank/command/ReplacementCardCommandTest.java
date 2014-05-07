@@ -10,26 +10,27 @@ import org.junit.Test;
 
 import es.unileon.ulebank.Office;
 import es.unileon.ulebank.account.Account;
-import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.bank.Bank;
+import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
-import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.handler.DNIHandler;
+import es.unileon.ulebank.handler.Handler;
+import es.unileon.ulebank.handler.OfficeHandler;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.CreditCard;
 import es.unileon.ulebank.payments.DebitCard;
 import es.unileon.ulebank.transacionManager.TransactionManager;
 
 public class ReplacementCardCommandTest {
-	private CardHandler handler1;
-	private CardHandler handler2;
+	private Handler handler1;
+	private Handler handler2;
 	private Office office;
-	private DNIHandler dni;
+	private Handler dni;
 	private Client client;
-	private AccountHandler accountHandler;
+	private Handler accountHandler;
 	private Account account;
 	private Card card1;
 	private Card card2;
@@ -42,14 +43,15 @@ public class ReplacementCardCommandTest {
 	@Before
 	public void setUp() throws NumberFormatException, CommissionException, IOException {
 		this.manager = new TransactionManager();
-        this.bank = new Bank(manager, new GenericHandler("1234"));
-		handler1 = new CardHandler();
-		handler2 = new CardHandler();
-		this.office =  new Office(new GenericHandler("1234"), this.bank);
+        this.bank = new Bank(manager, new BankHandler("1234"));
+		this.handler1 = new CardHandler();
+		this.handler2 = new CardHandler();
+		this.office =  new Office(new OfficeHandler("1234"), this.bank);
 		this.dni = new DNIHandler("71557005A");
-		client = new Client(dni, 20);
+		this.client = new Client(dni, 20);
 		this.office.addClient(client);
-		account = new Account(office, bank, accountNumber);
+		this.account = new Account(office, bank, accountNumber);
+		this.accountHandler = account.getID();
 		this.client.add(account);
 		this.card1 = new DebitCard(handler1, client, account, 400.0, 1000.0, 400.0, 1000.0, 25, 0, 0);
 		this.card2 = new CreditCard(handler2, client, account, 400.0, 1000.0, 400.0, 1000.0, 25, 0, 0);

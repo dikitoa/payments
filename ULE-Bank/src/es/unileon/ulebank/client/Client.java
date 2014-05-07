@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import es.unileon.ulebank.account.Account;
+import es.unileon.ulebank.account.exception.AccountNotFoundException;
 import es.unileon.ulebank.handler.Handler;
 
 /**
@@ -90,9 +91,10 @@ public class Client {
         return result;
     }
     
-    public Account searchAccount(Handler account2) {
+    public Account searchAccount(Handler account2) throws Exception {
 		Iterator<Account> iterator = accounts.iterator();
 		Account account = null;
+		boolean found = false;
 		
 		if (this.accounts.isEmpty()) {
 			throw new NullPointerException("Account list is empty.");
@@ -102,14 +104,18 @@ public class Client {
 			account = iterator.next();
 			
 			if (account.getID().compareTo(account2) == 0) {
+				found = true;
 				break;
 			}
 		}
-		
-		return account;
+		if (found) {
+			return account;
+		} else {
+			throw new AccountNotFoundException("This account does not exists.");
+		}
 	}
 
-    /**
+	/**
      * @return id of the client
      */
     public Handler getId() {

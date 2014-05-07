@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 
 import es.unileon.ulebank.Office;
 import es.unileon.ulebank.account.Account;
-import es.unileon.ulebank.exceptions.ClientNotFoundException;
 import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.payments.Card;
@@ -49,7 +48,7 @@ public class ReplacementCardCommand implements Command {
 			this.id = new CommandHandler(cardId);
 			this.cardId = cardId;
 			this.account = office.searchClient(dni).searchAccount(accountHandler);
-		} catch (ClientNotFoundException e) {
+		} catch (Exception e) {
 			Logger.getLogger(ReplacementCardCommand.class.toString()).log(Level.SEVERE, null, e);
 		}
 	}

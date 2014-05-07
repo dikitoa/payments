@@ -8,14 +8,13 @@ import org.junit.Test;
 
 import es.unileon.ulebank.Office;
 import es.unileon.ulebank.account.Account;
-import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.bank.Bank;
+import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
-import es.unileon.ulebank.exceptions.ClientNotFoundException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.DNIHandler;
-import es.unileon.ulebank.handler.GenericHandler;
+import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.handler.OfficeHandler;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.CardType;
@@ -25,7 +24,7 @@ public class NewCardCommandTest {
 	private NewCardCommand test;
 	private DNIHandler dni;
 	private Office office;
-	private AccountHandler accountHandler;
+	private Handler accountHandler;
 	private CardType cardTypeCredit;
 	private CardType cardTypeDebit;
 	private double buyLimitDiary;
@@ -35,7 +34,6 @@ public class NewCardCommandTest {
 	private float commissionEmission;
 	private float commissionMaintenance;
 	private float commissionRenovate;
-	private double limitDebit;
 	private Bank bank;
     private TransactionManager manager;
 
@@ -44,13 +42,14 @@ public class NewCardCommandTest {
 	@Before
 	public void setUp() {
 		this.manager = new TransactionManager();
-        this.bank = new Bank(manager, new GenericHandler("1234"));
-		this.office = new Office(new GenericHandler("1234"), this.bank);
+        this.bank = new Bank(manager, new BankHandler("1234"));
+		this.office = new Office(new OfficeHandler("1234"), this.bank);
 		this.dni = new DNIHandler("71557005A");
 		Client client = new Client(dni, 20);
 		this.office.addClient(client);
-		this.accountHandler = new AccountHandler(new OfficeHandler("0001"), new GenericHandler("1234"), "9876543210");
-		client.add(new Account(office, bank, accountNumber));
+		Account account = new Account(office, bank, accountNumber);
+		this.accountHandler = account.getID();
+		client.add(account);
 		this.cardTypeCredit = CardType.CREDIT;
 		this.cardTypeDebit = CardType.DEBIT;
 		this.buyLimitDiary = 400.0;
@@ -76,7 +75,7 @@ public class NewCardCommandTest {
 	}
 	
 	@Test
-	public void testCreateCreditCard() throws ClientNotFoundException {
+	public void testCreateCreditCard() throws Exception {
 		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeCredit, buyLimitDiary, 
 				buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, 
 				commissionMaintenance, commissionRenovate);
@@ -95,7 +94,7 @@ public class NewCardCommandTest {
 	}
 	
 	@Test
-	public void testCreateDebitCard() throws ClientNotFoundException {
+	public void testCreateDebitCard() throws Exception {
 		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeDebit, buyLimitDiary, 
 				buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, 
 				commissionMaintenance, commissionRenovate);
@@ -114,7 +113,7 @@ public class NewCardCommandTest {
 	}
 	
 	@Test (expected = NullPointerException.class)
-	public void testUndoNewCreditCardCommand() throws ClientNotFoundException {
+	public void testUndoNewCreditCardCommand() throws Exception {
 		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeCredit, buyLimitDiary, 
 				buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, 
 				commissionMaintenance, commissionRenovate);
@@ -129,7 +128,7 @@ public class NewCardCommandTest {
 	}
 	
 	@Test (expected = NullPointerException.class)
-	public void testUndoNewDebitCardCommand() throws ClientNotFoundException {
+	public void testUndoNewDebitCardCommand() throws Exception {
 		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeDebit, buyLimitDiary, 
 				buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, 
 				commissionMaintenance, commissionRenovate);

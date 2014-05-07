@@ -16,8 +16,9 @@ import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
-import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.handler.DNIHandler;
+import es.unileon.ulebank.handler.GenericHandler;
+import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.handler.OfficeHandler;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.CreditCard;
@@ -25,11 +26,11 @@ import es.unileon.ulebank.payments.DebitCard;
 import es.unileon.ulebank.transacionManager.TransactionManager;
 
 public class CancelCardCommandTest {
-	private CardHandler handler1;
-	private CardHandler handler2;
+	private Handler handler1;
+	private Handler handler2;
 	private Office office;
-	private DNIHandler dni;
-	private AccountHandler accountHandler;
+	private Handler dni;
+	private Handler accountHandler;
 	private Client client;
 	private Account account;
 	private Card card1;
@@ -50,8 +51,8 @@ public class CancelCardCommandTest {
 		this.dni = new DNIHandler("71557005A");
 		this.client = new Client(dni, 20);
 		this.office.addClient(client);
-		this.accountHandler = new AccountHandler(new OfficeHandler("0001"), new GenericHandler("1234"), "9876543210");
 		this.account = new Account(office, bank, accountNumber);
+		this.accountHandler = account.getID();
 		this.client.add(account);
 		this.card1 = new DebitCard(handler1, client, account, 400.0, 1000.0, 400.0, 1000.0, 25, 0, 0);
 		this.card2 = new CreditCard(handler2, client, account, 400.0, 1000.0, 400.0, 1000.0, 25, 0, 0);

@@ -5,7 +5,6 @@ import java.util.logging.Logger;
 
 import es.unileon.ulebank.Office;
 import es.unileon.ulebank.account.Account;
-import es.unileon.ulebank.exceptions.ClientNotFoundException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.Handler;
@@ -35,7 +34,7 @@ public class CancelCardCommand implements Command {
 		this.cardId = (CardHandler) cardId;
 		try {
 			this.account = office.searchClient(dni).searchAccount(account);
-		} catch (ClientNotFoundException e) {
+		} catch (Exception e) {
 			Logger.getLogger(CancelCardCommand.class.toString()).log(Level.SEVERE, null, e);
 		}
 	}

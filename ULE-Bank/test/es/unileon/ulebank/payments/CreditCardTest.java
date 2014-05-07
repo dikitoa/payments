@@ -12,16 +12,12 @@ import org.junit.Test;
 
 import es.unileon.ulebank.Office;
 import es.unileon.ulebank.account.Account;
-import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.bank.Bank;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.CardHandler;
-import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.handler.DNIHandler;
-import es.unileon.ulebank.handler.OfficeHandler;
-import es.unileon.ulebank.payments.CardType;
-import es.unileon.ulebank.payments.CreditCard;
+import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.strategy.StrategyCommission;
 import es.unileon.ulebank.strategy.StrategyCommissionCreditEmission;
 import es.unileon.ulebank.strategy.StrategyCommissionCreditMaintenance;
@@ -80,7 +76,6 @@ public class CreditCardTest {
 		SimpleDateFormat yearFormat = new SimpleDateFormat("YY");
 		String currentMonth = monthFormat.format(new Date());
 		String currentYear = String.valueOf(Integer.parseInt(yearFormat.format(new Date()))+3);
-		System.out.println(currentMonth+"/"+currentYear);
 		assertTrue(testCard.generateExpirationDate().equals(currentMonth+"/"+currentYear));
 	}
 
@@ -248,7 +243,6 @@ public class CreditCardTest {
 		SimpleDateFormat yearFormat = new SimpleDateFormat("YY");
 		String currentMonth = monthFormat.format(new Date());
 		String currentYear = String.valueOf(Integer.parseInt(yearFormat.format(new Date()))+3);
-		System.out.println(currentMonth+"/"+currentYear);
 		
 		assertTrue(testCard.getExpirationDate().equals(currentMonth+"/"+currentYear));
 	}

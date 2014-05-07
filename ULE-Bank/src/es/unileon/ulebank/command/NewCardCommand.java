@@ -1,21 +1,18 @@
 package es.unileon.ulebank.command;
 
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import es.unileon.ulebank.Office;
 import es.unileon.ulebank.account.Account;
-import es.unileon.ulebank.exceptions.ClientNotFoundException;
-import es.unileon.ulebank.exceptions.CommissionException;
+import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.CardType;
-import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.payments.CreditCard;
 import es.unileon.ulebank.payments.DebitCard;
-import es.unileon.ulebank.Office;
 
 /**
  * @author Israel
@@ -111,11 +108,13 @@ public class NewCardCommand implements Command {
 
 				break;
 			}
-		} catch (CommissionException | NumberFormatException | IOException | ClientNotFoundException e) {
+			
+			//Por ultimo asocia la tarjeta a la cuenta
+			account.addCard(card);
+		} catch (Exception e) {
 			Logger.getLogger(NewCardCommand.class.toString()).log(Level.SEVERE, null, e);
 		}
-		//Por ultimo asocia la tarjeta a la cuenta
-		account.addCard(card);
+		
 	}
 
 	/**
