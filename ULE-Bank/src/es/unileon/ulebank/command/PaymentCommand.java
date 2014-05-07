@@ -2,13 +2,11 @@ package es.unileon.ulebank.command;
 
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.payments.Card;
-import es.unileon.ulebank.payments.Payment;
 
 public class PaymentCommand implements Command {
 	private Card card;
-	private Payment payment;
 	
-	public PaymentCommand(Card card, Payment payment) {
+	public PaymentCommand(Card card) {
 		// TODO Auto-generated constructor stub
 	}
 	

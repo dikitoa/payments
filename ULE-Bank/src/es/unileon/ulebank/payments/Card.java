@@ -9,6 +9,8 @@ import java.util.regex.Pattern;
 
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.CardHandler;
+import es.unileon.ulebank.history.History;
+import es.unileon.ulebank.history.Transaction;
 import es.unileon.ulebank.strategy.StrategyCommission;
 
 /**
@@ -57,6 +59,8 @@ public abstract class Card {
 	private StrategyCommission commissionRenovate;
 	//Limite de deuda de la tarjeta (Solo en el caso de las de credito)
 	private double limitDebit;
+	//Historia de las transacciones realizadas con la tarjeta
+	private History<Transaction> transactionHistory;
 	
 	/**
 	 * Crea una nueva tarjeta con los parametros indicados
@@ -91,6 +95,7 @@ public abstract class Card {
 		this.commissionMaintenance = commissionMaintenance;
 		this.commissionRenovate = commissionRenovate;
 		this.limitDebit = limitDebit;
+		this.transactionHistory = new History<Transaction>();
 	}
 
 	/**
@@ -512,4 +517,21 @@ public abstract class Card {
 			return false;
 		}
 	}
+
+	/**
+	 * Getter of the history transactions
+	 * @return the list with the transactions
+	 */
+	public History<Transaction> getTransactionHistory() {
+		return transactionHistory;
+	}
+
+	/**
+	 * Method that adds new transaction in the list
+	 * @param transaction
+	 */
+	public void addTransaction(Transaction transaction){
+		this.transactionHistory.add(transaction);
+	}
+
 }

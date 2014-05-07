@@ -15,7 +15,6 @@ import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.GenericHandler;
-import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.handler.IdOffice;
 import es.unileon.ulebank.payments.CardType;

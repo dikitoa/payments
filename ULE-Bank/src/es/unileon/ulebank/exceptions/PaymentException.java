@@ -1,12 +1,12 @@
 package es.unileon.ulebank.exceptions;
 
 /**
- * Class PaymentHandler Exception
+ * PaymentException Class
  * @author Rober dCR
- * @date 09/04/2014
- * @brief Controls exception in Payment Handler
+ * @date 07/05/2014
+ * @brief  Exception that is thrown if the payment conditions are not accepted
  */
-public class PaymentHandlerException extends Exception{
+public class PaymentException extends Exception{
 
 	/**
 	 * 
@@ -17,7 +17,7 @@ public class PaymentHandlerException extends Exception{
 	 * Class constructor
 	 * @param message
 	 */
-	public PaymentHandlerException(String message){
+	public PaymentException(String message){
 		super(message);
 	}
 }
