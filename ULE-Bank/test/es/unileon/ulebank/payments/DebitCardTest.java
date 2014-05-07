@@ -10,8 +10,11 @@ import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
 
+import es.unileon.ulebank.Office;
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.account.AccountHandler;
+import es.unileon.ulebank.bank.Bank;
+import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.GenericHandler;
@@ -21,16 +24,24 @@ import es.unileon.ulebank.strategy.StrategyCommission;
 import es.unileon.ulebank.strategy.StrategyCommissionDebitEmission;
 import es.unileon.ulebank.strategy.StrategyCommissionDebitMaintenance;
 import es.unileon.ulebank.strategy.StrategyCommissionDebitRenovate;
+import es.unileon.ulebank.transacionManager.TransactionManager;
 
 public class DebitCardTest {
 
 	DebitCard testCard;
+	private Office office;
+	private Bank bank;
+	private TransactionManager manager;
+    private String accountNumber = "0000000000";
 	
 	@Before
 	public void setUp() throws Exception {
+		this.manager = new TransactionManager();
+        this.bank = new Bank(manager, new GenericHandler("1234"));
+        this.office = new Office(new GenericHandler("1234"), this.bank);
 		CardHandler handler = new CardHandler();
 		Client client = new Client(new DNIHandler("71451559N"), 27);
-		Account account = new Account(new AccountHandler(new OfficeHandler("0001"), new GenericHandler("1234"), "1234567890") );
+		Account account = new Account(office, bank, accountNumber);
 		StrategyCommission commissionEmission = new StrategyCommissionDebitEmission(25);
 		StrategyCommission commissionMaintenance = new StrategyCommissionDebitMaintenance(client, 0);
 		StrategyCommission commissionRenovate = new StrategyCommissionDebitRenovate(0);

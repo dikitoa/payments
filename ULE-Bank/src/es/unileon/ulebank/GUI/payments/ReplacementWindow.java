@@ -20,13 +20,13 @@ import javax.swing.JOptionPane;
 
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.account.AccountHandler;
+import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.handler.OfficeHandler;
-import es.unileon.ulebank.payments.Client;
 import es.unileon.ulebank.payments.DebitCard;
 import es.unileon.ulebank.strategy.StrategyCommission;
 import es.unileon.ulebank.strategy.StrategyCommissionDebitEmission;

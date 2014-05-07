@@ -3,6 +3,7 @@ package es.unileon.ulebank.payments;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.ClientNotFoundException;
 import es.unileon.ulebank.handler.DNIHandler;
 

@@ -8,9 +8,9 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
+import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.handler.DNIHandler;
-import es.unileon.ulebank.payments.Client;
 
 
 /**

@@ -4,8 +4,8 @@ import java.util.Date;
 
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.exceptions.TransferException;
-import es.unileon.ulebank.history.GenericTransaction;
 import es.unileon.ulebank.history.TransactionType;
+import es.unileon.ulebank.history.TransferTransaction;
 
 /**
  * Transfer Class
@@ -18,7 +18,7 @@ public class Transfer {
 	private Account senderAccount; //Account from transfer the money
 	private Account receiverAccount; //Account which receives the money
 	private double quantity; //Quantity of the transfer
-	private GenericTransaction transaction; //Transaction of the transfer
+	private TransferTransaction transaction; //Transaction of the transfer
 
 	/**
 	 * Class constructor
@@ -80,7 +80,7 @@ public class Transfer {
 		if (this.senderAccount.getBalance() >= quantity){
 			this.senderAccount.setBalance(this.senderAccount.getBalance() - quantity);
 			this.receiverAccount.setBalance(this.receiverAccount.getBalance() + quantity);
-			this.setTransaction(new GenericTransaction(this.quantity, new Date(), concept, TransactionType.TRANSFER));
+			this.setTransaction(new TransferTransaction(this.quantity, new Date(), concept, TransactionType.TRANSFER, this.senderAccount, this.receiverAccount));
 		}
 		else
 			throw new TransferException("Sender Account has not the balance necessary.");
@@ -90,7 +90,7 @@ public class Transfer {
 	 * Getter transaction
 	 * @return the annotation of the transfer
 	 */
-	public GenericTransaction getTransaction() {
+	public TransferTransaction getTransaction() {
 		return transaction;
 	}
 
@@ -98,7 +98,7 @@ public class Transfer {
 	 * Setter transaction
 	 * @param transaction
 	 */
-	public void setTransaction(GenericTransaction transaction) {
+	public void setTransaction(TransferTransaction transaction) {
 		this.transaction = transaction;
 	}
 

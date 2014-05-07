@@ -7,8 +7,8 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import es.unileon.ulebank.account.exception.TransactionException;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
+import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.history.History;
 import es.unileon.ulebank.history.Transaction;
@@ -506,7 +506,7 @@ public abstract class Card {
 	 * @throws TransactionException 
 	 */
 	public void addTransaction(Transaction transaction) throws TransactionException{
-		//Comprobar si devuelve true o false
+		//Si devuelve false la transacción ya esta incluida
 		if (!this.transactionHistory.add(transaction))
 			throw new TransactionException("Transacion already exists.");
 	}

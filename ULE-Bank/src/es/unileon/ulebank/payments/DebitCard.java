@@ -4,9 +4,10 @@ import java.io.IOException;
 import java.util.Date;
 
 import es.unileon.ulebank.account.Account;
-import es.unileon.ulebank.account.exception.TransactionException;
+import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.PaymentException;
+import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.history.GenericTransaction;
 import es.unileon.ulebank.history.TransactionType;

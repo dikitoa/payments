@@ -1,4 +1,4 @@
-package es.unileon.ulebank.account.exception;
+package es.unileon.ulebank.exceptions;
 
 /**
  * 

@@ -1,6 +1,7 @@
 package es.unileon.ulebank.payments;
 
 import es.unileon.ulebank.account.Account;
+import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.PaymentException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.strategy.StrategyCommission;

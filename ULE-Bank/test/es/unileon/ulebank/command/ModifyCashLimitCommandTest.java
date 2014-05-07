@@ -6,8 +6,11 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import es.unileon.ulebank.Office;
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.account.AccountHandler;
+import es.unileon.ulebank.bank.Bank;
+import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
@@ -15,9 +18,8 @@ import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.handler.OfficeHandler;
 import es.unileon.ulebank.payments.Card;
-import es.unileon.ulebank.payments.Client;
 import es.unileon.ulebank.payments.CreditCard;
-import es.unileon.ulebank.payments.Office;
+import es.unileon.ulebank.transacionManager.TransactionManager;
 
 public class ModifyCashLimitCommandTest {
 	private Card testCard;
@@ -29,17 +31,23 @@ public class ModifyCashLimitCommandTest {
 	private Account account;
 	private ModifyCashLimitCommand test;
 	private ModifyCashLimitCommand test2;
+    private Bank bank;
+    private TransactionManager manager;
+
+    private String accountNumber = "0000000000";
 	
 	@Before
 	public void setUp() throws CommissionException {
+		this.manager = new TransactionManager();
+        this.bank = new Bank(manager, new GenericHandler("1234"));
 		handler = new CardHandler();
-		this.office = new Office();
+		this.office = new Office(new GenericHandler("1234"), this.bank);
 		this.dni = new DNIHandler("71557005A");
 		client = new Client(dni, 20);
 		this.office.addClient(client);
 		this.accountHandler = new AccountHandler(new OfficeHandler("0001"), new GenericHandler("1234"), "9876543210");
-		account = new Account(accountHandler);
-		this.client.addAccount(account);
+		account = new Account(office, bank, accountNumber);
+		this.client.add(account);
 		testCard = new CreditCard(handler, client, account, 400.0, 1000.0, 400.0, 1000.0, 25, 0, 0);
 		account.addCard(testCard);
 	}

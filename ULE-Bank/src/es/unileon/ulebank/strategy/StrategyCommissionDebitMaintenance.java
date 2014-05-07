@@ -5,8 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
-import es.unileon.ulebank.payments.Client;
 
 /**
  * @class StrategyCommissionDebitMaintenance
