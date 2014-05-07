@@ -13,7 +13,7 @@ import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.handler.DNIHandler;
-import es.unileon.ulebank.handler.IdOffice;
+import es.unileon.ulebank.handler.OfficeHandler;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.CardType;
 import es.unileon.ulebank.payments.Client;
@@ -41,7 +41,7 @@ public class NewCardCommandTest {
 		this.dni = new DNIHandler("71557005A");
 		Client client = new Client(dni, 20);
 		this.office.addClient(client);
-		this.accountHandler = new AccountHandler(new IdOffice("0001"), new GenericHandler("1234"), "9876543210");
+		this.accountHandler = new AccountHandler(new OfficeHandler("0001"), new GenericHandler("1234"), "9876543210");
 		client.addAccount(new Account(accountHandler));
 		this.cardTypeCredit = CardType.CREDIT;
 		this.cardTypeDebit = CardType.DEBIT;

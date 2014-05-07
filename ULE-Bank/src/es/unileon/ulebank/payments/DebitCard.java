@@ -57,12 +57,13 @@ public class DebitCard extends Card {
 	 * @param payConcept Concept of the payment
 	 * @throws PaymentException
 	 */
-	public void makePayment(Account receiverAccount, double quantity, String payConcept) throws PaymentException{
-		if (this.account.getBalance() + this.getLimitDebit() >= quantity ){
+	public void makeTransaction(Account receiverAccount, double quantity, String payConcept) throws PaymentException{
+		//TODO - Actualizar con las nuevas transacciones
+		if (this.account.getBalance() >= quantity){
 			this.account.setBalance(this.account.getBalance() - quantity);
 			receiverAccount.setBalance(receiverAccount.getBalance() + quantity);
 			this.addTransaction(new GenericTransaction(quantity, new Date(), payConcept, TransactionType.PAYMENT));
 		}
-		else throw new PaymentException("Debit Card has not the balance necessary.");
+		else throw new PaymentException("Credit Card has not the balance necessary.");
 	}
 }

@@ -25,7 +25,7 @@ import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.handler.DNIHandler;
-import es.unileon.ulebank.handler.IdOffice;
+import es.unileon.ulebank.handler.OfficeHandler;
 import es.unileon.ulebank.payments.Client;
 import es.unileon.ulebank.payments.DebitCard;
 import es.unileon.ulebank.strategy.StrategyCommission;
@@ -382,7 +382,7 @@ public class RenovationCardWindow extends javax.swing.JInternalFrame {
             DebitCard debitCard = null;
             CardHandler handler = new CardHandler();
         	Client client = new Client(dni,25);
-        	Account account = new Account(new AccountHandler(new IdOffice("0001"), new GenericHandler("1234"), "1234567890"));
+        	Account account = new Account(new AccountHandler(new OfficeHandler("0001"), new GenericHandler("1234"), "1234567890"));
                 StrategyCommission commissionEmission = new StrategyCommissionDebitEmission(25);
                 StrategyCommission commissionMaintenance = new StrategyCommissionDebitMaintenance(client, 0);
                 StrategyCommission commissionRenovate = new StrategyCommissionDebitRenovate(0);

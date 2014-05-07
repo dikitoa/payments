@@ -9,7 +9,7 @@ import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.exceptions.TransferException;
 import es.unileon.ulebank.handler.GenericHandler;
-import es.unileon.ulebank.handler.IdOffice;
+import es.unileon.ulebank.handler.OfficeHandler;
 
 /**
  * Test about Transfer Class
@@ -25,8 +25,8 @@ public class TransferTest {
 	
 	@Before
 	public void setUp(){	
-		this.senderAccount = new Account(new AccountHandler(new IdOffice("0001"), new GenericHandler("1234"), "9876543210"));
-		this.receiverAccount = new Account(new AccountHandler(new IdOffice("0001"), new GenericHandler("1234"), "9876543210"));
+		this.senderAccount = new Account(new AccountHandler(new OfficeHandler("0001"), new GenericHandler("1234"), "9876543210"));
+		this.receiverAccount = new Account(new AccountHandler(new OfficeHandler("0001"), new GenericHandler("1234"), "9876543210"));
 		this.quantity = (float) 20.5;
 	}
 	
@@ -57,7 +57,7 @@ public class TransferTest {
 	
 	@Test (expected = TransferException.class)
 	public void transferMoneyEqualsAccountTest()throws TransferException {
-		Account exAccount = new Account(new AccountHandler(new IdOffice("0001"), new GenericHandler("1234"), "9876543210"));
+		Account exAccount = new Account(new AccountHandler(new OfficeHandler("0001"), new GenericHandler("1234"), "9876543210"));
 		this.transfer = new Transfer(exAccount, exAccount, this.quantity);
 	}
 }

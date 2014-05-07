@@ -60,7 +60,7 @@ public class RevolvingCard extends Card {
 	 * @param payConcept Concept of the payment
 	 * @throws PaymentException
 	 */
-	public void makePayment(Account receiverAccount, double quantity, String payConcept) throws PaymentException{
+	public void makeTransaction(Account receiverAccount, double quantity, String payConcept) throws PaymentException{
 		//TODO
 	}
 }

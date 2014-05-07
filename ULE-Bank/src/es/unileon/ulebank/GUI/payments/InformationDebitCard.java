@@ -23,7 +23,7 @@ import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.handler.DNIHandler;
-import es.unileon.ulebank.handler.IdOffice;
+import es.unileon.ulebank.handler.OfficeHandler;
 import es.unileon.ulebank.payments.Client;
 import es.unileon.ulebank.payments.DebitCard;
 import es.unileon.ulebank.strategy.StrategyCommission;
@@ -54,7 +54,7 @@ public class InformationDebitCard extends javax.swing.JFrame {
 
     public InformationDebitCard(int buyLimitDiary, int cashLimitDiary, int buyLimitMonthly, int cashLimitMonthly, String dni, String accountNumber) throws NumberFormatException, CommissionException, IOException {
         handler = new CardHandler();
-        account = new Account(new AccountHandler(new IdOffice("0001"), new GenericHandler("1234"), "1234567890"));
+        account = new Account(new AccountHandler(new OfficeHandler("0001"), new GenericHandler("1234"), "1234567890"));
         initComponents();
         this.dni=dni;
         this.accountNumber=accountNumber;

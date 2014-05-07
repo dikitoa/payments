@@ -7,11 +7,11 @@ import es.unileon.ulebank.exceptions.MalformedHandlerException;
  * @author Patricia
  * 
  */
-public class IdOffice implements Handler {
+public class OfficeHandler implements Handler {
 
 	private String numberOffice;
 
-	public IdOffice(int number)  {
+	public OfficeHandler(int number)  {
 
 		if (number >= 0) {
 
@@ -34,7 +34,7 @@ public class IdOffice implements Handler {
 		}
 	}
 
-	public IdOffice(String numberOffice)  {
+	public OfficeHandler(String numberOffice)  {
             try {
                 Integer.parseInt(numberOffice);
             } catch (NumberFormatException e) {

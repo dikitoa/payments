@@ -519,19 +519,13 @@ public abstract class Card {
 	}
 
 	/**
-	 * Getter of the history transactions
-	 * @return the list with the transactions
-	 */
-	public History<Transaction> getTransactionHistory() {
-		return transactionHistory;
-	}
-
-	/**
 	 * Method that adds new transaction in the list
 	 * @param transaction
 	 */
 	public void addTransaction(Transaction transaction){
-		this.transactionHistory.add(transaction);
+		//Comprobar si devuelve true o false
+		//if (!this.transactionHistory.add(transaction))
+			//throw excepcion
 	}
 
 }
