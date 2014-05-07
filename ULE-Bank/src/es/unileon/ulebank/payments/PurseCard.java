@@ -14,7 +14,7 @@ public class PurseCard extends Card {
 			double cashLimitDiary, double cashLimitMonthly,
 			StrategyCommission commissionEmission,
 			StrategyCommission commissionMaintenance,
-			StrategyCommission commissionRenovate, double limitDebit) {
+			StrategyCommission commissionRenovate) {
 		super(cardId, type, buyLimitDiary, buyLimitMonthly,
 				cashLimitDiary, cashLimitMonthly, commissionEmission,
 				commissionMaintenance, commissionRenovate);

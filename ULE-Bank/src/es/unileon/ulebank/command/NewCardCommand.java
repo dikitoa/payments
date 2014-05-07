@@ -10,7 +10,6 @@ import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.Handler;
-import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.CardType;
 import es.unileon.ulebank.payments.Client;
@@ -32,7 +31,7 @@ public class NewCardCommand implements Command {
 	//Oficina en la que esta la cuenta a la que se va a asociar la tarjeta
 	private Office office;
 	//DNI del propietario de la tarjeta
-	private DNIHandler dni;
+	private Handler dni;
 	//Identificador de la cuenta a la que se va a asociar la tarjeta
 	private Handler accountHandler;
 	//Tipo de tarjeta a crear
@@ -69,7 +68,7 @@ public class NewCardCommand implements Command {
 	 * @param commissionRenovate
 	 * @param limitDebit
 	 */
-	public NewCardCommand(Office office, DNIHandler dni, Handler accountHandler, CardType type, 
+	public NewCardCommand(Office office, Handler dni, Handler accountHandler, CardType type, 
 			double buyLimitDiary, double buyLimitMonthly, double cashLimitDiary, double cashLimitMonthly,
 			float commissionEmission, float commissionMaintenance, float commissionRenovate) {
 		cardId = new CardHandler();

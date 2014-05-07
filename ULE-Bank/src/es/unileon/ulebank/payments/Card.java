@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import es.unileon.ulebank.account.exception.TransactionException;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.Handler;
@@ -79,6 +80,7 @@ public abstract class Card {
 			double buyLimitDiary, double buyLimitMonthly, double cashLimitDiary, double cashLimitMonthly,
 			StrategyCommission commissionEmission, StrategyCommission commissionMaintenance, 
 			StrategyCommission commissionRenovate) {
+		this.cardId = (CardHandler) cardId;
 		this.cardId = (CardHandler) cardId;
 		this.cardType = type;
 		this.pin = generatePinCode();
@@ -502,11 +504,12 @@ public abstract class Card {
 	/**
 	 * Method that adds new transaction in the list
 	 * @param transaction
+	 * @throws TransactionException 
 	 */
-	public void addTransaction(Transaction transaction){
+	public void addTransaction(Transaction transaction) throws TransactionException{
 		//Comprobar si devuelve true o false
-		//if (!this.transactionHistory.add(transaction))
-			//throw excepcion
+		if (!this.transactionHistory.add(transaction))
+			throw new TransactionException("Transacion already exists.");
 	}
 
 }
