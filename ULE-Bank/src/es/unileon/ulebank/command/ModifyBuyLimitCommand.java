@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import es.unileon.ulebank.Office;
 import es.unileon.ulebank.account.Account;
+import es.unileon.ulebank.exceptions.CardNotFoundException;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.Handler;
@@ -56,31 +57,33 @@ public class ModifyBuyLimitCommand implements Command {
 	@Override
 	public void execute() {
 		//Buscamos la tarjeta con el identificador de la misma en la lista de tarjetas de la cuenta
-		this.card = account.searchCard(cardId);
-		
-		//Si el limite a modificar es diario
-		if (type.equalsIgnoreCase("diary")) {
-			try {
+		try {
+			this.card = account.searchCard(cardId);
+			
+			//Si el limite a modificar es diario
+			if (type.equalsIgnoreCase("diary")) {
 				//Guardamos la cantidad anterior para poder deshacer la operacion
 				this.oldAmount = this.card.getBuyLimitDiary();
 				//Cambiamos el limite por el indicado
 				this.card.setBuyLimitDiary(newAmount);
-			} catch (IncorrectLimitException e) {
-				Logger.getLogger(ModifyBuyLimitCommand.class.toString()).log(Level.SEVERE, "Diary limit cannot be greater than monthly", e);
-			}
-		//Si el limite a modificar es mensual
-		} else if (type.equalsIgnoreCase("monthly")) {
-			try {
+			//Si el limite a modificar es mensual
+			} else if (type.equalsIgnoreCase("monthly")) {
 				//Guardamos la cantidad anterior para poder deshacer la operacion
 				this.oldAmount = this.card.getBuyLimitMonthly();
 				//Cambiamos el limite por el indicado
 				this.card.setBuyLimitMonthly(newAmount);
-			} catch (IncorrectLimitException e) {
-				Logger.getLogger(ModifyBuyLimitCommand.class.toString()).log(Level.SEVERE, "Monthly limit cannot be smaller than diary", e);
+			//Si no se indica el tipo de limite a modificar adecuadamente no va a realizar la operacion
+			} else {
+				Logger.getLogger(ModifyBuyLimitCommand.class.toString()).log(Level.SEVERE, "Limit type not defined");
 			}
-		//Si no se indica el tipo de limite a modificar adecuadamente no va a realizar la operacion
-		} else {
-			Logger.getLogger(ModifyBuyLimitCommand.class.toString()).log(Level.SEVERE, "Limit type not defined");
+		} catch (NullPointerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CardNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IncorrectLimitException e) {
+			// TODO: handle exception
 		}
 	}
 

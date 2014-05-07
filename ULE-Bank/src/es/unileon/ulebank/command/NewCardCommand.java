@@ -1,11 +1,15 @@
 package es.unileon.ulebank.command;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.IOException;
+
+import org.apache.log4j.Logger;
 
 import es.unileon.ulebank.Office;
 import es.unileon.ulebank.account.Account;
+import es.unileon.ulebank.account.exception.AccountNotFoundException;
 import es.unileon.ulebank.client.Client;
+import es.unileon.ulebank.exceptions.ClientNotFoundException;
+import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.Handler;
@@ -19,35 +23,69 @@ import es.unileon.ulebank.payments.DebitCard;
  * Comando para la creacion de las tarjetas
  */
 public class NewCardCommand implements Command {
-	//Tarjeta que se va a crear
+	/**
+	 * El logger de la clase
+	 */
+	private static final Logger LOG = Logger.getLogger(NewCardCommand.class.getName());
+	/**
+	 * Tarjeta que se va a crear
+	 */
 	private Card card;
-	//Identificador del comando
+	/**
+	 * Identificador del comando
+	 */
 	private Handler id;
-	//Cuenta a la que se ha de asociar la tarjeta
+	/**
+	 * Cuenta a la que se ha de asociar la tarjeta
+	 */
 	private Account account;
-	//Oficina en la que esta la cuenta a la que se va a asociar la tarjeta
+	/**
+	 * Oficina en la que esta la cuenta a la que se va a asociar la tarjeta
+	 */
 	private Office office;
-	//DNI del propietario de la tarjeta
+	/**
+	 * DNI del propietario de la tarjeta
+	 */
 	private Handler dni;
-	//Identificador de la cuenta a la que se va a asociar la tarjeta
+	/**
+	 * Identificador de la cuenta a la que se va a asociar la tarjeta
+	 */
 	private Handler accountHandler;
-	//Tipo de tarjeta a crear
+	/**
+	 * Tipo de tarjeta a crear
+	 */
 	private CardType type;
-	//Identificador de la tarjeta
+	/**
+	 * Identificador de la tarjeta
+	 */
 	private CardHandler cardId;
-	//Limite de compra diario para la tarjeta
+	/**
+	 * Limite de compra diario para la tarjeta
+	 */
 	private double buyLimitDiary;
-	//Limite de compra mensual para la tarjeta
+	/**
+	 * Limite de compra mensual para la tarjeta
+	 */
 	private double buyLimitMonthly;
-	//Limite de extraccion en cajero diario para la tarjeta
+	/**
+	 * Limite de extraccion en cajero diario para la tarjeta
+	 */
 	private double cashLimitDiary;
-	//Limite de extraccion en cajero mensual para la tarjeta
+	/**
+	 * Limite de extraccion en cajero mensual para la tarjeta
+	 */
 	private double cashLimitMonthly;
-	//Comision de emision de la tarjeta
+	/**
+	 * Comision de emision de la tarjeta
+	 */
 	private float commissionEmission;
-	//Comision de mantenimiento de la tarjeta
+	/**
+	 * Comision de mantenimiento de la tarjeta
+	 */
 	private float commissionMaintenance;
-	//Comision de renovacion de la tarjeta
+	/**
+	 * Comision de renovacion de la tarjeta
+	 */
 	private float commissionRenovate;
 
 	/**
@@ -102,7 +140,7 @@ public class NewCardCommand implements Command {
 				this.card = new DebitCard(cardId, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, commissionMaintenance, commissionRenovate);
 				break;
 			case REVOLVING:
-
+				
 				break;
 			case PURSE:
 
@@ -111,8 +149,18 @@ public class NewCardCommand implements Command {
 			
 			//Por ultimo asocia la tarjeta a la cuenta
 			account.addCard(card);
-		} catch (Exception e) {
-			Logger.getLogger(NewCardCommand.class.toString()).log(Level.SEVERE, null, e);
+		} catch (ClientNotFoundException e) {
+			LOG.info("The client whose dni is " + dni.toString() + " does not found.");
+		} catch (CommissionException e) {
+			LOG.info("The commission can not be negative.");
+		} catch (NumberFormatException e) {
+			LOG.info("The String must only contains numbers.");
+		} catch (IOException e) {
+			LOG.info("Input/Output error.");
+		} catch (AccountNotFoundException e) {
+			LOG.info("The account " + accountHandler.toString() + " was not found.");
+		} catch (NullPointerException e) {
+			LOG.info(e.getMessage());
 		}
 		
 	}

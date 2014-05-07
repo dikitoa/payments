@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import es.unileon.ulebank.Office;
 import es.unileon.ulebank.account.Account;
+import es.unileon.ulebank.exceptions.CardNotFoundException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.Handler;
@@ -45,7 +46,15 @@ public class CancelCardCommand implements Command {
 	@Override
 	public void execute() {
 		//Se borra la tarjeta de la lista de tarjetas de la cuenta
-		account.removeCard(this.cardId);
+		try {
+			account.removeCard(this.cardId);
+		} catch (NullPointerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CardNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**

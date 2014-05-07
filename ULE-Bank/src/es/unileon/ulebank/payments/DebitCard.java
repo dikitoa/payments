@@ -42,8 +42,7 @@ public class DebitCard extends Card {
 	public DebitCard(Handler cardId, Client owner, Account account,
 			double buyLimitDiary, double buyLimitMonthly, double cashLimitDiary, double cashLimitMonthly,
 			float commissionEmission, float commissionMaintenance, float commissionRenovate) throws NumberFormatException, CommissionException, IOException {
-		super(cardId, CardType.DEBIT,
-				buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly,
+		super(cardId, CardType.DEBIT, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly,
 				new StrategyCommissionDebitEmission(commissionEmission), 
 				new StrategyCommissionDebitMaintenance(owner, commissionMaintenance), 
 				new StrategyCommissionDebitRenovate(commissionRenovate));

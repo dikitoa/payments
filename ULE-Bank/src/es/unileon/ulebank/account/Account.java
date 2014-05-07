@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import es.unileon.ulebank.Office;
 import es.unileon.ulebank.bank.Bank;
 import es.unileon.ulebank.client.Client;
+import es.unileon.ulebank.exceptions.CardNotFoundException;
 import es.unileon.ulebank.exceptions.MalformedHandlerException;
 import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.handler.Handler;
@@ -482,18 +483,36 @@ public class Account {
         return this.id;
     }
     
+    /**
+     * Add card to current card list
+     * @param card
+     */
 	public void addCard(Card card) {
 		this.cards.add(card);
 	}
 
-	public boolean removeCard(Handler cardId) {
+	/**
+	 * Removes card for current card list
+	 * @param cardId
+	 * @return
+	 * @throws CardNotFoundException 
+	 * @throws NullPointerException 
+	 */
+	public boolean removeCard(Handler cardId) throws NullPointerException, CardNotFoundException {
 		Card card = searchCard(cardId);
 		return this.cards.remove(card);
 	}
 	
-	public Card searchCard(Handler cardId) {
+	/**
+	 * Searchs card by id into card list
+	 * @param cardId
+	 * @return
+	 * @throws CardNotFoundException, NullPointerException 
+	 */
+	public Card searchCard(Handler cardId) throws CardNotFoundException, NullPointerException {
 		Iterator<Card> iterator = cards.iterator();
 		Card card = null;
+		boolean found = false;
 		
 		if (cards.isEmpty()) {
 			throw new NullPointerException("Card list is empty.");
@@ -503,11 +522,16 @@ public class Account {
 			card = iterator.next();
 			
 			if (card.getCardNumber().compareTo(cardId) == 0) {
+				found = true;
 				break;
 			}
 		}
 		
-		return card;
+		if (found) {
+			return card;
+		} else {
+			throw new CardNotFoundException("That card is not found.");
+		}
 	}
 	
 	public int getCardAmount() {

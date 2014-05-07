@@ -91,7 +91,7 @@ public class Client {
         return result;
     }
     
-    public Account searchAccount(Handler account2) throws Exception {
+    public Account searchAccount(Handler account2) throws NullPointerException, AccountNotFoundException {
 		Iterator<Account> iterator = accounts.iterator();
 		Account account = null;
 		boolean found = false;
