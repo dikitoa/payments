@@ -82,7 +82,7 @@ public class StrategyCommissionDebitMaintenance implements StrategyCommissionDeb
 
 		try {
 			Properties ageProperty = new Properties();
-			ageProperty.load(new FileInputStream("es/unileon/ulebank/properties/card.properties"));
+			ageProperty.load(new FileInputStream("src/es/unileon/ulebank/properties/card.properties"));
 			
 			/**Obtenemos los parametros definidos en el archivo*/
 			this.maximum_age = Integer.parseInt(ageProperty.getProperty(this.AGE));
@@ -104,11 +104,10 @@ public class StrategyCommissionDebitMaintenance implements StrategyCommissionDeb
 		
 		try {
 			Properties commissionProperty = new Properties();
-			commissionProperty.load(new FileInputStream("es/unileon/ulebank/properties/card.properties"));
+			commissionProperty.load(new FileInputStream("src/es/unileon/ulebank/properties/card.properties"));
 			
 			/**Obtenemos los parametros definidos en el archivo*/
 			this.default_commission = Float.parseFloat(commissionProperty.getProperty(this.COMMISSION));
-			
 		}
 		catch(FileNotFoundException e){
 			e.printStackTrace();

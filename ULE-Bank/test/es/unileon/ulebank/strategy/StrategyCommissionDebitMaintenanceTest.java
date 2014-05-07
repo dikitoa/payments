@@ -46,7 +46,6 @@ public class StrategyCommissionDebitMaintenanceTest {
 	 */
 	@Test
 	public void testCalculateCommissionOwnerLessThanMaximunAge() {
-		
 		assertTrue(commission.calculateCommission()==quantity);
 	}
 	
@@ -56,7 +55,6 @@ public class StrategyCommissionDebitMaintenanceTest {
 	 */
 	@Test
 	public void testCalculateCommissionOwnerLessThanMaximunAgeFalse() {
-		
 		assertFalse(commission.calculateCommission()!=quantity);
 	}
 	
@@ -71,7 +69,7 @@ public class StrategyCommissionDebitMaintenanceTest {
 	public void testCalculateCommissionOwnerMoreThanMaximunAge() throws NumberFormatException, CommissionException, IOException {
 		owner.setAge(30);
 		commission = new StrategyCommissionDebitMaintenance(owner, quantity);
-		assertTrue(commission.calculateCommission()==default_commission);
+		assertTrue(commission.calculateCommission()==this.default_commission);
 	}
 		
 	
