@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import es.unileon.ulebank.account.Account;
-import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.handler.Handler;
 
 /**
@@ -91,7 +90,7 @@ public class Client {
         return result;
     }
     
-    public Account searchAccount(AccountHandler handler) {
+    public Account searchAccount(Handler account2) {
 		Iterator<Account> iterator = accounts.iterator();
 		Account account = null;
 		
@@ -102,7 +101,7 @@ public class Client {
 		while (iterator.hasNext()) {
 			account = iterator.next();
 			
-			if (account.getID().compareTo(handler) == 0) {
+			if (account.getID().compareTo(account2) == 0) {
 				break;
 			}
 		}

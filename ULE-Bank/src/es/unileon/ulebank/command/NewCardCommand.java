@@ -12,10 +12,10 @@ import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.CardType;
-import es.unileon.ulebank.payments.Client;
+import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.payments.CreditCard;
 import es.unileon.ulebank.payments.DebitCard;
-import es.unileon.ulebank.payments.Office;
+import es.unileon.ulebank.Office;
 
 /**
  * @author Israel

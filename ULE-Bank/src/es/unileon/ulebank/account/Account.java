@@ -5,18 +5,18 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import es.unileon.ulebank.Office;
 import es.unileon.ulebank.bank.Bank;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.MalformedHandlerException;
 import es.unileon.ulebank.exceptions.TransactionException;
-import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.history.History;
 import es.unileon.ulebank.history.Transaction;
 import es.unileon.ulebank.history.TransactionType;
 import es.unileon.ulebank.payments.Card;
-import org.apache.log4j.Logger;
 
 /**
  *
@@ -485,12 +485,12 @@ public class Account {
 		this.cards.add(card);
 	}
 
-	public boolean removeCard(CardHandler cardId) {
+	public boolean removeCard(Handler cardId) {
 		Card card = searchCard(cardId);
 		return this.cards.remove(card);
 	}
 	
-	public Card searchCard(CardHandler cardId) {
+	public Card searchCard(Handler cardId) {
 		Iterator<Card> iterator = cards.iterator();
 		Card card = null;
 		

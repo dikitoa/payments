@@ -1,67 +1,46 @@
+/* Application developed for AW subject, belonging to passive operations
+ group.*/
+
 package es.unileon.ulebank.handler;
 
 import es.unileon.ulebank.exceptions.MalformedHandlerException;
+import es.unileon.ulebank.utils.DniLetters;
 
-
-public class DNIHandler implements Handler {
-	private static final String NIF_STRING_ASOCIATION = "TRWAGMYFPDXBNJZSQVHLCKE";
-
-    private char letter;
+/**
+ * Identifies a person with the dni
+ * @author Gonzalo Nicolas Barreales
+ */
+public class DNIHandler implements Handler{
+    
+    /**
+     * DNI number
+     */
     private int dni;
-
-    public DNIHandler(Integer dni, Character letter) {
-        boolean correct = true;
-        StringBuilder error = new StringBuilder();
-
-        if (dni == null || letter == null) {
-            correct = false;
-            error.append("The number or letter can't be null\n");
-        } else if (dni < 0) {
-            correct = false;
-            error.append("The number of dni must be non negative.\n");
-        } else {
-
-            correct = correct & checkDNI(dni, letter);
-        }
-        if (correct) {
-            this.dni = dni;
-            this.letter = letter;
-        } else {
-            throw new MalformedHandlerException("Bad DNI: ".concat(error.toString()));
-        }
-    }
-
-    private static boolean checkDNI(Integer dni, Character letter) {
-        boolean correct = true;
-        StringBuilder error = new StringBuilder();
-
-        if (dni == null || letter == null) {
-            correct = false;
-            error.append("The number or letter can't be null");
-        } else if (dni < 0) {
-            correct = false;
-            error.append("The number of dni must be non negative.\n");
-        } else {
-
-            if (Character.toString(letter).compareToIgnoreCase(
-                    Character.toString(charDNI(dni))) != 0) {
-                correct = false;
-            }
-            
-            if(dni.toString().length()>8){
-                correct=false;
-                error.append("The number is too long. Check again");
-            }
-        }
-
-        if (correct) {
-            return correct;
-        } else {
-            throw new MalformedHandlerException("Bad DNI: ".concat(error.toString()));
+    
+    /**
+     * DNI letter
+     */
+    private char letter;
+    
+    private char foreingLetter;
+    /**
+     * Creates the handler of the person with the dni data
+     * @param dni
+     * @param letter
+     * @throws MalformedHandlerException if the letter doesn't match with the dni number
+     */
+    public DNIHandler(int dni, char letter) throws MalformedHandlerException{
+        letter = Character.toUpperCase(letter);
+        if(DniLetters.getInstance().isDniValid(dni, letter)){
+            this.dni=dni;
+            this.letter=letter;
+            this.foreingLetter=' ';
+        }else{
+            throw new MalformedHandlerException("Incorrect DNI");
         }
     }
-
-    public DNIHandler(String dni) {
+    
+    public DNIHandler(String dni) throws MalformedHandlerException {
         boolean correct = true;
         StringBuilder error = new StringBuilder();
 
@@ -76,7 +55,7 @@ public class DNIHandler implements Handler {
             Integer dniNumber = Integer.parseInt(dni.substring(0, dni.length() - 1));
             Character letterDni = dni.charAt(dni.length() - 1);
 
-            if (checkDNI(dniNumber, letterDni)) {
+            if (DniLetters.getInstance().isDniValid(dniNumber, letterDni)) {
                 this.dni = dniNumber;
                 this.letter = letterDni;
             }
@@ -87,38 +66,56 @@ public class DNIHandler implements Handler {
             throw new MalformedHandlerException("Bad DNI: ".concat(error.toString()));
         }
     }
-
-    private static char charDNI(int dni) {
-        return NIF_STRING_ASOCIATION.charAt(dni % 23);
+    
+    /**
+     *
+     * @param foreingLetter
+     * @param dni
+     * @param letter
+     * @throws MalformedHandlerException
+     */
+    public DNIHandler (char foreingLetter, int dni, char letter) throws MalformedHandlerException{
+        foreingLetter = Character.toUpperCase(foreingLetter);
+        letter = Character.toUpperCase(letter);
+        int addFactor=0;
+        switch (foreingLetter){
+            case 'X':
+                break;
+            case 'Y':
+                addFactor=10000000;
+                break;
+            case 'Z':
+                addFactor=20000000;
+                break;
+            default:
+                throw new MalformedHandlerException("Incorrect NIE");
+        }
+        if(DniLetters.getInstance().isDniValid(addFactor+dni, letter)){
+            this.foreingLetter = foreingLetter;
+            this.dni = dni;
+            this.letter=letter;
+        }else{
+            throw new MalformedHandlerException("Invalid NIE");
+        }
     }
-
+    
+    
     @Override
     public int compareTo(Handler another) {
         return this.toString().compareTo(another.toString());
     }
-
+    
+    /**
+     *
+     * @return
+     */
     @Override
-    public String toString() {
-        String resultado;
-        resultado = Integer.toString(dni);
-        return resultado.concat(Character.toString(letter));
+    public String toString(){
+        String result="";
+        if(foreingLetter!=' ')
+            result+=foreingLetter;
+        result += Integer.toString(dni)+letter;
+        return result;
     }
-
-    /**
-     * return the number of dni
-     *
-     * @return the number of dni
-     */
-    public int getNif() {
-        return dni;
-    }
-
-    /**
-     * Return the letter of the dni
-     *
-     * @return the letter of the dni
-     */
-    public char getLetter() {
-        return letter;
-    }
+    
 }

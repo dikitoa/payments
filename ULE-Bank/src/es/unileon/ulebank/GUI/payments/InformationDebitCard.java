@@ -16,20 +16,21 @@ import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
+import es.unileon.ulebank.Office;
 import es.unileon.ulebank.account.Account;
-import es.unileon.ulebank.account.AccountHandler;
+import es.unileon.ulebank.bank.Bank;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.handler.GenericHandler;
-import es.unileon.ulebank.handler.OfficeHandler;
 import es.unileon.ulebank.payments.DebitCard;
 import es.unileon.ulebank.strategy.StrategyCommission;
 import es.unileon.ulebank.strategy.StrategyCommissionDebitEmission;
 import es.unileon.ulebank.strategy.StrategyCommissionDebitMaintenance;
 import es.unileon.ulebank.strategy.StrategyCommissionDebitRenovate;
+import es.unileon.ulebank.transacionManager.TransactionManager;
 
 /**
  *
@@ -37,7 +38,11 @@ import es.unileon.ulebank.strategy.StrategyCommissionDebitRenovate;
  */
 public class InformationDebitCard extends javax.swing.JFrame {
 
-    String dni;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	String dni;
     String accountNumber;
     DebitCard card;
     CardHandler handler = new CardHandler();
@@ -54,7 +59,13 @@ public class InformationDebitCard extends javax.swing.JFrame {
 
     public InformationDebitCard(int buyLimitDiary, int cashLimitDiary, int buyLimitMonthly, int cashLimitMonthly, String dni, String accountNumber) throws NumberFormatException, CommissionException, IOException {
         handler = new CardHandler();
-        account = new Account(new AccountHandler(new OfficeHandler("0001"), new GenericHandler("1234"), "1234567890"));
+        TransactionManager manager = new TransactionManager();
+        Bank bank = new Bank(manager, new GenericHandler("1234"));
+        Office office = new Office(new GenericHandler("1234"), bank);
+		DNIHandler dniHandler = new DNIHandler("71557005A");
+		Client client = new Client(dniHandler, 20);
+		office.addClient(client);
+		this.account = new Account(office, bank, accountNumber);
         initComponents();
         this.dni=dni;
         this.accountNumber=accountNumber;
@@ -367,7 +378,7 @@ public class InformationDebitCard extends javax.swing.JFrame {
     private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField8ActionPerformed
-    //Abrimos el contrato de la tarjeta de d������bito
+    //Abrimos el contrato de la tarjeta de d������������������bito
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        
         try {
@@ -381,7 +392,7 @@ public class InformationDebitCard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-         // Creamos un fichero de nombre el dni del usuario y dentro tendr������ el numero de cuenta y  toda la informacion de la tarjeta.
+         // Creamos un fichero de nombre el dni del usuario y dentro tendr������������������ el numero de cuenta y  toda la informacion de la tarjeta.
         if(jCheckBox1.isSelected()==true){
         FileWriter fichero = null;
         PrintWriter pw = null;
