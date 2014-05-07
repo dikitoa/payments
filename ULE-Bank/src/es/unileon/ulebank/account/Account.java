@@ -3,7 +3,7 @@ package es.unileon.ulebank.account;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import es.unileon.ulebank.handler.CardHandler;
+import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.payments.Card;
 
 public class Account {
@@ -11,8 +11,8 @@ public class Account {
 	private AccountHandler id;
 	private double balance;
 	
-	public Account(AccountHandler handler) {
-		this.id = handler;
+	public Account(Handler handler) {
+		this.id = (AccountHandler) handler;
 		this.cards = new ArrayList<Card>();
 	}
 
@@ -24,12 +24,12 @@ public class Account {
 		this.cards.add(card);
 	}
 
-	public boolean removeCard(CardHandler cardId) {
+	public boolean removeCard(Handler cardId) {
 		Card card = searchCard(cardId);
 		return this.cards.remove(card);
 	}
 	
-	public Card searchCard(CardHandler cardId) {
+	public Card searchCard(Handler cardId) {
 		Iterator<Card> iterator = cards.iterator();
 		Card card = null;
 		

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import es.unileon.ulebank.account.Account;
-import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.handler.DNIHandler;
+import es.unileon.ulebank.handler.Handler;
 
 public class Client {
 	private int age;
@@ -37,7 +37,7 @@ public class Client {
 		this.accounts.add(account);
 	}
 	
-	public boolean removeAccount(AccountHandler accountHandler) {
+	public boolean removeAccount(Handler accountHandler) {
 		if (this.accounts.isEmpty()) {
 			throw new NullPointerException("Account list is empty.");
 		} else {
@@ -46,7 +46,7 @@ public class Client {
 		}
 	}
 	
-	public Account searchAccount(AccountHandler handler) {
+	public Account searchAccount(Handler accountHandler) {
 		Iterator<Account> iterator = accounts.iterator();
 		Account account = null;
 		
@@ -57,7 +57,7 @@ public class Client {
 		while (iterator.hasNext()) {
 			account = iterator.next();
 			
-			if (account.getId().compareTo(handler) == 0) {
+			if (account.getId().compareTo(accountHandler) == 0) {
 				break;
 			}
 		}

@@ -23,8 +23,8 @@ import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.CardHandler;
-import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.handler.DNIHandler;
+import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.handler.OfficeHandler;
 import es.unileon.ulebank.payments.Client;
 import es.unileon.ulebank.payments.DebitCard;
@@ -386,7 +386,7 @@ public class RenovationCardWindow extends javax.swing.JInternalFrame {
                 StrategyCommission commissionEmission = new StrategyCommissionDebitEmission(25);
                 StrategyCommission commissionMaintenance = new StrategyCommissionDebitMaintenance(client, 0);
                 StrategyCommission commissionRenovate = new StrategyCommissionDebitRenovate(0);
-        	debitCard = new DebitCard(handler, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission.calculateCommission(), commissionMaintenance.calculateCommission(), commissionRenovate.calculateCommission(), 0);
+        	debitCard = new DebitCard(handler, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission.calculateCommission(), commissionMaintenance.calculateCommission(), commissionRenovate.calculateCommission());
             try {
                 debitCard.setBuyLimitDiary(buyLimitDiary);
                 debitCard.setCashLimitDiary(cashLimitDiary);

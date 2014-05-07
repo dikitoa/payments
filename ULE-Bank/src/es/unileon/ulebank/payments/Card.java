@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.CardHandler;
+import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.history.History;
 import es.unileon.ulebank.history.Transaction;
 import es.unileon.ulebank.strategy.StrategyCommission;
@@ -57,8 +58,6 @@ public abstract class Card {
 	private StrategyCommission commissionMaintenance;
 	//Comision de renovacion de la tarjeta
 	private StrategyCommission commissionRenovate;
-	//Limite de deuda de la tarjeta (Solo en el caso de las de credito)
-	private double limitDebit;
 	//Historia de las transacciones realizadas con la tarjeta
 	private History<Transaction> transactionHistory;
 	
@@ -75,13 +74,12 @@ public abstract class Card {
 	 * @param commissionEmission
 	 * @param commissionMaintenance
 	 * @param commissionRenovate
-	 * @param limitDebit
 	 */
-	public Card(CardHandler cardId, CardType type,
+	public Card(Handler cardId, CardType type,
 			double buyLimitDiary, double buyLimitMonthly, double cashLimitDiary, double cashLimitMonthly,
 			StrategyCommission commissionEmission, StrategyCommission commissionMaintenance, 
-			StrategyCommission commissionRenovate, double limitDebit) {
-		this.cardId = cardId;
+			StrategyCommission commissionRenovate) {
+		this.cardId = (CardHandler) cardId;
 		this.cardType = type;
 		this.pin = generatePinCode();
 		this.buyLimitDiary = buyLimitDiary;
@@ -94,7 +92,6 @@ public abstract class Card {
 		this.commissionEmission = commissionEmission;
 		this.commissionMaintenance = commissionMaintenance;
 		this.commissionRenovate = commissionRenovate;
-		this.limitDebit = limitDebit;
 		this.transactionHistory = new History<Transaction>();
 	}
 
@@ -480,22 +477,6 @@ public abstract class Card {
 	 */
 	public void setCommissionRenovate(StrategyCommission commissionRenovate) {
 		this.commissionRenovate = commissionRenovate;
-	}
-
-	/**
-	 * Devuelve el limite de deuda de la tarjeta
-	 * @return
-	 */
-	public double getLimitDebit() {
-		return limitDebit;
-	}
-
-	/**
-	 * Cambia el limite de deuda de la tarjeta por el recibido
-	 * @param limitDebt
-	 */
-	public void setLimitDebit(double limitDebt) {
-		this.limitDebit = limitDebt;
 	}
 	
 	/**

@@ -11,8 +11,8 @@ import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.exceptions.ClientNotFoundException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
-import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.handler.DNIHandler;
+import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.handler.OfficeHandler;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.CardType;
@@ -33,7 +33,6 @@ public class NewCardCommandTest {
 	private float commissionEmission;
 	private float commissionMaintenance;
 	private float commissionRenovate;
-	private double limitDebit;
 	
 	@Before
 	public void setUp() {
@@ -52,7 +51,6 @@ public class NewCardCommandTest {
 		this.commissionEmission = 25;
 		this.commissionMaintenance = 0;
 		this.commissionRenovate = 0;
-		this.limitDebit = 3000.0;
 	}
 	
 	@Test (expected = NullPointerException.class)
@@ -64,7 +62,7 @@ public class NewCardCommandTest {
 	@Test
 	public void testCommandId() {
 		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeCredit, buyLimitDiary, 
-				buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, commissionMaintenance, commissionRenovate, limitDebit);
+				buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, commissionMaintenance, commissionRenovate);
 		assertTrue(test.getId() != null);
 	}
 	
@@ -72,7 +70,7 @@ public class NewCardCommandTest {
 	public void testCreateCreditCard() throws ClientNotFoundException {
 		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeCredit, buyLimitDiary, 
 				buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, 
-				commissionMaintenance, commissionRenovate, limitDebit);
+				commissionMaintenance, commissionRenovate);
 		this.test.execute();
 		CommandHandler id = (CommandHandler) test.getId();
 		CardHandler cardHandler = (CardHandler) id.getId();
@@ -85,14 +83,13 @@ public class NewCardCommandTest {
 		assertEquals(commissionEmission, card.getCommissionEmission(), 0.0001);
 		assertEquals(commissionMaintenance, card.getCommissionMaintenance(), 0.0001);
 		assertEquals(commissionRenovate, card.getCommissionRenovate(), 0.0001);
-		assertEquals(limitDebit, card.getLimitDebit(), 0.0001);
 	}
 	
 	@Test
 	public void testCreateDebitCard() throws ClientNotFoundException {
 		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeDebit, buyLimitDiary, 
 				buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, 
-				commissionMaintenance, commissionRenovate, 0.0);
+				commissionMaintenance, commissionRenovate);
 		this.test.execute();
 		CommandHandler id = (CommandHandler) test.getId();
 		CardHandler cardHandler = (CardHandler) id.getId();
@@ -105,14 +102,13 @@ public class NewCardCommandTest {
 		assertEquals(commissionEmission, card.getCommissionEmission(), 0.0001);
 		assertEquals(commissionMaintenance, card.getCommissionMaintenance(), 0.0001);
 		assertEquals(commissionRenovate, card.getCommissionRenovate(), 0.0001);
-		assertEquals(0.0, card.getLimitDebit(), 0.0001);
 	}
 	
 	@Test (expected = NullPointerException.class)
 	public void testUndoNewCreditCardCommand() throws ClientNotFoundException {
 		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeCredit, buyLimitDiary, 
 				buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, 
-				commissionMaintenance, commissionRenovate, limitDebit);
+				commissionMaintenance, commissionRenovate);
 		this.test.execute();
 		CommandHandler id = (CommandHandler) test.getId();
 		CardHandler cardHandler = (CardHandler) id.getId();
@@ -127,7 +123,7 @@ public class NewCardCommandTest {
 	public void testUndoNewDebitCardCommand() throws ClientNotFoundException {
 		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeDebit, buyLimitDiary, 
 				buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, 
-				commissionMaintenance, commissionRenovate, 0.0);
+				commissionMaintenance, commissionRenovate);
 		this.test.execute();
 		CommandHandler id = (CommandHandler) test.getId();
 		CardHandler cardHandler = (CardHandler) id.getId();
@@ -141,7 +137,7 @@ public class NewCardCommandTest {
 	public void testRedoNewCreditCardCommand() {
 		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeCredit, buyLimitDiary, 
 				buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, 
-				commissionMaintenance, commissionRenovate, limitDebit);
+				commissionMaintenance, commissionRenovate);
 		this.test.execute();
 		this.test.undo();
 		this.test.redo();
@@ -151,7 +147,7 @@ public class NewCardCommandTest {
 	public void testRedoNewDebitCardCommand() {
 		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeDebit, buyLimitDiary, 
 				buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, 
-				commissionMaintenance, commissionRenovate, 0.0);
+				commissionMaintenance, commissionRenovate);
 		this.test.execute();
 		this.test.undo();
 		this.test.redo();

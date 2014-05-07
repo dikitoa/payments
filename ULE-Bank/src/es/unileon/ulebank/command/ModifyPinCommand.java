@@ -5,12 +5,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import es.unileon.ulebank.account.Account;
-import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.exceptions.ClientNotFoundException;
-import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.Handler;
-import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.Office;
 
@@ -22,7 +19,7 @@ public class ModifyPinCommand implements Command {
 	//Identificador del comando
 	private Handler id;
 	//Identificador de la tarjeta
-	private CardHandler cardId;
+	private Handler cardId;
 	//Tarjeta cuyo PIN vamos a modificar
 	private Card card;
 	//Cuenta a la que esta asociada la tarjeta
@@ -40,7 +37,7 @@ public class ModifyPinCommand implements Command {
 	 * @param accountHandler
 	 * @param newPin
 	 */
-	public ModifyPinCommand(CardHandler cardId, Office office, DNIHandler dni, AccountHandler accountHandler, String newPin) {
+	public ModifyPinCommand(Handler cardId, Office office, Handler dni, Handler accountHandler, String newPin) {
 		try {
 			this.id = new CommandHandler(cardId);
 			this.cardId = cardId;

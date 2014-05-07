@@ -5,7 +5,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import es.unileon.ulebank.account.Account;
-import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.exceptions.ClientNotFoundException;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.handler.CardHandler;
@@ -35,7 +34,7 @@ public class NewCardCommand implements Command {
 	//DNI del propietario de la tarjeta
 	private DNIHandler dni;
 	//Identificador de la cuenta a la que se va a asociar la tarjeta
-	private AccountHandler accountHandler;
+	private Handler accountHandler;
 	//Tipo de tarjeta a crear
 	private CardType type;
 	//Identificador de la tarjeta
@@ -54,8 +53,6 @@ public class NewCardCommand implements Command {
 	private float commissionMaintenance;
 	//Comision de renovacion de la tarjeta
 	private float commissionRenovate;
-	//Limite de deuda de la tarjeta
-	private double limitDebit;
 	
 	/**
 	 * Constructor de la clase
@@ -72,10 +69,9 @@ public class NewCardCommand implements Command {
 	 * @param commissionRenovate
 	 * @param limitDebit
 	 */
-	public NewCardCommand(Office office, DNIHandler dni, AccountHandler accountHandler, CardType type, 
+	public NewCardCommand(Office office, DNIHandler dni, Handler accountHandler, CardType type, 
 			double buyLimitDiary, double buyLimitMonthly, double cashLimitDiary, double cashLimitMonthly,
-			float commissionEmission, float commissionMaintenance, 
-			float commissionRenovate, double limitDebit) {
+			float commissionEmission, float commissionMaintenance, float commissionRenovate) {
 		cardId = new CardHandler();
 		this.id = new CommandHandler(cardId);
 		this.office = office;
@@ -89,7 +85,6 @@ public class NewCardCommand implements Command {
 		this.commissionEmission = commissionEmission;
 		this.commissionMaintenance = commissionMaintenance;
 		this.commissionRenovate = commissionRenovate;
-		this.limitDebit = limitDebit;
 	}
 	
 	/**
@@ -105,10 +100,10 @@ public class NewCardCommand implements Command {
 			//Crea una tarjeta en funcion del tipo indicado
 			switch (type) {
 			case CREDIT:
-				this.card = new CreditCard(cardId, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, commissionMaintenance, commissionRenovate, limitDebit);
+				this.card = new CreditCard(cardId, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, commissionMaintenance, commissionRenovate);
 				break;
 			case DEBIT:
-				this.card = new DebitCard(cardId, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, commissionMaintenance, commissionRenovate, limitDebit);
+				this.card = new DebitCard(cardId, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, commissionMaintenance, commissionRenovate);
 				break;
 			case REVOLVING:
 

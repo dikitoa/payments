@@ -5,7 +5,7 @@ import java.util.Date;
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.PaymentException;
-import es.unileon.ulebank.handler.CardHandler;
+import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.history.GenericTransaction;
 import es.unileon.ulebank.history.TransactionType;
 import es.unileon.ulebank.strategy.StrategyCommissionCreditEmission;
@@ -32,16 +32,15 @@ public class CreditCard extends Card {
 	 * @param commissionEmission
 	 * @param commissionMaintenance
 	 * @param commissionRenovate
-	 * @param limitDebit
 	 * @throws CommissionException
 	 */
-	public CreditCard(CardHandler cardId, Client owner, Account account, double buyLimitDiary, double buyLimitMonthly, 
+	public CreditCard(Handler cardId, Client owner, Account account, double buyLimitDiary, double buyLimitMonthly, 
 			double cashLimitDiary, double cashLimitMonthly, float commissionEmission, 
-			float commissionMaintenance, float commissionRenovate, double limitDebit) throws CommissionException {
+			float commissionMaintenance, float commissionRenovate) throws CommissionException {
 		super(cardId, CardType.CREDIT, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly,
 				new StrategyCommissionCreditEmission(commissionEmission),
 				new StrategyCommissionCreditMaintenance(commissionMaintenance),
-				new StrategyCommissionCreditRenovate(commissionRenovate), limitDebit);
+				new StrategyCommissionCreditRenovate(commissionRenovate));
 		this.account = account;
 	}
 		
@@ -54,7 +53,7 @@ public class CreditCard extends Card {
 	 */
 	public void makeTransaction(Account receiverAccount, double quantity, String payConcept) throws PaymentException{
 		//TODO - Actualizar con las nuevas transacciones
-		if (this.account.getBalance() + this.getLimitDebit() >= quantity ){
+		if (this.account.getBalance() >= quantity ){
 			this.account.setBalance(this.account.getBalance() - quantity);
 			receiverAccount.setBalance(receiverAccount.getBalance() + quantity);
 			this.addTransaction(new GenericTransaction(quantity, new Date(), payConcept, TransactionType.PAYMENT));

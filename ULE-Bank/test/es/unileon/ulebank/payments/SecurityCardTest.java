@@ -28,7 +28,7 @@ public class SecurityCardTest {
 
 	@Before
 	public void setUp() throws IOException, CommissionException{
-		this.card = new CreditCard(new CardHandler(), new Client(new DNIHandler(71034506,'H'),20), null, 0, 0, 0, 0, 0, 0, 0, 0);
+		this.card = new CreditCard(new CardHandler(), new Client(new DNIHandler(71034506,'H'),20), null, 0, 0, 0, 0, 0, 0, 0);
 		this.card.setPin("0000");
 		this.secCard = new SecurityCard(this.card);
 	}

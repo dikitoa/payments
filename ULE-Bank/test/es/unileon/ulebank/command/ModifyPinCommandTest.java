@@ -42,7 +42,7 @@ public class ModifyPinCommandTest {
 		this.accountHandler = new AccountHandler(new OfficeHandler("0001"), new GenericHandler("1234"), "9876543210");
 		account = new Account(accountHandler);
 		this.client.addAccount(account);
-		this.card = new DebitCard(handler, client, account, 400.0, 1000.0, 400.0, 1000.0, 25, 0, 0, 0);
+		this.card = new DebitCard(handler, client, account, 400.0, 1000.0, 400.0, 1000.0, 25, 0, 0);
 		this.account.addCard(card);
 		try {
 			this.card.setPin("1234");

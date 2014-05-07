@@ -5,12 +5,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import es.unileon.ulebank.account.Account;
-import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.exceptions.ClientNotFoundException;
-import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.Handler;
-import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.Office;
 
@@ -22,7 +19,7 @@ public class RenovateCardCommand implements Command {
 	//Identificador del comando
 	private Handler id;
 	//Identificador de la tarjeta a renovar
-	private CardHandler cardId;
+	private Handler cardId;
 	//Cuenta a la que esta asociada la tarjeta que se va a renovar
 	private Account account;
 	//Tarjeta que se va a renovar
@@ -43,7 +40,7 @@ public class RenovateCardCommand implements Command {
 	 * @param dni
 	 * @param accountHandler
 	 */
-	public RenovateCardCommand(CardHandler cardId, Office office, DNIHandler dni, AccountHandler accountHandler) {
+	public RenovateCardCommand(Handler cardId, Office office, Handler dni, Handler accountHandler) {
 		try {
 			this.id = new CommandHandler(cardId);
 			this.cardId = cardId;
