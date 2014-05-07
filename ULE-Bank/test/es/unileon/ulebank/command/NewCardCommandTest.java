@@ -35,14 +35,11 @@ public class NewCardCommandTest {
 	private float commissionEmission;
 	private float commissionMaintenance;
 	private float commissionRenovate;
-<<<<<<< HEAD
 	private double limitDebit;
 	private Bank bank;
     private TransactionManager manager;
 
     private String accountNumber = "0000000000";
-=======
->>>>>>> refs/remotes/origin/master
 	
 	@Before
 	public void setUp() {
