@@ -3,6 +3,7 @@ package es.unileon.ulebank.payments;
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.handler.CardHandler;
+import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.strategy.StrategyCommission;
 
 /**
@@ -10,7 +11,7 @@ import es.unileon.ulebank.strategy.StrategyCommission;
  */
 public class PurseCard extends Card {
 
-	public PurseCard(CardHandler cardId, Client owner, Account account,
+	public PurseCard(Handler cardId, Client owner, Account account,
 			CardType type, double buyLimitDiary, double buyLimitMonthly,
 			double cashLimitDiary, double cashLimitMonthly,
 			StrategyCommission commissionEmission,

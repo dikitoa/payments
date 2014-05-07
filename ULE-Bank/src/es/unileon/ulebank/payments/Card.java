@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.handler.CardHandler;
+import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.history.History;
 import es.unileon.ulebank.history.Transaction;
 import es.unileon.ulebank.strategy.StrategyCommission;
@@ -74,13 +75,13 @@ public abstract class Card {
 	 * @param commissionEmission
 	 * @param commissionMaintenance
 	 * @param commissionRenovate
-	 * @param limitDebit
 	 */
-	public Card(CardHandler cardId, CardType type,
+	public Card(Handler cardId, CardType type,
 			double buyLimitDiary, double buyLimitMonthly, double cashLimitDiary, double cashLimitMonthly,
 			StrategyCommission commissionEmission, StrategyCommission commissionMaintenance, 
 			StrategyCommission commissionRenovate) {
-		this.cardId = cardId;
+		this.cardId = (CardHandler) cardId;
+		this.cardId = (CardHandler) cardId;
 		this.cardType = type;
 		this.pin = generatePinCode();
 		this.buyLimitDiary = buyLimitDiary;

@@ -8,7 +8,7 @@ import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.PaymentException;
 import es.unileon.ulebank.exceptions.TransactionException;
-import es.unileon.ulebank.handler.CardHandler;
+import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.history.GenericTransaction;
 import es.unileon.ulebank.history.TransactionType;
 import es.unileon.ulebank.strategy.StrategyCommissionDebitEmission;
@@ -35,12 +35,11 @@ public class DebitCard extends Card {
 	 * @param commissionEmission
 	 * @param commissionMaintenance
 	 * @param commissionRenovate
-	 * @param limitDebit
 	 * @throws NumberFormatException
 	 * @throws CommissionException
 	 * @throws IOException
 	 */
-	public DebitCard(CardHandler cardId, Client owner, Account account,
+	public DebitCard(Handler cardId, Client owner, Account account,
 			double buyLimitDiary, double buyLimitMonthly, double cashLimitDiary, double cashLimitMonthly,
 			float commissionEmission, float commissionMaintenance, float commissionRenovate) throws NumberFormatException, CommissionException, IOException {
 		super(cardId, CardType.DEBIT,

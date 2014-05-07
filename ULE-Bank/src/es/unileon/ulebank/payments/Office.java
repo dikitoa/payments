@@ -6,6 +6,7 @@ import java.util.Iterator;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.ClientNotFoundException;
 import es.unileon.ulebank.handler.DNIHandler;
+import es.unileon.ulebank.handler.Handler;
 
 /**
  * @author Israel Garcia Centeno
@@ -55,7 +56,7 @@ public class Office {
 	 * @return
 	 * @throws ClientNotFoundException 
 	 */
-	public Client searchClient(DNIHandler dni) throws ClientNotFoundException {
+	public Client searchClient(Handler dni) throws ClientNotFoundException {
 		//Creamos un iterador para recorrer la lista
 		Iterator<Client> iterator = clients.iterator();
 		Client client = null;

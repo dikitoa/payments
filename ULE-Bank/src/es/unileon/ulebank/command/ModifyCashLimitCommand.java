@@ -5,13 +5,10 @@ import java.util.logging.Logger;
 
 import es.unileon.ulebank.Office;
 import es.unileon.ulebank.account.Account;
-import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.exceptions.ClientNotFoundException;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
-import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.Handler;
-import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.payments.Card;
 
 /**
@@ -25,7 +22,7 @@ public class ModifyCashLimitCommand implements Command {
 	//Cuenta a la que esta asociada la tarjeta que vamos a modificar
 	private Account account;
 	//Identificador de la tarjeta que se va a modificar
-	private CardHandler cardId;
+	private Handler cardId;
 	//Nueva cantidad a modificar
 	private double newAmount;
 	//Cantidad antes de la modificacion
@@ -42,7 +39,7 @@ public class ModifyCashLimitCommand implements Command {
 	 * @param amount
 	 * @param type
 	 */
-	public ModifyCashLimitCommand(CardHandler cardId, Office office, DNIHandler dni, AccountHandler accountHandler, double amount, String type) {
+	public ModifyCashLimitCommand(Handler cardId, Office office, Handler dni, Handler accountHandler, double amount, String type) {
 		try {
 			this.id = new CommandHandler(cardId);
 			this.cardId = cardId;

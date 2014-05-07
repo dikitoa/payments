@@ -7,7 +7,7 @@ import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.PaymentException;
 import es.unileon.ulebank.exceptions.TransactionException;
-import es.unileon.ulebank.handler.CardHandler;
+import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.history.GenericTransaction;
 import es.unileon.ulebank.history.TransactionType;
 import es.unileon.ulebank.strategy.StrategyCommissionCreditEmission;
@@ -34,10 +34,9 @@ public class CreditCard extends Card {
 	 * @param commissionEmission
 	 * @param commissionMaintenance
 	 * @param commissionRenovate
-	 * @param limitDebit
 	 * @throws CommissionException
 	 */
-	public CreditCard(CardHandler cardId, Client owner, Account account, double buyLimitDiary, double buyLimitMonthly, 
+	public CreditCard(Handler cardId, Client owner, Account account, double buyLimitDiary, double buyLimitMonthly, 
 			double cashLimitDiary, double cashLimitMonthly, float commissionEmission, 
 			float commissionMaintenance, float commissionRenovate) throws CommissionException {
 		super(cardId, CardType.CREDIT, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly,
