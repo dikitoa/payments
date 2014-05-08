@@ -3,8 +3,8 @@ package es.unileon.ulebank.command;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
 
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.payments.CardType;
@@ -14,9 +14,17 @@ import es.unileon.ulebank.payments.CardType;
  * Comando para generar el contrato segun el tipo de tarjeta
  */
 public class GenerateContractCommand implements Command {
-	//Identificador del comando que para este caso no es necesario
+	/**
+	 * Logger de la clase
+	 */
+	private static final Logger LOG = Logger.getLogger(GenerateContractCommand.class.getName());
+	/**
+	 * Identificador del comando que para este caso no es necesario
+	 */
 	private Handler id;
-	//Tipo de tarjeta 
+	/**
+	 * Tipo de tarjeta 
+	 */
 	private CardType type;
 	
 	/**
@@ -57,7 +65,7 @@ public class GenerateContractCommand implements Command {
 				break;
 			}
 		} catch (IOException e) {
-			Logger.getLogger(GenerateContractCommand.class.toString()).log(Level.SEVERE, null, e);
+			LOG.info("Error opening file.");
 		}
 	}
 

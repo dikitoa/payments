@@ -1,2 +1,6 @@
 eclipse.preferences.version=1
+encoding//src/es/unileon/ulebank/GUI/payments/InformationDebitCard.java=UTF-8
+encoding//src/es/unileon/ulebank/GUI/payments/RenovationCardWindow.java=UTF-8
+encoding//src/es/unileon/ulebank/GUI/payments/ReplacementWindow.java=UTF-8
 encoding//src/es/unileon/ulebank/payments/Card.java=UTF-8
+encoding//src/es/unileon/ulebank/payments/CreditCard.java=UTF-8

@@ -22,7 +22,10 @@ import es.unileon.ulebank.transacionManager.TransactionManager;
 
 public class NewCardCommandTest {
 	private NewCardCommand test;
-	private DNIHandler dni;
+	private Handler bankHandler;
+	private String officeId;
+	private String cardId;
+	private Handler dni;
 	private Office office;
 	private Handler accountHandler;
 	private CardType cardTypeCredit;
@@ -42,11 +45,14 @@ public class NewCardCommandTest {
 	@Before
 	public void setUp() {
 		this.manager = new TransactionManager();
-        this.bank = new Bank(manager, new BankHandler("1234"));
+		this.bankHandler = new BankHandler("1234");
+        this.bank = new Bank(manager, bankHandler);
 		this.office = new Office(new OfficeHandler("1234"), this.bank);
 		this.dni = new DNIHandler("71557005A");
 		Client client = new Client(dni, 20);
 		this.office.addClient(client);
+		this.officeId = "01";
+		this.cardId ="123456789";
 		Account account = new Account(office, bank, accountNumber);
 		this.accountHandler = account.getID();
 		client.add(account);
@@ -69,15 +75,15 @@ public class NewCardCommandTest {
 	
 	@Test
 	public void testCommandId() {
-		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeCredit, buyLimitDiary, 
+		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeCredit, bankHandler.toString(), officeId, cardId, buyLimitDiary, 
 				buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, commissionMaintenance, commissionRenovate);
 		assertTrue(test.getId() != null);
 	}
 	
 	@Test
 	public void testCreateCreditCard() throws Exception {
-		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeCredit, buyLimitDiary, 
-				buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, 
+		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeCredit, bankHandler.toString(), officeId, cardId,
+				buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, 
 				commissionMaintenance, commissionRenovate);
 		this.test.execute();
 		CommandHandler id = (CommandHandler) test.getId();
@@ -95,8 +101,8 @@ public class NewCardCommandTest {
 	
 	@Test
 	public void testCreateDebitCard() throws Exception {
-		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeDebit, buyLimitDiary, 
-				buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, 
+		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeDebit, bankHandler.toString(), officeId, cardId,
+				buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, 
 				commissionMaintenance, commissionRenovate);
 		this.test.execute();
 		CommandHandler id = (CommandHandler) test.getId();
@@ -114,8 +120,8 @@ public class NewCardCommandTest {
 	
 	@Test (expected = NullPointerException.class)
 	public void testUndoNewCreditCardCommand() throws Exception {
-		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeCredit, buyLimitDiary, 
-				buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, 
+		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeCredit, bankHandler.toString(), officeId, cardId,
+				buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, 
 				commissionMaintenance, commissionRenovate);
 		this.test.execute();
 		CommandHandler id = (CommandHandler) test.getId();
@@ -129,8 +135,8 @@ public class NewCardCommandTest {
 	
 	@Test (expected = NullPointerException.class)
 	public void testUndoNewDebitCardCommand() throws Exception {
-		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeDebit, buyLimitDiary, 
-				buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, 
+		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeDebit, bankHandler.toString(), officeId, cardId,
+				buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, 
 				commissionMaintenance, commissionRenovate);
 		this.test.execute();
 		CommandHandler id = (CommandHandler) test.getId();
@@ -143,8 +149,8 @@ public class NewCardCommandTest {
 	
 	@Test (expected = UnsupportedOperationException.class)
 	public void testRedoNewCreditCardCommand() {
-		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeCredit, buyLimitDiary, 
-				buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, 
+		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeCredit, bankHandler.toString(), officeId, cardId,
+				buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, 
 				commissionMaintenance, commissionRenovate);
 		this.test.execute();
 		this.test.undo();
@@ -153,8 +159,8 @@ public class NewCardCommandTest {
 	
 	@Test (expected = UnsupportedOperationException.class)
 	public void testRedoNewDebitCardCommand() {
-		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeDebit, buyLimitDiary, 
-				buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, 
+		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeDebit, bankHandler.toString(), officeId, cardId,
+				buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, 
 				commissionMaintenance, commissionRenovate);
 		this.test.execute();
 		this.test.undo();

@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import es.unileon.ulebank.Office;
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.account.exception.AccountNotFoundException;
+import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.ClientNotFoundException;
 import es.unileon.ulebank.exceptions.CommissionException;
@@ -17,6 +18,7 @@ import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.CardType;
 import es.unileon.ulebank.payments.CreditCard;
 import es.unileon.ulebank.payments.DebitCard;
+import es.unileon.ulebank.payments.SecurityCard;
 
 /**
  * @author Israel
@@ -58,7 +60,7 @@ public class NewCardCommand implements Command {
 	/**
 	 * Identificador de la tarjeta
 	 */
-	private CardHandler cardId;
+	private CardHandler cardHandler;
 	/**
 	 * Limite de compra diario para la tarjeta
 	 */
@@ -103,11 +105,12 @@ public class NewCardCommand implements Command {
 	 * @param commissionRenovate
 	 * @param limitDebit
 	 */
-	public NewCardCommand(Office office, Handler dni, Handler accountHandler, CardType type, 
+	public NewCardCommand(Office office, Handler dni, Handler accountHandler, CardType type,
+			String bankId, String officeId, String cardId,
 			double buyLimitDiary, double buyLimitMonthly, double cashLimitDiary, double cashLimitMonthly,
 			float commissionEmission, float commissionMaintenance, float commissionRenovate) {
-		cardId = new CardHandler();
-		this.id = new CommandHandler(cardId);
+		cardHandler = new CardHandler(new BankHandler(bankId), officeId, cardId);
+		this.id = new CommandHandler(cardHandler);
 		this.office = office;
 		this.dni = dni;
 		this.accountHandler = accountHandler;
@@ -134,10 +137,10 @@ public class NewCardCommand implements Command {
 			//Crea una tarjeta en funcion del tipo indicado
 			switch (type) {
 			case CREDIT:
-				this.card = new CreditCard(cardId, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, commissionMaintenance, commissionRenovate);
+				this.card = new CreditCard(cardHandler, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, commissionMaintenance, commissionRenovate);
 				break;
 			case DEBIT:
-				this.card = new DebitCard(cardId, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, commissionMaintenance, commissionRenovate);
+				this.card = new DebitCard(cardHandler, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, commissionMaintenance, commissionRenovate);
 				break;
 			case REVOLVING:
 				
@@ -147,6 +150,7 @@ public class NewCardCommand implements Command {
 				break;
 			}
 			
+			new SecurityCard(card);
 			//Por ultimo asocia la tarjeta a la cuenta
 			account.addCard(card);
 		} catch (ClientNotFoundException e) {
@@ -170,7 +174,7 @@ public class NewCardCommand implements Command {
 	 */
 	@Override
 	public void undo() {
-		CancelCardCommand cancel = new CancelCardCommand(cardId, office, dni, accountHandler);
+		CancelCardCommand cancel = new CancelCardCommand(cardHandler, office, dni, accountHandler);
 		cancel.execute();
 	}
 

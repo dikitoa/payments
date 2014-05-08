@@ -25,6 +25,10 @@ public class DebitCard extends Card {
 	 * Account associated to the Card
 	 */
 	private Account account;
+	/**
+	 * Card owner
+	 */
+	private Client owner;
 	
 	/**
 	 * Constructor de la clase
@@ -50,6 +54,7 @@ public class DebitCard extends Card {
 				new StrategyCommissionDebitMaintenance(owner, commissionMaintenance), 
 				new StrategyCommissionDebitRenovate(commissionRenovate));
 		this.account = account;
+		this.owner = owner;
 	}
 	
 	/**
@@ -72,5 +77,13 @@ public class DebitCard extends Card {
 			throw new PaymentException("Denegate Transaction");
 		}
 		
+	}
+
+	/**
+	 * Devuelve el duegno de la tarjeta
+	 * @return
+	 */
+	public Client getOwner() {
+		return owner;
 	}
 }

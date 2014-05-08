@@ -24,8 +24,9 @@ import es.unileon.ulebank.history.CardTransaction;
 public class CreditCard extends Card {
 	
 	private Account account;
-	List<CardTransaction> transactionList;
-	TaskList transactionTask;
+	private Client owner;
+	private List<CardTransaction> transactionList;
+	private TaskList transactionTask;
 	
 	/**
 	 * Constructor de la clase
@@ -49,6 +50,7 @@ public class CreditCard extends Card {
 				new StrategyCommissionCreditMaintenance(commissionMaintenance),
 				new StrategyCommissionCreditRenovate(commissionRenovate));
 		this.account = account;
+		this.owner = owner;
 		this.transactionList = new ArrayList<CardTransaction>();
 	}
 		
@@ -62,9 +64,17 @@ public class CreditCard extends Card {
 	 */
 	public void makeTransaction(Account receiverAccount, double quantity, String payConcept) throws PaymentException, TransactionException{
 		//TODO - Actualizar con las nuevas transacciones
-		//Añadimos la transaccion a la lista
+		//Aï¿½adimos la transaccion a la lista
 		this.transactionList.add(new CardTransaction(quantity, new Date(), payConcept, TransactionType.PAYMENT, receiverAccount, this.account));
 		//LLegada la fecha hay que descontar el dinero de la cuenta
 		//Pagar los importes a la cuenta
+	}
+	
+	/**
+	 * Devuelve el duegno de la tarjeta
+	 * @return
+	 */
+	public Client getOwner() {
+		return owner;
 	}
 }

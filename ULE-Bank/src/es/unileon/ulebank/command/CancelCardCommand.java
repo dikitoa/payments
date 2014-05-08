@@ -1,11 +1,12 @@
 package es.unileon.ulebank.command;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 import es.unileon.ulebank.Office;
 import es.unileon.ulebank.account.Account;
+import es.unileon.ulebank.account.exception.AccountNotFoundException;
 import es.unileon.ulebank.exceptions.CardNotFoundException;
+import es.unileon.ulebank.exceptions.ClientNotFoundException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.Handler;
@@ -16,11 +17,21 @@ import es.unileon.ulebank.handler.Handler;
  * Comando para realizar la cancelacion de la tarjeta
  */
 public class CancelCardCommand implements Command {
-	//Identificador del comando
+	/**
+	 * Logger de la clase
+	 */
+	private static final Logger LOG = Logger.getLogger(CancelCardCommand.class.getName());
+	/**
+	 * Identificador del comando
+	 */
 	private Handler id;
-	//Identificador de la tarjeta a cancelar
+	/**
+	 * Identificador de la tarjeta a cancelar
+	 */
 	private Handler cardId;
-	//Cuenta a la que esta asociada la tarjeta que se va a cancelar
+	/**
+	 * Cuenta a la que esta asociada la tarjeta que se va a cancelar
+	 */
 	private Account account;
 	
 	/**
@@ -35,8 +46,12 @@ public class CancelCardCommand implements Command {
 		this.cardId = (CardHandler) cardId;
 		try {
 			this.account = office.searchClient(dni).searchAccount(account);
-		} catch (Exception e) {
-			Logger.getLogger(CancelCardCommand.class.toString()).log(Level.SEVERE, null, e);
+		} catch (ClientNotFoundException e) {
+			LOG.info("The client that has dni " + dni.toString() + " is not found.");
+		} catch (NullPointerException e) {
+			LOG.info(e.getMessage());
+		} catch (AccountNotFoundException e) {
+			LOG.info("The account that has number " + account.toString() + " is not found.");
 		}
 	}
 	
@@ -49,11 +64,9 @@ public class CancelCardCommand implements Command {
 		try {
 			account.removeCard(this.cardId);
 		} catch (NullPointerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.info(e.getMessage());
 		} catch (CardNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.info("The card that has number " + cardId.toString() + " is not found.");
 		}
 	}
 

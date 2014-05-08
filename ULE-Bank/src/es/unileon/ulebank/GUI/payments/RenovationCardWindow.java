@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 import es.unileon.ulebank.Office;
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.bank.Bank;
+import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
@@ -352,7 +353,7 @@ public class RenovationCardWindow extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-//Al darle a este bot������������������������������������������������������n y dependiendo de la tarjeta seleccionada en el combobox
+//Al darle a este bot������������������������������������������������������������������������������������������������������������������������������������������������������������������n y dependiendo de la tarjeta seleccionada en el combobox
 //renovaremos la tarjeta, modificando la fecha, el cvv.
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
         String DNI = textField1.getText();
@@ -385,7 +386,7 @@ public class RenovationCardWindow extends javax.swing.JInternalFrame {
             commission=line.readLine();
 
             DebitCard debitCard = null;
-            CardHandler handler = new CardHandler();
+            CardHandler handler = new CardHandler(new BankHandler("1234"), "01", "123456789");
         	TransactionManager manager = new TransactionManager();
             Bank bank = new Bank(manager, new GenericHandler("1234"));
             Office office = new Office(new GenericHandler("1234"), bank);
@@ -559,7 +560,7 @@ public class RenovationCardWindow extends javax.swing.JInternalFrame {
             FileReader doc1 = new FileReader(archiveCard);
             BufferedReader line = new BufferedReader(doc1);
             
-                    //--Leemos hasta el n������������������������������������������������������mero de tarjeta que es lo que queremos mostrar en el comboBox
+                    //--Leemos hasta el n������������������������������������������������������������������������������������������������������������������������������������������������������������������mero de tarjeta que es lo que queremos mostrar en el comboBox
                     accountNumber=line.readLine();
                     cardType=line.readLine();
                     cardNumber=line.readLine();

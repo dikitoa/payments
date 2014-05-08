@@ -9,13 +9,12 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
+import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.SecurityCardException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.DNIHandler;
-import es.unileon.ulebank.payments.Card;
-import es.unileon.ulebank.payments.SecurityCard;
 
 /**
  * Test about SecurityCard Class
@@ -29,7 +28,7 @@ public class SecurityCardTest {
 
 	@Before
 	public void setUp() throws IOException, CommissionException{
-		this.card = new CreditCard(new CardHandler(), new Client(new DNIHandler(71034506,'H'),20), null, 0, 0, 0, 0, 0, 0, 0);
+		this.card = new CreditCard(new CardHandler(new BankHandler("1234"), "01", "123456789"), new Client(new DNIHandler(71034506,'H'),20), null, 0, 0, 0, 0, 0, 0, 0);
 		this.card.setPin("0000");
 		this.secCard = new SecurityCard(this.card);
 	}

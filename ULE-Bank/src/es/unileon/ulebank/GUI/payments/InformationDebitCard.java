@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 import es.unileon.ulebank.Office;
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.bank.Bank;
+import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
@@ -45,7 +46,8 @@ public class InformationDebitCard extends javax.swing.JFrame {
 	String dni;
     String accountNumber;
     DebitCard card;
-    CardHandler handler = new CardHandler();
+    //TODO agnadir funcionalidad para poder introducir la informacion del numero de tarjeta
+    CardHandler handler = new CardHandler(new BankHandler("1234"), "01", "123456789");
 	Client client;
 	Account account;
 	StrategyCommission commissionEmission = new StrategyCommissionDebitEmission(25);
@@ -58,7 +60,6 @@ public class InformationDebitCard extends javax.swing.JFrame {
      */
 
     public InformationDebitCard(int buyLimitDiary, int cashLimitDiary, int buyLimitMonthly, int cashLimitMonthly, String dni, String accountNumber) throws NumberFormatException, CommissionException, IOException {
-        handler = new CardHandler();
         TransactionManager manager = new TransactionManager();
         Bank bank = new Bank(manager, new GenericHandler("1234"));
         Office office = new Office(new GenericHandler("1234"), bank);
@@ -378,7 +379,7 @@ public class InformationDebitCard extends javax.swing.JFrame {
     private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField8ActionPerformed
-    //Abrimos el contrato de la tarjeta de d������������������bito
+    //Abrimos el contrato de la tarjeta de d������������������������������������������������������bito
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        
         try {
@@ -392,7 +393,7 @@ public class InformationDebitCard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-         // Creamos un fichero de nombre el dni del usuario y dentro tendr������������������ el numero de cuenta y  toda la informacion de la tarjeta.
+         // Creamos un fichero de nombre el dni del usuario y dentro tendr������������������������������������������������������ el numero de cuenta y  toda la informacion de la tarjeta.
         if(jCheckBox1.isSelected()==true){
         FileWriter fichero = null;
         PrintWriter pw = null;

@@ -10,8 +10,8 @@ import org.junit.Test;
 
 import es.unileon.ulebank.Office;
 import es.unileon.ulebank.account.Account;
-import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.bank.Bank;
+import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.handler.CardHandler;
@@ -19,7 +19,6 @@ import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.handler.Handler;
-import es.unileon.ulebank.handler.OfficeHandler;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.CreditCard;
 import es.unileon.ulebank.payments.DebitCard;
@@ -43,10 +42,11 @@ public class CancelCardCommandTest {
 	
 	@Before
 	public void setUp() throws NumberFormatException, CommissionException, IOException {
-		handler1 = new CardHandler();
-		handler2 = new CardHandler();
+		BankHandler bankHandler = new BankHandler("1234");
+		handler1 = new CardHandler(bankHandler, "01", "123456789");
+		handler2 = new CardHandler(bankHandler, "01", "123456788");
 		this.manager = new TransactionManager();
-        this.bank = new Bank(manager, new GenericHandler("1234"));
+        this.bank = new Bank(manager, bankHandler);
         this.office = new Office(new GenericHandler("1234"), this.bank);
 		this.dni = new DNIHandler("71557005A");
 		this.client = new Client(dni, 20);

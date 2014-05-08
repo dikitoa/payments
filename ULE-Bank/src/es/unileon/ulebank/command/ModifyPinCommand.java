@@ -1,12 +1,14 @@
 package es.unileon.ulebank.command;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
 
 import es.unileon.ulebank.Office;
 import es.unileon.ulebank.account.Account;
+import es.unileon.ulebank.account.exception.AccountNotFoundException;
 import es.unileon.ulebank.exceptions.CardNotFoundException;
+import es.unileon.ulebank.exceptions.ClientNotFoundException;
 import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.payments.Card;
@@ -16,17 +18,33 @@ import es.unileon.ulebank.payments.Card;
  * Comando para modificar el codigo PIN de la tarjeta
  */
 public class ModifyPinCommand implements Command {
-	//Identificador del comando
+	/**
+	 * Logger de la clase
+	 */
+	private static final Logger LOG = Logger.getLogger(ModifyPinCommand.class.getName());
+	/**
+	 * Identificador del comando
+	 */
 	private Handler id;
-	//Identificador de la tarjeta
+	/**
+	 * Identificador de la tarjeta
+	 */
 	private Handler cardId;
-	//Tarjeta cuyo PIN vamos a modificar
+	/**
+	 * Tarjeta cuyo PIN vamos a modificar
+	 */
 	private Card card;
-	//Cuenta a la que esta asociada la tarjeta
+	/**
+	 * Cuenta a la que esta asociada la tarjeta
+	 */
 	private Account account;
-	//PIN que se va a modificar
+	/**
+	 * PIN que se va a modificar
+	 */
 	private String newPin;
-	//PIN antes de modificarlo
+	/**
+	 * PIN antes de modificarlo
+	 */
 	private String oldPin;
 	
 	/**
@@ -43,8 +61,12 @@ public class ModifyPinCommand implements Command {
 			this.cardId = cardId;
 			this.account = office.searchClient(dni).searchAccount(accountHandler);
 			this.newPin = newPin;
-		} catch (Exception e) {
-			Logger.getLogger(ModifyPinCommand.class.toString()).log(Level.SEVERE, null, e);
+		} catch (ClientNotFoundException e) {
+			LOG.info("Client with dni " + dni.toString() + " is not found");
+		} catch (NullPointerException e) {
+			LOG.info(e.getMessage());
+		} catch (AccountNotFoundException e) {
+			LOG.info("Account with number " + accountHandler.toString() + " is not found");
 		}
 	}
 	
@@ -61,13 +83,11 @@ public class ModifyPinCommand implements Command {
 			//Cambiamos el PIN por el nuevo
 			this.card.setPin(newPin);
 		} catch (IOException e) {
-			Logger.getLogger(ModifyBuyLimitCommand.class.toString()).log(Level.SEVERE, "Incorrect Pin", e);
+			LOG.info(e.getMessage());
 		} catch (NullPointerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.info(e.getMessage());
 		} catch (CardNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.info("Card with number " + cardId.toString() + " is not found");
 		}
 	}
 
@@ -80,7 +100,7 @@ public class ModifyPinCommand implements Command {
 			//Restaura el PIN al valor anterior
 			this.card.setPin(oldPin);
 		} catch (IOException e) {
-			Logger.getLogger(ModifyBuyLimitCommand.class.toString()).log(Level.SEVERE, "Incorrect Pin", e);
+			LOG.info(e.getMessage());
 		}
 	}
 
@@ -93,7 +113,7 @@ public class ModifyPinCommand implements Command {
 			//Recuperamos la modificacion del PIN
 			this.card.setPin(newPin);
 		} catch (IOException e) {
-			Logger.getLogger(ModifyBuyLimitCommand.class.toString()).log(Level.SEVERE, "Incorrect Pin", e);
+			LOG.info(e.getMessage());
 		}
 	}
 

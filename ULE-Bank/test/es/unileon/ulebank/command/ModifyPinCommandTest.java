@@ -11,6 +11,7 @@ import org.junit.Test;
 import es.unileon.ulebank.Office;
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.bank.Bank;
+import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.handler.CardHandler;
@@ -39,9 +40,10 @@ public class ModifyPinCommandTest {
 	
 	@Before
 	public void setUp() throws NumberFormatException, CommissionException, IOException {
+		BankHandler bankHandler = new BankHandler("1234");
 		this.manager = new TransactionManager();
-        this.bank = new Bank(manager, new GenericHandler("1234"));
-		handler = new CardHandler();
+        this.bank = new Bank(manager, bankHandler);
+		handler = new CardHandler(bankHandler, "01", "987654321");
 		this.office = new Office(new GenericHandler("1234"), this.bank);
 		this.dni = new DNIHandler("71557005A");
 		client = new Client(dni, 20);

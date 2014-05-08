@@ -22,6 +22,7 @@ import es.unileon.ulebank.Office;
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.bank.Bank;
+import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
@@ -451,7 +452,7 @@ public class ReplacementWindow extends javax.swing.JInternalFrame {
             FileReader doc1 = new FileReader(archiveCard);
             BufferedReader line = new BufferedReader(doc1);
             
-                    //--Leemos hasta el n������������������mero de tarjeta que es lo que queremos mostrar en el comboBox
+                    //--Leemos hasta el n������������������������������������������������������mero de tarjeta que es lo que queremos mostrar en el comboBox
                     accountNumber=line.readLine();
                     cardType=line.readLine();
                     cardNumber=line.readLine();
@@ -493,7 +494,7 @@ public class ReplacementWindow extends javax.swing.JInternalFrame {
             commission=line.readLine();
 
             DebitCard debitCard = null;
-            CardHandler handler = new CardHandler();
+            CardHandler handler = new CardHandler(new BankHandler("1234"), "01", "123456789");
             String number = "" + textField1.getText().charAt(0);
             for(int i = 1; i < textField1.getText().length() - 1; i++)
             {
@@ -502,7 +503,7 @@ public class ReplacementWindow extends javax.swing.JInternalFrame {
             Character letter = textField1.getText().charAt(textField1.getText().length()-1);
             int numberDNI = Integer.valueOf(number);
             DNIHandler dni = new DNIHandler(numberDNI, letter);
-                // Falta a������������������adir correctamente la edad
+                // Falta a������������������������������������������������������adir correctamente la edad
         	Client client = new Client(dni,25);
         	TransactionManager manager = new TransactionManager();
             Bank bank = new Bank(manager, new GenericHandler("1234"));

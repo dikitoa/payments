@@ -13,6 +13,7 @@ import org.junit.Test;
 import es.unileon.ulebank.Office;
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.bank.Bank;
+import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.CardHandler;
@@ -37,7 +38,7 @@ public class DebitCardTest {
 		this.manager = new TransactionManager();
         this.bank = new Bank(manager, new GenericHandler("1234"));
         this.office = new Office(new GenericHandler("1234"), this.bank);
-		CardHandler handler = new CardHandler();
+		CardHandler handler = new CardHandler(new BankHandler("1234"), "01", "123456789");
 		Client client = new Client(new DNIHandler("71451559N"), 27);
 		Account account = new Account(office, bank, accountNumber);
 		StrategyCommission commissionEmission = new StrategyCommissionDebitEmission(25);

@@ -7,9 +7,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.log4j.Logger;
 
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.exceptions.TransactionException;
@@ -165,11 +166,9 @@ public abstract class Card {
 	 * @param commissionMaintenance
 	 * @param commissionRenovate
 	 */
-	public Card(Handler cardId, CardType type,
-			double buyLimitDiary, double buyLimitMonthly, double cashLimitDiary, double cashLimitMonthly,
-			StrategyCommission commissionEmission, StrategyCommission commissionMaintenance, 
-			StrategyCommission commissionRenovate) {
-		this.cardId = (CardHandler) cardId;
+	public Card(Handler cardId, CardType type, double buyLimitDiary, double buyLimitMonthly, 
+			double cashLimitDiary, double cashLimitMonthly,StrategyCommission commissionEmission, 
+			StrategyCommission commissionMaintenance, StrategyCommission commissionRenovate) {
 		this.cardId = (CardHandler) cardId;
 		this.cardType = type;
 		this.pin = generatePinCode();
@@ -184,12 +183,13 @@ public abstract class Card {
 		this.commissionMaintenance = commissionMaintenance;
 		this.commissionRenovate = commissionRenovate;
 		this.transactionHistory = new History<Transaction>();
+		
 		try {
-			this.readCardProperties();
+			this.setDefaultCardProperties();
 		} catch (FileNotFoundException e) {
 			LOG.info("The file is not found.");
 		} catch (IOException e) {
-			LOG.info("Input/Output error.");
+			LOG.info(e.getMessage());
 		}
 	}
 	
@@ -198,7 +198,7 @@ public abstract class Card {
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	private void readCardProperties() throws FileNotFoundException, IOException {
+	public void setDefaultCardProperties() throws FileNotFoundException, IOException {
 		this.setBuyLimitDiaryDefault();
 		this.setBuyLimitMonthlyDefault();
 		this.setCashLimitDiaryDefault();
@@ -531,7 +531,7 @@ public abstract class Card {
 		ageProperty.load(new FileInputStream("src/es/unileon/ulebank/properties/card.properties"));
 		
 		/**Obtenemos los parametros definidos en el archivo*/
-		this.buyLimitDiaryDefault = Integer.parseInt(ageProperty.getProperty(this.BUY_LIMIT_DIARY_DEFAULT));
+		this.buyLimitDiaryDefault = Double.parseDouble(ageProperty.getProperty(this.BUY_LIMIT_DIARY_DEFAULT));
 	}
 
 	/**
@@ -552,7 +552,7 @@ public abstract class Card {
 		ageProperty.load(new FileInputStream("src/es/unileon/ulebank/properties/card.properties"));
 		
 		/**Obtenemos los parametros definidos en el archivo*/
-		this.buyLimitMonthlyDefault = Integer.parseInt(ageProperty.getProperty(this.BUY_LIMIT_MONTHLY_DEFAULT));
+		this.buyLimitMonthlyDefault = Double.parseDouble(ageProperty.getProperty(this.BUY_LIMIT_MONTHLY_DEFAULT));
 	}
 
 	/**
@@ -573,7 +573,7 @@ public abstract class Card {
 		ageProperty.load(new FileInputStream("src/es/unileon/ulebank/properties/card.properties"));
 		
 		/**Obtenemos los parametros definidos en el archivo*/
-		this.cashLimitDiaryDefault = Integer.parseInt(ageProperty.getProperty(this.CASH_LIMIT_DIARY_DEFAULT));
+		this.cashLimitDiaryDefault = Double.parseDouble(ageProperty.getProperty(this.CASH_LIMIT_DIARY_DEFAULT));
 	}
 
 	/**
@@ -594,7 +594,7 @@ public abstract class Card {
 		ageProperty.load(new FileInputStream("src/es/unileon/ulebank/properties/card.properties"));
 		
 		/**Obtenemos los parametros definidos en el archivo*/
-		this.cashLimitMonthlyDefault = Integer.parseInt(ageProperty.getProperty(this.CASH_LIMIT_MONTHLY_DEFAULT));
+		this.cashLimitMonthlyDefault = Double.parseDouble(ageProperty.getProperty(this.CASH_LIMIT_MONTHLY_DEFAULT));
 	}
 
 	/**
@@ -655,7 +655,7 @@ public abstract class Card {
 		ageProperty.load(new FileInputStream("src/es/unileon/ulebank/properties/card.properties"));
 		
 		/**Obtenemos los parametros definidos en el archivo*/
-		this.minimumLimit = Integer.parseInt(ageProperty.getProperty(this.MINIMUM_LIMIT));
+		this.minimumLimit = Double.parseDouble(ageProperty.getProperty(this.MINIMUM_LIMIT));
 	}
 
 	/**

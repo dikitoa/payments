@@ -43,9 +43,10 @@ public class ReplacementCardCommandTest {
 	@Before
 	public void setUp() throws NumberFormatException, CommissionException, IOException {
 		this.manager = new TransactionManager();
-        this.bank = new Bank(manager, new BankHandler("1234"));
-		this.handler1 = new CardHandler();
-		this.handler2 = new CardHandler();
+		BankHandler bankHandler = new BankHandler("1234");
+        this.bank = new Bank(manager, bankHandler);
+		this.handler1 = new CardHandler(bankHandler, "01", "123456789");
+		this.handler2 = new CardHandler(bankHandler, "01", "987654321");
 		this.office =  new Office(new OfficeHandler("1234"), this.bank);
 		this.dni = new DNIHandler("71557005A");
 		this.client = new Client(dni, 20);
