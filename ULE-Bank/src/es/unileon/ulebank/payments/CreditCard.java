@@ -14,6 +14,7 @@ import es.unileon.ulebank.history.TransactionType;
 import es.unileon.ulebank.strategy.StrategyCommissionCreditEmission;
 import es.unileon.ulebank.strategy.StrategyCommissionCreditMaintenance;
 import es.unileon.ulebank.strategy.StrategyCommissionCreditRenovate;
+import es.unileon.ulebank.taskList.TaskList;
 import es.unileon.ulebank.history.CardTransaction;
 
 /**
@@ -24,6 +25,7 @@ public class CreditCard extends Card {
 	
 	private Account account;
 	List<CardTransaction> transactionList;
+	TaskList transactionTask;
 	
 	/**
 	 * Constructor de la clase

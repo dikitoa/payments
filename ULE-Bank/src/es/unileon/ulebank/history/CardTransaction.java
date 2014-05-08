@@ -10,7 +10,7 @@ public class CardTransaction extends GenericTransaction{
 	private Account senderAccount;
 	
 	public CardTransaction(double amount, Date date, String subject,
-			Enum<TransactionType> type, Account receiverAccount, Account senderAccount) {
+			Enum<TransactionType> type, Account senderAccount, Account receiverAccount) {
 		super(amount, date, subject, type);
 
 		this.receiverAccount = receiverAccount;

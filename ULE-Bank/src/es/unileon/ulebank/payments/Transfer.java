@@ -3,6 +3,7 @@ package es.unileon.ulebank.payments;
 import java.util.Date;
 
 import es.unileon.ulebank.account.Account;
+import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.exceptions.TransferException;
 import es.unileon.ulebank.history.TransactionType;
 import es.unileon.ulebank.history.TransferTransaction;
@@ -76,14 +77,17 @@ public class Transfer {
 	 * @param quantity
 	 * @throws TransferException 
 	 */
-	public void transferMoney(String concept) throws TransferException{
-		if (this.senderAccount.getBalance() >= quantity){
-			this.senderAccount.setBalance(this.senderAccount.getBalance() - quantity);
-			this.receiverAccount.setBalance(this.receiverAccount.getBalance() + quantity);
-			this.setTransaction(new TransferTransaction(this.quantity, new Date(), concept, TransactionType.TRANSFER, this.senderAccount, this.receiverAccount));
+	public void makeTransfer(String concept) throws TransferException{
+		
+		try{
+			//Discount the quantity from sender account
+			this.senderAccount.doWithdrawal(new TransferTransaction(quantity, new Date(), concept, TransactionType.TRANSFER, this.receiverAccount, this.senderAccount));
+			//Add the money to receiver account
+			this.receiverAccount.doDeposit(new TransferTransaction(quantity, new Date(), concept, TransactionType.TRANSFER, this.receiverAccount, this.senderAccount));
+		}catch(TransactionException e){
+			e.printStackTrace();
+			throw new TransferException("Denegate Transaction");
 		}
-		else
-			throw new TransferException("Sender Account has not the balance necessary.");
 	}
 
 	/**

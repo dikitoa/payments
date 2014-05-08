@@ -7,8 +7,14 @@ import es.unileon.ulebank.exceptions.TransferException;
 
 public class TransferTransaction extends GenericTransaction{
 	
-	private Account senderAccount; //Account from transfer the money
-	private Account receiverAccount; //Account which receives the money
+	/**
+	 * Account from transfer the money
+	 */
+	private Account senderAccount;
+	/**
+	 * Account which receives the money
+	 */
+	private Account receiverAccount;
 
 	public TransferTransaction(double amount, Date date, String subject,
 			Enum<TransactionType> type, Account senderAccount, Account receiverAccount) throws TransferException {
@@ -20,6 +26,22 @@ public class TransferTransaction extends GenericTransaction{
 		}
 		else
 			throw new TransferException("Sender Account number and Receiver Account number are the same.");
+	}
+
+	/**
+	 * Getter Sender Account
+	 * @return
+	 */
+	public Account getSenderAccount() {
+		return senderAccount;
+	}
+
+	/**
+	 * Getter Receiver Account
+	 * @return
+	 */
+	public Account getReceiverAccount() {
+		return receiverAccount;
 	}
 
 }

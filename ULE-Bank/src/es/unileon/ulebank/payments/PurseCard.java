@@ -2,7 +2,6 @@ package es.unileon.ulebank.payments;
 
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.client.Client;
-import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.strategy.StrategyCommission;
 
@@ -20,6 +19,5 @@ public class PurseCard extends Card {
 		super(cardId, type, buyLimitDiary, buyLimitMonthly,
 				cashLimitDiary, cashLimitMonthly, commissionEmission,
 				commissionMaintenance, commissionRenovate);
-		// TODO Auto-generated constructor stub
 	}
 }

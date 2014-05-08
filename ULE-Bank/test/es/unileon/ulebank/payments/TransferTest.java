@@ -48,7 +48,7 @@ public class TransferTest {
 		double beforeMoneyReceiver = this.receiverAccount.getBalance();
 		double beforeMoneySender = this.senderAccount.getBalance();
 		this.transfer = new Transfer(this.senderAccount, this.receiverAccount, this.quantity);
-		this.transfer.transferMoney("Concepto");
+		this.transfer.makeTransfer("Concepto");
 		double afterMoneyReceiver = this.receiverAccount.getBalance();
 		double afterMoneySender = this.senderAccount.getBalance();
 		
@@ -63,7 +63,7 @@ public class TransferTest {
 		this.senderAccount.setBalance(0);
 		this.receiverAccount.setBalance(0);
 		this.transfer = new Transfer(this.senderAccount, this.receiverAccount, this.quantity);
-		this.transfer.transferMoney("Concepto");
+		this.transfer.makeTransfer("Concepto");
 	}
 	
 	@Test (expected = TransferException.class)

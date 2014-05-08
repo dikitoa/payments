@@ -21,6 +21,9 @@ import es.unileon.ulebank.strategy.StrategyCommissionDebitRenovate;
  */
 public class DebitCard extends Card {
 	
+	/**
+	 * Account associated to the Card
+	 */
 	private Account account;
 	
 	/**
@@ -60,8 +63,10 @@ public class DebitCard extends Card {
 	public void makeTransaction(Account receiverAccount, double quantity, String payConcept) throws PaymentException, TransactionException{
 
 		try{
-			this.account.doWithdrawal(new CardTransaction(quantity, new Date(), payConcept, TransactionType.PAYMENT, receiverAccount, this.account));
-			receiverAccount.doDeposit(new CardTransaction(quantity, new Date(), payConcept, TransactionType.PAYMENT, receiverAccount, this.account));
+			//Discount the quantity from sender account
+			this.account.doWithdrawal(new CardTransaction(quantity, new Date(), payConcept, TransactionType.PAYMENT, this.account, receiverAccount));
+			//Add the money to receiver account
+			receiverAccount.doDeposit(new CardTransaction(quantity, new Date(), payConcept, TransactionType.PAYMENT, this.account, receiverAccount));
 		}catch(TransactionException e){
 			e.printStackTrace();
 			throw new PaymentException("Denegate Transaction");
