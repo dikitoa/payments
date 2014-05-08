@@ -97,7 +97,7 @@ public abstract class Card {
 	/**
 	 * Identificador de la tarjeta
 	 */
-	private CardHandler cardId;
+	private Handler cardId;
 	/**
 	 * Codigo PIN de la tarjeta
 	 */
@@ -509,7 +509,7 @@ public abstract class Card {
 	 * Devuelve el numero de la tarjeta
 	 * @return
 	 */
-	public CardHandler getCardNumber() {
+	public Handler getCardNumber() {
 		return cardId;
 	}
 
