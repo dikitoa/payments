@@ -5,6 +5,11 @@ import java.util.Date;
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.exceptions.TransferException;
 
+/**
+ * Transaction for the Transfer
+ * @author Rober dCR
+ * @date 8/05/2014
+ */
 public class TransferTransaction extends GenericTransaction{
 	
 	/**

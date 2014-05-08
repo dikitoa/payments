@@ -63,14 +63,6 @@ public class Transfer {
 	}
 	
 	/**
-	 * Setter quantity
-	 * @param quantity
-	 */
-	public void setQuantity(double quantity) {
-		this.quantity = quantity;
-	}
-	
-	/**
 	 * Method that transfers money from sender to receiver
 	 * @param sender
 	 * @param receiver
