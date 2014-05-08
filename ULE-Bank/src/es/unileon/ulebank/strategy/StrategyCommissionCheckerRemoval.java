@@ -11,7 +11,10 @@ import es.unileon.ulebank.exceptions.CommissionException;
  */
 public class StrategyCommissionCheckerRemoval implements StrategyCommission {
 
-	private float commission; //Commission establish by the employee 
+	/**
+	 * Commission establish by the employee
+	 */
+	private float commission;  
 	
 	public StrategyCommissionCheckerRemoval(float commission) throws CommissionException{
 		if (commission >= 0)

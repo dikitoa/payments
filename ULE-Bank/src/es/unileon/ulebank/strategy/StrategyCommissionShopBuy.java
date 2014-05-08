@@ -10,8 +10,14 @@ import es.unileon.ulebank.exceptions.CommissionException;
  */
 public class StrategyCommissionShopBuy implements StrategyCommissionShop {
 
-	private float quantity; //Quantity of the purchase
-	private float interest; //Interest establish by the bank
+	/**
+	 * Quantity of the purchase
+	 */
+	private float quantity;
+	/**
+	 * Interest establish by the bank
+	 */
+	private float interest;
 	
 	public StrategyCommissionShopBuy(float quantity, float interest) throws CommissionException{
 		if (quantity >= 0)
