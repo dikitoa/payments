@@ -16,7 +16,7 @@ import java.util.Iterator;
 public class ConstantLiquidation implements LiquidationStrategy {
 
     /**
-     *
+     * 
      */
     private String subject;
     /**

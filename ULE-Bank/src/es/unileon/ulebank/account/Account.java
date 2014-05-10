@@ -1,6 +1,6 @@
 package es.unileon.ulebank.account;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -411,9 +411,11 @@ public class Account {
     }
 
     /**
-     *
+     * Anade la estrategia de liquidacion. Si se hace correctamente devuelve true.
+     * 
      * @param strategy
-     * @return
+     * 
+     * @return boolean
      */
     public boolean addLiquidationStrategy(LiquidationStrategy strategy) {
         int i = 0;
@@ -430,9 +432,11 @@ public class Account {
     }
 
     /**
+     * elimina la estrategia de liquidación, si se realiza correctamente devuelve true.
      *
      * @param id
-     * @return
+     * 
+     * @return boolean
      */
     public boolean deleteLiquidationStrategy(Handler id) {
         int i = 0;
@@ -447,6 +451,7 @@ public class Account {
     }
 
     /**
+     * Realiza la liquidación 
      *
      * @param office
      */
@@ -485,6 +490,7 @@ public class Account {
     
     /**
      * Add card to current card list
+     * 
      * @param card
      */
 	public void addCard(Card card) {
@@ -494,7 +500,7 @@ public class Account {
 	/**
 	 * Removes card for current card list
 	 * @param cardId
-	 * @return
+	 * @return the remove card
 	 * @throws CardNotFoundException 
 	 * @throws NullPointerException 
 	 */
@@ -506,7 +512,7 @@ public class Account {
 	/**
 	 * Searchs card by id into card list
 	 * @param cardId
-	 * @return
+	 * @return the card found
 	 * @throws CardNotFoundException, NullPointerException 
 	 */
 	public Card searchCard(Handler cardId) throws CardNotFoundException, NullPointerException {
@@ -534,6 +540,11 @@ public class Account {
 		}
 	}
 	
+	/**
+	 *  Get the card size
+	 *  
+	 * @return card size
+	 */
 	public int getCardAmount() {
 		return this.cards.size();
 	}
