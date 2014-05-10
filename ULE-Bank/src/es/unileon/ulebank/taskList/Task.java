@@ -13,7 +13,7 @@ import java.util.Date;
 public class Task {
 
     /**
-     * comando que se aplicará a la tarea
+     * Comando que se aplicara a la tarea
      */
     private final Command command;
 
