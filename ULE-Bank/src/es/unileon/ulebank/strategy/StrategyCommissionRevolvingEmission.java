@@ -7,7 +7,7 @@ import es.unileon.ulebank.exceptions.CommissionException;
  * @class StrategyCommissionRevolvingEmission
  * @author Rober dCR
  * @date 20/03/2014
- * @brief Class that obtain Commision of Emission in Revolving Cards
+ * @brief Class that obtain Commission of Emission in Revolving Cards
  */
 public class StrategyCommissionRevolvingEmission implements StrategyCommissionRevolving {
 

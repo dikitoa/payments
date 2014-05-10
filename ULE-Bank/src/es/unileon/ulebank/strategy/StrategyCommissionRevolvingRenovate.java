@@ -7,7 +7,7 @@ import es.unileon.ulebank.exceptions.CommissionException;
  * @class StrategyCommissionRevolvingRenovate
  * @author Rober dCR
  * @date 20/03/2014
- * @brief Class that obtain Commision of Renovate (substitution, theft or damage) in Revolving Cards
+ * @brief Class that obtain Commission of Renovate (substitution, theft or damage) in Revolving Cards
  */
 public class StrategyCommissionRevolvingRenovate implements StrategyCommissionRevolving {
 

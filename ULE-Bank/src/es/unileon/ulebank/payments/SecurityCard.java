@@ -73,7 +73,7 @@ public class SecurityCard {
 	 * Method that deliver to the owner the security card coordinates only one time
 	 * if cardPin is correct
 	 * @param cardPin
-	 * @return 
+	 * @return Array of Integers
 	 * @throws SecurityCardException 
 	 */
 	public Integer[][] deliverSecurityCard(String cardPin) throws SecurityCardException{

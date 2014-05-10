@@ -107,7 +107,7 @@ public class DNIHandler implements Handler{
     
     /**
      *
-     * @return
+     * @return String
      */
     @Override
     public String toString(){

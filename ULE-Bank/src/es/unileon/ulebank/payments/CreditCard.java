@@ -72,7 +72,7 @@ public class CreditCard extends Card {
 	
 	/**
 	 * Devuelve el duegno de la tarjeta
-	 * @return
+	 * @return Client
 	 */
 	public Client getOwner() {
 		return owner;

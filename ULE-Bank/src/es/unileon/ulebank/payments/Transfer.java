@@ -48,7 +48,7 @@ public class Transfer {
 	
 	/**
 	 * Getter receiverAccount
-	 * @return receiverAccount
+	 * @return Account
 	 */
 	public Account getReceiverAccount() {
 		return receiverAccount;
@@ -56,7 +56,7 @@ public class Transfer {
 
 	/**
 	 * Getter quantity
-	 * @return quantity
+	 * @return double
 	 */
 	public double getQuantity() {
 		return quantity;
@@ -84,7 +84,7 @@ public class Transfer {
 
 	/**
 	 * Getter transaction
-	 * @return the annotation of the transfer
+	 * @return TransferTransaction
 	 */
 	public TransferTransaction getTransaction() {
 		return transaction;

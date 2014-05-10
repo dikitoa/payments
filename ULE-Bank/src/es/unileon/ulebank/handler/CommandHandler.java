@@ -40,12 +40,15 @@ public class CommandHandler implements Handler {
 
 	/**
 	 * Getter date
-	 * @return date
+	 * @return String
 	 */
 	public String getDate(){
 		return this.date.toString();
 	}
 	
+	/**
+	 * Devuelve en una cadena de strings el id y la fecha
+	 */
 	public String toString() {
 		return this.id.toString() + " " + date.toString();
 	}

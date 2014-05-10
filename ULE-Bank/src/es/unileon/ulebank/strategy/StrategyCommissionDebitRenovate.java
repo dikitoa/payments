@@ -7,7 +7,7 @@ import es.unileon.ulebank.exceptions.CommissionException;
  * @class StrategyCommissionDebitRenovate
  * @author Rober dCR
  * @date 19/03/2014
- * @brief Class that obtain Commision of Renovate (substitution, theft or damage) in Debit Cards
+ * @brief Class that obtain Commission of Renovate (substitution, theft or damage) in Debit Cards
  */
 public class StrategyCommissionDebitRenovate implements StrategyCommissionDebit {
 
