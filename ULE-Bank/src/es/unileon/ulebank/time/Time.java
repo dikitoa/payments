@@ -19,7 +19,7 @@ public class Time {
     private long actualTimestamp;
 
     /**
-     * Last upadte
+     * Last update
      */
     private long lastUpdateTimestamp;
 

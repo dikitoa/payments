@@ -7,7 +7,7 @@ import es.unileon.ulebank.exceptions.CommissionException;
  * @class StrategyCommissionCreditMaintenance
  * @author Rober dCR
  * @date 19/03/2014
- * @brief Class that obtain Commision of Maintenance in Credit Cards
+ * @brief Class that obtain Commission of Maintenance in Credit Cards
  */
 public class StrategyCommissionCreditMaintenance implements StrategyCommissionCredit {
 

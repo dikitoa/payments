@@ -7,7 +7,7 @@ import es.unileon.ulebank.exceptions.CommissionException;
  * @class StrategyCommissionCheckerRemoval
  * @author Rober dCR
  * @date 20/03/2014
- * @brief Class that obtain Commision of Removal in Checker
+ * @brief Class that obtain Commission of Removal in Checker
  */
 public class StrategyCommissionCheckerRemoval implements StrategyCommission {
 
@@ -16,6 +16,11 @@ public class StrategyCommissionCheckerRemoval implements StrategyCommission {
 	 */
 	private float commission;  
 	
+	/**
+	 * Class constructor
+	 * @param commission
+	 * @throws CommissionException
+	 */
 	public StrategyCommissionCheckerRemoval(float commission) throws CommissionException{
 		if (commission >= 0)
 			this.commission = commission;

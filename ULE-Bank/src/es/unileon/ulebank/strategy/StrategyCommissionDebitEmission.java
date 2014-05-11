@@ -6,7 +6,7 @@ import es.unileon.ulebank.exceptions.CommissionException;
  * @class StrategyCommissionDebitEmission
  * @author Rober dCR
  * @date 20/03/2014
- * @brief Class that obtain Commision of Emission in Debit Cards
+ * @brief Class that obtain Commission of Emission in Debit Cards
  */
 public class StrategyCommissionDebitEmission implements StrategyCommissionDebit {
 

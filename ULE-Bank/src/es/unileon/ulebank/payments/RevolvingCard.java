@@ -37,7 +37,7 @@ public class RevolvingCard extends Card {
 
 	/**
 	 * Getter of the interest
-	 * @return
+	 * @return float
 	 */
 	public float getInterest() {
 		return interest;

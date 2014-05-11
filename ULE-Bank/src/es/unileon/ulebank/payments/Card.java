@@ -211,7 +211,7 @@ public abstract class Card {
 
 	/**
 	 * Genera el codigo pin de la tarjeta
-	 * @return
+	 * @return String
 	 */
 	public String generatePinCode() {
 		StringBuilder result = new StringBuilder();
@@ -225,7 +225,7 @@ public abstract class Card {
 	
 	/**
 	 * Genera la fecha de emision de la tarjeta
-	 * @return
+	 * @return String
 	 */
 	public String generateEmissionDate() {
 		//Generamos la fecha dandole el formato estandar dd/MM/yyyy
@@ -236,7 +236,7 @@ public abstract class Card {
 	
 	/**
 	 * Genera una fecha de caducidad para la tarjeta
-	 * @return
+	 * @return String
 	 */
 	public String generateExpirationDate() {
 		//Obtenemos una instancia del calendario
@@ -257,7 +257,7 @@ public abstract class Card {
 	
 	/**
 	 * Genera el codigo de validacion CVV
-	 * @return
+	 * @return String
 	 */
 	public String generateCVV() {
 		StringBuilder result = new StringBuilder();
@@ -271,7 +271,7 @@ public abstract class Card {
 	
 	/**
 	 * Devuelve el identificador de la tarjeta
-	 * @return
+	 * @return String
 	 */
 	public String getCardId() {
 		return this.cardId.toString();
@@ -279,7 +279,7 @@ public abstract class Card {
 	
 	/**
 	 * Devuelve el codigo PIN de la tarjeta
-	 * @return
+	 * @return String
 	 */
 	public String getPin() {
 		return this.pin;
@@ -309,7 +309,7 @@ public abstract class Card {
 	/**
 	 * Comprueba que el pin sea correcto
 	 * @param pin
-	 * @return
+	 * @return boolean
 	 */
 	public boolean checkPin(String pin) {
 		//Si el pin coincide devuelve true
@@ -323,7 +323,7 @@ public abstract class Card {
 	
 	/**
 	 * Devuelve el limite de la tarjeta diario para compras
-	 * @return
+	 * @return double
 	 */
 	public double getBuyLimitDiary() {
 		return this.buyLimitDiary;
@@ -348,7 +348,7 @@ public abstract class Card {
 	/**
 	 * Comprueba que el precio no exceda el limite de la tarjeta
 	 * @param price
-	 * @return
+	 * @return boolean
 	 */
 	public boolean checkBuyLimitDiary(double price) {
 		//Si el precio es mayor que el limite de compra diario devuelve false
@@ -362,7 +362,7 @@ public abstract class Card {
 	
 	/**
 	 * Devuelve el limite de la tarjeta mensual para compras
-	 * @return
+	 * @return double
 	 */
 	public double getCashLimitMonthly() {
 		return cashLimitMonthly;
@@ -370,7 +370,7 @@ public abstract class Card {
 	
 	/**
 	 * Devuelve el limite de compra mensual
-	 * @return
+	 * @return double
 	 */
 	public double getBuyLimitMonthly() {
 		return buyLimitMonthly;
@@ -393,7 +393,7 @@ public abstract class Card {
 
 	/**
 	 * Devuelve el limite de la tarjeta para extracciones en cajeros
-	 * @return
+	 * @return double
 	 */
 	public double getCashLimitDiary() {
 		return this.cashLimitDiary;
@@ -417,7 +417,7 @@ public abstract class Card {
 	/**
 	 * Comprueba que la cantidad solicitada para extraer en cajero no exceda el limite de la tarjeta
 	 * @param cash
-	 * @return
+	 * @return boolean
 	 */
 	public boolean checkCashLimitDiary(double cash) {
 		//Si la cantidad solicitada para extraer es mayor que la cantidad maxima diaria devuelve false
@@ -446,7 +446,7 @@ public abstract class Card {
 	
 	/**
 	 * Devuelve la fecha de emision de la tarjeta
-	 * @return
+	 * @return String
 	 */
 	public String getEmissionDate() {
 		return emissionDate;
@@ -454,7 +454,7 @@ public abstract class Card {
 
 	/**
 	 * Devuelve la fecha de caducidad de la tarjeta
-	 * @return
+	 * @return String
 	 */
 	public String getExpirationDate() {
 		return this.expirationDate;
@@ -470,7 +470,7 @@ public abstract class Card {
 
 	/**
 	 * Devuelve el tipo de tarjeta
-	 * @return
+	 * @return CardType
 	 */
 	public CardType getCardType() {
 		return this.cardType;
@@ -478,7 +478,7 @@ public abstract class Card {
 
 	/**
 	 * Devuelve el codigo de validacion CVV
-	 * @return
+	 * @return String
 	 */
 	public String getCvv() {
 		return this.cvv;
@@ -507,7 +507,7 @@ public abstract class Card {
 
 	/**
 	 * Devuelve el numero de la tarjeta
-	 * @return
+	 * @return Handler
 	 */
 	public Handler getCardNumber() {
 		return cardId;
@@ -515,7 +515,7 @@ public abstract class Card {
 
 	/**
 	 * Devuelve el limite diario de compra por defecto
-	 * @return
+	 * @return double
 	 */
 	public double getBuyLimitDiaryDefault() {
 		return buyLimitDiaryDefault;
@@ -536,7 +536,7 @@ public abstract class Card {
 
 	/**
 	 * Devuelve el limite mensual de compra por defecto
-	 * @return
+	 * @return double
 	 */
 	public double getBuyLimitMonthlyDefault() {
 		return buyLimitMonthlyDefault;
@@ -557,7 +557,7 @@ public abstract class Card {
 
 	/**
 	 * Devuelve el limite diario de extraccion en cajero por defecto
-	 * @return
+	 * @return double
 	 */
 	public double getCashLimitDiaryDefault() {
 		return cashLimitDiaryDefault;
@@ -578,7 +578,7 @@ public abstract class Card {
 
 	/**
 	 * Devuelve el limite mensual de extraccion en cajero por defecto
-	 * @return
+	 * @return double
 	 */
 	public double getCashLimitMonthlyDefault() {
 		return cashLimitMonthlyDefault;
@@ -599,7 +599,7 @@ public abstract class Card {
 
 	/**
 	 * Devuelve la comision de emision de la tarjeta
-	 * @return
+	 * @return float
 	 */
 	public float getCommissionEmission() {
 		return commissionEmission.calculateCommission();
@@ -615,7 +615,7 @@ public abstract class Card {
 
 	/**
 	 * Devuelve la comisionde mantenimiento de la tarjeta
-	 * @return
+	 * @return float
 	 */
 	public float getCommissionMaintenance() {
 		return commissionMaintenance.calculateCommission();
@@ -631,7 +631,7 @@ public abstract class Card {
 
 	/**
 	 * Devuelve la comision de renovacion de la tarjeta
-	 * @return
+	 * @return float
 	 */
 	public float getCommissionRenovate() {
 		return commissionRenovate.calculateCommission();
@@ -700,7 +700,7 @@ public abstract class Card {
 	/**
 	 * Comprueba que el String recibido sea solo numerico
 	 * @param string
-	 * @return
+	 * @return boolean
 	 */
 	private boolean checkStringNumber(String string) {
 		//Crea un patron para indicar que solo debe contener numeros

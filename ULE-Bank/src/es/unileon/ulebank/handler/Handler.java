@@ -7,12 +7,12 @@ public interface Handler {
 	/**
 	 * Compara el Handler con otro y devuelve un entero en funcion de la similitud
 	 * @param another
-	 * @return
+	 * @return int
 	 */
 	public int compareTo(Handler another);
 	/**
 	 * Devuelve el Handler en forma de String
-	 * @return
+	 * @return String
 	 */
 	public String toString();
 }
