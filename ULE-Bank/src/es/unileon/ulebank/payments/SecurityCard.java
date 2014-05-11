@@ -13,11 +13,26 @@ import es.unileon.ulebank.exceptions.SecurityCardException;
  */
 public class SecurityCard {
 
-	private boolean activate; //Value that indicates if the SecurityCard is given to the owner
-	private final int ROW = 4; //Number of the rows in the matrix
-	private final int COLUMNS = 10; //Number of the columns in the matrix
-	private Integer[][] coordinates; //Matrix which store the coordinates of the security card
-	private Card associatedCard; //Card which owns this security card
+	/**
+	 * Value that indicates if the SecurityCard is given to the owner
+	 */
+	private boolean activate;
+	/**
+	 * Number of the rows in the matrix
+	 */
+	private final int ROW = 4;
+	/**
+	 * Number of the columns in the matrix
+	 */
+	private final int COLUMNS = 10;
+	/**
+	 * Matrix which store the coordinates of the security card
+	 */
+	private Integer[][] coordinates;
+	/**
+	 * Card which owns this security card
+	 */
+	private Card associatedCard;
 	
 	/**
 	 * @brief Security Card constructor
