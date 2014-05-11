@@ -3,6 +3,7 @@ package es.unileon.ulebank.history;
 import java.util.Date;
 
 import es.unileon.ulebank.account.Account;
+import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.exceptions.TransferException;
 
 /**
@@ -22,8 +23,8 @@ public class TransferTransaction extends GenericTransaction{
 	private Account receiverAccount;
 
 	public TransferTransaction(double amount, Date date, String subject,
-			Enum<TransactionType> type, Account senderAccount, Account receiverAccount) throws TransferException {
-		super(amount, date, subject, type);
+			Account senderAccount, Account receiverAccount) throws TransferException, TransactionException {
+		super(amount, date, subject);
 		
 		if (!senderAccount.equals(receiverAccount)){
 			this.senderAccount = senderAccount;

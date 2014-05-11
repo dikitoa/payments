@@ -5,7 +5,6 @@ import java.util.Date;
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.exceptions.TransferException;
-import es.unileon.ulebank.history.TransactionType;
 import es.unileon.ulebank.history.TransferTransaction;
 
 /**
@@ -16,10 +15,22 @@ import es.unileon.ulebank.history.TransferTransaction;
  */
 public class Transfer {
 
-	private Account senderAccount; //Account from transfer the money
-	private Account receiverAccount; //Account which receives the money
-	private double quantity; //Quantity of the transfer
-	private TransferTransaction transaction; //Transaction of the transfer
+	/**
+	 * Account from transfer the money
+	 */
+	private Account senderAccount;
+	/**
+	 * Account which receives the money
+	 */
+	private Account receiverAccount;
+	/**
+	 * Quantity of the transfer
+	 */
+	private double quantity;
+	/**
+	 * Transaction of the transfer
+	 */
+	private TransferTransaction transaction;
 
 	/**
 	 * Class constructor
@@ -73,9 +84,9 @@ public class Transfer {
 		
 		try{
 			//Discount the quantity from sender account
-			this.senderAccount.doWithdrawal(new TransferTransaction(quantity, new Date(), concept, TransactionType.TRANSFER, this.receiverAccount, this.senderAccount));
+			this.senderAccount.doWithdrawal(new TransferTransaction(quantity, new Date(), concept, this.receiverAccount, this.senderAccount));
 			//Add the money to receiver account
-			this.receiverAccount.doDeposit(new TransferTransaction(quantity, new Date(), concept, TransactionType.TRANSFER, this.receiverAccount, this.senderAccount));
+			this.receiverAccount.doDeposit(new TransferTransaction(quantity, new Date(), concept, this.receiverAccount, this.senderAccount));
 		}catch(TransactionException e){
 			e.printStackTrace();
 			throw new TransferException("Denegate Transaction");

@@ -10,7 +10,6 @@ import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.PaymentException;
 import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.handler.Handler;
-import es.unileon.ulebank.history.TransactionType;
 import es.unileon.ulebank.strategy.StrategyCommissionCreditEmission;
 import es.unileon.ulebank.strategy.StrategyCommissionCreditMaintenance;
 import es.unileon.ulebank.strategy.StrategyCommissionCreditRenovate;
@@ -65,7 +64,7 @@ public class CreditCard extends Card {
 	public void makeTransaction(Account receiverAccount, double quantity, String payConcept) throws PaymentException, TransactionException{
 		//TODO - Actualizar con las nuevas transacciones
 		//A�adimos la transaccion a la lista
-		this.transactionList.add(new CardTransaction(quantity, new Date(), payConcept, TransactionType.PAYMENT, receiverAccount, this.account));
+		this.transactionList.add(new CardTransaction(quantity, new Date(), payConcept, receiverAccount, this.account));
 		//LLegada la fecha hay que descontar el dinero de la cuenta
 		//Pagar los importes a la cuenta
 	}

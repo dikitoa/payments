@@ -2,12 +2,15 @@
  group.*/
 package es.unileon.ulebank.account;
 
+import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.history.GenericTransaction;
 import es.unileon.ulebank.history.Transaction;
 import es.unileon.ulebank.time.Time;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -16,7 +19,7 @@ import java.util.Iterator;
 public class ConstantLiquidation implements LiquidationStrategy {
 
     /**
-     * 
+     *
      */
     private String subject;
     /**
@@ -47,10 +50,16 @@ public class ConstantLiquidation implements LiquidationStrategy {
 
     @Override
     public Transaction doLiquidation(Iterator<Transaction> transactions, Date min, Date max) {
-        long actualTime = Time.getInstance().getTime();
-        Transaction t = new GenericTransaction(this.amount, new Date(actualTime), subject, null);
-        t.setEffectiveDate(new Date(actualTime));
+        Transaction t = null;
+        try {
+            long actualTime = Time.getInstance().getTime();
+            t = new GenericTransaction(this.amount, new Date(actualTime), subject);
+            t.setEffectiveDate(new Date(actualTime));
+        } catch (TransactionException ex) {
+            Logger.getLogger(ConstantLiquidation.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return t;
     }
 
 }
+

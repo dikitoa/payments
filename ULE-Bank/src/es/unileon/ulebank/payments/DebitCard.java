@@ -10,7 +10,6 @@ import es.unileon.ulebank.exceptions.PaymentException;
 import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.history.CardTransaction;
-import es.unileon.ulebank.history.TransactionType;
 import es.unileon.ulebank.strategy.StrategyCommissionDebitEmission;
 import es.unileon.ulebank.strategy.StrategyCommissionDebitMaintenance;
 import es.unileon.ulebank.strategy.StrategyCommissionDebitRenovate;
@@ -69,9 +68,9 @@ public class DebitCard extends Card {
 
 		try{
 			//Discount the quantity from sender account
-			this.account.doWithdrawal(new CardTransaction(quantity, new Date(), payConcept, TransactionType.PAYMENT, this.account, receiverAccount));
+			this.account.doWithdrawal(new CardTransaction(quantity, new Date(), payConcept, this.account, receiverAccount));
 			//Add the money to receiver account
-			receiverAccount.doDeposit(new CardTransaction(quantity, new Date(), payConcept, TransactionType.PAYMENT, this.account, receiverAccount));
+			receiverAccount.doDeposit(new CardTransaction(quantity, new Date(), payConcept, this.account, receiverAccount));
 		}catch(TransactionException e){
 			e.printStackTrace();
 			throw new PaymentException("Denegate Transaction");
