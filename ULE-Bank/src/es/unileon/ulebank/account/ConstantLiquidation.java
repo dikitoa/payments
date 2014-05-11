@@ -2,10 +2,10 @@
  group.*/
 package es.unileon.ulebank.account;
 
-import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.history.GenericTransaction;
 import es.unileon.ulebank.history.Transaction;
+import es.unileon.ulebank.history.TransactionException;
 import es.unileon.ulebank.time.Time;
 import java.util.Date;
 import java.util.Iterator;
@@ -62,4 +62,3 @@ public class ConstantLiquidation implements LiquidationStrategy {
     }
 
 }
-

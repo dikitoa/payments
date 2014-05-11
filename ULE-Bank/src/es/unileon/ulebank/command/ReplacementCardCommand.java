@@ -4,13 +4,15 @@ import java.io.IOException;
 
 import org.apache.log4j.Logger;
 
-import es.unileon.ulebank.Office;
 import es.unileon.ulebank.account.Account;
-import es.unileon.ulebank.account.exception.AccountNotFoundException;
+import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.exceptions.CardNotFoundException;
 import es.unileon.ulebank.exceptions.ClientNotFoundException;
+import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
+import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.handler.Handler;
+import es.unileon.ulebank.office.Office;
 import es.unileon.ulebank.payments.Card;
 
 /**
@@ -74,14 +76,14 @@ public class ReplacementCardCommand implements Command {
 		try {
 			this.id = new CommandHandler(cardId);
 			this.cardId = cardId;
-			this.account = office.searchClient(dni).searchAccount(accountHandler);
+			this.account = office.searchClient((DNIHandler) dni).searchAccount((AccountHandler) accountHandler);
 		} catch (ClientNotFoundException e) {
 			LOG.info("Client with DNI " + dni.toString() + " does not exists");
 		} catch (NullPointerException e) {
 			LOG.info(e.getMessage());
-		} catch (AccountNotFoundException e) {
+		}/* catch (AccountNotFoundException e) {
 			LOG.info("Account with number " + accountHandler.toString() + " does not exists");
-		}
+		}*/
 	}
 	
 	/**
@@ -91,7 +93,7 @@ public class ReplacementCardCommand implements Command {
 	public void execute() {
 		try {
 			//Buscamos la tarjeta en la cuenta a la que esta asociada a traves del identificador
-			this.card = account.searchCard(cardId);
+			this.card = account.searchCard((CardHandler) cardId);
 			//Guardamos el PIN anterior
 			this.oldPin = card.getPin();
 			//Generamos el nuevo PIN y lo almacenamos
@@ -114,9 +116,9 @@ public class ReplacementCardCommand implements Command {
 			LOG.info(e.getMessage());
 		} catch (NullPointerException e) {
 			LOG.info(e.getMessage());
-		} catch (CardNotFoundException e) {
+		}/* catch (CardNotFoundException e) {
 			LOG.info("Card with number " + cardId.toString() + " does not exists");
-		}
+		}*/
 		
 	}
 

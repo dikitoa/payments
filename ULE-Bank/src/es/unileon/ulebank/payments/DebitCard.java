@@ -62,9 +62,9 @@ public class DebitCard extends Card {
 	 * @param quantity Amount of the payment
 	 * @param payConcept Concept of the payment
 	 * @throws PaymentException
-	 * @throws TransactionException 
+	 * @throws es.unileon.ulebank.history.TransactionException 
 	 */
-	public void makeTransaction(Account receiverAccount, double quantity, String payConcept) throws PaymentException, TransactionException{
+	public void makeTransaction(Account receiverAccount, double quantity, String payConcept) throws PaymentException, TransactionException, es.unileon.ulebank.history.TransactionException{
 
 		try{
 			//Discount the quantity from sender account

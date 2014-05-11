@@ -6,8 +6,8 @@
 
 package es.unileon.ulebank.fees;
 
-import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.history.Transaction;
+import es.unileon.ulebank.history.TransactionException;
 import java.util.Date;
 
 /**

@@ -8,7 +8,6 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
-import es.unileon.ulebank.Office;
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.bank.Bank;
 import es.unileon.ulebank.bank.BankHandler;
@@ -19,9 +18,10 @@ import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.handler.Handler;
+import es.unileon.ulebank.office.Office;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.DebitCard;
-import es.unileon.ulebank.transacionManager.TransactionManager;
+import es.unileon.ulebank.transactionManager.TransactionManager;
 
 public class ModifyPinCommandTest {
 	private Handler handler;

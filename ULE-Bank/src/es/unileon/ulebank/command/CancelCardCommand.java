@@ -1,15 +1,18 @@
 package es.unileon.ulebank.command;
 
+import javax.security.auth.login.AccountNotFoundException;
+
 import org.apache.log4j.Logger;
 
-import es.unileon.ulebank.Office;
 import es.unileon.ulebank.account.Account;
-import es.unileon.ulebank.account.exception.AccountNotFoundException;
+import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.exceptions.CardNotFoundException;
 import es.unileon.ulebank.exceptions.ClientNotFoundException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
+import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.handler.Handler;
+import es.unileon.ulebank.office.Office;
 
 
 /**
@@ -45,14 +48,14 @@ public class CancelCardCommand implements Command {
 		this.id = new CommandHandler(cardId);
 		this.cardId = (CardHandler) cardId;
 		try {
-			this.account = office.searchClient(dni).searchAccount(account);
+			this.account = office.searchClient((DNIHandler) dni).searchAccount((AccountHandler) account);
 		} catch (ClientNotFoundException e) {
 			LOG.info("The client that has dni " + dni.toString() + " is not found.");
 		} catch (NullPointerException e) {
 			LOG.info(e.getMessage());
-		} catch (AccountNotFoundException e) {
+		}/* catch (AccountNotFoundException e) {
 			LOG.info("The account that has number " + account.toString() + " is not found.");
-		}
+		}*/
 	}
 	
 	/**
@@ -62,12 +65,12 @@ public class CancelCardCommand implements Command {
 	public void execute() {
 		//Se borra la tarjeta de la lista de tarjetas de la cuenta
 		try {
-			account.removeCard(this.cardId);
+			account.removeCard((CardHandler) this.cardId);
 		} catch (NullPointerException e) {
 			LOG.info(e.getMessage());
-		} catch (CardNotFoundException e) {
+		} /*catch (CardNotFoundException e) {
 			LOG.info("The card that has number " + cardId.toString() + " is not found.");
-		}
+		}*/
 	}
 
 	/**

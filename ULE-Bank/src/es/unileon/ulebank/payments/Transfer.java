@@ -78,9 +78,9 @@ public class Transfer {
 	 * @param sender
 	 * @param receiver
 	 * @param quantity
-	 * @throws TransferException 
+	 * @throws es.unileon.ulebank.history.TransactionException 
 	 */
-	public void makeTransfer(String concept) throws TransferException{
+	public void makeTransfer(String concept) throws TransferException, es.unileon.ulebank.history.TransactionException{
 		
 		try{
 			//Discount the quantity from sender account

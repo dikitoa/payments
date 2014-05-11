@@ -1,6 +1,6 @@
 package es.unileon.ulebank.brokerage.buyable;
 
-import es.unileon.ulebank.Employee;
+import es.unileon.ulebank.users.Employee;
 import es.unileon.ulebank.brokerage.pack.StockPack;
 import es.unileon.ulebank.handler.Handler;
 import java.util.Date;

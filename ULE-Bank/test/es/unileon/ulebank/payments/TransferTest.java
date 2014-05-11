@@ -9,10 +9,9 @@ import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.bank.Bank;
 import es.unileon.ulebank.exceptions.TransferException;
 import es.unileon.ulebank.handler.GenericHandler;
-import es.unileon.ulebank.transacionManager.TransactionManager;
-import es.unileon.ulebank.Office;
-
-
+import es.unileon.ulebank.history.TransactionException;
+import es.unileon.ulebank.office.Office;
+import es.unileon.ulebank.transactionManager.TransactionManager;
 
 /**
  * Test about Transfer Class
@@ -42,7 +41,7 @@ public class TransferTest {
 	}
 	
 	@Test
-	public void transferMoneyWithBalanceTest() throws TransferException {
+	public void transferMoneyWithBalanceTest() throws TransferException, TransactionException {
 		this.senderAccount.setBalance(100);
 		this.receiverAccount.setBalance(0);
 		double beforeMoneyReceiver = this.receiverAccount.getBalance();
@@ -59,7 +58,7 @@ public class TransferTest {
 	}
 
 	@Test (expected = TransferException.class)
-	public void transferMoneyWithOutBalanceTest()throws TransferException {
+	public void transferMoneyWithOutBalanceTest()throws TransferException, TransactionException {
 		this.senderAccount.setBalance(0);
 		this.receiverAccount.setBalance(0);
 		this.transfer = new Transfer(this.senderAccount, this.receiverAccount, this.quantity);

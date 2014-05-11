@@ -10,7 +10,6 @@ import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
 
-import es.unileon.ulebank.Office;
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.bank.Bank;
 import es.unileon.ulebank.bank.BankHandler;
@@ -19,11 +18,12 @@ import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.handler.GenericHandler;
+import es.unileon.ulebank.office.Office;
 import es.unileon.ulebank.strategy.StrategyCommission;
 import es.unileon.ulebank.strategy.StrategyCommissionDebitEmission;
 import es.unileon.ulebank.strategy.StrategyCommissionDebitMaintenance;
 import es.unileon.ulebank.strategy.StrategyCommissionDebitRenovate;
-import es.unileon.ulebank.transacionManager.TransactionManager;
+import es.unileon.ulebank.transactionManager.TransactionManager;
 
 public class DebitCardTest {
 

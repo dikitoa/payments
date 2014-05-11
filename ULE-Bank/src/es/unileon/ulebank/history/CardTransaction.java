@@ -30,9 +30,10 @@ public class CardTransaction extends GenericTransaction{
 	 * @param senderAccount
 	 * @param receiverAccount
 	 * @throws TransactionException 
+	 * @throws es.unileon.ulebank.history.TransactionException 
 	 */
 	public CardTransaction(double amount, Date date, String subject,
-			Account senderAccount, Account receiverAccount) throws TransactionException {
+			Account senderAccount, Account receiverAccount) throws TransactionException, es.unileon.ulebank.history.TransactionException {
 		super(amount, date, subject);
 
 		this.receiverAccount = receiverAccount;

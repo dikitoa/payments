@@ -6,8 +6,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import es.unileon.ulebank.Office;
 import es.unileon.ulebank.account.Account;
+import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.bank.Bank;
 import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
@@ -16,9 +16,10 @@ import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.handler.OfficeHandler;
+import es.unileon.ulebank.office.Office;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.CardType;
-import es.unileon.ulebank.transacionManager.TransactionManager;
+import es.unileon.ulebank.transactionManager.TransactionManager;
 
 public class NewCardCommandTest {
 	private NewCardCommand test;
@@ -88,7 +89,7 @@ public class NewCardCommandTest {
 		this.test.execute();
 		CommandHandler id = (CommandHandler) test.getId();
 		CardHandler cardHandler = (CardHandler) id.getId();
-		Card card = office.searchClient(dni).searchAccount(accountHandler).searchCard(cardHandler);
+		Card card = office.searchClient((DNIHandler) dni).searchAccount((AccountHandler) accountHandler).searchCard(cardHandler);
 		assertEquals(cardTypeCredit, card.getCardType());
 		assertEquals(buyLimitDiary, card.getBuyLimitDiary(), 0.0001);
 		assertEquals(buyLimitMonthly, card.getBuyLimitMonthly(), 0.0001);
@@ -107,7 +108,7 @@ public class NewCardCommandTest {
 		this.test.execute();
 		CommandHandler id = (CommandHandler) test.getId();
 		CardHandler cardHandler = (CardHandler) id.getId();
-		Card card = office.searchClient(dni).searchAccount(accountHandler).searchCard(cardHandler);
+		Card card = office.searchClient((DNIHandler) dni).searchAccount((AccountHandler) accountHandler).searchCard(cardHandler);
 		assertEquals(cardTypeDebit, card.getCardType());
 		assertEquals(buyLimitDiary, card.getBuyLimitDiary(), 0.0001);
 		assertEquals(buyLimitMonthly, card.getBuyLimitMonthly(), 0.0001);
@@ -126,11 +127,11 @@ public class NewCardCommandTest {
 		this.test.execute();
 		CommandHandler id = (CommandHandler) test.getId();
 		CardHandler cardHandler = (CardHandler) id.getId();
-		assertEquals(1, office.searchClient(dni).searchAccount(accountHandler).getCardAmount());
+		assertEquals(1, office.searchClient((DNIHandler) dni).searchAccount((AccountHandler) accountHandler).getCardAmount());
 		this.test.undo();
-		assertEquals(0, office.searchClient(dni).searchAccount(accountHandler).getCardAmount());
+		assertEquals(0, office.searchClient((DNIHandler) dni).searchAccount((AccountHandler) accountHandler).getCardAmount());
 		//Como no hay tarjetas se espera una excepcion NullPointerException
-		office.searchClient(dni).searchAccount(accountHandler).searchCard(cardHandler);
+		office.searchClient((DNIHandler) dni).searchAccount((AccountHandler) accountHandler).searchCard(cardHandler);
 	}
 	
 	@Test (expected = NullPointerException.class)
@@ -141,10 +142,10 @@ public class NewCardCommandTest {
 		this.test.execute();
 		CommandHandler id = (CommandHandler) test.getId();
 		CardHandler cardHandler = (CardHandler) id.getId();
-		assertEquals(1, office.searchClient(dni).searchAccount(accountHandler).getCardAmount());
+		assertEquals(1, office.searchClient((DNIHandler) dni).searchAccount((AccountHandler) accountHandler).getCardAmount());
 		this.test.undo();
-		assertEquals(0, office.searchClient(dni).searchAccount(accountHandler).getCardAmount());
-		office.searchClient(dni).searchAccount(accountHandler).searchCard(cardHandler);
+		assertEquals(0, office.searchClient((DNIHandler) dni).searchAccount((AccountHandler) accountHandler).getCardAmount());
+		office.searchClient((DNIHandler) dni).searchAccount((AccountHandler) accountHandler).searchCard(cardHandler);
 	}
 	
 	@Test (expected = UnsupportedOperationException.class)

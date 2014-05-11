@@ -4,16 +4,17 @@ import java.io.IOException;
 
 import org.apache.log4j.Logger;
 
-import es.unileon.ulebank.Office;
 import es.unileon.ulebank.account.Account;
-import es.unileon.ulebank.account.exception.AccountNotFoundException;
+import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.ClientNotFoundException;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
+import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.handler.Handler;
+import es.unileon.ulebank.office.Office;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.CardType;
 import es.unileon.ulebank.payments.CreditCard;
@@ -131,9 +132,9 @@ public class NewCardCommand implements Command {
 	public void execute() {
 		try {
 			//Obtiene el cliente de la sucursal con el DNI
-			Client client = office.searchClient(dni);
+			Client client = office.searchClient((DNIHandler) dni);
 			//Busca la cuenta del cliente con el identificador de la cuenta
-			this.account = client.searchAccount(accountHandler);
+			this.account = client.searchAccount((AccountHandler) accountHandler);
 			//Crea una tarjeta en funcion del tipo indicado
 			switch (type) {
 			case CREDIT:
@@ -161,9 +162,9 @@ public class NewCardCommand implements Command {
 			LOG.info("The String must only contains numbers.");
 		} catch (IOException e) {
 			LOG.info("Input/Output error.");
-		} catch (AccountNotFoundException e) {
+		}/* catch (AccountNotFoundException e) {
 			LOG.info("The account " + accountHandler.toString() + " was not found.");
-		} catch (NullPointerException e) {
+		}*/ catch (NullPointerException e) {
 			LOG.info(e.getMessage());
 		}
 		

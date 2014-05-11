@@ -58,10 +58,10 @@ public class CreditCard extends Card {
 	 * @param receiverAccount Account which receives the money from the card
 	 * @param quantity Amount of the payment
 	 * @param payConcept Concept of the payment
-	 * @throws PaymentException
-	 * @throws TransactionException 
+	 * @throws PaymentException 
+	 * @throws es.unileon.ulebank.history.TransactionException 
 	 */
-	public void makeTransaction(Account receiverAccount, double quantity, String payConcept) throws PaymentException, TransactionException{
+	public void makeTransaction(Account receiverAccount, double quantity, String payConcept) throws PaymentException, TransactionException, es.unileon.ulebank.history.TransactionException{
 		//TODO - Actualizar con las nuevas transacciones
 		//A�adimos la transaccion a la lista
 		this.transactionList.add(new CardTransaction(quantity, new Date(), payConcept, receiverAccount, this.account));

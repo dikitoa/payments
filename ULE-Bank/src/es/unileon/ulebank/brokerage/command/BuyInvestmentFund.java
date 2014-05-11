@@ -9,7 +9,6 @@ package es.unileon.ulebank.brokerage.command;
 import es.unileon.ulebank.command.Command;
 import es.unileon.ulebank.exceptions.MalformedHandlerException;
 import es.unileon.ulebank.handler.Handler;
-import java.util.Date;
 
 /**
  *

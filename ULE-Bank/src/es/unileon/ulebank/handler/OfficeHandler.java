@@ -9,16 +9,9 @@ import es.unileon.ulebank.exceptions.MalformedHandlerException;
  */
 public class OfficeHandler implements Handler {
 
-	/**
-	 * Numero de la oficina
-	 */
 	private String numberOffice;
 
-	/**
-	 * Crea el numero de oficina
-	 * @param number
-	 */
-	public OfficeHandler(int number)  {
+	public OfficeHandler(int number) throws MalformedHandlerException  {
 
 		if (number >= 0) {
 
@@ -41,11 +34,7 @@ public class OfficeHandler implements Handler {
 		}
 	}
 
-	/**
-	 * Excepcion para indicar que toda oficina debe llevar su numero asociado
-	 * @param numberOffice
-	 */
-	public OfficeHandler(String numberOffice)  {
+	public OfficeHandler(String numberOffice) throws MalformedHandlerException  {
             try {
                 Integer.parseInt(numberOffice);
             } catch (NumberFormatException e) {
@@ -72,13 +61,9 @@ public class OfficeHandler implements Handler {
 		}
 	}
 
-	/**
-	 * Obtiene el id de la oficina
-	 * @return int
-	 */
-    public int getIdOffice() {
-        return Integer.parseInt(numberOffice);
-    }
+        public int getIdOffice() {
+            return Integer.parseInt(numberOffice);
+        }
         
         
 

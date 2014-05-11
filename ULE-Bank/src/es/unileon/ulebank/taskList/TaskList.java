@@ -51,9 +51,9 @@ public class TaskList {
     }
 
     /**
-     * Anade una tarea e indica si se anadio correctamente
+     *
      * @param task
-     * @return booleano
+     * @return
      */
     public synchronized boolean addTask(Task task) {
         boolean add = true;
@@ -70,9 +70,9 @@ public class TaskList {
     }
 
     /**
-     * Elimina una tarea e indica si se elimino correctamente
+     *
      * @param task
-     * @return boolean
+     * @return
      */
     public boolean deleteTask(Task task) {
         boolean delete = false;
@@ -91,7 +91,7 @@ public class TaskList {
     }
 
     /**
-     * Deshace la tarea cuyo id es pasado por parametro
+     *
      * @param id
      */
     public void undoTask(Handler id) {
@@ -104,7 +104,7 @@ public class TaskList {
     }
 
     /**
-     * Ejecuta tareas
+     *
      */
     public void executeTasks() {
         int i = 0;
@@ -118,25 +118,22 @@ public class TaskList {
         this.sort();;
     }
 
-    /**
-     * Ordena la lista en base al comparador indicado
-     */
     private void sort() {
         Collections.sort(this.tasks, this.comparator);
         Collections.sort(this.tasksDone, this.comparator);
     }
 
     /**
-     * Obtiene las tareas que han sido eliminadas
-     * @return ArrayList de tareas eliminadas
+     *
+     * @return
      */
     public List<Task> getDeteledTasks() {
         return new ArrayList<>(this.deletedTasks);
     }
 
     /**
-     * Obtiene una lista de tareas -- 
-     * @return ArrayList de tareas
+     *
+     * @return
      */
     public List<Task> getTaskList() {
         return new ArrayList<>(this.tasks);

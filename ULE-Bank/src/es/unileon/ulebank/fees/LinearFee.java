@@ -13,7 +13,7 @@ public class LinearFee implements FeeStrategy {
     private final double fee;
 
     /**
-     * Minimum value which is always added to the total fee.
+     * Minimum value which is always paid.
      */
     private final double minimum;
 
@@ -28,7 +28,12 @@ public class LinearFee implements FeeStrategy {
 
     @Override
     public double getFee(double value) {
-        return this.fee * value + this.minimum;
+        double total=this.fee * value;
+        if(total <this.minimum) {
+            total = this.minimum;
+        }
+        
+        return total;
+    
     }
-
 }

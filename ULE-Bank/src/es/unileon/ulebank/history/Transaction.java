@@ -5,7 +5,6 @@
  */
 package es.unileon.ulebank.history;
 
-import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.handler.Handler;
 import java.util.Date;
 

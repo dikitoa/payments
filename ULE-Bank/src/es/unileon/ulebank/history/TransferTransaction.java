@@ -23,7 +23,7 @@ public class TransferTransaction extends GenericTransaction{
 	private Account receiverAccount;
 
 	public TransferTransaction(double amount, Date date, String subject,
-			Account senderAccount, Account receiverAccount) throws TransferException, TransactionException {
+			Account senderAccount, Account receiverAccount) throws TransferException, TransactionException, es.unileon.ulebank.history.TransactionException {
 		super(amount, date, subject);
 		
 		if (!senderAccount.equals(receiverAccount)){

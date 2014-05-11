@@ -1,23 +1,22 @@
 package es.unileon.ulebank.account;
 
-import java.util.ArrayList; 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
-import es.unileon.ulebank.Office;
+import es.unileon.ulebank.office.Office;
 import es.unileon.ulebank.bank.Bank;
 import es.unileon.ulebank.client.Client;
-import es.unileon.ulebank.exceptions.CardNotFoundException;
 import es.unileon.ulebank.exceptions.MalformedHandlerException;
-import es.unileon.ulebank.exceptions.TransactionException;
+import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.history.History;
 import es.unileon.ulebank.history.Transaction;
+import es.unileon.ulebank.history.TransactionException;
 import es.unileon.ulebank.history.TransactionType;
 import es.unileon.ulebank.payments.Card;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -95,7 +94,6 @@ public class Account {
         this.balance = 0.0d;
         this.titulars = new ArrayList<>();
         this.authorizeds = new ArrayList<>();
-        this.cards = new ArrayList<Card>();
         this.lastLiquidation = new Date(System.currentTimeMillis());
         this.liquidationFrecuency = DEFAULT_LIQUIDATION_FREQUENCY;
         this.liquidationStrategies = new ArrayList<>();
@@ -411,11 +409,9 @@ public class Account {
     }
 
     /**
-     * Anade la estrategia de liquidacion. Si se hace correctamente devuelve true.
-     * 
+     *
      * @param strategy
-     * 
-     * @return boolean
+     * @return
      */
     public boolean addLiquidationStrategy(LiquidationStrategy strategy) {
         int i = 0;
@@ -432,11 +428,9 @@ public class Account {
     }
 
     /**
-     * elimina la estrategia de liquidación, si se realiza correctamente devuelve true.
      *
      * @param id
-     * 
-     * @return boolean
+     * @return
      */
     public boolean deleteLiquidationStrategy(Handler id) {
         int i = 0;
@@ -451,7 +445,6 @@ public class Account {
     }
 
     /**
-     * Realiza la liquidación 
      *
      * @param office
      */
@@ -488,37 +481,18 @@ public class Account {
         return this.id;
     }
     
-    /**
-     * Add card to current card list
-     * 
-     * @param card
-     */
 	public void addCard(Card card) {
 		this.cards.add(card);
 	}
 
-	/**
-	 * Removes card for current card list
-	 * @param cardId
-	 * @return the remove card
-	 * @throws CardNotFoundException 
-	 * @throws NullPointerException 
-	 */
-	public boolean removeCard(Handler cardId) throws NullPointerException, CardNotFoundException {
+	public boolean removeCard(CardHandler cardId) {
 		Card card = searchCard(cardId);
 		return this.cards.remove(card);
 	}
 	
-	/**
-	 * Searchs card by id into card list
-	 * @param cardId
-	 * @return the card found
-	 * @throws CardNotFoundException, NullPointerException 
-	 */
-	public Card searchCard(Handler cardId) throws CardNotFoundException, NullPointerException {
+	public Card searchCard(CardHandler cardId) {
 		Iterator<Card> iterator = cards.iterator();
 		Card card = null;
-		boolean found = false;
 		
 		if (cards.isEmpty()) {
 			throw new NullPointerException("Card list is empty.");
@@ -528,23 +502,13 @@ public class Account {
 			card = iterator.next();
 			
 			if (card.getCardNumber().compareTo(cardId) == 0) {
-				found = true;
 				break;
 			}
 		}
 		
-		if (found) {
-			return card;
-		} else {
-			throw new CardNotFoundException("That card is not found.");
-		}
+		return card;
 	}
 	
-	/**
-	 *  Get the card size
-	 *  
-	 * @return card size
-	 */
 	public int getCardAmount() {
 		return this.cards.size();
 	}
