@@ -169,6 +169,13 @@ public abstract class Card {
 	public Card(Handler cardId, CardType type, double buyLimitDiary, double buyLimitMonthly, 
 			double cashLimitDiary, double cashLimitMonthly,StrategyCommission commissionEmission, 
 			StrategyCommission commissionMaintenance, StrategyCommission commissionRenovate) {
+		try {
+			this.setDefaultCardProperties();
+		} catch (FileNotFoundException e) {
+			LOG.info("The file is not found.");
+		} catch (IOException e) {
+			LOG.info(e.getMessage());
+		}
 		this.cardId = (CardHandler) cardId;
 		this.cardType = type;
 		this.pin = generatePinCode();
@@ -183,14 +190,6 @@ public abstract class Card {
 		this.commissionMaintenance = commissionMaintenance;
 		this.commissionRenovate = commissionRenovate;
 		this.transactionHistory = new History<Transaction>();
-		
-		try {
-			this.setDefaultCardProperties();
-		} catch (FileNotFoundException e) {
-			LOG.info("The file is not found.");
-		} catch (IOException e) {
-			LOG.info(e.getMessage());
-		}
 	}
 	
 	/**
@@ -651,11 +650,11 @@ public abstract class Card {
 	 * @throws FileNotFoundException 
 	 */
 	public void setMinimumLimit() throws FileNotFoundException, IOException {
-		Properties ageProperty = new Properties();
-		ageProperty.load(new FileInputStream("src/es/unileon/ulebank/properties/card.properties"));
+		Properties minimumLimitProperty = new Properties();
+		minimumLimitProperty.load(new FileInputStream("src/es/unileon/ulebank/properties/card.properties"));
 		
 		/**Obtenemos los parametros definidos en el archivo*/
-		this.minimumLimit = Double.parseDouble(ageProperty.getProperty(this.MINIMUM_LIMIT));
+		this.minimumLimit = Double.parseDouble(minimumLimitProperty.getProperty(this.MINIMUM_LIMIT));
 	}
 
 	/**
@@ -664,11 +663,11 @@ public abstract class Card {
 	 * @throws IOException
 	 */
 	public void setExpirationYear() throws FileNotFoundException, IOException {
-		Properties ageProperty = new Properties();
-		ageProperty.load(new FileInputStream("src/es/unileon/ulebank/properties/card.properties"));
+		Properties expirationYearProperty = new Properties();
+		expirationYearProperty.load(new FileInputStream("src/es/unileon/ulebank/properties/card.properties"));
 		
 		/**Obtenemos los parametros definidos en el archivo*/
-		this.expirationYear = Integer.parseInt(ageProperty.getProperty(this.EXPIRATION_YEAR));
+		this.expirationYear = Integer.parseInt(expirationYearProperty.getProperty(this.EXPIRATION_YEAR));
 	}
 
 	/**
@@ -677,11 +676,11 @@ public abstract class Card {
 	 * @throws FileNotFoundException 
 	 */
 	public void setCvvSize() throws FileNotFoundException, IOException {
-		Properties ageProperty = new Properties();
-		ageProperty.load(new FileInputStream("src/es/unileon/ulebank/properties/card.properties"));
+		Properties cvvProperty = new Properties();
+		cvvProperty.load(new FileInputStream("src/es/unileon/ulebank/properties/card.properties"));
 		
 		/**Obtenemos los parametros definidos en el archivo*/
-		this.cvvSize = Integer.parseInt(ageProperty.getProperty(this.CVV_SIZE));
+		this.cvvSize = Integer.parseInt(cvvProperty.getProperty(this.CVV_SIZE));
 	}
 
 	/**
@@ -690,11 +689,11 @@ public abstract class Card {
 	 * @throws IOException
 	 */
 	public void setPinSize() throws FileNotFoundException, IOException {
-		Properties ageProperty = new Properties();
-		ageProperty.load(new FileInputStream("src/es/unileon/ulebank/properties/card.properties"));
+		Properties pinProperty = new Properties();
+		pinProperty.load(new FileInputStream("src/es/unileon/ulebank/properties/card.properties"));
 		
 		/**Obtenemos los parametros definidos en el archivo*/
-		this.pinSize = Integer.parseInt(ageProperty.getProperty(this.PIN_SIZE));
+		this.pinSize = Integer.parseInt(pinProperty.getProperty(this.PIN_SIZE));
 	}
 
 	/**

@@ -92,6 +92,7 @@ public class CreditCardTest {
 
 	@Test
 	public void testGetPin() throws IOException {
+		System.out.println(testCard.getPin().length());
 		assertTrue(testCard.getPin().length() == 4);
 		
 		testCard.setPin("9182");
@@ -244,7 +245,8 @@ public class CreditCardTest {
 		SimpleDateFormat yearFormat = new SimpleDateFormat("YY");
 		String currentMonth = monthFormat.format(new Date());
 		String currentYear = String.valueOf(Integer.parseInt(yearFormat.format(new Date()))+3);
-		
+		System.out.println(currentMonth+"/"+currentYear);
+		System.out.println(testCard.getExpirationDate());
 		assertTrue(testCard.getExpirationDate().equals(currentMonth+"/"+currentYear));
 	}
 

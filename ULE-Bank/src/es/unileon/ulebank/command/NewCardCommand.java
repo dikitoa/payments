@@ -150,7 +150,7 @@ public class NewCardCommand implements Command {
 
 				break;
 			}
-			
+			this.card.setDefaultCardProperties();
 			new SecurityCard(card);
 			//Por ultimo asocia la tarjeta a la cuenta
 			account.addCard(card);

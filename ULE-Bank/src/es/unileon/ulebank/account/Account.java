@@ -98,6 +98,7 @@ public class Account {
         this.liquidationFrecuency = DEFAULT_LIQUIDATION_FREQUENCY;
         this.liquidationStrategies = new ArrayList<>();
         this.maxOverdraft = 0;
+        this.cards = new ArrayList<Card>();
         LOG.info("Create a new account with number " + accountnumber + " office " + office.getIdOffice().toString() + " bank " + bank.getID());
     }
 

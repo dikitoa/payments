@@ -1,13 +1,10 @@
 package es.unileon.ulebank.command;
 
 
-import javax.security.auth.login.AccountNotFoundException;
-
 import org.apache.log4j.Logger;
 
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.account.AccountHandler;
-import es.unileon.ulebank.exceptions.CardNotFoundException;
 import es.unileon.ulebank.exceptions.ClientNotFoundException;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.CardHandler;
