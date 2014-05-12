@@ -2,6 +2,8 @@
  group.*/
 package es.unileon.ulebank.taskList;
 
+import es.unileon.ulebank.exceptions.PaymentException;
+import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.fees.InvalidFeeException;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.time.Time;
@@ -106,9 +108,12 @@ public class TaskList {
 
     /**
      * @throws InvalidFeeException 
+     * @throws es.unileon.ulebank.history.TransactionException 
+     * @throws TransactionException 
+     * @throws PaymentException 
      *
      */
-    public void executeTasks() throws InvalidFeeException {
+    public void executeTasks() throws InvalidFeeException, PaymentException, TransactionException, es.unileon.ulebank.history.TransactionException {
         int i = 0;
         while (this.tasks.get(i).getEffectiveDate().getTime() <= this.time.getTime()) {
             Task c = this.tasks.get(i);
