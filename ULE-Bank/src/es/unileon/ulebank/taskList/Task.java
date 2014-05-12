@@ -5,6 +5,7 @@ package es.unileon.ulebank.taskList;
 import es.unileon.ulebank.command.Command;
 import es.unileon.ulebank.exceptions.PaymentException;
 import es.unileon.ulebank.exceptions.TransactionException;
+import es.unileon.ulebank.exceptions.TransferException;
 import es.unileon.ulebank.fees.InvalidFeeException;
 import es.unileon.ulebank.handler.Handler;
 import java.util.Date;
@@ -33,11 +34,11 @@ public class Task {
         this.command.execute();
     }
 
-    public void undo() {
+    public void undo() throws TransferException, es.unileon.ulebank.history.TransactionException {
         this.command.undo();
     }
 
-    public void redo() {
+    public void redo() throws PaymentException, TransactionException, es.unileon.ulebank.history.TransactionException {
         this.command.redo();
     }
 

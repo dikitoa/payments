@@ -9,7 +9,6 @@ import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.ClientNotFoundException;
-import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.fees.InvalidFeeException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;

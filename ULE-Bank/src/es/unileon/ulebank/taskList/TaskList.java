@@ -4,6 +4,7 @@ package es.unileon.ulebank.taskList;
 
 import es.unileon.ulebank.exceptions.PaymentException;
 import es.unileon.ulebank.exceptions.TransactionException;
+import es.unileon.ulebank.exceptions.TransferException;
 import es.unileon.ulebank.fees.InvalidFeeException;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.time.Time;
@@ -96,8 +97,10 @@ public class TaskList {
     /**
      *
      * @param id
+     * @throws es.unileon.ulebank.history.TransactionException 
+     * @throws TransferException 
      */
-    public void undoTask(Handler id) {
+    public void undoTask(Handler id) throws TransferException, es.unileon.ulebank.history.TransactionException {
         for (int i = 0; i < this.tasksDone.size(); i++) {
             Task c = this.tasksDone.get(i);
             if (c.getID().compareTo(id) == 0) {
