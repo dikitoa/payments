@@ -92,7 +92,6 @@ public class CreditCardTest {
 
 	@Test
 	public void testGetPin() throws IOException {
-		System.out.println(testCard.getPin().length());
 		assertTrue(testCard.getPin().length() == 4);
 		
 		testCard.setPin("9182");
@@ -199,7 +198,7 @@ public class CreditCardTest {
 	}
 	
 	@Test (expected = IncorrectLimitException.class)
-	public void testCashLimitDiaryFAILUp() throws IncorrectLimitException{
+	public void testSetCashLimitDiaryFAILUp() throws IncorrectLimitException{
 		testCard.setCashLimitDiary(2000); //fail because cash limit diary is greater than cash limit monthly
 		assertEquals(2000.0, testCard.getCashLimitDiary(), 0.0001);
 	}
@@ -238,6 +237,13 @@ public class CreditCardTest {
 		testCard.setCashLimitMonthly(399); //fail because cash limit diary is 400
 		assertEquals(399.0, testCard.getCashLimitMonthly(), 0.0001);
 	}
+	
+	@Test
+	public void testGetEmissionDate(){
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		String today = dateFormat.format(new Date());
+		assertTrue(testCard.getEmissionDate().equals(today));
+	}
 
 	@Test
 	public void testGetExpirationDate() {
@@ -245,8 +251,7 @@ public class CreditCardTest {
 		SimpleDateFormat yearFormat = new SimpleDateFormat("YY");
 		String currentMonth = monthFormat.format(new Date());
 		String currentYear = String.valueOf(Integer.parseInt(yearFormat.format(new Date()))+3);
-		System.out.println(currentMonth+"/"+currentYear);
-		System.out.println(testCard.getExpirationDate());
+
 		assertTrue(testCard.getExpirationDate().equals(currentMonth+"/"+currentYear));
 	}
 
@@ -266,13 +271,26 @@ public class CreditCardTest {
 		assertTrue(testCard.generateCVV().length() == 3);
 	}
 
+	@Test (expected = IOException.class)
+	public void testSetCvvFAILLenght() throws IOException {
+			testCard.setCvv("1954");
+		assertTrue(testCard.getCvv().equals("1954"));
+	}
+	
+	@Test (expected = IOException.class)
+	public void testSetCvvFAILLetter() throws IOException {
+			testCard.setCvv("19f");
+		assertTrue(testCard.getCvv().equals("19f"));
+	}
+	
 	@Test
-	public void testSetCvv() {
-		try {
-			testCard.setCvv("195");
-		} catch (IOException e) {
-			
-		}
-		assertTrue(testCard.getCvv().equals("195"));
+	public void testSetCvvOK() throws IOException{
+			testCard.setCvv("146");
+		assertTrue(testCard.getCvv().equals("146"));
+	}
+	
+	@Test
+	public void testGetCardNumber(){
+		assertTrue(testCard.getCardNumber().toString().equals("1234 0112 3456 789"+handler.getControlDigit()));
 	}
 }
