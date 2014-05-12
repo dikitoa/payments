@@ -14,11 +14,11 @@ import org.apache.log4j.Logger;
 
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.exceptions.TransactionException;
+import es.unileon.ulebank.fees.FeeStrategy;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.history.History;
 import es.unileon.ulebank.history.Transaction;
-import es.unileon.ulebank.strategy.StrategyCommission;
 
 /**
  * @author Israel
@@ -138,15 +138,15 @@ public abstract class Card {
 	/**
 	 * Comision de emision de la tarjeta
 	 */
-	private StrategyCommission commissionEmission;
+	private FeeStrategy commissionEmission;
 	/**
 	 * Comision de mantenimiento de la tarjeta
 	 */
-	private StrategyCommission commissionMaintenance;
+	private FeeStrategy commissionMaintenance;
 	/**
 	 * Comision de renovacion de la tarjeta
 	 */
-	private StrategyCommission commissionRenovate;
+	private FeeStrategy commissionRenovate;
 	/**
 	 * Historia de las transacciones realizadas con la tarjeta
 	 */
@@ -167,8 +167,8 @@ public abstract class Card {
 	 * @param commissionRenovate
 	 */
 	public Card(Handler cardId, CardType type, double buyLimitDiary, double buyLimitMonthly, 
-			double cashLimitDiary, double cashLimitMonthly,StrategyCommission commissionEmission, 
-			StrategyCommission commissionMaintenance, StrategyCommission commissionRenovate) {
+			double cashLimitDiary, double cashLimitMonthly, FeeStrategy commissionEmission, 
+			FeeStrategy commissionMaintenance, FeeStrategy commissionRenovate) {
 		try {
 			this.setDefaultCardProperties();
 		} catch (FileNotFoundException e) {
@@ -600,15 +600,15 @@ public abstract class Card {
 	 * Devuelve la comision de emision de la tarjeta
 	 * @return float
 	 */
-	public float getCommissionEmission() {
-		return commissionEmission.calculateCommission();
+	public double getCommissionEmission(double value) {
+		return commissionEmission.getFee(value);
 	}
 
 	/**
 	 * Cambia la comision de emision por la que recibe
 	 * @param commissionEmission
 	 */
-	public void setCommissionEmission(StrategyCommission commissionEmission) {
+	public void setCommissionEmission(FeeStrategy commissionEmission) {
 		this.commissionEmission = commissionEmission;
 	}
 
@@ -616,15 +616,15 @@ public abstract class Card {
 	 * Devuelve la comisionde mantenimiento de la tarjeta
 	 * @return float
 	 */
-	public float getCommissionMaintenance() {
-		return commissionMaintenance.calculateCommission();
+	public double getCommissionMaintenance(double value) {
+		return commissionMaintenance.getFee(value);
 	}
 
 	/**
 	 * Cambia la comision de mantenimiento por la que se indica
 	 * @param commissionMaintenance
 	 */
-	public void setCommissionMaintenance(StrategyCommission commissionMaintenance) {
+	public void setCommissionMaintenance(FeeStrategy commissionMaintenance) {
 		this.commissionMaintenance = commissionMaintenance;
 	}
 
@@ -632,15 +632,15 @@ public abstract class Card {
 	 * Devuelve la comision de renovacion de la tarjeta
 	 * @return float
 	 */
-	public float getCommissionRenovate() {
-		return commissionRenovate.calculateCommission();
+	public double getCommissionRenovate(double value) {
+		return commissionRenovate.getFee(value);
 	}
 
 	/**
 	 * Cambia la comision de renovacion por la que se recibe
 	 * @param commissionRenovate
 	 */
-	public void setCommissionRenovate(StrategyCommission commissionRenovate) {
+	public void setCommissionRenovate(FeeStrategy commissionRenovate) {
 		this.commissionRenovate = commissionRenovate;
 	}
 	

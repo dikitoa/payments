@@ -18,9 +18,9 @@ import es.unileon.ulebank.exceptions.CommissionException;
 public class DebitMaintenanceFee implements FeeStrategy {
 
     private Client owner; //Card owner
-    private float quantity; //Commission establish by the employee 
+    private double quantity; //Commission establish by the employee 
     private int maximum_age; //Maximum age to differentiate commissions
-    private float default_commission; //Quantity of the default commission
+    private double default_commission; //Quantity of the default commission
     //Strings for obtain the maximum age & default commission
     private final String AGE = "debit_age";
     private final String COMMISSION = "debit_maintenance";
@@ -34,7 +34,7 @@ public class DebitMaintenanceFee implements FeeStrategy {
      * @throws IOException
      * @throws NumberFormatException
      */
-    public DebitMaintenanceFee(Client owner, float quantity) throws CommissionException, NumberFormatException, IOException {
+    public DebitMaintenanceFee(Client owner, double quantity) throws CommissionException, NumberFormatException, IOException {
         this.owner = owner;
         this.setDefaultCommission();
         this.setMaximumAge();
@@ -125,7 +125,7 @@ public class DebitMaintenanceFee implements FeeStrategy {
 
                 //Check if the line is the correct one
                 if (aux[0].compareTo(this.COMMISSION) == 0) {
-                    this.default_commission = Float.parseFloat(aux[1]);
+                    this.default_commission = Double.parseDouble(aux[1]);
                     break;
                 }
             }

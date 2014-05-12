@@ -3,6 +3,7 @@
 package es.unileon.ulebank.taskList;
 
 import es.unileon.ulebank.command.Command;
+import es.unileon.ulebank.fees.InvalidFeeException;
 import es.unileon.ulebank.handler.Handler;
 import java.util.Date;
 
@@ -26,7 +27,7 @@ public class Task {
         return this.command.getId();
     }
 
-    public void execute() {
+    public void execute() throws InvalidFeeException {
         this.command.execute();
     }
 

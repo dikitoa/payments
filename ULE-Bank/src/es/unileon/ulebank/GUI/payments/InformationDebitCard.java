@@ -22,6 +22,10 @@ import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
+import es.unileon.ulebank.fees.DebitMaintenanceFee;
+import es.unileon.ulebank.fees.FeeStrategy;
+import es.unileon.ulebank.fees.InvalidFeeException;
+import es.unileon.ulebank.fees.LinearFee;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.handler.GenericHandler;
@@ -50,16 +54,17 @@ public class InformationDebitCard extends javax.swing.JFrame {
     CardHandler handler = new CardHandler(new BankHandler("1234"), "01", "123456789");
 	Client client;
 	Account account;
-	StrategyCommission commissionEmission = new StrategyCommissionDebitEmission(25);
-	StrategyCommission commissionMaintenance = new StrategyCommissionDebitMaintenance(client, 0);
-	StrategyCommission commissionRenovate = new StrategyCommissionDebitRenovate(0);
+	FeeStrategy commissionEmission = new LinearFee(0, 25);
+	FeeStrategy commissionMaintenance = new DebitMaintenanceFee(client, 0);
+	FeeStrategy commissionRenovate = new LinearFee(0, 0);
 	
     
     /**
      * Creates new form InformationDevitCard1
+     * @throws InvalidFeeException 
      */
 
-    public InformationDebitCard(int buyLimitDiary, int cashLimitDiary, int buyLimitMonthly, int cashLimitMonthly, String dni, String accountNumber) throws NumberFormatException, CommissionException, IOException {
+    public InformationDebitCard(int buyLimitDiary, int cashLimitDiary, int buyLimitMonthly, int cashLimitMonthly, String dni, String accountNumber) throws NumberFormatException, CommissionException, IOException, InvalidFeeException {
         TransactionManager manager = new TransactionManager();
         Bank bank = new Bank(manager, new GenericHandler("1234"));
         Office office = new Office(new GenericHandler("1234"), bank);
@@ -83,7 +88,7 @@ public class InformationDebitCard extends javax.swing.JFrame {
         DNIHandler Nif = new DNIHandler(numberDNI, letter);
         client = new Client(Nif, 25);
         
-        card = new DebitCard(handler, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission.calculateCommission(), commissionMaintenance.calculateCommission(), commissionRenovate.calculateCommission());
+        card = new DebitCard(handler, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission.getFee(0), commissionMaintenance.getFee(0), commissionRenovate.getFee(0));
 
         
         try {
@@ -105,9 +110,9 @@ public class InformationDebitCard extends javax.swing.JFrame {
         this.jTextField7.setText(this.card.getCvv());
         this.jTextField9.setText(String.valueOf(this.card.getCashLimitMonthly()));
         this.jTextField10.setText(String.valueOf(this.card.getBuyLimitMonthly()));
-        this.jTextField8.setText(String.valueOf(commissionEmission.calculateCommission()));
-        this.jTextField11.setText(String.valueOf(commissionMaintenance.calculateCommission()));
-        this.jTextField12.setText(String.valueOf(commissionRenovate.calculateCommission()));
+        this.jTextField8.setText(String.valueOf(commissionEmission.getFee(0)));
+        this.jTextField11.setText(String.valueOf(commissionMaintenance.getFee(0)));
+        this.jTextField12.setText(String.valueOf(commissionRenovate.getFee(0)));
 //        this.jTextField8.setText(String.valueOf(card.getCommission()));
     }
     

@@ -11,6 +11,7 @@ import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.bank.Bank;
 import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
+import es.unileon.ulebank.fees.InvalidFeeException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.DNIHandler;
@@ -95,9 +96,9 @@ public class NewCardCommandTest {
 		assertEquals(buyLimitMonthly, card.getBuyLimitMonthly(), 0.0001);
 		assertEquals(cashLimitDiary, card.getCashLimitDiary(), 0.0001);
 		assertEquals(cashLimitMonthly, card.getCashLimitMonthly(), 0.0001);
-		assertEquals(commissionEmission, card.getCommissionEmission(), 0.0001);
-		assertEquals(commissionMaintenance, card.getCommissionMaintenance(), 0.0001);
-		assertEquals(commissionRenovate, card.getCommissionRenovate(), 0.0001);
+		assertEquals(commissionEmission, card.getCommissionEmission(0), 0.0001);
+		assertEquals(commissionMaintenance, card.getCommissionMaintenance(0), 0.0001);
+		assertEquals(commissionRenovate, card.getCommissionRenovate(0), 0.0001);
 	}
 	
 	@Test
@@ -114,9 +115,9 @@ public class NewCardCommandTest {
 		assertEquals(buyLimitMonthly, card.getBuyLimitMonthly(), 0.0001);
 		assertEquals(cashLimitDiary, card.getCashLimitDiary(), 0.0001);
 		assertEquals(cashLimitMonthly, card.getCashLimitMonthly(), 0.0001);
-		assertEquals(commissionEmission, card.getCommissionEmission(), 0.0001);
-		assertEquals(commissionMaintenance, card.getCommissionMaintenance(), 0.0001);
-		assertEquals(commissionRenovate, card.getCommissionRenovate(), 0.0001);
+		assertEquals(commissionEmission, card.getCommissionEmission(0), 0.0001);
+		assertEquals(commissionMaintenance, card.getCommissionMaintenance(0), 0.0001);
+		assertEquals(commissionRenovate, card.getCommissionRenovate(0), 0.0001);
 	}
 	
 	@Test (expected = NullPointerException.class)
@@ -149,7 +150,7 @@ public class NewCardCommandTest {
 	}
 	
 	@Test (expected = UnsupportedOperationException.class)
-	public void testRedoNewCreditCardCommand() {
+	public void testRedoNewCreditCardCommand() throws InvalidFeeException {
 		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeCredit, bankHandler.toString(), officeId, cardId,
 				buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, 
 				commissionMaintenance, commissionRenovate);
@@ -159,7 +160,7 @@ public class NewCardCommandTest {
 	}
 	
 	@Test (expected = UnsupportedOperationException.class)
-	public void testRedoNewDebitCardCommand() {
+	public void testRedoNewDebitCardCommand() throws InvalidFeeException {
 		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeDebit, bankHandler.toString(), officeId, cardId,
 				buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, 
 				commissionMaintenance, commissionRenovate);

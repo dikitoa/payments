@@ -10,6 +10,7 @@ import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.ClientNotFoundException;
 import es.unileon.ulebank.exceptions.CommissionException;
+import es.unileon.ulebank.fees.InvalidFeeException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.DNIHandler;
@@ -81,15 +82,15 @@ public class NewCardCommand implements Command {
 	/**
 	 * Comision de emision de la tarjeta
 	 */
-	private float commissionEmission;
+	private double commissionEmission;
 	/**
 	 * Comision de mantenimiento de la tarjeta
 	 */
-	private float commissionMaintenance;
+	private double commissionMaintenance;
 	/**
 	 * Comision de renovacion de la tarjeta
 	 */
-	private float commissionRenovate;
+	private double commissionRenovate;
 
 	/**
 	 * Constructor de la clase
@@ -127,9 +128,10 @@ public class NewCardCommand implements Command {
 
 	/**
 	 * Realiza la creacion de la tarjeta con todos los parametros necesarios
+	 * @throws InvalidFeeException 
 	 */
 	@Override
-	public void execute() {
+	public void execute() throws InvalidFeeException {
 		try {
 			//Obtiene el cliente de la sucursal con el DNI
 			Client client = office.searchClient((DNIHandler) dni);
@@ -138,10 +140,20 @@ public class NewCardCommand implements Command {
 			//Crea una tarjeta en funcion del tipo indicado
 			switch (type) {
 			case CREDIT:
-				this.card = new CreditCard(cardHandler, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, commissionMaintenance, commissionRenovate);
+				try {
+					this.card = new CreditCard(cardHandler, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, commissionMaintenance, commissionRenovate);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				break;
 			case DEBIT:
-				this.card = new DebitCard(cardHandler, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, commissionMaintenance, commissionRenovate);
+				try {
+					this.card = new DebitCard(cardHandler, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, commissionMaintenance, commissionRenovate);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				break;
 			case REVOLVING:
 				
@@ -156,8 +168,6 @@ public class NewCardCommand implements Command {
 			account.addCard(card);
 		} catch (ClientNotFoundException e) {
 			LOG.info("The client whose dni is " + dni.toString() + " does not found.");
-		} catch (CommissionException e) {
-			LOG.info("The commission can not be negative.");
 		} catch (NumberFormatException e) {
 			LOG.info("The String must only contains numbers.");
 		} catch (IOException e) {

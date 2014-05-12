@@ -2,6 +2,7 @@
  group.*/
 package es.unileon.ulebank.taskList;
 
+import es.unileon.ulebank.fees.InvalidFeeException;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.time.Time;
 import java.util.ArrayList;
@@ -104,9 +105,10 @@ public class TaskList {
     }
 
     /**
+     * @throws InvalidFeeException 
      *
      */
-    public void executeTasks() {
+    public void executeTasks() throws InvalidFeeException {
         int i = 0;
         while (this.tasks.get(i).getEffectiveDate().getTime() <= this.time.getTime()) {
             Task c = this.tasks.get(i);

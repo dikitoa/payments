@@ -25,6 +25,7 @@ import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
+import es.unileon.ulebank.fees.InvalidFeeException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.handler.GenericHandler;
@@ -190,7 +191,12 @@ public class ReplacementWindow extends javax.swing.JInternalFrame {
         jButton3.setText("Confirm");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                try {
+					jButton3ActionPerformed(evt);
+				} catch (NumberFormatException | InvalidFeeException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
@@ -471,7 +477,7 @@ public class ReplacementWindow extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_button3ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) throws NumberFormatException, InvalidFeeException {//GEN-FIRST:event_jButton3ActionPerformed
 
                 
         String DNI = textField1.getText();

@@ -8,11 +8,11 @@ import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.PaymentException;
 import es.unileon.ulebank.exceptions.TransactionException;
+import es.unileon.ulebank.fees.DebitMaintenanceFee;
+import es.unileon.ulebank.fees.InvalidFeeException;
+import es.unileon.ulebank.fees.LinearFee;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.history.CardTransaction;
-import es.unileon.ulebank.strategy.StrategyCommissionDebitEmission;
-import es.unileon.ulebank.strategy.StrategyCommissionDebitMaintenance;
-import es.unileon.ulebank.strategy.StrategyCommissionDebitRenovate;
 
 /**
  * @author Israel, Rober dCR
@@ -44,14 +44,15 @@ public class DebitCard extends Card {
 	 * @throws NumberFormatException
 	 * @throws CommissionException
 	 * @throws IOException
+	 * @throws InvalidFeeException 
 	 */
 	public DebitCard(Handler cardId, Client owner, Account account,
 			double buyLimitDiary, double buyLimitMonthly, double cashLimitDiary, double cashLimitMonthly,
-			float commissionEmission, float commissionMaintenance, float commissionRenovate) throws NumberFormatException, CommissionException, IOException {
+			double commissionEmission, double commissionMaintenance, double commissionRenovate) throws NumberFormatException, CommissionException, IOException, InvalidFeeException {
 		super(cardId, CardType.DEBIT, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly,
-				new StrategyCommissionDebitEmission(commissionEmission), 
-				new StrategyCommissionDebitMaintenance(owner, commissionMaintenance), 
-				new StrategyCommissionDebitRenovate(commissionRenovate));
+				new LinearFee(0,commissionEmission), 
+				new DebitMaintenanceFee(owner, commissionMaintenance), 
+				new LinearFee(0,commissionRenovate));
 		this.account = account;
 		this.owner = owner;
 	}

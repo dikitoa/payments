@@ -3,8 +3,8 @@ package es.unileon.ulebank.payments;
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.PaymentException;
+import es.unileon.ulebank.fees.FeeStrategy;
 import es.unileon.ulebank.handler.Handler;
-import es.unileon.ulebank.strategy.StrategyCommission;
 
 public class RevolvingCard extends Card {
 	private float interest = 1;
@@ -27,9 +27,9 @@ public class RevolvingCard extends Card {
 	public RevolvingCard(Handler cardId, Client owner, Account account,
 			CardType type, double buyLimitDiary, double buyLimitMonthly,
 			double cashLimitDiary, double cashLimitMonthly,
-			StrategyCommission commissionEmission,
-			StrategyCommission commissionMaintenance,
-			StrategyCommission commissionRenovate) {
+			FeeStrategy commissionEmission,
+			FeeStrategy commissionMaintenance,
+			FeeStrategy commissionRenovate) {
 		super(cardId, type, buyLimitDiary, buyLimitMonthly,
 				cashLimitDiary, cashLimitMonthly, commissionEmission,
 				commissionMaintenance, commissionRenovate);

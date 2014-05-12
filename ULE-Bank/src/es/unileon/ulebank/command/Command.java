@@ -1,5 +1,6 @@
 package es.unileon.ulebank.command;
 
+import es.unileon.ulebank.fees.InvalidFeeException;
 import es.unileon.ulebank.handler.Handler;
 
 /**
@@ -8,8 +9,9 @@ import es.unileon.ulebank.handler.Handler;
 public interface Command {
 	/**
 	 * Realiza la ejecucion del comando
+	 * @throws InvalidFeeException 
 	 */
-	public void execute();
+	public void execute() throws InvalidFeeException;
 	/**
 	 * Deshace los cambios realizados
 	 */

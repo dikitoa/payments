@@ -9,10 +9,9 @@ import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.PaymentException;
 import es.unileon.ulebank.exceptions.TransactionException;
+import es.unileon.ulebank.fees.InvalidFeeException;
+import es.unileon.ulebank.fees.LinearFee;
 import es.unileon.ulebank.handler.Handler;
-import es.unileon.ulebank.strategy.StrategyCommissionCreditEmission;
-import es.unileon.ulebank.strategy.StrategyCommissionCreditMaintenance;
-import es.unileon.ulebank.strategy.StrategyCommissionCreditRenovate;
 import es.unileon.ulebank.taskList.TaskList;
 import es.unileon.ulebank.history.CardTransaction;
 
@@ -40,14 +39,15 @@ public class CreditCard extends Card {
 	 * @param commissionMaintenance
 	 * @param commissionRenovate
 	 * @throws CommissionException
+	 * @throws InvalidFeeException 
 	 */
 	public CreditCard(Handler cardId, Client owner, Account account, double buyLimitDiary, double buyLimitMonthly, 
-			double cashLimitDiary, double cashLimitMonthly, float commissionEmission, 
-			float commissionMaintenance, float commissionRenovate) throws CommissionException {
+			double cashLimitDiary, double cashLimitMonthly, double commissionEmission, 
+			double commissionMaintenance, double commissionRenovate) throws CommissionException, InvalidFeeException {
 		super(cardId, CardType.CREDIT, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly,
-				new StrategyCommissionCreditEmission(commissionEmission),
-				new StrategyCommissionCreditMaintenance(commissionMaintenance),
-				new StrategyCommissionCreditRenovate(commissionRenovate));
+				new LinearFee(0,commissionEmission),
+				new LinearFee(0,commissionMaintenance),
+				new LinearFee(0,commissionRenovate));
 		this.account = account;
 		this.owner = owner;
 		this.transactionList = new ArrayList<CardTransaction>();

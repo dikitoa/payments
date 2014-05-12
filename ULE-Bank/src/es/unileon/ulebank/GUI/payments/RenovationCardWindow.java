@@ -24,6 +24,7 @@ import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
+import es.unileon.ulebank.fees.InvalidFeeException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.handler.GenericHandler;
@@ -127,7 +128,12 @@ public class RenovationCardWindow extends javax.swing.JInternalFrame {
         button2.setLabel("Renovation");
         button2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button2ActionPerformed(evt);
+                try {
+					button2ActionPerformed(evt);
+				} catch (NumberFormatException | InvalidFeeException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
@@ -355,7 +361,7 @@ public class RenovationCardWindow extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 //Al darle a este bot������������������������������������������������������������������������������������������������������������������������������������������������������������������n y dependiendo de la tarjeta seleccionada en el combobox
 //renovaremos la tarjeta, modificando la fecha, el cvv.
-    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
+    private void button2ActionPerformed(java.awt.event.ActionEvent evt) throws NumberFormatException, InvalidFeeException {//GEN-FIRST:event_button2ActionPerformed
         String DNI = textField1.getText();
         
         String number = "" + textField1.getText().charAt(0);

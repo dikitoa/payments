@@ -13,6 +13,7 @@ import es.unileon.ulebank.bank.Bank;
 import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
+import es.unileon.ulebank.fees.InvalidFeeException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.DNIHandler;
@@ -42,7 +43,7 @@ public class RenovateCardCommandTest {
     private String accountNumber = "0000000000";
 	
 	@Before
-	public void setUp() throws NumberFormatException, CommissionException, IOException {
+	public void setUp() throws NumberFormatException, CommissionException, IOException, InvalidFeeException {
 		BankHandler bankHandler = new BankHandler("1234");
 		this.manager = new TransactionManager();
         this.bank = new Bank(manager, bankHandler);
