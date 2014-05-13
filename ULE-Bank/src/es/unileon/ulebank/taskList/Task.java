@@ -30,7 +30,7 @@ public class Task {
         return this.command.getId();
     }
 
-    public void execute() throws InvalidFeeException, PaymentException, TransactionException, es.unileon.ulebank.history.TransactionException {
+    public void execute() throws InvalidFeeException, PaymentException, TransactionException, es.unileon.ulebank.history.TransactionException, TransferException {
         this.command.execute();
     }
 

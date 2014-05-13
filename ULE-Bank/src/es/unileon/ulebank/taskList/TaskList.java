@@ -114,9 +114,10 @@ public class TaskList {
      * @throws es.unileon.ulebank.history.TransactionException 
      * @throws TransactionException 
      * @throws PaymentException 
+     * @throws TransferException 
      *
      */
-    public void executeTasks() throws InvalidFeeException, PaymentException, TransactionException, es.unileon.ulebank.history.TransactionException {
+    public void executeTasks() throws InvalidFeeException, PaymentException, TransactionException, es.unileon.ulebank.history.TransactionException, TransferException {
         int i = 0;
         while (this.tasks.get(i).getEffectiveDate().getTime() <= this.time.getTime()) {
             Task c = this.tasks.get(i);

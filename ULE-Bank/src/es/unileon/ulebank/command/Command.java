@@ -16,8 +16,9 @@ public interface Command {
 	 * @throws es.unileon.ulebank.history.TransactionException 
 	 * @throws TransactionException 
 	 * @throws PaymentException 
+	 * @throws TransferException 
 	 */
-	public void execute() throws InvalidFeeException, PaymentException, TransactionException, es.unileon.ulebank.history.TransactionException;
+	public void execute() throws InvalidFeeException, PaymentException, TransactionException, es.unileon.ulebank.history.TransactionException, TransferException;
 	/**
 	 * Deshace los cambios realizados
 	 * @throws TransferException 
