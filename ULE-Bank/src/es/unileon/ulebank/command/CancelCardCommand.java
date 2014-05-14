@@ -65,9 +65,7 @@ public class CancelCardCommand implements Command {
 			account.removeCard((CardHandler) this.cardId);
 		} catch (NullPointerException e) {
 			LOG.info(e.getMessage());
-		} /*catch (CardNotFoundException e) {
-			LOG.info("The card that has number " + cardId.toString() + " is not found.");
-		}*/
+		}
 	}
 
 	/**

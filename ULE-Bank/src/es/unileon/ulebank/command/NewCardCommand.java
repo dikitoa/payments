@@ -9,6 +9,7 @@ import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.ClientNotFoundException;
+import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.fees.InvalidFeeException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
@@ -139,19 +140,19 @@ public class NewCardCommand implements Command {
 			//Crea una tarjeta en funcion del tipo indicado
 			switch (type) {
 			case CREDIT:
+				
 				try {
 					this.card = new CreditCard(cardHandler, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, commissionMaintenance, commissionRenovate);
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				} catch (CommissionException e1) {
+					LOG.info("Error creating commission");
 				}
+				
 				break;
 			case DEBIT:
 				try {
 					this.card = new DebitCard(cardHandler, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, commissionMaintenance, commissionRenovate);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				} catch (CommissionException e1) {
+					LOG.info("Error creating commission");
 				}
 				break;
 			case REVOLVING:
@@ -171,9 +172,7 @@ public class NewCardCommand implements Command {
 			LOG.info("The String must only contains numbers.");
 		} catch (IOException e) {
 			LOG.info("Input/Output error.");
-		}/* catch (AccountNotFoundException e) {
-			LOG.info("The account " + accountHandler.toString() + " was not found.");
-		}*/ catch (NullPointerException e) {
+		} catch (NullPointerException e) {
 			LOG.info(e.getMessage());
 		}
 		
