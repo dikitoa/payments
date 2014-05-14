@@ -12,8 +12,8 @@ import es.unileon.ulebank.exceptions.SecurityCardException;
  * SecurityCard Class
  * @author Rober dCR
  * @date 26/03/2014
- * @brief Class about the security matrix for the card
- * Based on "CajaEspana" SecurityCard
+ * @brief Class about the security matrix for the card which allows transactions in TPVs 
+ * Based on "CajaEspanya" SecurityCard
  */
 public class SecurityCard {
 
@@ -75,10 +75,10 @@ public class SecurityCard {
 	}
 	
 	/**
-	 * @brief Method get the coordinate
-	 * @param row
-	 * @param column
-	 * @return coordinate
+	 * @brief Method get the coordinate of a row and column specified
+	 * @param row of the matrix
+	 * @param column column of the matrix
+	 * @return coordinate store in the matrix
 	 * @throws SecurityCardException 
 	 */
 	private Integer getCoordinate(int row, int column) throws SecurityCardException{
@@ -89,10 +89,10 @@ public class SecurityCard {
 	}
 	
 	/**
-	 * @brief Method that probe if the coordinate is correct
-	 * @param row
-	 * @param column
-	 * @param coordinate
+	 * @brief Method that probe if the coordinate to check is really in the coordinates indicated
+	 * @param row of the matrix
+	 * @param column of the matrix
+	 * @param coordinate to check
 	 * @return true if coordinate is correct / false another case
 	 * @throws SecurityCardException 
 	 */
@@ -141,9 +141,9 @@ public class SecurityCard {
 			this.row = Integer.parseInt(commissionProperty.getProperty(this.DIMENSION_ROW));
 		}
 		catch(FileNotFoundException e){
-			e.printStackTrace();
+			throw new FileNotFoundException("The file card.properties is not found.");
 		}catch (IOException e2) {
-			e2.printStackTrace();
+			throw new IOException("Fail to try open or close file card.properties");
 		}
 
 	}
@@ -159,13 +159,13 @@ public class SecurityCard {
 			Properties commissionProperty = new Properties();
 			commissionProperty.load(new FileInputStream("src/es/unileon/ulebank/properties/card.properties"));
 
-			/**Obtenemos los parametros definidos en el archivo*/
+			/*Obtenemos los parametros definidos en el archivo*/
 			this.columns = Integer.parseInt(commissionProperty.getProperty(this.DIMENSION_COLUMNS));
 		}
 		catch(FileNotFoundException e){
-			e.printStackTrace();
+			throw new FileNotFoundException("The file card.properties is not found.");
 		}catch (IOException e2) {
-			e2.printStackTrace();
+			throw new IOException("Fail to try open or close file card.properties");
 		}
 
 	}

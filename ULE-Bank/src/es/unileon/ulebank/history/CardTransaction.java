@@ -3,19 +3,15 @@ package es.unileon.ulebank.history;
 import java.util.Date;
 
 import es.unileon.ulebank.account.Account;
-import es.unileon.ulebank.exceptions.TransactionException;
 
 /**
  * Transaction for the Card
  * @author Rober dCR
  * @date 8/05/2014
+ * @brief Class that allows all monetary transactions with cards
  */
-public class CardTransaction extends GenericTransaction{
+public class CardTransaction extends Transaction{
 
-	/**
-	 * Account which receives the amount in the transaction
-	 */
-	private Account receiverAccount;
 	/**
 	 * Account which emits the amount in the transaction
 	 */
@@ -30,22 +26,12 @@ public class CardTransaction extends GenericTransaction{
 	 * @param senderAccount
 	 * @param receiverAccount
 	 * @throws TransactionException 
-	 * @throws es.unileon.ulebank.history.TransactionException 
 	 */
 	public CardTransaction(double amount, Date date, String subject,
-			Account senderAccount, Account receiverAccount) throws TransactionException, es.unileon.ulebank.history.TransactionException {
+			Account senderAccount) throws TransactionException {
 		super(amount, date, subject);
 
-		this.receiverAccount = receiverAccount;
 		this.senderAccount = senderAccount;
-	}
-
-	/**
-	 * Getter ReceiverAccount
-	 * @return ReceiverAccount
-	 */
-	public Account getReceiverAccount() {
-		return receiverAccount;
 	}
 
 	/**

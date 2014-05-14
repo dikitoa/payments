@@ -8,12 +8,12 @@ import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.PaymentException;
-import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.fees.InvalidFeeException;
 import es.unileon.ulebank.fees.LinearFee;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.taskList.TaskList;
 import es.unileon.ulebank.history.CardTransaction;
+import es.unileon.ulebank.history.TransactionException;
 
 /**
  * @author Israel, Rober dCR
@@ -64,19 +64,19 @@ public class CreditCard extends Card {
 		this.transactionList = new ArrayList<CardTransaction>();
 	}
 	
-	@Override
 	/**
 	 * Method that makes the payment
 	 * @param receiverAccount Account which receives the money from the card
 	 * @param quantity Amount of the payment
 	 * @param payConcept Concept of the payment
 	 * @throws PaymentException 
-	 * @throws es.unileon.ulebank.history.TransactionException 
+	 * @throws TransactionException 
 	 */
-	public void makeTransaction(Account receiverAccount, double quantity, String payConcept) throws PaymentException, TransactionException, es.unileon.ulebank.history.TransactionException{
+	@Override
+	public void makeTransaction(Account receiverAccount, double quantity, String payConcept) throws PaymentException, TransactionException {
 		//TODO - Actualizar con las nuevas transacciones
 		//Agyadimos la transaccion a la lista
-		this.transactionList.add(new CardTransaction(quantity, new Date(), payConcept, receiverAccount, this.account));
+		this.transactionList.add(new CardTransaction(quantity, new Date(), payConcept, this.account));
 		//LLegada la fecha hay que descontar el dinero de la cuenta
 		//Pagar los importes a la cuenta
 	}

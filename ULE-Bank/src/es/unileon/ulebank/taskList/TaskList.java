@@ -3,11 +3,13 @@
 package es.unileon.ulebank.taskList;
 
 import es.unileon.ulebank.exceptions.PaymentException;
-import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.exceptions.TransferException;
 import es.unileon.ulebank.fees.InvalidFeeException;
 import es.unileon.ulebank.handler.Handler;
+import es.unileon.ulebank.history.TransactionException;
 import es.unileon.ulebank.time.Time;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -99,8 +101,9 @@ public class TaskList {
      * @param id
      * @throws es.unileon.ulebank.history.TransactionException 
      * @throws TransferException 
+     * @throws IOException 
      */
-    public void undoTask(Handler id) throws TransferException, es.unileon.ulebank.history.TransactionException {
+    public void undoTask(Handler id) throws TransferException, IOException, TransactionException {
         for (int i = 0; i < this.tasksDone.size(); i++) {
             Task c = this.tasksDone.get(i);
             if (c.getID().compareTo(id) == 0) {
@@ -117,7 +120,7 @@ public class TaskList {
      * @throws TransferException 
      *
      */
-    public void executeTasks() throws InvalidFeeException, PaymentException, TransactionException, es.unileon.ulebank.history.TransactionException, TransferException {
+    public void executeTasks() throws InvalidFeeException, PaymentException, TransactionException, TransferException {
         int i = 0;
         while (this.tasks.get(i).getEffectiveDate().getTime() <= this.time.getTime()) {
             Task c = this.tasks.get(i);

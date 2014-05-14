@@ -19,23 +19,19 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 import es.unileon.ulebank.account.Account;
-import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.bank.Bank;
 import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
+import es.unileon.ulebank.fees.FeeStrategy;
 import es.unileon.ulebank.fees.InvalidFeeException;
+import es.unileon.ulebank.fees.LinearFee;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.handler.GenericHandler;
-import es.unileon.ulebank.handler.OfficeHandler;
 import es.unileon.ulebank.office.Office;
 import es.unileon.ulebank.payments.DebitCard;
-import es.unileon.ulebank.strategy.StrategyCommission;
-import es.unileon.ulebank.strategy.StrategyCommissionDebitEmission;
-import es.unileon.ulebank.strategy.StrategyCommissionDebitMaintenance;
-import es.unileon.ulebank.strategy.StrategyCommissionDebitRenovate;
 import es.unileon.ulebank.transactionManager.TransactionManager;
 
 /**
@@ -516,11 +512,11 @@ public class ReplacementWindow extends javax.swing.JInternalFrame {
             Office office = new Office(new GenericHandler("1234"), bank);
     		office.addClient(client);
     		Account account = new Account(office, bank, accountNumber);
-                StrategyCommission commissionEmission = new StrategyCommissionDebitEmission(25);
-                StrategyCommission commissionMaintenance = new StrategyCommissionDebitMaintenance(client, 0);
-                StrategyCommission commissionRenovate = new StrategyCommissionDebitRenovate(0);
+    		FeeStrategy commissionEmission = new LinearFee(0, 25);
+    		FeeStrategy commissionMaintenance = new LinearFee(0, 0);
+    		FeeStrategy commissionRenovate = new LinearFee(0, 0);
                 // Falta el limitDebit, ultima argumento que se pasa al crear el DebitCard
-                debitCard = new DebitCard(handler, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission.calculateCommission(), commissionMaintenance.calculateCommission(), commissionRenovate.calculateCommission());
+                debitCard = new DebitCard(handler, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission.getFee(0), commissionMaintenance.getFee(0), commissionRenovate.getFee(0));
             try {
                 debitCard.setBuyLimitDiary(buyLimitDiary);
                 debitCard.setCashLimitDiary(cashLimitDiary);

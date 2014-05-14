@@ -15,14 +15,12 @@ import es.unileon.ulebank.bank.Bank;
 import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
+import es.unileon.ulebank.fees.FeeStrategy;
+import es.unileon.ulebank.fees.LinearFee;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.office.Office;
-import es.unileon.ulebank.strategy.StrategyCommission;
-import es.unileon.ulebank.strategy.StrategyCommissionCreditEmission;
-import es.unileon.ulebank.strategy.StrategyCommissionCreditMaintenance;
-import es.unileon.ulebank.strategy.StrategyCommissionCreditRenovate;
 import es.unileon.ulebank.transactionManager.TransactionManager;
 
 public class CreditCardTest {
@@ -42,10 +40,10 @@ public class CreditCardTest {
 		handler = new CardHandler(new BankHandler("1234"), "01", "123456789");
 		Client client = new Client(new DNIHandler("71451559N"), 27);
 		Account account = new Account(office, bank, accountNumber);
-		StrategyCommission commissionEmission = new StrategyCommissionCreditEmission(25);
-		StrategyCommission commissionMaintenance = new StrategyCommissionCreditMaintenance(0);
-		StrategyCommission commissionRenovate = new StrategyCommissionCreditRenovate(0);
-		testCard = new CreditCard(handler, client, account, 400.0, 1000.0, 400.0, 1000.0, commissionEmission.calculateCommission(), commissionMaintenance.calculateCommission(), commissionRenovate.calculateCommission());
+		FeeStrategy commissionEmission = new LinearFee(0, 25);
+		FeeStrategy commissionMaintenance = new LinearFee(0, 0);
+		FeeStrategy commissionRenovate = new LinearFee(0, 0);
+		testCard = new CreditCard(handler, client, account, 400.0, 1000.0, 400.0, 1000.0, commissionEmission.getFee(0), commissionMaintenance.getFee(0), commissionRenovate.getFee(0));
 	}
 	
 	@Test (expected = NullPointerException.class)

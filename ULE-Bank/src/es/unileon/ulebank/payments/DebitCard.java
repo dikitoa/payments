@@ -7,12 +7,12 @@ import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.PaymentException;
-import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.fees.DebitMaintenanceFee;
 import es.unileon.ulebank.fees.InvalidFeeException;
 import es.unileon.ulebank.fees.LinearFee;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.history.CardTransaction;
+import es.unileon.ulebank.history.TransactionException;
 
 /**
  * @author Israel, Rober dCR
@@ -57,24 +57,23 @@ public class DebitCard extends Card {
 		this.owner = owner;
 	}
 	
-	@Override
 	/**
 	 * Method that makes the payment
 	 * @param receiverAccount Account which receives the money from the card
 	 * @param quantity Amount of the payment
 	 * @param payConcept Concept of the payment
 	 * @throws PaymentException
-	 * @throws es.unileon.ulebank.history.TransactionException 
+	 * @throws TransactionException 
 	 */
-	public void makeTransaction(Account receiverAccount, double quantity, String payConcept) throws PaymentException, TransactionException, es.unileon.ulebank.history.TransactionException{
+	@Override
+	public void makeTransaction(Account receiverAccount, double quantity, String payConcept) throws PaymentException, TransactionException {
 
 		try{
 			//Discount the quantity from sender account
-			this.account.doWithdrawal(new CardTransaction(quantity, new Date(), payConcept, this.account, receiverAccount));
+			this.account.doWithdrawal(new CardTransaction(quantity, new Date(), payConcept, this.account));
 			//Add the money to receiver account
-			receiverAccount.doDeposit(new CardTransaction(quantity, new Date(), payConcept, this.account, receiverAccount));
+			receiverAccount.doDeposit(new CardTransaction(quantity, new Date(), payConcept, receiverAccount));
 		}catch(TransactionException e){
-			e.printStackTrace();
 			throw new PaymentException("Denegate Transaction");
 		}
 		

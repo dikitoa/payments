@@ -6,7 +6,16 @@ import es.unileon.ulebank.exceptions.PaymentException;
 import es.unileon.ulebank.fees.FeeStrategy;
 import es.unileon.ulebank.handler.Handler;
 
+/**
+ * Revolving Card Class
+ * @author Rober dCR
+ * @date 14/05/2014
+ * @brief Class which implemtens the features of the revolving card
+ */
 public class RevolvingCard extends Card {
+	/**
+	 * Interest establish by the office
+	 */
 	private float interest = 1;
 	
 	/**
@@ -51,7 +60,6 @@ public class RevolvingCard extends Card {
 		this.interest = interest;
 	}
 	
-	@Override
 	/**
 	 * Method that makes the payment
 	 * @param receiverAccount Account which receives the money from the card
@@ -59,6 +67,7 @@ public class RevolvingCard extends Card {
 	 * @param payConcept Concept of the payment
 	 * @throws PaymentException
 	 */
+	@Override
 	public void makeTransaction(Account receiverAccount, double quantity, String payConcept) throws PaymentException{
 		//TODO
 	}

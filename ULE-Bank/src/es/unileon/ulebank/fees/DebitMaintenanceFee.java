@@ -81,9 +81,9 @@ public class DebitMaintenanceFee implements FeeStrategy {
 			
 		}
 		catch(FileNotFoundException e){
-			e.printStackTrace();
+			throw new FileNotFoundException("The file card.properties is not found.");
 		}catch (IOException e2) {
-			e2.printStackTrace();
+			throw new IOException("Fail to try open or close file card.properties");
 		}
 	}
 
@@ -102,9 +102,9 @@ public class DebitMaintenanceFee implements FeeStrategy {
 			this.default_commission = Float.parseFloat(commissionProperty.getProperty(this.COMMISSION));
 		}
 		catch(FileNotFoundException e){
-			e.printStackTrace();
+			throw new FileNotFoundException("The file card.properties is not found.");
 		}catch (IOException e2) {
-			e2.printStackTrace();
+			throw new IOException("Fail to try open or close file card.properties");
 		}
 		
 	}

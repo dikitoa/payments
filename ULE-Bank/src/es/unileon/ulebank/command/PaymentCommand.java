@@ -11,12 +11,12 @@ import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.exceptions.ClientNotFoundException;
 import es.unileon.ulebank.exceptions.PaymentException;
-import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.exceptions.TransferException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.handler.Handler;
+import es.unileon.ulebank.history.TransactionException;
 import es.unileon.ulebank.office.Office;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.CardType;
@@ -109,7 +109,7 @@ public class PaymentCommand implements Command {
 			//Search the account for that card
 			this.card = accountSender.searchCard((CardHandler) cardId);
 			//Make the payment by the type of the card
-			this.payByType(type);
+			this.card.makeTransaction(this.accountReceiver, this.amount, this.concept);
 		} catch (NullPointerException e) {
 			LOG.info(e.getMessage());
 		}
@@ -117,7 +117,7 @@ public class PaymentCommand implements Command {
 	}
 
 	@Override
-	public void undo() throws TransferException, es.unileon.ulebank.history.TransactionException {
+	public void undo() throws TransferException, TransactionException, IOException {
 		try {
 			//Make the transfer for revert the payment
 			Transfer revertPayment = new Transfer(accountReceiver, accountSender, amount);
@@ -130,10 +130,10 @@ public class PaymentCommand implements Command {
 	}
 
 	@Override
-	public void redo() throws PaymentException, TransactionException, es.unileon.ulebank.history.TransactionException {
+	public void redo() throws PaymentException, TransactionException {
 		try {
 			//Make the payment by the type of the card
-			this.payByType(this.type);
+			this.card.makeTransaction(this.accountReceiver, this.amount, this.concept);
 		} catch (NullPointerException e) {
 			LOG.info(e.getMessage());
 		}
@@ -147,8 +147,9 @@ public class PaymentCommand implements Command {
 	
 	/**
 	 * Setter of undoConcept
+	 * @throws IOException 
 	 */
-	private void setUndoConcept(){
+	private void setUndoConcept() throws IOException{
 		try {
 			Properties commissionProperty = new Properties();
 			commissionProperty.load(new FileInputStream("src/es/unileon/ulebank/properties/card.properties"));
@@ -157,35 +158,9 @@ public class PaymentCommand implements Command {
 			this.undoConcept = commissionProperty.getProperty(this.UNDO_PROPERTY);
 		}
 		catch(FileNotFoundException e){
-			e.printStackTrace();
+			throw new FileNotFoundException("File card.properties not found");
 		}catch (IOException e2) {
-			e2.printStackTrace();
-		}
-	}
-	
-	/**
-	 * Method that makes the payment by the card type
-	 * @param type of the card
-	 * @throws PaymentException
-	 * @throws TransactionException
-	 * @throws es.unileon.ulebank.history.TransactionException
-	 */
-	private void payByType(CardType type) throws PaymentException, TransactionException, es.unileon.ulebank.history.TransactionException{
-		switch (this.type){
-		case CREDIT:
-			((CreditCard) this.card).makeTransaction(this.accountReceiver, this.amount, this.concept);
-			break;
-		case DEBIT:
-			((DebitCard) this.card).makeTransaction(this.accountReceiver, this.amount, this.concept);
-			break;
-		case PURSE:
-			((PurseCard) this.card).makeTransaction(this.accountReceiver, this.amount, this.concept);
-			break;
-		case REVOLVING:
-			((RevolvingCard) this.card).makeTransaction(this.accountReceiver, this.amount, this.concept);
-			break;
-		default:
-			break;
+			throw new IOException("Fail in card.properties when try open or close file.");
 		}
 	}
 
