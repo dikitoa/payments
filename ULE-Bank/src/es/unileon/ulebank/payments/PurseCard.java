@@ -36,6 +36,7 @@ public class PurseCard extends Card {
 				commissionMaintenance, commissionRenovate);
 	}
 	
+	@Override
 	/**
 	 * Method that makes the payment
 	 * @param receiverAccount Account which receives the money from the card

@@ -57,6 +57,7 @@ public class DebitCard extends Card {
 		this.owner = owner;
 	}
 	
+	@Override
 	/**
 	 * Method that makes the payment
 	 * @param receiverAccount Account which receives the money from the card

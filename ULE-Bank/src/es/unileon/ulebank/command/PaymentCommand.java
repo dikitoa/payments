@@ -122,7 +122,7 @@ public class PaymentCommand implements Command {
 			//Make the transfer for revert the payment
 			Transfer revertPayment = new Transfer(accountReceiver, accountSender, amount);
 			this.setUndoConcept();
-			revertPayment.makeTransfer(this.undoConcept + this.cardId.toString());
+			revertPayment.make(this.undoConcept + this.cardId.toString());
 		} catch (NullPointerException e) {
 			LOG.info(e.getMessage());
 		}

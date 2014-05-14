@@ -51,6 +51,7 @@ public class RevolvingCard extends Card {
 		this.interest = interest;
 	}
 	
+	@Override
 	/**
 	 * Method that makes the payment
 	 * @param receiverAccount Account which receives the money from the card

@@ -12,11 +12,14 @@ import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
+import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
+import es.unileon.ulebank.exceptions.PaymentException;
 import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.fees.FeeStrategy;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.Handler;
+import es.unileon.ulebank.history.CardTransaction;
 import es.unileon.ulebank.history.History;
 import es.unileon.ulebank.history.Transaction;
 
@@ -722,9 +725,21 @@ public abstract class Card {
 	 * @throws TransactionException 
 	 */
 	public void addTransaction(Transaction transaction) throws TransactionException{
-		//Si devuelve false la transacci�n ya esta incluida
+		//Si devuelve false la transaccion ya esta incluida
 		if (!this.transactionHistory.add(transaction))
 			throw new TransactionException("Transacion already exists.");
+	}
+	
+	/**
+	 * Method that makes the payment
+	 * @param receiverAccount Account which receives the money from the card
+	 * @param quantity Amount of the payment
+	 * @param payConcept Concept of the payment
+	 * @throws PaymentException 
+	 * @throws es.unileon.ulebank.history.TransactionException 
+	 */
+	public void makeTransaction(Account receiverAccount, double quantity, String payConcept) throws PaymentException, TransactionException, es.unileon.ulebank.history.TransactionException{
+		
 	}
 
 }

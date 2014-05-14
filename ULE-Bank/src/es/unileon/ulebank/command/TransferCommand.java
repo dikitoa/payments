@@ -80,7 +80,7 @@ public class TransferCommand implements Command {
 	public void execute() throws TransferException, TransactionException {
 		try {
 			Transfer transfer = new Transfer(this.accountSender, this.accountReceiver, this.amount);
-			transfer.makeTransfer(this.concept);
+			transfer.make(this.concept);
 			this.undo = true;
 		} catch (TransferException e) {
 			LOG.info(e.getMessage());
@@ -94,7 +94,7 @@ public class TransferCommand implements Command {
 		if (this.undo) {
 			try {
 				Transfer transfer = new Transfer(this.accountReceiver, this.accountSender, this.amount);
-				transfer.makeTransfer("Return transfer " + this.concept);
+				transfer.make("Return transfer " + this.concept);
 				this.redo = true;
 				this.undo = false;
 			} catch (TransferException e) {
@@ -110,7 +110,7 @@ public class TransferCommand implements Command {
 		if (this.redo) {
 			try {
 				Transfer transfer = new Transfer(this.accountSender, this.accountReceiver, this.amount);
-				transfer.makeTransfer(this.concept);
+				transfer.make(this.concept);
 				this.undo = true;
 				this.redo = false;
 			} catch (TransferException e) {

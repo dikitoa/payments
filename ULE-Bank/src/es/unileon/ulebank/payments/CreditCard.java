@@ -63,7 +63,8 @@ public class CreditCard extends Card {
 		this.owner = owner;
 		this.transactionList = new ArrayList<CardTransaction>();
 	}
-		
+	
+	@Override
 	/**
 	 * Method that makes the payment
 	 * @param receiverAccount Account which receives the money from the card
@@ -74,7 +75,7 @@ public class CreditCard extends Card {
 	 */
 	public void makeTransaction(Account receiverAccount, double quantity, String payConcept) throws PaymentException, TransactionException, es.unileon.ulebank.history.TransactionException{
 		//TODO - Actualizar con las nuevas transacciones
-		//A�adimos la transaccion a la lista
+		//Agyadimos la transaccion a la lista
 		this.transactionList.add(new CardTransaction(quantity, new Date(), payConcept, receiverAccount, this.account));
 		//LLegada la fecha hay que descontar el dinero de la cuenta
 		//Pagar los importes a la cuenta
