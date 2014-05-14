@@ -28,7 +28,7 @@ public class PaymentHandler implements Handler {
 	public PaymentHandler(String cardNumber, String concept, String date) throws PaymentHandlerException{
 		this.id = this.obtainInitials(cardNumber) + this.obtainChars(concept) + this.obtainFinals(date);
 		if (this.id.length() != this.LENGTH)
-			throw new PaymentHandlerException("Longitud de Payment Handler err�nea");
+			throw new PaymentHandlerException("Longitud de Payment Handler err���nea");
 	}
 
 	@Override
@@ -70,6 +70,13 @@ public class PaymentHandler implements Handler {
 				concept.concat("B");
 		
 		return concept.substring(0, 2);
+	}
+	
+	/**
+	 * To String class method
+	 */
+	public String toString() {
+		return this.id;
 	}
 	
 	/**

@@ -31,6 +31,9 @@ public class StrategyCommissionShopBuy implements StrategyCommissionShop {
 		
 	}
 	
+	/**
+	 * Calculates commission
+	 */
 	@Override
 	public float calculateCommission() {		
 		return this.interest * quantity;

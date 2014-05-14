@@ -29,9 +29,23 @@ public class TransferHandler implements Handler {
 		this.id = this.sender + this.receiver + this.date;
 	}
 	
+	/**
+	 * Compares one handler with other
+	 * @return
+	 * 	0 if both are equals
+	 * 	any other number if not equals
+	 */
 	@Override
 	public int compareTo(Handler another) {
 		return this.toString().compareTo(another.toString());
+	}
+	
+	/**
+	 * To String class method
+	 */
+	@Override
+	public String toString() {
+		return this.id;
 	}
 	
 	/**

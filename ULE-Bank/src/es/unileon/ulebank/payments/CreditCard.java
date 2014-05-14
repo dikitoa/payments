@@ -20,10 +20,21 @@ import es.unileon.ulebank.history.CardTransaction;
  * Clase que representa la tarjeta de credito
  */
 public class CreditCard extends Card {
-	
+	/**
+	 * Cuenta a la que esta asociada la tarjeta
+	 */
 	private Account account;
+	/**
+	 * Duegno de la tarjeta
+	 */
 	private Client owner;
+	/**
+	 * Lista de transacciones de la tarjeta
+	 */
 	private List<CardTransaction> transactionList;
+	/**
+	 * Lista de tareas a realizar
+	 */
 	private TaskList transactionTask;
 	
 	/**

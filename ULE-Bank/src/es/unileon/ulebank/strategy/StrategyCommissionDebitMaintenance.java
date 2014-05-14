@@ -65,6 +65,9 @@ public class StrategyCommissionDebitMaintenance implements StrategyCommissionDeb
 			throw new CommissionException("Commission can't been negative.");
 	}
 
+	/**
+	 * Calculates commission
+	 */
 	@Override
 	public float calculateCommission() {
 		if (this.owner.getAge() > this.maximum_age)

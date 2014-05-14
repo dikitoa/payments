@@ -28,6 +28,9 @@ public class StrategyCommissionCreditEmission implements StrategyCommissionCredi
 			throw new CommissionException("Commission can't been negative.");
 	}
 	
+	/**
+	 * Calculates commission
+	 */
 	@Override
 	public float calculateCommission() {
 		return this.quantity;

@@ -24,12 +24,11 @@ public class StrategyCommissionCheckerConsultation implements
 			throw new CommissionException("Commission can't been negative.");
 	}
 	
+	/**
+	 * Calculates commission
+	 */
 	@Override
 	public float calculateCommission() {
 		return this.commission;
 	}
-
-
-
-
 }
