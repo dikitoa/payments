@@ -26,7 +26,7 @@ import es.unileon.ulebank.strategy.StrategyCommissionCreditRenovate;
 import es.unileon.ulebank.transactionManager.TransactionManager;
 
 public class CreditCardTest {
-
+	//TODO cuando un test espera excepcion quitar los assert
 	CreditCard testCard;
 	CardHandler handler;
 	private Office office;

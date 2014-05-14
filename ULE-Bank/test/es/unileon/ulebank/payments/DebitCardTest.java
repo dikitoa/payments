@@ -26,7 +26,7 @@ import es.unileon.ulebank.strategy.StrategyCommissionDebitRenovate;
 import es.unileon.ulebank.transactionManager.TransactionManager;
 
 public class DebitCardTest {
-
+	//TODO cuando un test espera excepcion quitar los assert
 	DebitCard testCard;
 	CardHandler handler;
 	private Office office;
