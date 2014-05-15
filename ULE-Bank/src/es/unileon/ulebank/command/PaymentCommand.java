@@ -20,10 +20,6 @@ import es.unileon.ulebank.history.TransactionException;
 import es.unileon.ulebank.office.Office;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.CardType;
-import es.unileon.ulebank.payments.CreditCard;
-import es.unileon.ulebank.payments.DebitCard;
-import es.unileon.ulebank.payments.PurseCard;
-import es.unileon.ulebank.payments.RevolvingCard;
 import es.unileon.ulebank.payments.Transfer;
 
 /**
@@ -36,7 +32,7 @@ public class PaymentCommand implements Command {
 	/**
 	 * Logger Class
 	 */
-	private static final Logger LOG = Logger.getLogger(ModifyPinCommand.class.getName());
+	private static final Logger LOG = Logger.getLogger(PaymentCommand.class.getName());
 	private final String UNDO_PROPERTY = "concept_undo_payment";
 	/**
 	 * String for add in the concept when makes the undo method
@@ -70,10 +66,6 @@ public class PaymentCommand implements Command {
 	 * Concept of the payment
 	 */
 	private String concept;
-	/**
-	 * Type of the Card
-	 */
-	private CardType type;
 	
 	/**
 	 * Class constructor
@@ -87,15 +79,13 @@ public class PaymentCommand implements Command {
 	 * @param concept
 	 * @param type
 	 */
-	public PaymentCommand(Handler cardId, Office office, Handler dni, Handler accountHandler, Handler dniReceiver, Handler accountReceiver, double amount, String concept, CardType type) {
+	public PaymentCommand(Handler cardId, Office office, Handler dni, Handler accountHandler, double amount, String concept, CardType type) {
 		try {
 			this.id = new CommandHandler(cardId);
 			this.cardId = cardId;
 			this.accountSender = office.searchClient((DNIHandler) dni).searchAccount((AccountHandler) accountHandler);
-			this.accountReceiver = office.searchClient((DNIHandler) dniReceiver).searchAccount((AccountHandler) accountReceiver);
 			this.amount = amount;
 			this.concept = concept;
-			this.type = type;
 		} catch (ClientNotFoundException e) {
 			LOG.info("Client with dni " + dni.toString() + " is not found");
 		} catch (NullPointerException e) {
@@ -109,7 +99,7 @@ public class PaymentCommand implements Command {
 			//Search the account for that card
 			this.card = accountSender.searchCard((CardHandler) cardId);
 			//Make the payment by the type of the card
-			this.card.makeTransaction(this.accountReceiver, this.amount, this.concept);
+			this.card.makeTransaction(this.amount, this.concept);
 		} catch (NullPointerException e) {
 			LOG.info(e.getMessage());
 		}
@@ -133,7 +123,7 @@ public class PaymentCommand implements Command {
 	public void redo() throws PaymentException, TransactionException {
 		try {
 			//Make the payment by the type of the card
-			this.card.makeTransaction(this.accountReceiver, this.amount, this.concept);
+			this.card.makeTransaction(this.amount, this.concept);
 		} catch (NullPointerException e) {
 			LOG.info(e.getMessage());
 		}
@@ -154,7 +144,7 @@ public class PaymentCommand implements Command {
 			Properties commissionProperty = new Properties();
 			commissionProperty.load(new FileInputStream("src/es/unileon/ulebank/properties/card.properties"));
 			
-			/**Obtain the paramentes in card.properties*/
+			/*Obtain the paramentes in card.properties*/
 			this.undoConcept = commissionProperty.getProperty(this.UNDO_PROPERTY);
 		}
 		catch(FileNotFoundException e){

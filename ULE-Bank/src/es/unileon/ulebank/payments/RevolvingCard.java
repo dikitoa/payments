@@ -62,13 +62,12 @@ public class RevolvingCard extends Card {
 	
 	/**
 	 * Method that makes the payment
-	 * @param receiverAccount Account which receives the money from the card
 	 * @param quantity Amount of the payment
 	 * @param payConcept Concept of the payment
 	 * @throws PaymentException
 	 */
 	@Override
-	public void makeTransaction(Account receiverAccount, double quantity, String payConcept) throws PaymentException{
+	public void makeTransaction(double quantity, String payConcept) throws PaymentException{
 		//TODO
 	}
 }

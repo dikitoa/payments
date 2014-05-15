@@ -59,20 +59,19 @@ public class DebitCard extends Card {
 	
 	/**
 	 * Method that makes the payment
-	 * @param receiverAccount Account which receives the money from the card
 	 * @param quantity Amount of the payment
 	 * @param payConcept Concept of the payment
 	 * @throws PaymentException
 	 * @throws TransactionException 
 	 */
 	@Override
-	public void makeTransaction(Account receiverAccount, double quantity, String payConcept) throws PaymentException, TransactionException {
+	public void makeTransaction(double quantity, String payConcept) throws PaymentException, TransactionException {
 
 		try{
 			//Discount the quantity from sender account
-			this.account.doWithdrawal(new CardTransaction(quantity, new Date(), payConcept, this.account));
+			this.account.doWithdrawal(new CardTransaction(quantity, new Date(), payConcept));
 			//Add the money to receiver account
-			receiverAccount.doDeposit(new CardTransaction(quantity, new Date(), payConcept, receiverAccount));
+			//receiverAccount.doDeposit(new CardTransaction(quantity, new Date(), payConcept, receiverAccount));
 		}catch(TransactionException e){
 			throw new PaymentException("Denegate Transaction");
 		}
