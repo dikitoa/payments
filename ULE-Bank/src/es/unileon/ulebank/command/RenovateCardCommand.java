@@ -2,8 +2,6 @@ package es.unileon.ulebank.command;
 
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
-
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.exceptions.ClientNotFoundException;
@@ -19,10 +17,6 @@ import es.unileon.ulebank.payments.Card;
  * Comando para la renovacion de la tarjeta
  */
 public class RenovateCardCommand implements Command {
-	/**
-	 * Logger de la clase
-	 */
-	private static final Logger LOG = Logger.getLogger(RenovateCardCommand.class.getName());
 	/**
 	 * Identificador del comando
 	 */
@@ -62,78 +56,58 @@ public class RenovateCardCommand implements Command {
 	 * @param office
 	 * @param dni
 	 * @param accountHandler
+	 * @throws ClientNotFoundException 
 	 */
-	public RenovateCardCommand(Handler cardId, Office office, Handler dni, Handler accountHandler) {
-		try {
-			this.id = new CommandHandler(cardId);
-			this.cardId = cardId;
-			this.account = office.searchClient((DNIHandler) dni).searchAccount((AccountHandler) accountHandler);
-		} catch (ClientNotFoundException e) {
-			LOG.info("Client with dni " + dni.toString() + " does not exists");
-		} catch (NullPointerException e) {
-			LOG.info(e.getMessage());
-		}/* catch (AccountNotFoundException e) {
-			LOG.info("Account with number " + accountHandler.toString() + " does not exists");
-		}*/
+	public RenovateCardCommand(Handler cardId, Office office, Handler dni, Handler accountHandler) throws ClientNotFoundException {
+		this.id = new CommandHandler(cardId);
+		this.cardId = cardId;
+		this.account = office.searchClient((DNIHandler) dni).searchAccount((AccountHandler) accountHandler);
 	}
 	
 	/**
 	 * Realiza la renovacion de la tarjeta
+	 * @throws IOException 
 	 */
 	@Override
-	public void execute() {
-		try {
-			//Buscamos la tarjeta en la cuenta con el identificador de la misma
-			this.card = this.account.searchCard((CardHandler) cardId);
-			//Guardamos el CVV para poder deshacer la operacion
-			this.oldCvv = this.card.getCvv();
-			//Guardamos la fecha de caducidad para poder deshacer la operacion
-			this.oldExpirationDate = card.getExpirationDate();
-			//Generamos la nueva fecha de caducidad
-			this.newExpirationDate = card.generateExpirationDate();
-			//Cambiamos la fecha de caducidad por la nueva
-			this.card.setExpirationDate(newExpirationDate);
-			//Generamos el nuevo CVV y lo guardamos
-			this.newCvv = card.generateCVV();
-			//Cambiamos el CVV por el nuevo que se genera
-			this.card.setCvv(newCvv);
-		} catch (IOException e) {
-			LOG.info(e.getMessage());
-		} catch (NullPointerException e) {
-			LOG.info(e.getMessage());
-		}/* catch (CardNotFoundException e) {
-			LOG.info("Card with number " + cardId.toString() + " does not exists");
-		}*/
+	public void execute() throws IOException {
+		//Buscamos la tarjeta en la cuenta con el identificador de la misma
+		this.card = this.account.searchCard((CardHandler) cardId);
+		//Guardamos el CVV para poder deshacer la operacion
+		this.oldCvv = this.card.getCvv();
+		//Guardamos la fecha de caducidad para poder deshacer la operacion
+		this.oldExpirationDate = card.getExpirationDate();
+		//Generamos la nueva fecha de caducidad
+		this.newExpirationDate = card.generateExpirationDate();
+		//Cambiamos la fecha de caducidad por la nueva
+		this.card.setExpirationDate(newExpirationDate);
+		//Generamos el nuevo CVV y lo guardamos
+		this.newCvv = card.generateCVV();
+		//Cambiamos el CVV por el nuevo que se genera
+		this.card.setCvv(newCvv);
 	}
 
 	/**
 	 * Deshace la renovacion de la tarjeta
+	 * @throws IOException 
 	 */
 	@Override
-	public void undo() {
-		try {
-			//Restaura el antiguo CVV
-			this.card.setCvv(oldCvv);
-			//Restaura la antigua fecha de caducidad
-			this.card.setExpirationDate(oldExpirationDate);
-		} catch (IOException e) {
-			LOG.info(e.getMessage());
-		}
+	public void undo() throws IOException {
+		//Restaura el antiguo CVV
+		this.card.setCvv(oldCvv);
+		//Restaura la antigua fecha de caducidad
+		this.card.setExpirationDate(oldExpirationDate);
 	}
 
 	/**
 	 * Rehace la renovacion de la tarjeta despues de haber deshecho la operacion
+	 * @throws IOException 
 	 */
 	@Override
-	public void redo() {
-		try {
-			//Vuelve a cambiar el CVV por el que se habia generado
-			this.card.setCvv(newCvv);
-			//Vuelve a cambiar la fecha de caducidad por la nueva
-			this.card.setExpirationDate(newExpirationDate);
-		} catch (IOException e) {
-			LOG.info(e.getMessage());
-		}
+	public void redo() throws IOException {
+		//Vuelve a cambiar el CVV por el que se habia generado
+		this.card.setCvv(newCvv);
+		//Vuelve a cambiar la fecha de caducidad por la nueva
+		this.card.setExpirationDate(newExpirationDate);
 	}
 
 	/**

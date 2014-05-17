@@ -11,7 +11,6 @@ import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.bank.Bank;
 import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
-import es.unileon.ulebank.fees.InvalidFeeException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.DNIHandler;
@@ -150,7 +149,7 @@ public class NewCardCommandTest {
 	}
 	
 	@Test (expected = UnsupportedOperationException.class)
-	public void testRedoNewCreditCardCommand() throws InvalidFeeException {
+	public void testRedoNewCreditCardCommand() throws Exception {
 		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeCredit, bankHandler.toString(), officeId, cardId,
 				buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, 
 				commissionMaintenance, commissionRenovate);
@@ -160,7 +159,7 @@ public class NewCardCommandTest {
 	}
 	
 	@Test (expected = UnsupportedOperationException.class)
-	public void testRedoNewDebitCardCommand() throws InvalidFeeException {
+	public void testRedoNewDebitCardCommand() throws Exception {
 		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeDebit, bankHandler.toString(), officeId, cardId,
 				buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, 
 				commissionMaintenance, commissionRenovate);

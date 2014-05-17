@@ -80,14 +80,14 @@ public class ReplacementCardCommandTest {
 	}
 	
 	@Test
-	public void testCommandId() {
+	public void testCommandId() throws Exception {
 		test = new ReplacementCardCommand(handler1, office, dni, accountHandler);
 		CommandHandler handler = (CommandHandler) test.getId();
 		assertTrue(handler1.compareTo(handler.getId()) == 0);
 	}
 	
 	@Test
-	public void testReplacementCreditCard() {
+	public void testReplacementCreditCard() throws Exception {
 		test = new ReplacementCardCommand(handler2, office, dni, accountHandler);
 		assertEquals("123", card2.getCvv());
 		assertEquals("0000", card2.getPin());
@@ -97,7 +97,7 @@ public class ReplacementCardCommandTest {
 	}
 	
 	@Test
-	public void testUndoReplacementCreditCardOk() {
+	public void testUndoReplacementCreditCardOk() throws Exception {
 		test = new ReplacementCardCommand(handler2, office, dni, accountHandler);
 		assertEquals("123", card2.getCvv());
 		assertEquals("0000", card2.getPin());
@@ -110,7 +110,7 @@ public class ReplacementCardCommandTest {
 	}
 	
 	@Test (expected = NullPointerException.class)
-	public void testUndoReplacementCreditCardFail() {
+	public void testUndoReplacementCreditCardFail() throws Exception {
 		test = new ReplacementCardCommand(handler2, office, dni, accountHandler);
 		assertEquals("123", card2.getCvv());
 		assertEquals("0000", card2.getPin());
@@ -118,7 +118,7 @@ public class ReplacementCardCommandTest {
 	}
 	
 	@Test
-	public void testRedoReplacementCreditCardOk() {
+	public void testRedoReplacementCreditCardOk() throws Exception {
 		test = new ReplacementCardCommand(handler2, office, dni, accountHandler);
 		assertEquals("123", card2.getCvv());
 		assertEquals("0000", card2.getPin());
@@ -134,7 +134,7 @@ public class ReplacementCardCommandTest {
 	}
 	
 	@Test (expected = NullPointerException.class)
-	public void testRedoReplacementCreditCardFail() {
+	public void testRedoReplacementCreditCardFail() throws Exception {
 		test = new ReplacementCardCommand(handler2, office, dni, accountHandler);
 		assertEquals("123", card2.getCvv());
 		assertEquals("0000", card2.getPin());
@@ -142,7 +142,7 @@ public class ReplacementCardCommandTest {
 	}
 	
 	@Test
-	public void testReplacementDebitCard() {
+	public void testReplacementDebitCard() throws Exception {
 		test = new ReplacementCardCommand(handler1, office, dni, accountHandler);
 		assertEquals("213", card1.getCvv());
 		assertEquals("1234", card1.getPin());
@@ -152,7 +152,7 @@ public class ReplacementCardCommandTest {
 	}
 	
 	@Test
-	public void testUndoReplacementDebitCardOk() {
+	public void testUndoReplacementDebitCardOk() throws Exception {
 		test = new ReplacementCardCommand(handler1, office, dni, accountHandler);
 		assertEquals("213", card1.getCvv());
 		assertEquals("1234", card1.getPin());
@@ -165,7 +165,7 @@ public class ReplacementCardCommandTest {
 	}
 	
 	@Test (expected = NullPointerException.class)
-	public void testUndoReplacementDebitCardFail() {
+	public void testUndoReplacementDebitCardFail() throws Exception {
 		test = new ReplacementCardCommand(handler1, office, dni, accountHandler);
 		assertEquals("213", card1.getCvv());
 		assertEquals("1234", card1.getPin());
@@ -173,7 +173,7 @@ public class ReplacementCardCommandTest {
 	}
 	
 	@Test
-	public void testRedoReplacementDebitCardOk() {
+	public void testRedoReplacementDebitCardOk() throws Exception {
 		test = new ReplacementCardCommand(handler1, office, dni, accountHandler);
 		assertEquals("213", card1.getCvv());
 		assertEquals("1234", card1.getPin());
@@ -189,7 +189,7 @@ public class ReplacementCardCommandTest {
 	}
 	
 	@Test (expected = NullPointerException.class)
-	public void testRedoReplacementDebitCardFail() {
+	public void testRedoReplacementDebitCardFail() throws Exception {
 		test = new ReplacementCardCommand(handler1, office, dni, accountHandler);
 		assertEquals("213", card1.getCvv());
 		assertEquals("1234", card1.getPin());

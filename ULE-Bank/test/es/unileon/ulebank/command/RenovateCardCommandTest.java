@@ -77,14 +77,14 @@ public class RenovateCardCommandTest {
 	}
 	
 	@Test
-	public void testCommandId() {
+	public void testCommandId() throws Exception {
 		test = new RenovateCardCommand(handler1, office, dni, accountHandler);
 		CommandHandler handler = (CommandHandler) test.getId();
 		assertTrue(this.handler1.compareTo(handler.getId()) == 0);
 	}
 	
 	@Test
-	public void testRenovateCreditCard() {
+	public void testRenovateCreditCard() throws Exception {
 		test = new RenovateCardCommand(handler2, office, dni, accountHandler);
 		assertEquals("04/14", this.card2.getExpirationDate());
 		assertEquals("123", this.card2.getCvv());
@@ -94,7 +94,7 @@ public class RenovateCardCommandTest {
 	}
 	
 	@Test
-	public void testUndoRenovateCreditCardOk() {
+	public void testUndoRenovateCreditCardOk() throws Exception {
 		test = new RenovateCardCommand(handler2, office, dni, accountHandler);
 		assertEquals("04/14", this.card2.getExpirationDate());
 		assertEquals("123", this.card2.getCvv());
@@ -107,7 +107,7 @@ public class RenovateCardCommandTest {
 	}
 	
 	@Test (expected = NullPointerException.class)
-	public void testUndoRenovateCreditCardFail() {
+	public void testUndoRenovateCreditCardFail() throws Exception {
 		test = new RenovateCardCommand(handler2, office, dni, accountHandler);
 		assertEquals("04/14", this.card2.getExpirationDate());
 		assertEquals("123", this.card2.getCvv());
@@ -115,7 +115,7 @@ public class RenovateCardCommandTest {
 	}
 	
 	@Test
-	public void testRedoRenovateCreditCardOk() {
+	public void testRedoRenovateCreditCardOk() throws Exception {
 		test = new RenovateCardCommand(handler2, office, dni, accountHandler);
 		assertEquals("04/14", this.card2.getExpirationDate());
 		assertEquals("123", this.card2.getCvv());
@@ -131,7 +131,7 @@ public class RenovateCardCommandTest {
 	}
 	
 	@Test (expected = NullPointerException.class)
-	public void testRedoRenovateCreditCardFail() {
+	public void testRedoRenovateCreditCardFail() throws Exception {
 		test = new RenovateCardCommand(handler2, office, dni, accountHandler);
 		assertEquals("04/14", this.card2.getExpirationDate());
 		assertEquals("123", this.card2.getCvv());
@@ -139,7 +139,7 @@ public class RenovateCardCommandTest {
 	}
 	
 	@Test
-	public void testRenovateDebitCard() {
+	public void testRenovateDebitCard() throws Exception {
 		test = new RenovateCardCommand(handler1, office, dni, accountHandler);
 		assertEquals("04/14", this.card1.getExpirationDate());
 		assertEquals("213", this.card1.getCvv());
@@ -149,7 +149,7 @@ public class RenovateCardCommandTest {
 	}
 	
 	@Test
-	public void testUndoRenovateDebitCardOk() {
+	public void testUndoRenovateDebitCardOk() throws Exception {
 		test = new RenovateCardCommand(handler1, office, dni, accountHandler);
 		assertEquals("04/14", this.card1.getExpirationDate());
 		assertEquals("213", this.card1.getCvv());
@@ -162,7 +162,7 @@ public class RenovateCardCommandTest {
 	}
 	
 	@Test (expected = NullPointerException.class)
-	public void testUndoRenovateDebitCardFail() {
+	public void testUndoRenovateDebitCardFail() throws Exception {
 		test = new RenovateCardCommand(handler1, office, dni, accountHandler);
 		assertEquals("04/14", this.card1.getExpirationDate());
 		assertEquals("213", this.card1.getCvv());
@@ -170,7 +170,7 @@ public class RenovateCardCommandTest {
 	}
 	
 	@Test
-	public void testRedoRenovateDebitCardOk() {
+	public void testRedoRenovateDebitCardOk() throws Exception {
 		test = new RenovateCardCommand(handler1, office, dni, accountHandler);
 		assertEquals("04/14", this.card1.getExpirationDate());
 		assertEquals("213", this.card1.getCvv());
@@ -186,7 +186,7 @@ public class RenovateCardCommandTest {
 	}
 	
 	@Test (expected = NullPointerException.class)
-	public void testRedoRenovateDebitCardFail() {
+	public void testRedoRenovateDebitCardFail() throws Exception {
 		test = new RenovateCardCommand(handler1, office, dni, accountHandler);
 		assertEquals("04/14", this.card1.getExpirationDate());
 		assertEquals("213", this.card1.getCvv());

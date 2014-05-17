@@ -12,6 +12,7 @@ import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.bank.Bank;
 import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
+import es.unileon.ulebank.exceptions.ClientNotFoundException;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.fees.InvalidFeeException;
 import es.unileon.ulebank.handler.CardHandler;
@@ -68,14 +69,14 @@ public class CancelCardCommandTest {
 	}
 	
 	@Test
-	public void testCommandId() {
+	public void testCommandId() throws ClientNotFoundException {
 		test = new CancelCardCommand(handler1, office, dni, accountHandler);
 		CommandHandler handler = (CommandHandler) test.getId();
 		assertTrue(handler.getId().compareTo(card1.getCardNumber()) == 0);
 	}
 	
 	@Test
-	public void testCancelDebitCard() {
+	public void testCancelDebitCard() throws ClientNotFoundException {
 		test = new CancelCardCommand(handler1, office, dni, accountHandler);
 		assertEquals(2, account.getCardAmount());
 		test.execute();
@@ -83,21 +84,21 @@ public class CancelCardCommandTest {
 	}
 	
 	@Test (expected = UnsupportedOperationException.class)
-	public void testUndoCancelDebitCard() {
+	public void testUndoCancelDebitCard() throws ClientNotFoundException {
 		test = new CancelCardCommand(handler1, office, dni, accountHandler);
 		test.execute();
 		test.undo();
 	}
 	
 	@Test (expected = UnsupportedOperationException.class)
-	public void testRedoCancelDebitCard() {
+	public void testRedoCancelDebitCard() throws ClientNotFoundException {
 		test = new CancelCardCommand(handler1, office, dni, accountHandler);
 		test.execute();
 		test.redo();
 	}
 	
 	@Test
-	public void testCancelCreditCard() {
+	public void testCancelCreditCard() throws ClientNotFoundException {
 		test = new CancelCardCommand(handler2, office, dni, accountHandler);
 		assertEquals(2, account.getCardAmount());
 		test.execute();
@@ -105,14 +106,14 @@ public class CancelCardCommandTest {
 	}
 	
 	@Test (expected = UnsupportedOperationException.class)
-	public void testUndoCancelCreditCard() {
+	public void testUndoCancelCreditCard() throws ClientNotFoundException {
 		test = new CancelCardCommand(handler2, office, dni, accountHandler);
 		test.execute();
 		test.undo();
 	}
 	
 	@Test (expected = UnsupportedOperationException.class)
-	public void testRedoCancelCreditCard() {
+	public void testRedoCancelCreditCard() throws ClientNotFoundException {
 		test = new CancelCardCommand(handler2, office, dni, accountHandler);
 		test.execute();
 		test.redo();

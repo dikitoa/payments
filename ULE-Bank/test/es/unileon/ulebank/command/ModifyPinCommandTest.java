@@ -12,6 +12,7 @@ import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.bank.Bank;
 import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
+import es.unileon.ulebank.exceptions.ClientNotFoundException;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.fees.InvalidFeeException;
 import es.unileon.ulebank.handler.CardHandler;
@@ -69,7 +70,7 @@ public class ModifyPinCommandTest {
 	}
 	
 	@Test
-	public void testCommandId() {
+	public void testCommandId() throws ClientNotFoundException {
 		test = new ModifyPinCommand(this.handler, office, dni, accountHandler, newPin);
 		CommandHandler commandId = (CommandHandler) test.getId();
 		String date = commandId.getDate();
@@ -77,7 +78,7 @@ public class ModifyPinCommandTest {
 	}
 	
 	@Test
-	public void testModifyPinOk() {
+	public void testModifyPinOk() throws ClientNotFoundException, IOException {
 		test = new ModifyPinCommand(handler, office, dni, accountHandler, newPin);
 		assertEquals("1234", card.getPin());
 		test.execute();
@@ -85,7 +86,7 @@ public class ModifyPinCommandTest {
 	}
 	
 	@Test
-	public void testModifyPinFail() {
+	public void testModifyPinFail() throws ClientNotFoundException, IOException {
 		test = new ModifyPinCommand(handler, office, dni, accountHandler, "4s22");
 		test.execute();
 		assertEquals("1234", card.getPin());
@@ -95,7 +96,7 @@ public class ModifyPinCommandTest {
 	}
 	
 	@Test
-	public void testUndoMofifyPinOk() {
+	public void testUndoMofifyPinOk() throws Exception {
 		test = new ModifyPinCommand(handler, office, dni, accountHandler, newPin);
 		assertEquals("1234", card.getPin());
 		test.execute();
@@ -105,14 +106,14 @@ public class ModifyPinCommandTest {
 	}
 	
 	@Test (expected = NullPointerException.class)
-	public void testUndoMofifyPinFail() {
+	public void testUndoMofifyPinFail() throws Exception {
 		test = new ModifyPinCommand(handler, office, dni, accountHandler, newPin);
 		assertEquals("1234", card.getPin());
 		test.undo();
 	}
 	
 	@Test
-	public void testRedoModifyPinOk() {
+	public void testRedoModifyPinOk() throws Exception {
 		test = new ModifyPinCommand(handler, office, dni, accountHandler, newPin);
 		assertEquals("1234", card.getPin());
 		test.execute();
@@ -124,7 +125,7 @@ public class ModifyPinCommandTest {
 	}
 	
 	@Test (expected = NullPointerException.class)
-	public void testRedoModifyPinFail() {
+	public void testRedoModifyPinFail() throws Exception {
 		test = new ModifyPinCommand(handler, office, dni, accountHandler, newPin);
 		assertEquals("1234", card.getPin());
 		test.redo();

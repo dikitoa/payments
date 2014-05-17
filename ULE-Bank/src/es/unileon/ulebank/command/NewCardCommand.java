@@ -129,60 +129,54 @@ public class NewCardCommand implements Command {
 	/**
 	 * Realiza la creacion de la tarjeta con todos los parametros necesarios
 	 * @throws InvalidFeeException 
+	 * @throws ClientNotFoundException 
+	 * @throws IOException 
+	 * @throws NumberFormatException 
 	 */
 	@Override
-	public void execute() throws InvalidFeeException {
-		try {
-			//Obtiene el cliente de la sucursal con el DNI
-			Client client = office.searchClient((DNIHandler) dni);
-			//Busca la cuenta del cliente con el identificador de la cuenta
-			this.account = client.searchAccount((AccountHandler) accountHandler);
-			//Crea una tarjeta en funcion del tipo indicado
-			switch (type) {
-			case CREDIT:
-				
-				try {
-					this.card = new CreditCard(cardHandler, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, commissionMaintenance, commissionRenovate);
-				} catch (CommissionException e1) {
-					LOG.info("Error creating commission");
-				}
-				
-				break;
-			case DEBIT:
-				try {
-					this.card = new DebitCard(cardHandler, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, commissionMaintenance, commissionRenovate);
-				} catch (CommissionException e1) {
-					LOG.info("Error creating commission");
-				}
-				break;
-			case REVOLVING:
-				
-				break;
-			case PURSE:
+	public void execute() throws InvalidFeeException, ClientNotFoundException, NumberFormatException, IOException {
+		//Obtiene el cliente de la sucursal con el DNI
+		Client client = office.searchClient((DNIHandler) dni);
+		//Busca la cuenta del cliente con el identificador de la cuenta
+		this.account = client.searchAccount((AccountHandler) accountHandler);
+		//Crea una tarjeta en funcion del tipo indicado
+		switch (type) {
+		case CREDIT:
 
-				break;
+			try {
+				this.card = new CreditCard(cardHandler, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, commissionMaintenance, commissionRenovate);
+			} catch (CommissionException e1) {
+				LOG.info("Error creating commission");
 			}
-			this.card.setDefaultCardProperties();
-			new SecurityCard(card);
-			//Por ultimo asocia la tarjeta a la cuenta
-			account.addCard(card);
-		} catch (ClientNotFoundException e) {
-			LOG.info("The client whose dni is " + dni.toString() + " does not found.");
-		} catch (NumberFormatException e) {
-			LOG.info("The String must only contains numbers.");
-		} catch (IOException e) {
-			LOG.info("Input/Output error.");
-		} catch (NullPointerException e) {
-			LOG.info(e.getMessage());
+
+			break;
+		case DEBIT:
+			try {
+				this.card = new DebitCard(cardHandler, client, account, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, commissionMaintenance, commissionRenovate);
+			} catch (CommissionException e1) {
+				LOG.info("Error creating commission");
+			}
+			break;
+		case REVOLVING:
+
+			break;
+		case PURSE:
+
+			break;
 		}
+		this.card.setDefaultCardProperties();
+		new SecurityCard(card);
+		//Por ultimo asocia la tarjeta a la cuenta
+		account.addCard(card);
 		
 	}
 
 	/**
 	 * Deshace la creacion de la tarjeta
+	 * @throws ClientNotFoundException 
 	 */
 	@Override
-	public void undo() {
+	public void undo() throws ClientNotFoundException {
 		CancelCardCommand cancel = new CancelCardCommand(cardHandler, office, dni, accountHandler);
 		cancel.execute();
 	}

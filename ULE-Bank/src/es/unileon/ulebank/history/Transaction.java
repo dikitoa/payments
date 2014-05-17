@@ -29,6 +29,9 @@ public abstract class Transaction {
      */
     public Transaction(double amount, Date date, String subject) throws TransactionException {
         this.id = TransactionHandlerProvider.getTransactionHandler();
+        this.subject = subject;
+        this.amount = amount;
+        this.date = date;
         
         if (amount == 0) {
             throw new TransactionException("Amount can't be 0");
@@ -37,10 +40,6 @@ public abstract class Transaction {
         if (this.subject.isEmpty()) {
             throw new TransactionException("Subject can't be empty");
         }
-        
-        this.amount = amount;
-        this.date = date;
-        this.subject = subject;
     }
 
     /**

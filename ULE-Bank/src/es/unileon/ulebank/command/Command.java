@@ -19,20 +19,20 @@ public interface Command {
 	 * @throws PaymentException 
 	 * @throws TransferException 
 	 */
-	public void execute() throws InvalidFeeException, PaymentException, TransactionException, TransferException;
+	public void execute() throws Exception;
 	/**
 	 * Deshace los cambios realizados
 	 * @throws TransferException 
 	 * @throws TransactionException 
 	 * @throws IOException 
 	 */
-	public void undo() throws TransferException, TransactionException, IOException;
+	public void undo() throws Exception;
 	/**
 	 * Rehace los cambios deshechos
 	 * @throws TransactionException 
 	 * @throws PaymentException 
 	 */
-	public void redo() throws PaymentException, TransactionException;
+	public void redo() throws Exception;
 	/**
 	 * Devuelve el identificador del comando
 	 * @return

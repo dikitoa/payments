@@ -10,7 +10,10 @@ import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.bank.Bank;
 import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
+import es.unileon.ulebank.exceptions.ClientNotFoundException;
+import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.exceptions.CommissionException;
+import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.fees.InvalidFeeException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
@@ -55,13 +58,13 @@ public class ModifyCashLimitCommandTest {
 	}
 	
 	@Test
-	public void testCommandNotNull() {
+	public void testCommandNotNull() throws ClientNotFoundException {
 		test = new ModifyCashLimitCommand(handler, office, dni, accountHandler, 100.0, "diary");
 		assertTrue(test != null);
 	}
 	
 	@Test
-	public void testCommandId() {
+	public void testCommandId() throws ClientNotFoundException {
 		test = new ModifyCashLimitCommand(this.handler, office, dni, accountHandler, 200.0, "diary");
 		CommandHandler commandId = (CommandHandler) test.getId();
 		String date = commandId.getDate();
@@ -69,7 +72,7 @@ public class ModifyCashLimitCommandTest {
 	}
 	
 	@Test
-	public void testLimitDiaryModified() {
+	public void testLimitDiaryModified() throws ClientNotFoundException, IncorrectLimitException, CommandException {
 		test = new ModifyCashLimitCommand(handler, office, dni, accountHandler, 200.0, "Diary");
 		assertEquals(400.0, this.testCard.getCashLimitDiary(), 0.0001);
 		test.execute();
@@ -77,7 +80,7 @@ public class ModifyCashLimitCommandTest {
 	}
 	
 	@Test
-	public void testLimitDiaryNotModified() {
+	public void testLimitDiaryNotModified() throws IncorrectLimitException, CommandException, ClientNotFoundException {
 		test = new ModifyCashLimitCommand(handler, office, dni, accountHandler, 1100.0, "Diary");
 		assertEquals(400.0, this.testCard.getCashLimitDiary(), 0.0001);
 		test.execute();
@@ -86,7 +89,7 @@ public class ModifyCashLimitCommandTest {
 	}
 	
 	@Test
-	public void testLimitMonthlyModified() {
+	public void testLimitMonthlyModified() throws ClientNotFoundException, IncorrectLimitException, CommandException {
 		test = new ModifyCashLimitCommand(handler, office, dni, accountHandler, 2000.0, "Monthly");
 		assertEquals(1000.0, this.testCard.getCashLimitMonthly(), 0.0001);
 		test.execute();
@@ -94,7 +97,7 @@ public class ModifyCashLimitCommandTest {
 	}
 	
 	@Test
-	public void testLimitMonthlyNotModified() {
+	public void testLimitMonthlyNotModified() throws ClientNotFoundException, IncorrectLimitException, CommandException {
 		test = new ModifyCashLimitCommand(handler, office, dni, accountHandler, 300.0, "Monthly");
 		assertEquals(1000.0, this.testCard.getCashLimitMonthly(), 0.0001);
 		test.execute();
@@ -102,7 +105,7 @@ public class ModifyCashLimitCommandTest {
 	}
 	
 	@Test
-	public void testTypeOK() {
+	public void testTypeOK() throws ClientNotFoundException, IncorrectLimitException, CommandException {
 		test = new ModifyCashLimitCommand(handler, office, dni, accountHandler, 300.0, "DIARY");
 		test.execute();
 		assertTrue(this.testCard != null);
@@ -110,7 +113,7 @@ public class ModifyCashLimitCommandTest {
 	}
 	
 	@Test
-	public void testTypeNotOK() {
+	public void testTypeNotOK() throws ClientNotFoundException, IncorrectLimitException, CommandException {
 		test = new ModifyCashLimitCommand(handler, office, dni, accountHandler, 300.0, "");
 		test.execute();
 		//Any changes in both limits
@@ -123,7 +126,7 @@ public class ModifyCashLimitCommandTest {
 	}
 	
 	@Test
-	public void undoTest() {
+	public void undoTest() throws ClientNotFoundException, IncorrectLimitException, CommandException {
 		test = new ModifyCashLimitCommand(this.handler, office, dni, accountHandler, 300.0, "diary");
 		test.execute();
 		assertEquals(300.0, testCard.getCashLimitDiary(), 0.0001);
@@ -132,7 +135,7 @@ public class ModifyCashLimitCommandTest {
 	}
 	
 	@Test
-	public void redoTest() {
+	public void redoTest() throws ClientNotFoundException, IncorrectLimitException, CommandException {
 		test = new ModifyCashLimitCommand(this.handler, office, dni, accountHandler, 300.0, "diary");
 		test.execute();
 		assertEquals(300.0, testCard.getCashLimitDiary(), 0.0001);
