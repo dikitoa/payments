@@ -60,7 +60,8 @@ public class TransferHandlerTests {
 	public void testCompareToDifferents() {
 		String senderFirst="victor";
 		String receiverFirst="david";
-		TransferHandler transferHandler1 = new TransferHandler(senderFirst,senderFirst);
+		TransferHandler transferHandler1 = new TransferHandler(senderFirst,receiverFirst);
+		assertNotNull(transferHandler1);
 		assertNotEquals(transferHandler1.compareTo(transferHandler), 0);
 	}
 	
@@ -68,8 +69,8 @@ public class TransferHandlerTests {
 	public void testCompareToEquals() {
 		String senderFirst="victor";
 		String receiverFirst="david";
-		TransferHandler transferHandler1 = new TransferHandler(senderFirst,senderFirst);
-		assertEquals(transferHandler1.compareTo(transferHandler1), 0);
+		TransferHandler transferHandler1 = new TransferHandler(senderFirst,receiverFirst);
+		assertNotNull(compareTransferHandler);
 		assertEquals(transferHandler.compareTo(compareTransferHandler),0);
 	}
 	
