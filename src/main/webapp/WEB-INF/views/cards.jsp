@@ -45,5 +45,11 @@
 		</c:forEach>
 		<br><br>
 		<a href="createcard.htm">New Card</a>
+		<button type="button"
+		onClick="location.href='<c:url value="buyLimits.htm"/>'">Change
+		Buy Limits</button> 
+	<button type="button"
+		onClick="location.href='<c:url value="cashLimits.htm"/>'">Change
+		Cash Limits</button>
 	</body>
 </html>

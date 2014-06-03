@@ -46,4 +46,10 @@ public class InMemoryCardDao implements CardDao {
 	public Account getAccount(String accountNumber) {
 		return null;
 	}
+
+	@Override
+	public Card getCardDAO(String card_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
