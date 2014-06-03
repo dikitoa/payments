@@ -59,9 +59,3 @@ CREATE TABLE transactionHistory (
 	card_id VarChar(19) REFERENCES cards (id),
 	CONSTRAINT pk_transacyion_history PRIMARY KEY (transaction_id, card_id)
 );
-
-CREATE TABLE commissions (
-  id INTEGER PRIMARY KEY,
-  description varchar(255),
-  commission decimal(15,2)
-);
