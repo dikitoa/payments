@@ -2,11 +2,15 @@ package es.unileon.ulebank.service;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.client.Client;
+import es.unileon.ulebank.command.Command;
+import es.unileon.ulebank.command.ModifyBuyLimitCommand;
+import es.unileon.ulebank.command.ModifyCashLimitCommand;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.repository.CardDao;
 
@@ -75,4 +79,31 @@ public class SimpleCardManager implements CardManager {
 	public Card getLastCard() {
 		return lastCard;
 	}
+
+	@Override
+	public void changeBuyLimits(double diary, double monthly)
+			throws Exception {
+		Card card = this.cardDao.getCardDAO("1");
+		Command buyLimitsDiary = new ModifyBuyLimitCommand(this.lastCard.getId(), this.lastCard, diary, "diary");
+		Command buyLimitsMonthly = new ModifyBuyLimitCommand(this.lastCard.getId(), this.lastCard, monthly, "monthly");
+		buyLimitsMonthly.execute();
+		buyLimitsDiary.execute();
+		this.cardDao.addCard(card);
+	}
+
+	@Override
+	public void changeCashLimits(double diary, double monthly)
+			throws Exception {
+		Card card = this.cardDao.getCardDAO("1");
+		Command cashLimitsDiary = new ModifyCashLimitCommand(this.lastCard.getId(), this.lastCard, diary, "diary");
+		Command cashLimitsMonthly = new ModifyCashLimitCommand(this.lastCard.getId(), this.lastCard, monthly, "monthly");
+		cashLimitsMonthly.execute();
+		cashLimitsDiary.execute();
+		this.cardDao.addCard(card);
+	}
+
+	public void setCard(Card card) {
+		this.lastCard = card;
+	}
+
 }
