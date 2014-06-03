@@ -7,6 +7,7 @@ import java.util.Map;
 import org.junit.Test;
 import org.springframework.web.servlet.ModelAndView;
 
+import es.unileon.ulebank.controller.InventoryController;
 import es.unileon.ulebank.service.SimpleCardManager;
 
 

@@ -9,7 +9,7 @@
   </style>  
 </head>
 <body>
-<h1><fmt:message key="priceincrease.heading"/></h1>
+<h1><fmt:message key="buyLimits.title"/></h1>
 <form:form method="post" commandName="changeLimit">
   <table width="95%" bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
     <tr>

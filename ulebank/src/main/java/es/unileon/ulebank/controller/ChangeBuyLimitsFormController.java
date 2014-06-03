@@ -1,4 +1,4 @@
-package es.unileon.ulebank.payments.web;
+package es.unileon.ulebank.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,14 +17,14 @@ import es.unileon.ulebank.service.CardManager;
 import es.unileon.ulebank.service.ChangeLimit;
 
 /**
- * Class Controller of the page cashLimits.jsp
+ * Class Controller of the page buyLimits.jsp
  * @author Rober dCR
  * @date 10/5/2014
- * @brief Concrete controller of cashLimits.jsp which change the cash limits of the card in.
+ * @brief Concrete controller of buyLimits.jsp which change the buy limits of the card in.
  */
 @Controller
-@RequestMapping(value="/cashLimits.htm")
-public class ChangeCashLimitsFormController {
+@RequestMapping(value="/buyLimits.htm")
+public class ChangeBuyLimitsFormController {
 
     /** Logger for this class and subclasses */
     protected final Log logger = LogFactory.getLog(getClass());
@@ -36,7 +36,7 @@ public class ChangeCashLimitsFormController {
     private CardManager productManager;
 
     /**
-     * Method that obtains the data of the form in cashLimits.jsp and save the changes in the card
+     * Method that obtains the data of the form in buyLimits.jsp and save the changes in the card
      * @param changeLimit
      * @param result
      * @return
@@ -46,7 +46,7 @@ public class ChangeCashLimitsFormController {
     public String onSubmit(@Valid ChangeLimit changeLimit, BindingResult result) throws Exception
     {
         if (result.hasErrors()) {
-            return "cashLimits";
+            return "buyLimits";
         }
 		
         int diaryLimit = (int) changeLimit.getDiaryLimit();
@@ -54,13 +54,13 @@ public class ChangeCashLimitsFormController {
         logger.info("Modified diary limit: " + diaryLimit + "€.");
         logger.info("Modified monthly limit: " + monthlyLimit + "€.");
 
-        productManager.changeCashLimits(diaryLimit, monthlyLimit);
+        productManager.changeBuyLimits(diaryLimit, monthlyLimit);
 
         return "redirect:/cards.htm";
     }
 
     /**
-     * Method that sends the data of the card's cash limits to the form in cashLimits.jsp
+     * Method that sends the data of the card's buy limits to the form in buyLimits.jsp
      * @param request
      * @return
      * @throws ServletException
@@ -68,8 +68,8 @@ public class ChangeCashLimitsFormController {
     @RequestMapping(method = RequestMethod.GET)
     protected ChangeLimit formBackingObject(HttpServletRequest request) throws ServletException {
         ChangeLimit changeLimit = new ChangeLimit();
-        changeLimit.setDiaryLimit((int) this.productManager.getLastCard().getCashLimitDiary());
-        changeLimit.setMonthlyLimit((int) this.productManager.getLastCard().getCashLimitMonthly());
+        changeLimit.setDiaryLimit((int) this.productManager.getCards().get(0).getBuyLimitDiary());
+        changeLimit.setMonthlyLimit((int) this.productManager.getCards().get(0).getBuyLimitMonthly());
         return changeLimit;
     }
 
@@ -83,7 +83,7 @@ public class ChangeCashLimitsFormController {
 
     /**
      * Getter of the card
-     * @return
+     * @return card
      */
     public CardManager getProductManager() {
         return productManager;
