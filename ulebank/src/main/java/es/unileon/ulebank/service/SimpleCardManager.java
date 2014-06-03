@@ -83,23 +83,23 @@ public class SimpleCardManager implements CardManager {
 	@Override
 	public void changeBuyLimits(double diary, double monthly)
 			throws Exception {
-		Card card = this.cardDao.getCardDAO("1");
-		Command buyLimitsDiary = new ModifyBuyLimitCommand(this.lastCard.getId(), this.lastCard, diary, "diary");
-		Command buyLimitsMonthly = new ModifyBuyLimitCommand(this.lastCard.getId(), this.lastCard, monthly, "monthly");
+		Card card = this.cardDao.getCardList().get(0);
+		Command buyLimitsDiary = new ModifyBuyLimitCommand(card.getId(), card, diary, "diary");
+		Command buyLimitsMonthly = new ModifyBuyLimitCommand(card.getId(), card, monthly, "monthly");
 		buyLimitsMonthly.execute();
 		buyLimitsDiary.execute();
-		this.cardDao.addCard(card);
+		this.cardDao.saveCard(card);
 	}
 
 	@Override
 	public void changeCashLimits(double diary, double monthly)
 			throws Exception {
-		Card card = this.cardDao.getCardDAO("1");
-		Command cashLimitsDiary = new ModifyCashLimitCommand(this.lastCard.getId(), this.lastCard, diary, "diary");
-		Command cashLimitsMonthly = new ModifyCashLimitCommand(this.lastCard.getId(), this.lastCard, monthly, "monthly");
+		Card card = this.cardDao.getCardList().get(0);
+		Command cashLimitsDiary = new ModifyCashLimitCommand(card.getId(), card, diary, "diary");
+		Command cashLimitsMonthly = new ModifyCashLimitCommand(card.getId(), card, monthly, "monthly");
 		cashLimitsMonthly.execute();
 		cashLimitsDiary.execute();
-		this.cardDao.addCard(card);
+		this.cardDao.saveCard(card);
 	}
 
 	public void setCard(Card card) {

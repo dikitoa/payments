@@ -52,4 +52,10 @@ public class InMemoryCardDao implements CardDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void saveCard(Card card) {
+		// TODO Auto-generated method stub
+		
+	}
 }

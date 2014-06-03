@@ -38,4 +38,6 @@ public interface CardDao {
 	 * @return Card of the BBDD
 	 */
 	public Card getCardDAO(String card_id);
+	
+	public void saveCard(Card card);
 }
