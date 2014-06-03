@@ -94,7 +94,6 @@ public class CreateCardController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String initForm(ModelMap model) {
 		CardBean bean = new CardBean();
-
 		bean.setBuyLimitDiary(CardProperties.getBuyLimitDiary());
 		bean.setBuyLimitMonthly(CardProperties.getBuyLimitMonthly());
 		bean.setCashLimitDiary(CardProperties.getCashLimitDiary());

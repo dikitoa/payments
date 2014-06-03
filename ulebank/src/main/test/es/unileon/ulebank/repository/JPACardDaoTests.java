@@ -26,7 +26,7 @@ public class JPACardDaoTests {
 	@Test
 	public void testGetCardList() {
 		List<Card> cards = cardDao.getCardList();
-		assertEquals(cards.size(), 2, 0);
+		assertEquals(cards.size(), 5, 0);
 	}
 	
 	@Test

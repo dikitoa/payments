@@ -3,7 +3,6 @@ package es.unileon.ulebank.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +72,7 @@ public class SimpleCardDaoTests {
 		assertEquals(2, cardManager.getCards().size());
 		
 		Card card = cards.get(0);
-		assertEquals("987654321111110", card.getId());
+		assertEquals("9876 5432 1111 1100", card.getId());
 		assertEquals(300.0, card.getBuyLimitDiary(), 0.0001);
 		assertEquals(900.0, card.getBuyLimitMonthly(), 0.0001);
 		assertEquals(400.0, card.getCashLimitDiary(), 0.0001);
@@ -81,23 +80,13 @@ public class SimpleCardDaoTests {
 		assertEquals("CREDIT", card.getCardType());
 		
 		card = cards.get(1);
-		assertEquals("228383942749890", card.getId());
+		System.out.println(card.getId());
+		assertEquals("2283 8394 2749 8907", card.getId());
 		assertEquals(600.0, card.getBuyLimitDiary(), 0.0001);
 		assertEquals(2000.0, card.getBuyLimitMonthly(), 0.0001);
 		assertEquals(500.0, card.getCashLimitDiary(), 0.0001);
 		assertEquals(1000.0, card.getCashLimitMonthly(), 0.0001);
 		assertEquals("DEBIT", card.getCardType());
-	}
-	
-	@Test
-	public void testSaveCardWithNullList() {
-		try {
-			cardManager = new SimpleCardManager();
-			cardManager.setCardDao(new InMemoryCardDao(null));
-			cardManager.saveNewCard(card1);
-		} catch (NullPointerException ex) {
-			fail("Card list is null");
-		}
 	}
 	
 	@Test
@@ -117,7 +106,7 @@ public class SimpleCardDaoTests {
 		assertEquals(3, cardManager.getCards().size());
 		
 		card = cardManager.getCards().get(2);
-		assertEquals("987654321111110", card.getId());
+		assertEquals("9876 5432 1111 1100", card.getId());
 		assertEquals(300.0, card.getBuyLimitDiary(), 0.0001);
 		assertEquals(900.0, card.getBuyLimitMonthly(), 0.0001);
 		assertEquals(400.0, card.getCashLimitDiary(), 0.0001);
