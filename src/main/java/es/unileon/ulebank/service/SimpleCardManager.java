@@ -83,19 +83,23 @@ public class SimpleCardManager implements CardManager {
 	@Override
 	public void changeBuyLimits(double diary, double monthly)
 			throws Exception {
+		Card card = this.cardDao.getCardDAO("1");
 		Command buyLimitsDiary = new ModifyBuyLimitCommand(this.lastCard.getId(), this.lastCard, diary, "diary");
 		Command buyLimitsMonthly = new ModifyBuyLimitCommand(this.lastCard.getId(), this.lastCard, monthly, "monthly");
 		buyLimitsMonthly.execute();
 		buyLimitsDiary.execute();
+		this.cardDao.addCard(card);
 	}
 
 	@Override
 	public void changeCashLimits(double diary, double monthly)
 			throws Exception {
+		Card card = this.cardDao.getCardDAO("1");
 		Command cashLimitsDiary = new ModifyCashLimitCommand(this.lastCard.getId(), this.lastCard, diary, "diary");
 		Command cashLimitsMonthly = new ModifyCashLimitCommand(this.lastCard.getId(), this.lastCard, monthly, "monthly");
 		cashLimitsMonthly.execute();
 		cashLimitsDiary.execute();
+		this.cardDao.addCard(card);
 	}
 
 	public void setCard(Card card) {
