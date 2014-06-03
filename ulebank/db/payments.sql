@@ -24,10 +24,8 @@ CREATE TABLE cards (
 );
 
 CREATE TABLE accounts (
-  id_office VarChar(4) REFERENCES office(id_office),
-  id_bank VarChar(4) REFERENCES bank(id_bank),
-  account_number VarChar(10),
-  CONSTRAINT pk_account PRIMARY KEY (id_office, id_bank, account_number)
+  account_number VarChar(20),
+  CONSTRAINT pk_account PRIMARY KEY (account_number)
 );
 
 CREATE TABLE bank (
@@ -58,10 +56,4 @@ CREATE TABLE transactionHistory (
 	transaction_id VarChar(30) REFERENCES transaction (id),
 	card_id VarChar(19) REFERENCES cards (id),
 	CONSTRAINT pk_transacyion_history PRIMARY KEY (transaction_id, card_id)
-);
-
-CREATE TABLE commissions (
-  id INTEGER PRIMARY KEY,
-  description varchar(255),
-  commission decimal(15,2)
 );

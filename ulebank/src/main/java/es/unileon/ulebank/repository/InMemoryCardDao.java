@@ -4,7 +4,6 @@ import java.util.List;
 
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.client.Client;
-import es.unileon.ulebank.fees.InvalidFeeException;
 import es.unileon.ulebank.payments.Card;
 
 public class InMemoryCardDao implements CardDao {
