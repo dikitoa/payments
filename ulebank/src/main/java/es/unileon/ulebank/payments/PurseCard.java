@@ -3,8 +3,6 @@ package es.unileon.ulebank.payments;
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.PaymentException;
-import es.unileon.ulebank.fees.FeeStrategy;
-import es.unileon.ulebank.handler.Handler;
 
 /**
  * Purse Card Class
@@ -13,6 +11,11 @@ import es.unileon.ulebank.handler.Handler;
  * @brief Class which implements the features of the purse card
  */
 public class PurseCard extends Card {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Class constructor

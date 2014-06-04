@@ -17,6 +17,11 @@ import es.unileon.ulebank.exceptions.CommissionException;
 public class DebitMaintenanceFee implements FeeStrategy {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * Card owner
 	 */
 	private Client owner;

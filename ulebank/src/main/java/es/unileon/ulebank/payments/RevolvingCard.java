@@ -3,8 +3,6 @@ package es.unileon.ulebank.payments;
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.PaymentException;
-import es.unileon.ulebank.fees.FeeStrategy;
-import es.unileon.ulebank.handler.Handler;
 
 /**
  * Revolving Card Class
@@ -13,6 +11,10 @@ import es.unileon.ulebank.handler.Handler;
  * @brief Class which implemtens the features of the revolving card
  */
 public class RevolvingCard extends Card {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Interest establish by the office
 	 */
