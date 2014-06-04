@@ -26,7 +26,7 @@
 			<tr>
 				<td>Buy limit diary: </td>
 				<td><c:out value="${card.buyLimitDiary}"></c:out></td> 
-				<td><a href="">Modify Buy Limits</a></td>
+				<td><a href="buyLimits.htm">Modify Buy Limits</a></td>
 			</tr>
 			<tr>
 				<td>Buy limit monthly: </td>
@@ -35,7 +35,7 @@
 			<tr>
 				<td>Cash limit diary: </td>
 				<td><c:out value="${card.cashLimitDiary}"></c:out></td>
-				<td><a href="">Modify Cash Limits</a></td>
+				<td><a href="cashLimits.htm">Modify Cash Limits</a></td>
 			</tr>
 			<tr>
 				<td>Cash limit monthly: </td>
