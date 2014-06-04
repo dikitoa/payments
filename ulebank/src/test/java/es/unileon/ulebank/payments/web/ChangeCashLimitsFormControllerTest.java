@@ -1,7 +1,5 @@
 package es.unileon.ulebank.payments.web;
 
-import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,7 +18,6 @@ import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.CreditCard;
 import es.unileon.ulebank.service.ChangeLimit;
 import es.unileon.ulebank.service.SimpleCardManager;
-import es.unileon.ulebank.transactionManager.TransactionManager;
 
 public class ChangeCashLimitsFormControllerTest {
 
@@ -30,22 +27,20 @@ public class ChangeCashLimitsFormControllerTest {
 	CardHandler handler;
 	private Office office;
 	private Bank bank;
-	private TransactionManager manager;
     private String accountNumber = "0000000000";
     
     @Before
     public void setUp() throws Exception {
     	productManager = new SimpleCardManager();
-        this.manager = new TransactionManager();
-        this.bank = new Bank(manager, "1234");
+        this.bank = new Bank(new BankHandler("1234"));
         this.office = new Office(new GenericHandler("1234"), this.bank);
 		handler = new CardHandler(new BankHandler("1234"), "01", "123456789");
-		Client client = new Client("71451559N");
-		Account account = new Account("123401123456789");
+		Client client = new Client(new DNIHandler("71451559N"));
+		Account account = new Account(office, bank, "3456789213", client);
 		FeeStrategy commissionEmission = new LinearFee(0, 25);
 		FeeStrategy commissionMaintenance = new LinearFee(0, 0);
 		FeeStrategy commissionRenovate = new LinearFee(0, 0);
-		testCard = new CreditCard(handler.toString(), client, account, 400.0, 1000.0, 400.0, 1000.0, commissionEmission.getFee(0), commissionMaintenance.getFee(0), commissionRenovate.getFee(0));
+		testCard = new CreditCard(handler, client, account, 400.0, 1000.0, 400.0, 1000.0, commissionEmission.getFee(0), commissionMaintenance.getFee(0), commissionRenovate.getFee(0));
 		this.productManager.setCard(this.testCard);
 	}
     

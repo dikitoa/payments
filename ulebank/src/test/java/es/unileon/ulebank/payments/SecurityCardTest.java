@@ -30,7 +30,7 @@ public class SecurityCardTest {
 
 	@Before
 	public void setUp() throws IOException, CommissionException, MalformedHandlerException, InvalidFeeException{
-		this.card = new CreditCard("123401123456789", new Client(new DNIHandler(71034506,'H').toString()), null, 0, 0, 0, 0, 0, 0, 0);
+		this.card = new CreditCard(new CardHandler("123401123456789"), new Client(new DNIHandler(71034506,'H')), null, 0, 0, 0, 0, 0, 0, 0);
 		this.card.setPin("0000");
 		this.secCard = new SecurityCard(this.card);
 	}

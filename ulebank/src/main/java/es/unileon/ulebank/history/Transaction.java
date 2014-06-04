@@ -5,8 +5,10 @@
  */
 package es.unileon.ulebank.history;
 
-import es.unileon.ulebank.handler.Handler;
 import java.util.Date;
+
+import es.unileon.ulebank.account.DetailedInformation;
+import es.unileon.ulebank.handler.Handler;
 
 /**
  *
@@ -25,9 +27,10 @@ public abstract class Transaction {
      * @param amount
      * @param date
      * @param subject
+     * @param info 
      * @throws es.unileon.ulebank.history.TransactionException
      */
-    public Transaction(double amount, Date date, String subject) throws TransactionException {
+    public Transaction(double amount, Date date, String subject, DetailedInformation info) throws TransactionException {
         this.id = TransactionHandlerProvider.getTransactionHandler();
         this.subject = subject;
         this.amount = amount;
@@ -42,7 +45,22 @@ public abstract class Transaction {
         }
     }
 
-    /**
+    public Transaction(double amount, Date date, String subject) throws TransactionException {
+    	this.id = TransactionHandlerProvider.getTransactionHandler();
+        this.subject = subject;
+        this.amount = amount;
+        this.date = date;
+        
+        if (amount == 0) {
+            throw new TransactionException("Amount can't be 0");
+        }
+        
+        if (this.subject.isEmpty()) {
+            throw new TransactionException("Subject can't be empty");
+        }
+	}
+
+	/**
      * @return the id
      */
     public Handler getId() {

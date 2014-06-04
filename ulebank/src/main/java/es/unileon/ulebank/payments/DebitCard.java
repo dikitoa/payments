@@ -9,6 +9,7 @@ import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.fees.InvalidFeeException;
+import es.unileon.ulebank.handler.Handler;
 
 /**
  * @author Israel, Rober dCR
@@ -37,7 +38,7 @@ public class DebitCard extends Card {
 	 * @throws IOException
 	 * @throws InvalidFeeException
 	 */
-	public DebitCard(String cardId, Client owner, Account account, double buyLimitDiary, double buyLimitMonthly, double cashLimitDiary, double cashLimitMonthly, double commissionEmission, double commissionMaintenance, double commissionRenovate)
+	public DebitCard(Handler cardId, Client owner, Account account, double buyLimitDiary, double buyLimitMonthly, double cashLimitDiary, double cashLimitMonthly, double commissionEmission, double commissionMaintenance, double commissionRenovate)
 			throws NumberFormatException, CommissionException, IOException, InvalidFeeException {
 		super(cardId, CardType.DEBIT.toString(), account, owner, buyLimitDiary, buyLimitMonthly, cashLimitDiary, cashLimitMonthly, 
 				/*new LinearFee(0.0D, commissionEmission), new LinearFee(0.0D, commissionMaintenance), 

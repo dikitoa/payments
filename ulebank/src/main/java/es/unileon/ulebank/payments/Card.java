@@ -19,7 +19,7 @@ import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.exceptions.PaymentException;
-import es.unileon.ulebank.handler.CardHandler;
+import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.history.TransactionException;
 import es.unileon.ulebank.utils.CardProperties;
 
@@ -37,7 +37,7 @@ public abstract class Card implements Serializable {
 	 */
 	@Id
 	@Column (name = "id")
-	private String id;
+	private Handler id;
 	/**
 	 * Codigo PIN de la tarjeta
 	 */
@@ -134,11 +134,11 @@ public abstract class Card implements Serializable {
 	 * @param commissionMaintenance
 	 * @param commissionRenovate
 	 */
-	public Card(String cardId, String type, Account account, Client client, double buyLimitDiary,
+	public Card(Handler cardId, String type, Account account, Client client, double buyLimitDiary,
 			double buyLimitMonthly, double cashLimitDiary, double cashLimitMonthly, 
 			double commissionEmission, double commissionMaintenance, 
 			double commissionRenovate) {
-		this.id = new CardHandler(cardId).toString();
+		this.id = cardId;
 		this.cardType = type;
 		this.account = account;
 		this.owner = client;
@@ -459,8 +459,8 @@ public abstract class Card implements Serializable {
 	 * Devuelve el numero de la tarjeta
 	 * @return String
 	 */
-	public String getId() {
-		return id.toString();
+	public Handler getId() {
+		return id;
 	}
 
 //	/**

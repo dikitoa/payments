@@ -60,7 +60,7 @@ public class TransferCommand implements Command {
 	 * @param dniReceiver
 	 * @param amount
 	 */
-	public TransferCommand(Office office, String accountSender, String dniSender, String accountReceiver, String dniReceiver, double amount, String concept){
+	public TransferCommand(Office office, Handler accountSender, Handler dniSender, Handler accountReceiver, Handler dniReceiver, double amount, String concept){
 		try {
 			this.id = new CommandHandler(accountSender);
 			this.accountSender = office.searchClient(dniSender).searchAccount(accountSender);

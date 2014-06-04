@@ -3,6 +3,7 @@ package es.unileon.ulebank.payments;
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.PaymentException;
+import es.unileon.ulebank.handler.Handler;
 
 /**
  * Revolving Card Class
@@ -35,7 +36,7 @@ public class RevolvingCard extends Card {
 	 * @param commissionRenovate
 	 * @param limitDebit
 	 */
-	public RevolvingCard(String cardId, Client owner, Account account,
+	public RevolvingCard(Handler cardId, Client owner, Account account,
 			double buyLimitDiary, double buyLimitMonthly,
 			double cashLimitDiary, double cashLimitMonthly,
 			double commissionEmission,

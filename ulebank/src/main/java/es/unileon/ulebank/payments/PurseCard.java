@@ -3,6 +3,7 @@ package es.unileon.ulebank.payments;
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.PaymentException;
+import es.unileon.ulebank.handler.Handler;
 
 /**
  * Purse Card Class
@@ -31,7 +32,7 @@ public class PurseCard extends Card {
 	 * @param commissionMaintenance
 	 * @param commissionRenovate
 	 */
-	public PurseCard(String cardId, Client owner, Account account,
+	public PurseCard(Handler cardId, Client owner, Account account,
 			double buyLimitDiary, double buyLimitMonthly,
 			double cashLimitDiary, double cashLimitMonthly,
 			double commissionEmission,

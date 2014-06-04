@@ -21,7 +21,7 @@ public class RenovateCardCommand implements Command {
 	/**
 	 * Identificador de la tarjeta a renovar
 	 */
-	private String cardId;
+	private Handler cardId;
 	/**
 	 * Cuenta a la que esta asociada la tarjeta que se va a renovar
 	 */
@@ -55,7 +55,7 @@ public class RenovateCardCommand implements Command {
 	 * @param accountHandler
 	 * @throws ClientNotFoundException 
 	 */
-	public RenovateCardCommand(String cardId, Office office, String dni, String accountHandler) throws ClientNotFoundException {
+	public RenovateCardCommand(Handler cardId, Office office, Handler dni, Handler accountHandler) throws ClientNotFoundException {
 		this.id = new CommandHandler(cardId);
 		this.cardId = cardId;
 		this.account = office.searchClient(dni).searchAccount(accountHandler);

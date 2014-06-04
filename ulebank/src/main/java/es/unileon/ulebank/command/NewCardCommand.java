@@ -8,6 +8,7 @@ import es.unileon.ulebank.domain.CardBean;
 import es.unileon.ulebank.exceptions.ClientNotFoundException;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.fees.InvalidFeeException;
+import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.office.Office;
@@ -44,7 +45,7 @@ public class NewCardCommand implements Command {
 	/**
 	 * Identificador de la tarjeta
 	 */
-	private String cardHandler;
+	private Handler cardHandler;
 	/**
 	 * Limite de compra diario para la tarjeta
 	 */
@@ -100,7 +101,7 @@ public class NewCardCommand implements Command {
 		this.manager = cardManager;
 		this.account = cardManager.getAccount(bean.getAccountNumber());
 		this.client = cardManager.getClient(bean.getDni());
-		this.cardHandler = bean.getCardNumber();
+		this.cardHandler = new CardHandler(bean.getCardNumber());
 		this.id = new CommandHandler(this.cardHandler);
 		this.cardType = bean.getCardType();
 		this.buyLimitDiary = bean.getBuyLimitDiary();
@@ -146,7 +147,7 @@ public class NewCardCommand implements Command {
 	 */
 	@Override
 	public void undo() throws ClientNotFoundException {
-		CancelCardCommand cancel = new CancelCardCommand(cardHandler, office, client.getId(), account.getId());
+		CancelCardCommand cancel = new CancelCardCommand(cardHandler, office, client.getId(), account.getID());
 		cancel.execute();
 	}
 

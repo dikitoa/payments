@@ -12,10 +12,13 @@ import org.junit.Test;
 
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.bank.Bank;
+import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.fees.InvalidFeeException;
+import es.unileon.ulebank.handler.CardHandler;
+import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.handler.OfficeHandler;
 import es.unileon.ulebank.office.Office;
 import es.unileon.ulebank.payments.Card;
@@ -23,7 +26,6 @@ import es.unileon.ulebank.payments.CreditCard;
 import es.unileon.ulebank.payments.DebitCard;
 import es.unileon.ulebank.repository.CardDao;
 import es.unileon.ulebank.repository.InMemoryCardDao;
-import es.unileon.ulebank.transactionManager.TransactionManager;
 
 public class SimpleCardDaoTests {
 	
@@ -41,15 +43,14 @@ public class SimpleCardDaoTests {
 		this.cardManager = new SimpleCardManager();
 		this.cards = new ArrayList<Card>();
 		
-		TransactionManager manager = new TransactionManager();
-		this.bank = new Bank(manager, "1234");
+		this.bank = new Bank(new BankHandler("1234"));
 		this.office = new Office(new OfficeHandler("0001"), bank);
-		this.client = new Client("71557005A");
+		this.client = new Client(new DNIHandler("71557005A"));
 		this.client.setName("Paco");
 		this.client.setSurname("Ramirez Pinto");
-		this.account = new Account("123400001234567890");
-		this.card1 = new CreditCard("987654321111110", client, account, 300.0, 900.0, 400.0, 1000.0, 10.0, 25.0, 0);
-		this.card2 = new DebitCard("228383942749890", client, account, 600.0, 2000.0, 500.0, 1000.0, 0.0, 30.0, 40.0);
+		this.account = new Account(office, bank, "1234567890", client);
+		this.card1 = new CreditCard(new CardHandler("987654321111110"), client, account, 300.0, 900.0, 400.0, 1000.0, 10.0, 25.0, 0);
+		this.card2 = new DebitCard(new CardHandler("228383942749890"), client, account, 600.0, 2000.0, 500.0, 1000.0, 0.0, 30.0, 40.0);
 		office.addClient(client);
 		client.add(account);
 		
@@ -102,7 +103,7 @@ public class SimpleCardDaoTests {
 		cardManager = new SimpleCardManager();
 		cardManager.setCardDao(new InMemoryCardDao(this.cards));
 		
-		Card card = new CreditCard("987654321111110", client, account, 300.0, 900.0, 400.0, 1000.0, 10.0, 25.0, 0);
+		Card card = new CreditCard(new CardHandler("987654321111110"), client, account, 300.0, 900.0, 400.0, 1000.0, 10.0, 25.0, 0);
 		cardManager.saveNewCard(card);
 		assertEquals(3, cardManager.getCards().size());
 		

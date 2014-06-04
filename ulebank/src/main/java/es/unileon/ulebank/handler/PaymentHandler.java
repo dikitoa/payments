@@ -21,11 +21,11 @@ public class PaymentHandler implements Handler {
 	
 	/**
 	 * Class constructor
-	 * @param string
+	 * @param handler
 	 * @throws PaymentHandlerException
 	 */
-	public PaymentHandler(String string, Date date) throws PaymentHandlerException{
-		this.id = this.obtainInitials(string) + this.obtainFinals(date);
+	public PaymentHandler(Handler handler, Date date) throws PaymentHandlerException{
+		this.id = this.obtainInitials(handler) + this.obtainFinals(date);
 		if (this.id.length() != this.LENGTH)
 			throw new PaymentHandlerException("Length of payment handler incorrect.");
 	}
@@ -41,7 +41,7 @@ public class PaymentHandler implements Handler {
 	 * @return 4 initials
 	 * @throws PaymentHandlerException
 	 */
-	private String obtainInitials(String cardNumber) throws PaymentHandlerException{
+	private String obtainInitials(Handler cardNumber) throws PaymentHandlerException{
 		if (cardNumber.toString().substring(this.POSITION_CARD).length() == this.NUMBER_INITIALS)
 			return cardNumber.toString().substring(this.POSITION_CARD);
 		else

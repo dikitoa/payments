@@ -103,7 +103,7 @@ public class Office {
             int i = 0;
             boolean found = false;
             while (i < this.accounts.size() && !found) {
-                if (accounts.get(i).getId().compareTo(account.getId()) == 0) {
+                if (accounts.get(i).getID().compareTo(account.getID()) == 0) {
                     found = true;
                 }
                 ++i;
@@ -140,7 +140,7 @@ public class Office {
      * @param id
      * @return
      */
-    public synchronized boolean deleteClient(String id) {
+    public synchronized boolean deleteClient(Handler id) {
         int i = 0;
         boolean found = false;
         while (i < this.clients.size() && !found) {
@@ -159,11 +159,11 @@ public class Office {
      * @param id
      * @return
      */
-    public synchronized boolean deleteAccount(String id) {
+    public synchronized boolean deleteAccount(Handler id) {
         int i = 0;
         boolean found = false;
         while (i < this.accounts.size() && !found) {
-            if (accounts.get(i).getId().compareTo(id) == 0) {
+            if (accounts.get(i).getID().compareTo(id) == 0) {
                 accounts.remove(i);
                 found = true;
             }
@@ -342,7 +342,7 @@ public class Office {
 	 * @return
 	 * @throws ClientNotFoundException 
 	 */
-	public Client searchClient(String dni) throws ClientNotFoundException {
+	public Client searchClient(Handler dni) throws ClientNotFoundException {
 		//Creamos un iterador para recorrer la lista
 		Iterator<Client> iterator = clients.iterator();
 		Client client = null;

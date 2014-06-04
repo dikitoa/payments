@@ -20,26 +20,24 @@ import es.unileon.ulebank.fees.LinearFee;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.handler.GenericHandler;
+import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.office.Office;
-import es.unileon.ulebank.transactionManager.TransactionManager;
 
 public class DebitCardTest {
 	//TODO cuando un test espera excepcion quitar los assert
 	DebitCard testCard;
-	String handler;
+	Handler handler;
 	private Office office;
 	private Bank bank;
-	private TransactionManager manager;
     private String accountNumber = "0000000000";
 	
 	@Before
 	public void setUp() throws Exception {
-		this.manager = new TransactionManager();
-        this.bank = new Bank(manager, new GenericHandler("1234").toString());
+        this.bank = new Bank(new BankHandler("1234"));
         this.office = new Office(new GenericHandler("1234"), this.bank);
-        this.handler = "123401987654321";
-		Client client = new Client(new DNIHandler("71451559N").toString());
-		Account account = new Account(office, bank, accountNumber);
+        this.handler = new CardHandler(new BankHandler("1234"), "01", "987654321");
+		Client client = new Client(new DNIHandler("71451559N"));
+		Account account = new Account(office, bank, accountNumber, client);
 		FeeStrategy commissionEmission = new LinearFee(0, 25);
 		FeeStrategy commissionMaintenance = new LinearFee(0, 0);
 		FeeStrategy commissionRenovate = new LinearFee(0, 0);
@@ -85,7 +83,7 @@ public class DebitCardTest {
 
 	@Test
 	public void testGetCardId() {
-		assertTrue(testCard.getId().length() == 16 + 3); //add +3 because the cardId have 3 white spaces
+		assertTrue(((CardHandler)testCard.getId()).toString().length() == 16 + 3); //add +3 because the cardId have 3 white spaces
 	}
 
 	@Test

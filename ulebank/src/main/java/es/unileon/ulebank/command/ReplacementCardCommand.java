@@ -25,7 +25,7 @@ public class ReplacementCardCommand implements Command {
 	/**
 	 * Identificador de la tarjeta a sustituir
 	 */
-	private String cardId;
+	private Handler cardId;
 	/**
 	 * Cuenta a la que esta asociada la tarjeta
 	 */
@@ -63,7 +63,7 @@ public class ReplacementCardCommand implements Command {
 	 * @param accountHandler
 	 * @throws ClientNotFoundException 
 	 */
-	public ReplacementCardCommand(String cardId, Office office, String dni, String accountHandler) throws ClientNotFoundException {
+	public ReplacementCardCommand(Handler cardId, Office office, Handler dni, Handler accountHandler) throws ClientNotFoundException {
 		this.id = new CommandHandler(cardId);
 		this.cardId = cardId;
 		this.account = office.searchClient(dni).searchAccount(accountHandler);

@@ -48,7 +48,7 @@ public class ModifyBuyLimitCommand implements Command {
 	 * @param type
 	 * @throws AccountNotFoundException 
 	 */
-	public ModifyBuyLimitCommand(String cardId, Card card, double amount, String type) throws AccountNotFoundException {
+	public ModifyBuyLimitCommand(Handler cardId, Card card, double amount, String type) throws AccountNotFoundException {
 		try {
 			this.id = new CommandHandler(cardId);
 			this.card = card;

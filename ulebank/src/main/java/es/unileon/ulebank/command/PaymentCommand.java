@@ -42,7 +42,7 @@ public class PaymentCommand implements Command {
 	/**
 	 * Card Identifier
 	 */
-	private String cardId;
+	private Handler cardId;
 	/**
 	 * Card which makes the payment
 	 */
@@ -76,7 +76,7 @@ public class PaymentCommand implements Command {
 	 * @param concept
 	 * @param type
 	 */
-	public PaymentCommand(String cardId, Office office, String dni, String accountHandler, double amount, String concept, CardType type) {
+	public PaymentCommand(Handler cardId, Office office, Handler dni, Handler accountHandler, double amount, String concept, CardType type) {
 		try {
 			this.id = new CommandHandler(cardId);
 			this.cardId = cardId;

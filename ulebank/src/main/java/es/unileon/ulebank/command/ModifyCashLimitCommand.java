@@ -50,7 +50,7 @@ public class ModifyCashLimitCommand implements Command {
 	 * @param type
 	 * @throws AccountNotFoundException 
 	 */
-	public ModifyCashLimitCommand(String cardId, Card card, double amount, String type) throws AccountNotFoundException {
+	public ModifyCashLimitCommand(Handler cardId, Card card, double amount, String type) throws AccountNotFoundException {
 		try {
 			this.id = new CommandHandler(cardId);
 			this.card = card;

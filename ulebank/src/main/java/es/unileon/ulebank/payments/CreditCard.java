@@ -11,6 +11,7 @@ import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.PaymentException;
 import es.unileon.ulebank.fees.InvalidFeeException;
+import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.history.CardTransaction;
 import es.unileon.ulebank.history.TransactionException;
 
@@ -47,7 +48,7 @@ public class CreditCard extends Card {
 	 * @throws CommissionException
 	 * @throws InvalidFeeException
 	 */
-	public CreditCard(String cardId, Client owner, Account account, 
+	public CreditCard(Handler cardId, Client owner, Account account, 
 			double buyLimitDiary, double buyLimitMonthly, double cashLimitDiary, double cashLimitMonthly, 
 			double commissionEmission, double commissionMaintenance, double commissionRenovate)
 					throws CommissionException, InvalidFeeException {

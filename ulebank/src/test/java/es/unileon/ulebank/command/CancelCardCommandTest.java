@@ -14,6 +14,8 @@ import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.ClientNotFoundException;
 import es.unileon.ulebank.exceptions.CommissionException;
+import es.unileon.ulebank.exceptions.MalformedHandlerException;
+import es.unileon.ulebank.exceptions.WrongArgsException;
 import es.unileon.ulebank.fees.InvalidFeeException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.CommandHandler;
@@ -24,36 +26,33 @@ import es.unileon.ulebank.office.Office;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.CreditCard;
 import es.unileon.ulebank.payments.DebitCard;
-import es.unileon.ulebank.transactionManager.TransactionManager;
 
 public class CancelCardCommandTest {
-	private String handler1;
-	private String handler2;
+	private Handler handler1;
+	private Handler handler2;
 	private Office office;
-	private String dni;
-	private String accountHandler;
+	private Handler dni;
+	private Handler accountHandler;
 	private Client client;
 	private Account account;
 	private Card card1;
 	private Card card2;
 	private CancelCardCommand test;
     private Bank bank;
-    private TransactionManager manager;
 
     private String accountNumber = "0000000000";
 	
 	@Before
-	public void setUp() throws NumberFormatException, CommissionException, IOException, InvalidFeeException {
-		String bankHandler = new BankHandler("1234").toString();
-		handler1 = bankHandler + "01123456789";
-		handler2 = bankHandler + "01123456788";
-		this.manager = new TransactionManager();
-        this.bank = new Bank(manager, bankHandler);
+	public void setUp() throws NumberFormatException, CommissionException, IOException, InvalidFeeException, MalformedHandlerException, WrongArgsException {
+		Handler bankHandler = new BankHandler("1234");
+		handler1 = new CardHandler(bankHandler, "01", "123456789");
+		handler2 = new CardHandler(bankHandler, "01", "123456788");
+        this.bank = new Bank(bankHandler);
         this.office = new Office(new GenericHandler("1234"), this.bank);
-		this.dni = new DNIHandler("71557005A").toString();
+		this.dni = new DNIHandler("71557005A");
 		this.client = new Client(dni);
 		this.office.addClient(client);
-		this.account = new Account(office, bank, accountNumber);
+		this.account = new Account(office, bank, accountNumber, client);
 		this.accountHandler = account.getID();
 		this.client.add(account);
 		this.card1 = new DebitCard(handler1, client, account, 400.0, 1000.0, 400.0, 1000.0, 25, 0, 0);

@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import es.unileon.ulebank.account.Account;
+import es.unileon.ulebank.handler.DNIHandler;
+import es.unileon.ulebank.handler.Handler;
 
 /**
  *Class tha provides the basic gestion data of a client in a bank
@@ -29,7 +31,7 @@ public class Client {
      */
 	@Id
 	@Column (name = "client_id")
-    private String id;
+    private DNIHandler id;
     
     /**
      * Accounts where the client appear
@@ -59,9 +61,9 @@ public class Client {
      * 
      * @param clientHandler 
      */
-    public Client(String clientHandler){
+    public Client(Handler clientHandler){
         accounts = new ArrayList<Account>();
-        this.id=clientHandler;
+        this.id=(DNIHandler) clientHandler;
     }
     
     public Client(){
@@ -84,12 +86,12 @@ public class Client {
      * @param accountHandler
      * @return true if account is deleted, false if account doesn't exists
      */
-    public boolean removeAccount(String accountHandler){
+    public boolean removeAccount(Handler accountHandler){
         boolean result = false;
         Iterator<Account> iterator = accounts.iterator();
         while(iterator.hasNext()){
             Account account = iterator.next();
-            if(account.getId().compareTo(accountHandler)==0){
+            if(account.getID().compareTo(accountHandler)==0){
                 result = accounts.remove(account);
             }
         }
@@ -101,19 +103,19 @@ public class Client {
      * @param accountHandler
      * @return true if the account exists, false if it doesn't exists
      */
-    public boolean existsAccount(String accountHandler){
+    public boolean existsAccount(Handler accountHandler){
         boolean result = false;
         Iterator<Account> iterator = accounts.iterator();
         while(iterator.hasNext()){
             Account account = iterator.next();
-            if(account.getId().compareTo(accountHandler)==0){
+            if(account.getID().compareTo(accountHandler)==0){
                 result = true;
             }
         }
         return result;
     }
     
-    public Account searchAccount(String handler) {
+    public Account searchAccount(Handler handler) {
 		Iterator<Account> iterator = accounts.iterator();
 		Account account = null;
 		
@@ -124,7 +126,7 @@ public class Client {
 		while (iterator.hasNext()) {
 			account = iterator.next();
 			
-			if (account.getId().compareTo(handler) == 0) {
+			if (account.getID().compareTo(handler) == 0) {
 				break;
 			}
 		}
@@ -139,7 +141,7 @@ public class Client {
     /**
      * @return id of the client
      */
-    public String getId() {
+    public Handler getId() {
         return id;
     }
     
