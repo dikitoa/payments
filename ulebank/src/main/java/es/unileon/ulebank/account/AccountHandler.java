@@ -5,6 +5,7 @@ package es.unileon.ulebank.account;
 import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.exceptions.MalformedHandlerException;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -135,7 +136,7 @@ public class AccountHandler implements Handler {
     /**
      * The bank identifier
      */
-    private final Handler bankHandler;
+    private final String bankHandler;
     /**
      * The control digits
      */
@@ -145,16 +146,16 @@ public class AccountHandler implements Handler {
      * Create a new AccountHandler
      *
      * @param office ( the office id )
-     * @param bank ( the bank id )
+     * @param string ( the bank id )
      * @param accountNumber ( the account number )
      * @author runix
      * @throws MalformedHandlerException ( If the account number, office
      * handler, or bank handler aren't correct )
      */
-    public AccountHandler(Handler office, Handler bank, String accountNumber) throws MalformedHandlerException {
+    public AccountHandler(Handler office, String string, String accountNumber) throws MalformedHandlerException {
         StringBuilder errors = new StringBuilder();
         Pattern numberPattern = Pattern.compile("^[0-9]*$");
-        if (office != null && office.toString() != null && bank != null && bank.toString() != null && accountNumber != null) {
+        if (office != null && office.toString() != null && string != null && string.toString() != null && accountNumber != null) {
             Matcher matcher = numberPattern.matcher(accountNumber);
             if (!matcher.find()) {
                 errors.append("The accountNumber can only have numbers\n");
@@ -172,12 +173,12 @@ public class AccountHandler implements Handler {
                 errors.append("The office id length must be " + OFFICE_NUMBER_LENGTH + " \n");
             }
             
-            matcher = numberPattern.matcher(bank.toString());
+            matcher = numberPattern.matcher(string.toString());
             if (!matcher.find()) {
                 errors.append("The bank id can only have numbers\n");
             }
             
-            if (bank.toString().length() != BANK_NUMBER_LENGTH) {
+            if (string.toString().length() != BANK_NUMBER_LENGTH) {
                 errors.append("The bank id length must be " + BANK_NUMBER_LENGTH + " \n");
             }
         } else {
@@ -187,32 +188,32 @@ public class AccountHandler implements Handler {
             throw new MalformedHandlerException(errors.toString());
         }
         this.officeHandler = office;
-        this.bankHandler = bank;
+        this.bankHandler = string;
         this.accountNumber = accountNumber;
-        this.dc = calculateDC(office.toString(), bank.toString(), accountNumber + "");
+        this.dc = calculateDC(office.toString(), string.toString(), accountNumber + "");
     }
 
-    /**
-     *
-     * @param another
-     * @throws MalformedHandlerException
-     */
-    public AccountHandler(Handler another) throws MalformedHandlerException {
-        this(getField(another, 1, SEPARATOR), getField(another, 0, SEPARATOR), getField(another, 3, SEPARATOR).toString());
-        StringBuilder error = new StringBuilder();
-        if (!getField(another, 2, SEPARATOR).toString().equals(this.dc)) {
-            error.append("Wrong control digits");
-        }
-        if (error.length() > 0) {
-            throw new MalformedHandlerException(error.toString());
-        }
-    }
+//    /**
+//     *
+//     * @param another
+//     * @throws MalformedHandlerException
+//     */
+//    public AccountHandler(Handler another) throws MalformedHandlerException {
+//        this(getField(another, 1, SEPARATOR), getField(another, 0, SEPARATOR), getField(another, 3, SEPARATOR).toString());
+//        StringBuilder error = new StringBuilder();
+//        if (!getField(another, 2, SEPARATOR).toString().equals(this.dc)) {
+//            error.append("Wrong control digits");
+//        }
+//        if (error.length() > 0) {
+//            throw new MalformedHandlerException(error.toString());
+//        }
+//    }
 
     /**
      *
      * @return
      */
-    public Handler getBankHandler() {
+    public String getBankHandler() {
         return this.bankHandler;
     }
 
