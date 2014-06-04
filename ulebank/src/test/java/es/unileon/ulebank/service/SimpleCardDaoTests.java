@@ -74,7 +74,7 @@ public class SimpleCardDaoTests {
 		assertEquals(2, cardManager.getCards().size());
 		
 		Card card = cards.get(0);
-		assertEquals("9876 5432 1111 1100", card.getId());
+		assertEquals("9876 5432 1111 1100", card.getId().toString());
 		assertEquals(300.0, card.getBuyLimitDiary(), 0.0001);
 		assertEquals(900.0, card.getBuyLimitMonthly(), 0.0001);
 		assertEquals(400.0, card.getCashLimitDiary(), 0.0001);
@@ -82,8 +82,7 @@ public class SimpleCardDaoTests {
 		assertEquals("CREDIT", card.getCardType());
 		
 		card = cards.get(1);
-		System.out.println(card.getId());
-		assertEquals("2283 8394 2749 8907", card.getId());
+		assertEquals("2283 8394 2749 8907", card.getId().toString());
 		assertEquals(600.0, card.getBuyLimitDiary(), 0.0001);
 		assertEquals(2000.0, card.getBuyLimitMonthly(), 0.0001);
 		assertEquals(500.0, card.getCashLimitDiary(), 0.0001);
@@ -108,7 +107,7 @@ public class SimpleCardDaoTests {
 		assertEquals(3, cardManager.getCards().size());
 		
 		card = cardManager.getCards().get(2);
-		assertEquals("9876 5432 1111 1100", card.getId());
+		assertEquals("9876 5432 1111 1100", card.getId().toString());
 		assertEquals(300.0, card.getBuyLimitDiary(), 0.0001);
 		assertEquals(900.0, card.getBuyLimitMonthly(), 0.0001);
 		assertEquals(400.0, card.getCashLimitDiary(), 0.0001);

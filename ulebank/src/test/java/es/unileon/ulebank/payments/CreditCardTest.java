@@ -133,8 +133,8 @@ public class CreditCardTest {
 	
 	@Test (expected = IncorrectLimitException.class)
 	public void testSetBuyLimitDiaryFAILDownMinimumLimit() throws IncorrectLimitException{
-		testCard.setBuyLimitDiary(199.0); //fail because buy limit diary under 200
-		assertEquals(199.0, testCard.getBuyLimitDiary(), 0.0001);
+		testCard.setBuyLimitMonthly(190);
+		testCard.setBuyLimitDiary(199.0);
 	}
 
 	@Test
@@ -201,8 +201,8 @@ public class CreditCardTest {
 	
 	@Test (expected = IncorrectLimitException.class)
 	public void testSetCashLimitDiaryFAILDownMinimumLimit() throws IncorrectLimitException{
-		testCard.setCashLimitDiary(199); //fail because cash limit diary under 200
-		assertEquals(199.0, testCard.getCashLimitDiary(), 0.0001);
+		testCard.setCashLimitMonthly(190);
+		testCard.setCashLimitDiary(199); //fail because cash limit diary is over monthly
 	}
 
 	@Test
@@ -287,6 +287,6 @@ public class CreditCardTest {
 	
 	@Test
 	public void testGetCardNumber(){
-		assertTrue(testCard.getId().equals("1234 0112 3456 7892"));
+		assertTrue(testCard.getId().toString().equals("1234 0112 3456 7892"));
 	}
 }
