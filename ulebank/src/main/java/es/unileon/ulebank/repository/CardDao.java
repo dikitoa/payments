@@ -31,4 +31,13 @@ public interface CardDao {
 	 * @return
 	 */
 	public Account getAccount(String accountNumber);
+	
+	/**
+	 * Method that obtains the card of the database;
+	 * @param card_id Identifier of the card which get of the BBDD
+	 * @return Card of the BBDD
+	 */
+	public Card getCardDAO(String card_id);
+	
+	public void saveCard(Card card);
 }

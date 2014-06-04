@@ -81,4 +81,15 @@ public class JPACardDao implements CardDao {
 		entityManager.close();
 		return (Account) query.getSingleResult();
 	}
+
+    @Transactional(readOnly = true)
+	@Override
+	public Card getCardDAO(String card_id) {
+    	return (Card) entityManager.createQuery("select c from Card c where id =" + card_id).getSingleResult();
+	}
+    
+    @Transactional(readOnly = false)
+    public void saveCard(Card card) {
+    	entityManager.merge(card);
+    }
 }

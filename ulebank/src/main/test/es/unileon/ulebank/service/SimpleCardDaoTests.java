@@ -14,6 +14,7 @@ import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.bank.Bank;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
+import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.fees.InvalidFeeException;
 import es.unileon.ulebank.handler.OfficeHandler;
 import es.unileon.ulebank.office.Office;
@@ -113,4 +114,34 @@ public class SimpleCardDaoTests {
 		assertEquals(1000.0, card.getCashLimitMonthly(), 0.0001);
 		assertEquals("CREDIT", card.getCardType());
 	}
+	
+    @Test(expected = IncorrectLimitException.class)
+    public void testChangeBuyLimitsWithIncorrectLimits() throws Exception {
+    	cardManager.changeBuyLimits(200, 100);
+    }
+    
+    @Test(expected = IncorrectLimitException.class)
+    public void testChangeBuyLimitsWithEqualsLimits() throws Exception {
+    	cardManager.changeBuyLimits(3000, 3000);
+    }
+    
+    @Test
+    public void testChangeBuyLimitsWithCorrectLimits() throws Exception {
+    	cardManager.changeBuyLimits(200, 1000);
+    	assertEquals(cardManager.getCards().get(0).getBuyLimitDiary(),200,0.01);
+    	assertEquals(cardManager.getCards().get(0).getBuyLimitMonthly(),1000,0.01);
+    }
+    
+    @Test(expected = IncorrectLimitException.class)
+    public void testChangeCashLimitsWithIncorrectLimits() throws Exception {
+    	cardManager.changeCashLimits(200, 100);
+    }
+    
+    
+    @Test
+    public void testChangeCashLimitsWithCorrectLimits() throws Exception {
+    	cardManager.changeCashLimits(200, 1200);
+    	assertEquals(cardManager.getCards().get(0).getCashLimitDiary(),200,0.01);
+    	assertEquals(cardManager.getCards().get(0).getCashLimitMonthly(),1200,0.01);
+    }
 }
