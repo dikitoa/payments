@@ -33,7 +33,7 @@ public class TransferTest {
 	@Before
 	public void setUp(){
 		this.manager = new TransactionManager();
-        this.bank = new Bank(manager, new GenericHandler("1234"));
+        this.bank = new Bank(manager, new GenericHandler("1234").toString());
         this.office = new Office(new GenericHandler("1234"), this.bank);
 		this.senderAccount = new Account(office, bank, accountNumber);
 		this.receiverAccount = new Account(office, bank, accountNumber);

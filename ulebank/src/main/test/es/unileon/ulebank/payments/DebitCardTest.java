@@ -26,7 +26,7 @@ import es.unileon.ulebank.transactionManager.TransactionManager;
 public class DebitCardTest {
 	//TODO cuando un test espera excepcion quitar los assert
 	DebitCard testCard;
-	CardHandler handler;
+	String handler;
 	private Office office;
 	private Bank bank;
 	private TransactionManager manager;
@@ -35,10 +35,10 @@ public class DebitCardTest {
 	@Before
 	public void setUp() throws Exception {
 		this.manager = new TransactionManager();
-        this.bank = new Bank(manager, new GenericHandler("1234"));
+        this.bank = new Bank(manager, new GenericHandler("1234").toString());
         this.office = new Office(new GenericHandler("1234"), this.bank);
-		handler = new CardHandler(new BankHandler("1234"), "01", "987654321");
-		Client client = new Client(new DNIHandler("71451559N"), 27);
+        this.handler = "123401987654321";
+		Client client = new Client(new DNIHandler("71451559N").toString());
 		Account account = new Account(office, bank, accountNumber);
 		FeeStrategy commissionEmission = new LinearFee(0, 25);
 		FeeStrategy commissionMaintenance = new LinearFee(0, 0);
@@ -49,7 +49,7 @@ public class DebitCardTest {
 	@Test (expected = NullPointerException.class)
 	public void cardNull() {
 		testCard = null;
-		testCard.getCardId();
+		testCard.getId();
 	}
 	
 	@Test
@@ -85,7 +85,7 @@ public class DebitCardTest {
 
 	@Test
 	public void testGetCardId() {
-		assertTrue(testCard.getCardId().length() == handler.getCardLength() + 3); //add +3 because the cardId have 3 white spaces
+		assertTrue(testCard.getId().length() == 16 + 3); //add +3 because the cardId have 3 white spaces
 	}
 
 	@Test
@@ -288,7 +288,7 @@ public class DebitCardTest {
 
 	@Test
 	public void testGetCardNumber(){
-		assertTrue(testCard.getCardNumber().toString().equals("1234 0198 7654 321"+handler.getControlDigit()));
+		assertTrue(testCard.getId().toString().equals("1234 0198 7654 3212"));
 	}
 
 }

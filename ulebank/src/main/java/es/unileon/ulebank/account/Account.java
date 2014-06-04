@@ -288,34 +288,34 @@ public class Account {
 //        return new ArrayList<>(this.authorizeds);
 //    }
 //
-//    /**
-//     * Get the account's balance
-//     *
-//     * @return (the balance)
-//     *
-//     * @author runix
-//     */
-//    public final double getBalance() {
-//        return this.balance;
-//    }
-//    
-//    /**
-//     * Set balance value
-//     * @param balance
-//     */
-//    public void setBalance(double balance) {
-//		this.balance = balance;
-//	}
-//
-//    /**
-//     * Get the max account's overdraft
-//     *
-//     * @return (the account's overdraft )
-//     */
-//    public final double getMaxOverdraft() {
-//        return this.maxOverdraft;
-//    }
-//
+    /**
+     * Get the account's balance
+     *
+     * @return (the balance)
+     *
+     * @author runix
+     */
+    public final double getBalance() {
+        return this.balance;
+    }
+    
+    /**
+     * Set balance value
+     * @param balance
+     */
+    public void setBalance(double balance) {
+		this.balance = balance;
+	}
+
+    /**
+     * Get the max account's overdraft
+     *
+     * @return (the account's overdraft )
+     */
+    public final double getMaxOverdraft() {
+        return this.maxOverdraft;
+    }
+
     /**
      * Withdraw money from the account.
      *

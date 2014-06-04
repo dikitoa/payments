@@ -26,13 +26,13 @@ import es.unileon.ulebank.payments.DebitCard;
 import es.unileon.ulebank.transactionManager.TransactionManager;
 
 public class RenovateCardCommandTest {
-	private Handler handler1;
-	private Handler handler2;
+	private String handler1;
+	private String handler2;
 	private Office office;
-	private Handler dni;
+	private String dni;
 	private Client client;
 	private 
-	Handler accountHandler;
+	String accountHandler;
 	private Account account;
 	private Card card1;
 	private Card card2;
@@ -44,14 +44,14 @@ public class RenovateCardCommandTest {
 	
 	@Before
 	public void setUp() throws NumberFormatException, CommissionException, IOException, InvalidFeeException {
-		BankHandler bankHandler = new BankHandler("1234");
+		String bankHandler = new BankHandler("1234").toString();
 		this.manager = new TransactionManager();
         this.bank = new Bank(manager, bankHandler);
-		handler1 = new CardHandler(bankHandler, "01", "987654321");
-		handler2 = new CardHandler(bankHandler, "01", "123456789");
+        this.handler1 = bankHandler + "01987654321";
+        this.handler2 = bankHandler + "01123456789";
 		this.office = new Office(new GenericHandler("1234"), this.bank);
-		this.dni = new DNIHandler("71557005A");
-		client = new Client(dni, 20);
+		this.dni = new DNIHandler("71557005A").toString();
+		client = new Client(dni);
 		this.office.addClient(client);
 		account = new Account(office, bank, accountNumber);
 		this.accountHandler = account.getID();
