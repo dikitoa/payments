@@ -17,7 +17,7 @@ public class BankHandler implements Handler {
     /**
      * The number of digits
      */
-    private static final int BANK_NUMBER_DIGITS = 0b100;
+    private static final int BANK_NUMBER_DIGITS = 4;
     /**
      * Bank's number
      */

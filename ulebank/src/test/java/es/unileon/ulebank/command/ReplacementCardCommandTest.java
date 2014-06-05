@@ -25,6 +25,7 @@ import es.unileon.ulebank.office.Office;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.CreditCard;
 import es.unileon.ulebank.payments.DebitCard;
+import es.unileon.ulebank.utils.CardProperties;
 
 public class ReplacementCardCommandTest {
 	private Handler handler1;
@@ -43,6 +44,11 @@ public class ReplacementCardCommandTest {
 	
 	@Before
 	public void setUp() throws NumberFormatException, CommissionException, IOException, InvalidFeeException, MalformedHandlerException, WrongArgsException {
+		CardProperties properties = new CardProperties();
+		properties.setCvvSize(3);
+		properties.setPinSize(4);
+		properties.setMinimumLimit(200.0);
+		properties.setExpirationYear(3);
 		Handler bankHandler = new BankHandler("1234");
         this.bank = new Bank(bankHandler);
         this.handler1 = new CardHandler(bankHandler, "01", "123456789");

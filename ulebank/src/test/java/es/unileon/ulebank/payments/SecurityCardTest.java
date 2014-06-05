@@ -9,7 +9,6 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
-import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.MalformedHandlerException;
@@ -17,6 +16,7 @@ import es.unileon.ulebank.exceptions.SecurityCardException;
 import es.unileon.ulebank.fees.InvalidFeeException;
 import es.unileon.ulebank.handler.CardHandler;
 import es.unileon.ulebank.handler.DNIHandler;
+import es.unileon.ulebank.utils.CardProperties;
 
 /**
  * Test about SecurityCard Class
@@ -30,6 +30,13 @@ public class SecurityCardTest {
 
 	@Before
 	public void setUp() throws IOException, CommissionException, MalformedHandlerException, InvalidFeeException{
+		CardProperties properties = new CardProperties();
+		properties.setCvvSize(3);
+		properties.setPinSize(4);
+		properties.setMinimumLimit(200.0);
+		properties.setExpirationYear(3);
+		properties.setDimensionColumns(10);
+		properties.setDimensionRow(4);
 		this.card = new CreditCard(new CardHandler("123401123456789"), new Client(new DNIHandler(71034506,'H')), null, 0, 0, 0, 0, 0, 0, 0);
 		this.card.setPin("0000");
 		this.secCard = new SecurityCard(this.card);

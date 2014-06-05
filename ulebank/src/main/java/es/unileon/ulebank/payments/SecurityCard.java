@@ -1,12 +1,10 @@
 package es.unileon.ulebank.payments;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Properties;
 import java.util.Random;
 
 import es.unileon.ulebank.exceptions.SecurityCardException;
+import es.unileon.ulebank.utils.CardProperties;
 
 /**
  * SecurityCard Class
@@ -17,14 +15,6 @@ import es.unileon.ulebank.exceptions.SecurityCardException;
  */
 public class SecurityCard {
 
-	/**
-	 * Global variable for search the row dimension in card.properties
-	 */
-	private final String DIMENSION_ROW = "row";
-	/**
-	 * Global variable for search the column dimension in card.properties
-	 */
-	private final String DIMENSION_COLUMNS = "columns";
 	/**
 	 * Value that indicates if the SecurityCard is given to the owner
 	 */
@@ -132,20 +122,7 @@ public class SecurityCard {
 	 * @throws IOException
 	 */
 	private void setDefaultRow() throws NumberFormatException, IOException{
-
-		try {
-			Properties commissionProperty = new Properties();
-			commissionProperty.load(new FileInputStream("src/es/unileon/ulebank/properties/card.properties"));
-
-			/**Obtenemos los parametros definidos en el archivo*/
-			this.row = Integer.parseInt(commissionProperty.getProperty(this.DIMENSION_ROW));
-		}
-		catch(FileNotFoundException e){
-			throw new FileNotFoundException("The file card.properties is not found.");
-		}catch (IOException e2) {
-			throw new IOException("Fail to try open or close file card.properties");
-		}
-
+		this.row = CardProperties.getDimensionRow();
 	}
 	
 	/**
@@ -154,20 +131,7 @@ public class SecurityCard {
 	 * @throws IOException
 	 */
 	private void setDefaultColumns() throws NumberFormatException, IOException{
-
-		try {
-			Properties commissionProperty = new Properties();
-			commissionProperty.load(new FileInputStream("src/es/unileon/ulebank/properties/card.properties"));
-
-			/*Obtenemos los parametros definidos en el archivo*/
-			this.columns = Integer.parseInt(commissionProperty.getProperty(this.DIMENSION_COLUMNS));
-		}
-		catch(FileNotFoundException e){
-			throw new FileNotFoundException("The file card.properties is not found.");
-		}catch (IOException e2) {
-			throw new IOException("Fail to try open or close file card.properties");
-		}
-
+		this.columns = CardProperties.getDimensionColumns();
 	}
 		
 }

@@ -5,6 +5,10 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+
 import org.apache.log4j.Logger;
 
 import es.unileon.ulebank.account.liquidation.AbstractLiquidationFee;
@@ -12,6 +16,7 @@ import es.unileon.ulebank.bank.Bank;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.MalformedHandlerException;
 import es.unileon.ulebank.exceptions.WrongArgsException;
+import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.history.DirectDebitTransaction;
 import es.unileon.ulebank.history.GenericTransaction;
@@ -26,6 +31,7 @@ import es.unileon.ulebank.payments.Card;
  *
  * @author runix
  */
+@Entity
 public class Account {
 
 	/**
@@ -41,6 +47,13 @@ public class Account {
 	 * The account identifier
 	 */
 	private final Handler id;
+	
+	/**
+	 * Card list for that account
+	 */
+	@Column
+    @ElementCollection (targetClass = Card.class)
+    private List<Card> cards;
 
 	/**
 	 * The account balance
@@ -119,10 +132,19 @@ public class Account {
 			this.maxOverdraft = 0;
 			this.directDebits = new AccountDirectDebits();
 			this.liquidationFees = new ArrayList<AbstractLiquidationFee>();
+			this.cards = new ArrayList<Card>();
 		}
 		LOG.info("Create a new account with number " + accountnumber
 				+ " office " + office.getIdOffice().toString() + " bank "
 				+ bank.getID());
+	}
+	
+	public Account() {
+		this.titulars = new ArrayList<Client>();
+		this.history = new History<Transaction>();
+		this.authorizeds = new ArrayList<Client>();
+		this.id = new AccountHandler(new GenericHandler("000000000000000000"));
+		this.directDebitHistory = new History<DirectDebitTransaction>();
 	}
 
 	/**
@@ -478,22 +500,43 @@ public class Account {
 		return this.id;
 	}
 
-	public void removeCard(Handler cardId) {
-		//TODO rellenar metodo
+	public void addCard(Card card) {
+		this.cards.add(card);
+	}
+
+	public boolean removeCard(Handler cardId) {
+		Card card = searchCard(cardId);
+		return this.cards.remove(card);
 	}
 
 	public Card searchCard(Handler cardId) {
-		// TODO Auto-generated method stub
-		return null;
+		Iterator<Card> iterator = cards.iterator();
+		Card card = null;
+
+		if (cards.isEmpty()) {
+			throw new NullPointerException("Card list is empty.");
+		}
+
+		while (iterator.hasNext()) {
+			card = iterator.next();
+
+			if (card.getId().compareTo(cardId) == 0) {
+				break;
+			}
+		}
+
+		return card;
 	}
 
-	public void addCard(Card card1) {
-		// TODO Auto-generated method stub
-		
+	public List<Card> getCards() {
+		return this.cards;
 	}
 
-	public Object getCardAmount() {
-		// TODO Auto-generated method stub
-		return null;
+	public int getCardAmount() {
+		return this.cards.size();
+	}
+
+	public void setBalance(int balance) {
+		this.balance = balance;
 	}
 }

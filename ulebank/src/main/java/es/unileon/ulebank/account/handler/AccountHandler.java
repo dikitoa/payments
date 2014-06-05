@@ -30,19 +30,19 @@ public class AccountHandler implements Handler {
 	/**
 	 * the number of digits ( account number )
 	 */
-	private static final int ACCOUNT_NUMBER_LENGTH = 0b1010;
+	private static final int ACCOUNT_NUMBER_LENGTH = 10;
 	/**
 	 * the number of digits ( office number )
 	 */
-	private static final int OFFICE_NUMBER_LENGTH = 0b100;
+	private static final int OFFICE_NUMBER_LENGTH = 4;
 	/**
 	 * the number of digits ( bank number )
 	 */
-	private static final int BANK_NUMBER_LENGTH = 0b100;
+	private static final int BANK_NUMBER_LENGTH = 4;
 	/**
 	 * number of fields
 	 */
-	private static final int NUMBER_OF_FIELDS = 0b100;
+	private static final int NUMBER_OF_FIELDS = 4;
 	/**
 	 * The control digits
 	 */

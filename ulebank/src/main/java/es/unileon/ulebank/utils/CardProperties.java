@@ -38,6 +38,14 @@ public class CardProperties {
 	 * Limite de extraccion en cajero mensual de la tarjeta
 	 */
 	private static double cashLimitMonthly;
+	/**
+	 * Filas para la tarjeta de seguridad
+	 */
+	private static int dimensionRow;
+	/**
+	 * Columnas para la tarjeta de seguridad
+	 */
+	private static int dimensionColumns;
 	
 	/**
 	 * Devuelve el limite minimo por defecto
@@ -166,4 +174,37 @@ public class CardProperties {
 	public void setCashLimitMonthly(double cashLimitMonthly) {
 		CardProperties.cashLimitMonthly = cashLimitMonthly;
 	}
+	
+	/**
+	 * Devuelve la cantidad de filas de la tarjeta de seguridad
+	 * @return
+	 */
+	public static int getDimensionRow() {
+		return dimensionRow;
+	}
+	
+	/**
+	 * Cambia la cantidad de filas de la tarjeta de seguridad por las indicadas
+	 * @param dimensionRow
+	 */
+	public void setDimensionRow(int dimensionRow) {
+		CardProperties.dimensionRow = dimensionRow;
+	}
+	
+	/**
+	 * Deuelve la cantidad de columnas de la tarjeta de seguridad
+	 * @return
+	 */
+	public static int getDimensionColumns() {
+		return dimensionColumns;
+	}
+
+	/**
+	 * Cambia la cantidad de columnas de la tarjeta de seguridad por las que se indican
+	 * @param dimensionColumns
+	 */
+	public void setDimensionColumns(int dimensionColumns) {
+		CardProperties.dimensionColumns = dimensionColumns;
+	}
+	
 }

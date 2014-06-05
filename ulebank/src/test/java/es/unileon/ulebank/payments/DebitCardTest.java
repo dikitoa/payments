@@ -22,6 +22,7 @@ import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.office.Office;
+import es.unileon.ulebank.utils.CardProperties;
 
 public class DebitCardTest {
 	//TODO cuando un test espera excepcion quitar los assert
@@ -33,6 +34,11 @@ public class DebitCardTest {
 	
 	@Before
 	public void setUp() throws Exception {
+		CardProperties properties = new CardProperties();
+		properties.setCvvSize(3);
+		properties.setPinSize(4);
+		properties.setMinimumLimit(200.0);
+		properties.setExpirationYear(3);
         this.bank = new Bank(new BankHandler("1234"));
         this.office = new Office(new GenericHandler("1234"), this.bank);
         this.handler = new CardHandler(new BankHandler("1234"), "01", "987654321");
@@ -70,7 +76,7 @@ public class DebitCardTest {
 	@Test
 	public void testGenerateExpirationDate() {
 		SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
-		SimpleDateFormat yearFormat = new SimpleDateFormat("YY");
+		SimpleDateFormat yearFormat = new SimpleDateFormat("yy");
 		String currentMonth = monthFormat.format(new Date());
 		String currentYear = String.valueOf(Integer.parseInt(yearFormat.format(new Date()))+3);
 		assertTrue(testCard.generateExpirationDate().equals(currentMonth+"/"+currentYear));
@@ -244,7 +250,7 @@ public class DebitCardTest {
 	@Test
 	public void testGetExpirationDate() {
 		SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
-		SimpleDateFormat yearFormat = new SimpleDateFormat("YY");
+		SimpleDateFormat yearFormat = new SimpleDateFormat("yy");
 		String currentMonth = monthFormat.format(new Date());
 		String currentYear = String.valueOf(Integer.parseInt(yearFormat.format(new Date()))+3);
 		assertTrue(testCard.getExpirationDate().equals(currentMonth+"/"+currentYear));

@@ -30,6 +30,8 @@ public class TransferTest {
 	Transfer transfer;
     private Office office;
     private Bank bank;
+    private Client client1;
+    private Client client2;
 
     private String accountNumber = "0000000000";
 	
@@ -37,8 +39,8 @@ public class TransferTest {
 	public void setUp() throws MalformedHandlerException, WrongArgsException{
         this.bank = new Bank(new BankHandler("1234"));
         this.office = new Office(new OfficeHandler("1234"), this.bank);
-        Client client1 = new Client(new DNIHandler("71557005A"));
-        Client client2 = new Client(new DNIHandler(""));
+        this.client1 = new Client(new DNIHandler("71557005A"));
+        this.client2 = new Client(new DNIHandler("71560136Y"));
 		this.senderAccount = new Account(office, bank, accountNumber, client1);
 		this.receiverAccount = new Account(office, bank, accountNumber, client2);
 		this.quantity = (float) 20.5;
@@ -46,8 +48,8 @@ public class TransferTest {
 	
 	@Test
 	public void transferMoneyWithBalanceTest() throws TransferException, TransactionException {
-//		this.senderAccount.setBalance(100);
-//		this.receiverAccount.setBalance(0);
+		this.senderAccount.setBalance(100);
+		this.receiverAccount.setBalance(0);
 		double beforeMoneyReceiver = this.receiverAccount.getBalance();
 		double beforeMoneySender = this.senderAccount.getBalance();
 		this.transfer = new Transfer(this.senderAccount, this.receiverAccount, this.quantity);
@@ -63,15 +65,15 @@ public class TransferTest {
 
 	@Test (expected = TransferException.class)
 	public void transferMoneyWithOutBalanceTest()throws TransferException, TransactionException {
-//		this.senderAccount.setBalance(0);
-//		this.receiverAccount.setBalance(0);
+		this.senderAccount.setBalance(0);
+		this.receiverAccount.setBalance(0);
 		this.transfer = new Transfer(this.senderAccount, this.receiverAccount, this.quantity);
 		this.transfer.make("Concepto");
 	}
 	
-//	@Test (expected = TransferException.class)
-//	public void transferMoneyEqualsAccountTest()throws TransferException {
-//		Account exAccount = new Account(office, bank, accountNumber);
-//		this.transfer = new Transfer(exAccount, exAccount, this.quantity);
-//	}
+	@Test (expected = TransferException.class)
+	public void transferMoneyEqualsAccountTest()throws TransferException, MalformedHandlerException, WrongArgsException {
+		Account exAccount = new Account(office, bank, accountNumber, client1);
+		this.transfer = new Transfer(exAccount, exAccount, this.quantity);
+	}
 }
