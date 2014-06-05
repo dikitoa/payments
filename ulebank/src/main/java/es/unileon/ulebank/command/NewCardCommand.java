@@ -99,8 +99,8 @@ public class NewCardCommand implements Command {
 	 */
 	public NewCardCommand(CardManager cardManager, CardBean bean) {
 		this.manager = cardManager;
-		this.account = cardManager.getAccount(bean.getAccountNumber());
-		this.client = cardManager.getClient(bean.getDni());
+//		this.account = cardManager.getAccount(bean.getAccountNumber());
+//		this.client = cardManager.getClient(bean.getDni());
 		this.cardHandler = new CardHandler(bean.getCardNumber());
 		this.id = new CommandHandler(this.cardHandler);
 		this.cardType = bean.getCardType();

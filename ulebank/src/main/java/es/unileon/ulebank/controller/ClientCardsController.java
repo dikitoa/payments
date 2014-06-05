@@ -35,10 +35,10 @@ public class ClientCardsController {
 	@RequestMapping (value = "/cards.htm")
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		//TODO pasar un cliente para la busqueda de tarjetas
+//		List<Card> cards = cardManager.getCards();
 		
-		List<Card> cards = cardManager.getCards();
-		
-		map.put("cards", cards);
+//		map.put("cards", cards);
 		return new ModelAndView("cards", "model", map);
 	}
 	

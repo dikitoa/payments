@@ -149,6 +149,11 @@
     	<artifactId>itextpdf</artifactId>
     	<version>5.0.6</version>
     </dependency>
+    <dependency>
+    	<groupId>javax.ejb</groupId>
+    	<artifactId>javax.ejb-api</artifactId>
+    	<version>3.2</version>
+    </dependency>
   </dependencies>
   <build>
 		<finalName>ulebank</finalName>

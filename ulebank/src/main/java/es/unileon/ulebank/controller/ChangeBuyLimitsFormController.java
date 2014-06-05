@@ -51,10 +51,10 @@ public class ChangeBuyLimitsFormController {
 		
         int diaryLimit = (int) changeLimit.getDiaryLimit();
         int monthlyLimit = (int) changeLimit.getMonthlyLimit();
-        logger.info("Modified diary limit: " + diaryLimit + "€.");
-        logger.info("Modified monthly limit: " + monthlyLimit + "€.");
-
-        productManager.changeBuyLimits(diaryLimit, monthlyLimit);
+        logger.info("Modified diary limit: " + diaryLimit + "ï¿½.");
+        logger.info("Modified monthly limit: " + monthlyLimit + "ï¿½.");
+//TODO agnadir cliente
+//        productManager.changeBuyLimits(diaryLimit, monthlyLimit);
 
         return "redirect:/cards.htm";
     }
@@ -68,8 +68,9 @@ public class ChangeBuyLimitsFormController {
     @RequestMapping(method = RequestMethod.GET)
     protected ChangeLimit formBackingObject(HttpServletRequest request) throws ServletException {
         ChangeLimit changeLimit = new ChangeLimit();
-        changeLimit.setDiaryLimit((int) this.productManager.getCards().get(0).getBuyLimitDiary());
-        changeLimit.setMonthlyLimit((int) this.productManager.getCards().get(0).getBuyLimitMonthly());
+        //TODO corregir esto para que busque una tarjeta por el identificador
+//        changeLimit.setDiaryLimit((int) this.productManager.getCards().get(0).getBuyLimitDiary());
+//        changeLimit.setMonthlyLimit((int) this.productManager.getCards().get(0).getBuyLimitMonthly());
         return changeLimit;
     }
 

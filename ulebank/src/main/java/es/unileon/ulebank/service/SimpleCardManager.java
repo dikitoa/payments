@@ -2,17 +2,15 @@ package es.unileon.ulebank.service;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import es.unileon.ulebank.account.Account;
-import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.command.Command;
 import es.unileon.ulebank.command.ModifyBuyLimitCommand;
 import es.unileon.ulebank.command.ModifyCashLimitCommand;
+import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.payments.Card;
-import es.unileon.ulebank.repository.CardDao;
+import es.unileon.ulebank.repository.dao.CardsDao;
 
 /**
  * @author Israel
@@ -26,7 +24,7 @@ public class SimpleCardManager implements CardManager {
 	 * Atributo para realizar las operaciones de acceso a la base de datos
 	 */
 	@Autowired
-	private CardDao cardDao;
+	private CardsDao cardDao;
 	/**
 	 * Guarda la ultima tarjeta agnadida a la base de datos
 	 */
@@ -36,8 +34,8 @@ public class SimpleCardManager implements CardManager {
 	 * Obtiene la lista de tarjetas de la base de datos
 	 */
 	@Override
-	public List<Card> getCards() {
-		return cardDao.getCardList();
+	public List<Card> getCards(Handler dni) {
+		return cardDao.getCards(dni);
 	}
 
 	/**
@@ -45,31 +43,15 @@ public class SimpleCardManager implements CardManager {
 	 */
 	public void saveNewCard(Card card) {
 		this.lastCard = card;
-		this.cardDao.addCard(card);
+		this.cardDao.persist(card);
 	}
 	
 	/**
 	 * Cambia el atributo de acceso al almacenamiento por el recibido
 	 * @param cardDao
 	 */
-	public void setCardDao(CardDao cardDao) {
+	public void setCardDao(CardsDao cardDao) {
 		this.cardDao = cardDao;
-	}
-	
-	/**
-	 * Devuelve el cliente que obtiene de la memoria o de la base de datos
-	 */
-	@Override
-	public Client getClient(String dni) {
-		return this.cardDao.getClient(dni);
-	}
-	
-	/**
-	 * Devuelve la cuenta que obtiene de la memoria o de la base de datos
-	 */
-	@Override
-	public Account getAccount(String accountNumber) {
-		return this.cardDao.getAccount(accountNumber);
 	}
 
 	/**
@@ -81,25 +63,25 @@ public class SimpleCardManager implements CardManager {
 	}
 
 	@Override
-	public void changeBuyLimits(double diary, double monthly)
+	public void changeBuyLimits(double diary, double monthly, Handler handler)
 			throws Exception {
-		Card card = this.cardDao.getCardList().get(0);
+		Card card = this.cardDao.findById(handler);
 		Command buyLimitsDiary = new ModifyBuyLimitCommand(card.getId(), card, diary, "diary");
 		Command buyLimitsMonthly = new ModifyBuyLimitCommand(card.getId(), card, monthly, "monthly");
 		buyLimitsMonthly.execute();
 		buyLimitsDiary.execute();
-		this.cardDao.saveCard(card);
+		this.cardDao.merge(card);
 	}
 
 	@Override
-	public void changeCashLimits(double diary, double monthly)
+	public void changeCashLimits(double diary, double monthly, Handler handler)
 			throws Exception {
-		Card card = this.cardDao.getCardList().get(0);
+		Card card = this.cardDao.findById(handler);
 		Command cashLimitsDiary = new ModifyCashLimitCommand(card.getId(), card, diary, "diary");
 		Command cashLimitsMonthly = new ModifyCashLimitCommand(card.getId(), card, monthly, "monthly");
 		cashLimitsMonthly.execute();
 		cashLimitsDiary.execute();
-		this.cardDao.saveCard(card);
+		this.cardDao.merge(card);
 	}
 
 	public void setCard(Card card) {
