@@ -6,6 +6,7 @@ import javax.security.auth.login.AccountNotFoundException;
 import org.apache.log4j.Logger;
 
 import es.unileon.ulebank.exceptions.CardNotFoundException;
+import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.handler.CommandHandler;
 import es.unileon.ulebank.handler.Handler;
@@ -39,6 +40,14 @@ public class ModifyCashLimitCommand implements Command {
 	 * Tipo de limite a modificar (diario o mensual)
 	 */
 	private String type;
+	/**
+	 * Variable para saber si el comando ha sido ejecutado o no
+	 */
+	private boolean executed = false;
+	/**
+	 * Variable para saber si el comando ha sido deshecho o no
+	 */
+	private boolean undone = false;
 	
 	/**
 	 * Constructor de la clase
@@ -76,12 +85,14 @@ public class ModifyCashLimitCommand implements Command {
 					this.oldAmount = this.card.getCashLimitDiary();
 					//Cambiamos el limite por el indicado
 					this.card.setCashLimitDiary(newAmount);
+					this.executed = true;
 				//Si el limite a modificar es mensual
 			} else if (type.equalsIgnoreCase("monthly")) {
 					//Guardamos la cantidad anterior para poder deshacer la operacion
 					this.oldAmount = this.card.getCashLimitMonthly();
 					//Cambiamos el limite por el indicado
 					this.card.setCashLimitMonthly(newAmount);
+					this.executed = true;
 				//Si no se indica el tipo de limite a modificar adecuadamente no va a realizar la operacion
 			} else {
 				LOG.info("Limit type not defined");
@@ -96,55 +107,73 @@ public class ModifyCashLimitCommand implements Command {
 
 	/**
 	 * Deshace la modificacion del limite de compra dejandolo como estaba
+	 * @throws CommandException 
 	 */
 	@Override
-	public void undo() {
-		//Si el tipo es diario
-		if (type.equalsIgnoreCase("diary")) {
-			try {
-				//Recuperamos el limite anterior
-				this.card.setCashLimitDiary(oldAmount);
-			} catch (IncorrectLimitException e) {
-				LOG.info(e.getMessage());
+	public void undo() throws CommandException {
+		if (this.executed){
+			//Si el tipo es diario
+			if (type.equalsIgnoreCase("diary")) {
+				try {
+					//Recuperamos el limite anterior
+					this.card.setCashLimitDiary(oldAmount);
+					this.undone = true;
+				} catch (IncorrectLimitException e) {
+					LOG.info(e.getMessage());
+				}
+				//Si el tipo es mensual
+			} else if (type.equalsIgnoreCase("monthly")) {
+				try {
+					//Recuperamos el limite anterior
+					this.card.setCashLimitMonthly(oldAmount);
+					this.undone = true;
+				} catch (IncorrectLimitException e) {
+					LOG.info(e.getMessage());
+				}
+				//Si no se indica el tipo de limite a modificar adecuadamente no va a realizar la operacion
+			} else {
+				LOG.info("Limit type not defined");
 			}
-			//Si el tipo es mensual
-		} else if (type.equalsIgnoreCase("monthly")) {
-			try {
-				//Recuperamos el limite anterior
-				this.card.setCashLimitMonthly(oldAmount);
-			} catch (IncorrectLimitException e) {
-				LOG.info(e.getMessage());
-			}
-			//Si no se indica el tipo de limite a modificar adecuadamente no va a realizar la operacion
-		} else {
-			LOG.info("Limit type not defined");
+		}
+		else {
+			LOG.info("Can't undo because command has not executed yet.");
+			throw new CommandException("Can't undo because command has not executed yet.");
 		}
 	}
 
 	/**
 	 * Rehace la modificacion del limite de compra despues de haberlo deshecho
+	 * @throws CommandException 
 	 */
 	@Override
-	public void redo() {
-		//Si el tipo es diario
-		if (type.equalsIgnoreCase("diary")) {
-			try {
-				//Volvemos a cambiar el limite por el que lo habiamos cambiado anteriormente
-				this.card.setCashLimitDiary(newAmount);
-			} catch (IncorrectLimitException e) {
-				LOG.info(e.getMessage());
+	public void redo() throws CommandException {
+		if (this.undone){
+			//Si el tipo es diario
+			if (type.equalsIgnoreCase("diary")) {
+				try {
+					//Volvemos a cambiar el limite por el que lo habiamos cambiado anteriormente
+					this.card.setCashLimitDiary(newAmount);
+					this.undone = false;
+				} catch (IncorrectLimitException e) {
+					LOG.info(e.getMessage());
+				}
+				//Si el tipo es mensual
+			} else if (type.equalsIgnoreCase("monthly")) {
+				try {
+					//Volvemos a cambiar el limite por el que lo habiamos cambiado anteriormente
+					this.card.setCashLimitMonthly(newAmount);
+					this.undone = false;
+				} catch (IncorrectLimitException e) {
+					LOG.info(e.getMessage());
+				}
+				//Si no se indica el tipo de limite a modificar adecuadamente no va a realizar la operacion
+			} else {
+				LOG.info("Limit type not defined");
 			}
-			//Si el tipo es mensual
-		} else if (type.equalsIgnoreCase("monthly")) {
-			try {
-				//Volvemos a cambiar el limite por el que lo habiamos cambiado anteriormente
-				this.card.setCashLimitMonthly(newAmount);
-			} catch (IncorrectLimitException e) {
-				LOG.info(e.getMessage());
-			}
-			//Si no se indica el tipo de limite a modificar adecuadamente no va a realizar la operacion
-		} else {
-			LOG.info("Limit type not defined");
+		}
+		else {
+			LOG.info("Can't undo because command has not undoned yet.");
+			throw new CommandException("Can't undo because command has not undoned yet.");
 		}
 	}
 	

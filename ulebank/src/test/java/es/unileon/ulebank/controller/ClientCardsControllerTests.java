@@ -10,7 +10,6 @@ import org.junit.Test;
 import org.springframework.web.servlet.ModelAndView;
 
 import es.unileon.ulebank.payments.Card;
-import es.unileon.ulebank.repository.InMemoryCardDao;
 import es.unileon.ulebank.service.SimpleCardManager;
 
 public class ClientCardsControllerTests {
@@ -25,7 +24,7 @@ public class ClientCardsControllerTests {
 	@Test
 	public void testHandleRequest() {
 		SimpleCardManager manager = new SimpleCardManager();
-		manager.setCardDao(new InMemoryCardDao(new ArrayList<Card>()));
+		//manager.setCardDao(new InMemoryCardDao(new ArrayList<Card>()));
 		controller.setCardManager(manager);
 		ModelAndView model = controller.handleRequest(null, null);
 		assertEquals("cards", model.getViewName());
