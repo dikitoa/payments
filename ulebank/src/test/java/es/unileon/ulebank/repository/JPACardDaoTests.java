@@ -18,7 +18,7 @@ import es.unileon.ulebank.payments.Card;
 
 public class JPACardDaoTests {
 	private ApplicationContext context;
-	private CardDao cardDao;
+	/*private CardDao cardDao;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -83,5 +83,5 @@ public class JPACardDaoTests {
 		assertEquals(card2.getBuyLimitMonthly(), 1200.0, 0);
 		assertEquals(card2.getBuyLimitDiary(), 120.0, 0);
 		
-	}
+	}*/
 }
