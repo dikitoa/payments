@@ -56,11 +56,7 @@ public class SimpleCardDaoTests {
 //		
 //		cards.add(card1);
 //		cards.add(card2);
-<<<<<<< HEAD
-//		CardsDao cardDao = new InMemoryCardDao(cards);
-=======
 //		CardDao cardDao = new InMemoryCardDao(cards);
->>>>>>> branch 'master' of git@github.com:ULE-Bank/payments.git
 //		cardManager.setCardDao(cardDao);
 //	}
 //
