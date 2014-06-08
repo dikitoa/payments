@@ -9,6 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.web.servlet.ModelAndView;
 
+import es.unileon.ulebank.command.RenovateCardCommand;
+import es.unileon.ulebank.exceptions.ClientNotFoundException;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.service.SimpleCardManager;
 
@@ -29,5 +31,10 @@ public class ClientCardsControllerTests {
 		ModelAndView model = controller.handleRequest(null, null);
 		assertEquals("cards", model.getViewName());
 		assertNotNull(model.getModel());
+	}
+	
+	@Test
+	public void testControllerNotNull() throws ClientNotFoundException {
+		assertNotNull(controller);
 	}
 }

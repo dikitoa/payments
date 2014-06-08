@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.springframework.ui.ModelMap;
 
 import es.unileon.ulebank.domain.CardBean;
+import es.unileon.ulebank.exceptions.ClientNotFoundException;
 
 public class CreateCardControllerTests {
 
@@ -36,5 +37,10 @@ public class CreateCardControllerTests {
 		assertTrue(map.containsValue("CREDIT"));
 		assertTrue(map.containsKey("Debit"));
 		assertTrue(map.containsValue("DEBIT"));
+	}
+	
+	@Test
+	public void testControllerNotNull() throws ClientNotFoundException {
+		assertNotNull(controller);
 	}
 }

@@ -1,6 +1,8 @@
 package es.unileon.ulebank.handler;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -20,8 +22,13 @@ public class CardHandlerTest {
 	}
 	
 	@Test
-	public void testCardHandler() {
-		assertTrue(test != null);
+	public void testCardHandlerNotNull() {
+		assertNotNull(test);
+	}
+	
+	@Test
+	public void testCardHandlerNull() {
+		assertNull(test2);
 	}
 
 	@Test

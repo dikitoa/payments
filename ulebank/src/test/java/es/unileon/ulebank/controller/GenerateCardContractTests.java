@@ -1,6 +1,7 @@
 package es.unileon.ulebank.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Map;
@@ -8,6 +9,8 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.ui.ModelMap;
+
+import es.unileon.ulebank.exceptions.ClientNotFoundException;
 
 public class GenerateCardContractTests {
 
@@ -33,5 +36,10 @@ public class GenerateCardContractTests {
 		assertTrue(map.containsValue("CREDIT"));
 		assertTrue(map.containsKey("Debit"));
 		assertTrue(map.containsValue("DEBIT"));
+	}
+	
+	@Test
+	public void testControllerNotNull() throws ClientNotFoundException {
+		assertNotNull(controller);
 	}
 }

@@ -2,6 +2,7 @@ package es.unileon.ulebank.payments;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
@@ -27,7 +28,8 @@ public class SecurityCardTest {
 
 	public Card card;
 	public SecurityCard secCard;
-
+	public SecurityCard secCard2;
+	
 	@Before
 	public void setUp() throws IOException, CommissionException, MalformedHandlerException, InvalidFeeException{
 		CardProperties properties = new CardProperties();
@@ -40,6 +42,21 @@ public class SecurityCardTest {
 		this.card = new CreditCard(new CardHandler("123401123456789"), new Client(new DNIHandler(71034506,'H')), null, 0, 0, 0, 0, 0, 0, 0);
 		this.card.setPin("0000");
 		this.secCard = new SecurityCard(this.card);
+	}
+	
+	@Test
+	public void securityCardOk() {
+		assertNotNull(this.secCard);
+	}
+	
+	@Test
+	public void securityCardNull() {
+		assertNull(this.secCard2);
+	}
+	
+	@Test
+	public void securityCarNotdOk() {
+		assertNotNull(this.secCard);
 	}
 	
 	@Test

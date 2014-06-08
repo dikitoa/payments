@@ -1,5 +1,11 @@
 package es.unileon.ulebank.command;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import javax.security.auth.login.AccountNotFoundException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -60,12 +66,17 @@ public class NewCardCommandTest {
 		this.commissionRenovate = 0;
 	}
 	
-	@Test (expected = NullPointerException.class)
-	public void testCommandNull() {
-		test = null;
-		test.getId();
+	@Test
+	public void testCommandNull() throws AccountNotFoundException {
+		assertNull(test);
 	}
 	
+//	@Test
+//	public void testCommandNotNull() {
+//		test = new NewCardCommand(office, dni, accountHandler, cardTypeCredit, bankHandler.toString(), officeId, cardId, buyLimitDiary,	buyLimitMonthly, cashLimitDiary, cashLimitMonthly, commissionEmission, commissionMaintenance, commissionRenovate);
+//		assertNotNull(test);
+//	}
+//	
 //	@Test
 //	public void testCommandId() {
 //		this.test = new NewCardCommand(office, dni, accountHandler, cardTypeCredit, bankHandler.toString(), officeId, cardId, buyLimitDiary, 

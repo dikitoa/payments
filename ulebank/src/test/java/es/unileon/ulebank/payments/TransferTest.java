@@ -1,6 +1,8 @@
 package es.unileon.ulebank.payments;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,6 +30,7 @@ public class TransferTest {
 	public Account receiverAccount;
 	public float quantity;
 	Transfer transfer;
+	Transfer transfer2;
     private Office office;
     private Bank bank;
     private Client client1;
@@ -44,6 +47,17 @@ public class TransferTest {
 		this.senderAccount = new Account(office, bank, accountNumber, client1);
 		this.receiverAccount = new Account(office, bank, accountNumber, client2);
 		this.quantity = (float) 20.5;
+	}
+	
+	@Test
+	public void transferOk() throws TransferException {
+		this.transfer = new Transfer(this.senderAccount, this.receiverAccount, this.quantity);
+		assertNotNull(this.transfer);
+	}
+	
+	@Test
+	public void transferNull() throws TransferException {
+		assertNull(this.transfer2);
 	}
 	
 	@Test

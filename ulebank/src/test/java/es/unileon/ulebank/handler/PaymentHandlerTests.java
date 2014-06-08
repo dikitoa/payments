@@ -48,7 +48,7 @@ public class PaymentHandlerTests {
 
 	@Test
 	public void correctHandlerTest() {
-		assertTrue(this.handler != null);
+		assertNotNull(this.handler);
 		assertEquals(this.handler.toString().length(),15);
 	}
 	
@@ -61,6 +61,7 @@ public class PaymentHandlerTests {
 	@Test (expected = MalformedHandlerException.class)
 	public void incorrectHandlerTest() throws PaymentHandlerException{
 		Handler card = new CardHandler(new BankHandler("1234"), "01", "1234567890");
+		@SuppressWarnings("unused")
 		PaymentHandler test = new PaymentHandler(card ,new Date());
 	}
 }

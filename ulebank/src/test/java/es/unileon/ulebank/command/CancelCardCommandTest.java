@@ -1,6 +1,8 @@
 package es.unileon.ulebank.command;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
@@ -61,10 +63,15 @@ public class CancelCardCommandTest {
 		account.addCard(card2);
 	}
 	
-	@Test (expected = NullPointerException.class)
-	public void testCommandNull() {
-		test = null;
-		test.getId();
+	@Test 
+	public void testCommandNotNull() throws ClientNotFoundException {
+		test = new CancelCardCommand(handler1, office, dni, accountHandler);
+		assertNotNull(test);
+	}
+	
+	@Test 
+	public void testCommandNull() throws ClientNotFoundException {
+		assertNull(test);
 	}
 	
 	@Test

@@ -1,5 +1,8 @@
 package es.unileon.ulebank.payments.web;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -7,6 +10,7 @@ import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.bank.Bank;
 import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
+import es.unileon.ulebank.controller.ChangeBuyLimitsFormController;
 import es.unileon.ulebank.controller.ChangeCashLimitsFormController;
 import es.unileon.ulebank.fees.FeeStrategy;
 import es.unileon.ulebank.fees.LinearFee;
@@ -22,9 +26,9 @@ import es.unileon.ulebank.service.SimpleCardManager;
 public class ChangeCashLimitsFormControllerTest {
 
     private SimpleCardManager productManager;
-    
-    Card testCard;
-	CardHandler handler;
+    private ChangeCashLimitsFormController controller;
+    private Card testCard;
+	private CardHandler handler;
 	private Office office;
 	private Bank bank;
     private String accountNumber = "0000000000";
@@ -44,9 +48,20 @@ public class ChangeCashLimitsFormControllerTest {
 		this.productManager.setCard(this.testCard);
 	}
     
+    @Test
+	public void controllerNotNull() throws Exception{
+    	controller = new ChangeCashLimitsFormController();
+    	assertNotNull(controller);
+    }
+    
+    @Test
+	public void controllerNull() throws Exception{
+    	assertNull(controller);
+    }
+    
 	@Test
 	public void testFormBackingObject() throws Exception{		
-		ChangeCashLimitsFormController controller = new ChangeCashLimitsFormController();		
+		controller = new ChangeCashLimitsFormController();		
 		controller.setProductManager(this.productManager);	
 		//assertEquals(controller.formBackingObject(null).getDiaryLimit(),this.productManager.getLastCard().getBuyLimitDiary(),0.01);
 		//assertEquals(controller.formBackingObject(null).getMonthlyLimit(),this.productManager.getLastCard().getBuyLimitMonthly(),0.01);
@@ -54,7 +69,7 @@ public class ChangeCashLimitsFormControllerTest {
 	
 	@Test
 	public void testOnSubmit() throws Exception{		
-		ChangeCashLimitsFormController controller = new ChangeCashLimitsFormController();		
+		controller = new ChangeCashLimitsFormController();		
 		controller.setProductManager(this.productManager);	
 		ChangeLimit limit = new ChangeLimit();
 		limit.setDiaryLimit(150);

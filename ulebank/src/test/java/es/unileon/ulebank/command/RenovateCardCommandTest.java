@@ -1,9 +1,13 @@
 package es.unileon.ulebank.command;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
+
+import javax.security.auth.login.AccountNotFoundException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +16,8 @@ import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.bank.Bank;
 import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
+import es.unileon.ulebank.exceptions.ClientNotFoundException;
+import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.MalformedHandlerException;
 import es.unileon.ulebank.exceptions.WrongArgsException;
@@ -69,10 +75,15 @@ public class RenovateCardCommandTest {
 		card2.setExpirationDate("04/14");
 	}
 	
-	@Test (expected = NullPointerException.class)
-	public void testCommandNull() {
-		test = null;
-		test.getId();
+	@Test
+	public void testCommandNotNull() throws ClientNotFoundException {
+		test = new RenovateCardCommand(handler1, office, dni, accountHandler);
+		assertNotNull(test);
+	}
+	
+	@Test
+	public void testCommandNull() throws AccountNotFoundException {
+		assertNull(test);
 	}
 	
 	@Test
@@ -105,11 +116,9 @@ public class RenovateCardCommandTest {
 		assertEquals("123", this.card2.getCvv());
 	}
 	
-	@Test (expected = NullPointerException.class)
+	@Test (expected = CommandException.class)
 	public void testUndoRenovateCreditCardFail() throws Exception {
 		test = new RenovateCardCommand(handler2, office, dni, accountHandler);
-		assertEquals("04/14", this.card2.getExpirationDate());
-		assertEquals("123", this.card2.getCvv());
 		test.undo();
 	}
 	
@@ -129,11 +138,9 @@ public class RenovateCardCommandTest {
 		assertTrue(!this.card2.getCvv().equals("123"));
 	}
 	
-	@Test (expected = NullPointerException.class)
+	@Test (expected = CommandException.class)
 	public void testRedoRenovateCreditCardFail() throws Exception {
 		test = new RenovateCardCommand(handler2, office, dni, accountHandler);
-		assertEquals("04/14", this.card2.getExpirationDate());
-		assertEquals("123", this.card2.getCvv());
 		test.redo();
 	}
 	
@@ -160,7 +167,7 @@ public class RenovateCardCommandTest {
 		assertEquals("213", this.card1.getCvv());
 	}
 	
-	@Test (expected = NullPointerException.class)
+	@Test (expected = CommandException.class)
 	public void testUndoRenovateDebitCardFail() throws Exception {
 		test = new RenovateCardCommand(handler1, office, dni, accountHandler);
 		assertEquals("04/14", this.card1.getExpirationDate());
@@ -184,11 +191,9 @@ public class RenovateCardCommandTest {
 		assertTrue(!this.card1.getCvv().equals("213"));
 	}
 	
-	@Test (expected = NullPointerException.class)
+	@Test (expected = CommandException.class)
 	public void testRedoRenovateDebitCardFail() throws Exception {
 		test = new RenovateCardCommand(handler1, office, dni, accountHandler);
-		assertEquals("04/14", this.card1.getExpirationDate());
-		assertEquals("213", this.card1.getCvv());
 		test.redo();
 	}
 }

@@ -1,9 +1,13 @@
 package es.unileon.ulebank.command;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
+
+import javax.security.auth.login.AccountNotFoundException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +16,8 @@ import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.bank.Bank;
 import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
+import es.unileon.ulebank.exceptions.ClientNotFoundException;
+import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.MalformedHandlerException;
 import es.unileon.ulebank.exceptions.WrongArgsException;
@@ -28,6 +34,7 @@ import es.unileon.ulebank.payments.DebitCard;
 import es.unileon.ulebank.utils.CardProperties;
 
 public class ReplacementCardCommandTest {
+	
 	private Handler handler1;
 	private Handler handler2;
 	private Office office;
@@ -78,10 +85,15 @@ public class ReplacementCardCommandTest {
 		}
 	}
 	
-	@Test (expected = NullPointerException.class)
-	public void testCommandNull() {
-		test = null;
-		test.getId();
+	@Test 
+	public void testCommandNotNull() throws ClientNotFoundException {
+		test = new ReplacementCardCommand(handler1, office, dni, accountHandler);
+		assertNotNull(test);
+	}
+	
+	@Test
+	public void testCommandNull() throws AccountNotFoundException {
+		assertNull(test);
 	}
 	
 	@Test
@@ -114,8 +126,8 @@ public class ReplacementCardCommandTest {
 		assertEquals("0000", card2.getPin());
 	}
 	
-	@Test (expected = NullPointerException.class)
-	public void testUndoReplacementCreditCardFail() throws Exception {
+	@Test (expected = CommandException.class)
+	public void testUndoReplacementCreditCardFail() throws CommandException, ClientNotFoundException, IOException {
 		test = new ReplacementCardCommand(handler2, office, dni, accountHandler);
 		assertEquals("123", card2.getCvv());
 		assertEquals("0000", card2.getPin());
@@ -138,7 +150,7 @@ public class ReplacementCardCommandTest {
 		assertTrue(!card2.getPin().equals("0000"));
 	}
 	
-	@Test (expected = NullPointerException.class)
+	@Test (expected = CommandException.class)
 	public void testRedoReplacementCreditCardFail() throws Exception {
 		test = new ReplacementCardCommand(handler2, office, dni, accountHandler);
 		assertEquals("123", card2.getCvv());
@@ -169,7 +181,7 @@ public class ReplacementCardCommandTest {
 		assertEquals("1234", card1.getPin());
 	}
 	
-	@Test (expected = NullPointerException.class)
+	@Test (expected = CommandException.class)
 	public void testUndoReplacementDebitCardFail() throws Exception {
 		test = new ReplacementCardCommand(handler1, office, dni, accountHandler);
 		assertEquals("213", card1.getCvv());
@@ -193,7 +205,7 @@ public class ReplacementCardCommandTest {
 		assertTrue(!card1.getPin().equals("1234"));
 	}
 	
-	@Test (expected = NullPointerException.class)
+	@Test (expected = CommandException.class)
 	public void testRedoReplacementDebitCardFail() throws Exception {
 		test = new ReplacementCardCommand(handler1, office, dni, accountHandler);
 		assertEquals("213", card1.getCvv());

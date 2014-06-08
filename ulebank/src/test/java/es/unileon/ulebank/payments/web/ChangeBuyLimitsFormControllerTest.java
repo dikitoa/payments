@@ -1,5 +1,8 @@
 package es.unileon.ulebank.payments.web;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,9 +25,9 @@ import es.unileon.ulebank.service.SimpleCardManager;
 public class ChangeBuyLimitsFormControllerTest {
 
     private SimpleCardManager productManager;
-    
-    Card testCard;
-	CardHandler handler;
+    private ChangeBuyLimitsFormController controller;
+    private Card testCard;
+	private CardHandler handler;
 	private Office office;
 	private Bank bank;
     private String accountNumber = "0000000000";
@@ -44,9 +47,20 @@ public class ChangeBuyLimitsFormControllerTest {
 		this.productManager.setCard(this.testCard);
 	}
     
+    @Test
+	public void controllerNotNull() throws Exception{
+    	controller = new ChangeBuyLimitsFormController();
+    	assertNotNull(controller);
+    }
+    
+    @Test
+	public void controllerNull() throws Exception{
+    	assertNull(controller);
+    }
+    
 	@Test
 	public void testFormBackingObject() throws Exception{		
-		ChangeBuyLimitsFormController controller = new ChangeBuyLimitsFormController();		
+		controller = new ChangeBuyLimitsFormController();		
 		controller.setProductManager(this.productManager);	
 		//assertEquals(controller.formBackingObject(null).getDiaryLimit(),this.productManager.getLastCard().getBuyLimitDiary(),0.01);
 		//assertEquals(controller.formBackingObject(null).getMonthlyLimit(),this.productManager.getLastCard().getBuyLimitMonthly(),0.01);
@@ -54,7 +68,7 @@ public class ChangeBuyLimitsFormControllerTest {
 	
 	@Test
 	public void testOnSubmit() throws Exception{		
-		ChangeBuyLimitsFormController controller = new ChangeBuyLimitsFormController();		
+		controller = new ChangeBuyLimitsFormController();		
 		controller.setProductManager(this.productManager);	
 		ChangeLimit limit = new ChangeLimit();
 		limit.setDiaryLimit(150);

@@ -58,7 +58,12 @@ public class ModifyCashLimitCommandTest {
 	@Test
 	public void testCommandNotNull() throws AccountNotFoundException {
 		test = new ModifyCashLimitCommand(this.handler, this.testCard, 100.0, "diary");
-		assertTrue(test != null);
+		assertNotNull(test);
+	}
+	
+	@Test
+	public void testCommandNull() throws AccountNotFoundException {
+		assertNull(test);
 	}
 	
 	@Test

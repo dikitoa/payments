@@ -58,7 +58,12 @@ public class ModifyBuyLimitCommandTest {
 	@Test
 	public void testCommandNotNull() throws AccountNotFoundException  {
 		test = new ModifyBuyLimitCommand(this.handler, this.testCard, 100.0, "diary");
-		assertTrue(test != null);
+		assertNotNull(test);
+	}
+	
+	@Test
+	public void testCommandtNull() throws AccountNotFoundException  {
+		assertNull(test);
 	}
 	
 	@Test

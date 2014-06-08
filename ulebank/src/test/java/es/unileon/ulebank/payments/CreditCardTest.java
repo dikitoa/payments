@@ -1,6 +1,8 @@
 package es.unileon.ulebank.payments;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
@@ -25,8 +27,9 @@ import es.unileon.ulebank.office.Office;
 import es.unileon.ulebank.utils.CardProperties;
 
 public class CreditCardTest {
-	//TODO cuando un test espera excepcion quitar los assert
+
 	CreditCard testCard;
+	CreditCard testCard2;
 	Handler handler;
 	private Office office;
 	private Bank bank;
@@ -50,12 +53,16 @@ public class CreditCardTest {
 		testCard = new CreditCard(handler, client, account, 400.0, 1000.0, 400.0, 1000.0, commissionEmission.getFee(0), commissionMaintenance.getFee(0), commissionRenovate.getFee(0));
 	}
 	
-	@Test (expected = NullPointerException.class)
-	public void cardNull() {
-		testCard = null;
-		testCard.getId();
+	@Test
+	public void cardNotNull() {
+		assertNotNull(testCard);
 	}
 
+	@Test
+	public void cardNull() {
+		assertNull(testCard2);
+	}
+	
 	@Test
 	public void cardOk() {
 		assertTrue(testCard != null);
@@ -134,7 +141,6 @@ public class CreditCardTest {
 	@Test (expected = IncorrectLimitException.class)
 	public void testSetBuyLimitDiaryFAILUp() throws IncorrectLimitException{
 		testCard.setBuyLimitDiary(2000); //fail because buy limit diary is greater than buy limit monthly
-		assertEquals(2000.0, testCard.getBuyLimitDiary(), 0.0001);
 	}
 	
 	@Test (expected = IncorrectLimitException.class)
@@ -202,7 +208,6 @@ public class CreditCardTest {
 	@Test (expected = IncorrectLimitException.class)
 	public void testSetCashLimitDiaryFAILUp() throws IncorrectLimitException{
 		testCard.setCashLimitDiary(2000); //fail because cash limit diary is greater than cash limit monthly
-		assertEquals(2000.0, testCard.getCashLimitDiary(), 0.0001);
 	}
 	
 	@Test (expected = IncorrectLimitException.class)
@@ -237,7 +242,6 @@ public class CreditCardTest {
 	@Test  (expected = IncorrectLimitException.class)
 	public void testSetCashLimitMonthlyFAILDownMinimumLimit() throws IncorrectLimitException{
 		testCard.setCashLimitMonthly(399); //fail because cash limit diary is 400
-		assertEquals(399.0, testCard.getCashLimitMonthly(), 0.0001);
 	}
 	
 	@Test
@@ -275,19 +279,17 @@ public class CreditCardTest {
 
 	@Test (expected = IOException.class)
 	public void testSetCvvFAILLenght() throws IOException {
-			testCard.setCvv("1954");
-		assertTrue(testCard.getCvv().equals("1954"));
+		testCard.setCvv("1954");
 	}
 	
 	@Test (expected = IOException.class)
 	public void testSetCvvFAILLetter() throws IOException {
-			testCard.setCvv("19f");
-		assertTrue(testCard.getCvv().equals("19f"));
+		testCard.setCvv("19f");
 	}
 	
 	@Test
 	public void testSetCvvOK() throws IOException{
-			testCard.setCvv("146");
+		testCard.setCvv("146");
 		assertTrue(testCard.getCvv().equals("146"));
 	}
 	
