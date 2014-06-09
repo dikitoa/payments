@@ -12,7 +12,13 @@ import java.util.Date;
  */
 public class CommandHandler implements Handler {
 
+	/**
+	 * Identifier of the object which makes the command
+	 */
 	private Handler id;
+	/**
+	 * Date when the commandHandler is created
+	 */
 	private String date;
 	
 	/**
@@ -21,7 +27,7 @@ public class CommandHandler implements Handler {
 	 */
 	public CommandHandler(Handler handler){
 		this.id = handler;
-		DateFormat dateFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
+		DateFormat dateFormat = new SimpleDateFormat("ddMMyyyyHHmmssss");
 		this.date = dateFormat.format(new Date());
 	}
 	
