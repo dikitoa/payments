@@ -99,8 +99,8 @@ public class NewCardCommand implements Command {
 	 */
 	public NewCardCommand(CardManager cardManager, CardBean bean) {
 		this.manager = cardManager;
-//		this.account = cardManager.getAccount(bean.getAccountNumber());
-//		this.client = cardManager.getClient(bean.getDni());
+		//		this.account = cardManager.getAccount(bean.getAccountNumber());
+		//		this.client = cardManager.getClient(bean.getDni());
 		this.cardHandler = new CardHandler(bean.getCardNumber());
 		this.id = new CommandHandler(this.cardHandler);
 		this.cardType = bean.getCardType();
@@ -135,7 +135,7 @@ public class NewCardCommand implements Command {
 		} else if (this.cardType.equalsIgnoreCase("REVOLVING")) {
 			this.cardType.equalsIgnoreCase("REVOLVING");
 		}
-		
+
 		if (this.card != null) {
 			this.manager.saveNewCard(card);
 		}
@@ -161,6 +161,7 @@ public class NewCardCommand implements Command {
 
 	/**
 	 * Devuelve el identificador del comando
+	 * @return command id
 	 */
 	@Override
 	public Handler getId() {

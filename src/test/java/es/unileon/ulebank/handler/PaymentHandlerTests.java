@@ -22,20 +22,20 @@ import es.unileon.ulebank.office.Office;
 import es.unileon.ulebank.payments.CreditCard;
 
 public class PaymentHandlerTests {
-	
+
 	CreditCard testCard;
 	Handler cardHandler;
 	private Office office;
 	private Bank bank;
-    private String accountNumber = "0000000000";
+	private String accountNumber = "0000000000";
 	private Handler handler;
 	private Date paymentDate;
-	
+
 	@Before
 	public void setUp() throws PaymentHandlerException, InvalidFeeException, CommissionException, MalformedHandlerException, WrongArgsException{
-        this.bank = new Bank(new BankHandler("1234"));
-        this.office = new Office(new GenericHandler("1234"), this.bank);
-        cardHandler = new CardHandler("123401123456789");
+		this.bank = new Bank(new BankHandler("1234"));
+		this.office = new Office(new GenericHandler("1234"), this.bank);
+		cardHandler = new CardHandler("123401123456789");
 		Client client = new Client(new DNIHandler("71451559N"));
 		Account account = new Account(office, bank, accountNumber, client);
 		FeeStrategy commissionEmission = new LinearFee(0, 25);
@@ -51,7 +51,7 @@ public class PaymentHandlerTests {
 		assertNotNull(this.handler);
 		assertEquals(this.handler.toString().length(),15);
 	}
-	
+
 	@Test 
 	public void compareHandlerTest(){
 		assertFalse(this.handler.compareTo(cardHandler)==0);

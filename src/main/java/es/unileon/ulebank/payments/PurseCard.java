@@ -14,7 +14,7 @@ import es.unileon.ulebank.handler.Handler;
 public class PurseCard extends Card {
 
 	/**
-	 * 
+	 * Version
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -51,6 +51,6 @@ public class PurseCard extends Card {
 	 */
 	@Override
 	public void makeTransaction(double quantity, String payConcept) throws PaymentException{
-		//TODO
+		throw new UnsupportedOperationException();
 	}
 }

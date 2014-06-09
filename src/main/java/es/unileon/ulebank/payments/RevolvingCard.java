@@ -13,7 +13,7 @@ import es.unileon.ulebank.handler.Handler;
  */
 public class RevolvingCard extends Card {
 	/**
-	 * 
+	 * Version
 	 */
 	private static final long serialVersionUID = 1L;
 	/**
@@ -71,6 +71,6 @@ public class RevolvingCard extends Card {
 	 */
 	@Override
 	public void makeTransaction(double quantity, String payConcept) throws PaymentException{
-		//TODO
+		throw new UnsupportedOperationException();
 	}
 }

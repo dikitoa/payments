@@ -1,6 +1,5 @@
 package es.unileon.ulebank.command;
 
-
 import javax.security.auth.login.AccountNotFoundException;
 
 import org.apache.log4j.Logger;
@@ -48,7 +47,7 @@ public class ModifyBuyLimitCommand implements Command {
 	 * Variable para saber si el comando ha sido deshecho o no
 	 */
 	private boolean undone = false;
-	
+
 	/**
 	 * Constructor de la clase
 	 * @param cardId
@@ -67,7 +66,7 @@ public class ModifyBuyLimitCommand implements Command {
 			LOG.info(e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * Realiza la modificacion del limite de compra ya sea diario o mensual
 	 * @throws CardNotFoundException 
@@ -83,14 +82,14 @@ public class ModifyBuyLimitCommand implements Command {
 				//Cambiamos el limite por el indicado
 				this.card.setBuyLimitDiary(newAmount);
 				this.executed = true;
-			//Si el limite a modificar es mensual
+				//Si el limite a modificar es mensual
 			} else if (type.equalsIgnoreCase("monthly")) {
 				//Guardamos la cantidad anterior para poder deshacer la operacion
 				this.oldAmount = this.card.getBuyLimitMonthly();
 				//Cambiamos el limite por el indicado
 				this.card.setBuyLimitMonthly(newAmount);
 				this.executed = true;
-			//Si no se indica el tipo de limite a modificar adecuadamente no va a realizar la operacion
+				//Si no se indica el tipo de limite a modificar adecuadamente no va a realizar la operacion
 			} else {
 				LOG.info("Limit type not defined");
 			}
@@ -118,7 +117,7 @@ public class ModifyBuyLimitCommand implements Command {
 				} catch (IncorrectLimitException e) {
 					LOG.info(e.getMessage());
 				}
-			//Si el tipo es mensual
+				//Si el tipo es mensual
 			} else if (type.equalsIgnoreCase("monthly")) {
 				try {
 					//Recuperamos el limite anterior
@@ -136,7 +135,7 @@ public class ModifyBuyLimitCommand implements Command {
 			LOG.info("Can't undo because command has not executed yet.");
 			throw new CommandException("Can't undo because command has not executed yet.");
 		}
-		
+
 	}
 
 	/**
@@ -177,6 +176,7 @@ public class ModifyBuyLimitCommand implements Command {
 
 	/**
 	 * Devuelve el identificador del comando
+	 * @return command id
 	 */
 	@Override
 	public Handler getId() {

@@ -5,6 +5,9 @@ package es.unileon.ulebank.exceptions;
  * Excepcion que se lanza cuando un comando no se ejecuta correctamente
  */
 public class CommandException extends Exception {
+	/**
+	 * Version
+	 */
 	private static final long serialVersionUID = 1L;
 
 	/**

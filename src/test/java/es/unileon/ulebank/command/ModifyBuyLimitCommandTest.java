@@ -36,15 +36,15 @@ public class ModifyBuyLimitCommandTest {
 	private Account account;
 	private ModifyBuyLimitCommand test;
 	private ModifyBuyLimitCommand test2;
-    private Bank bank;
+	private Bank bank;
 
-    private String accountNumber = "0000000000";
-	
+	private String accountNumber = "0000000000";
+
 	@Before
 	public void setUp() throws CommissionException, InvalidFeeException, MalformedHandlerException, WrongArgsException {
 		Handler bankHandler = new BankHandler("1234");
-        this.bank = new Bank(bankHandler);
-        this.handler = new CardHandler(bankHandler, "01", "123456789");
+		this.bank = new Bank(bankHandler);
+		this.handler = new CardHandler(bankHandler, "01", "123456789");
 		this.office = new Office(new GenericHandler("1234"), this.bank);
 		this.dni = new DNIHandler("71557005A");
 		this.client = new Client(dni);
@@ -54,18 +54,18 @@ public class ModifyBuyLimitCommandTest {
 		testCard = new CreditCard(handler, client, account, 400.0, 1000.0, 400.0, 1000.0, 25, 0, 0);
 		account.addCard(testCard);
 	}
-	
+
 	@Test
 	public void testCommandNotNull() throws AccountNotFoundException  {
 		test = new ModifyBuyLimitCommand(this.handler, this.testCard, 100.0, "diary");
 		assertNotNull(test);
 	}
-	
+
 	@Test
 	public void testCommandtNull() throws AccountNotFoundException  {
 		assertNull(test);
 	}
-	
+
 	@Test
 	public void testCommandId() throws AccountNotFoundException  {
 		test = new ModifyBuyLimitCommand(this.handler, this.testCard, 200.0, "diary");
@@ -73,7 +73,7 @@ public class ModifyBuyLimitCommandTest {
 		String date = commandId.getDate();
 		assertTrue(test.getId().toString().compareTo(handler.toString() + " " + date) == 0);
 	}
-	
+
 	@Test
 	public void testLimitDiaryModified() throws AccountNotFoundException, CardNotFoundException, IncorrectLimitException {
 		test = new ModifyBuyLimitCommand(this.handler, this.testCard, 200.0, "diary");
@@ -81,14 +81,14 @@ public class ModifyBuyLimitCommandTest {
 		test.execute();
 		assertEquals(200.0, testCard.getBuyLimitDiary(), 0.0001);
 	}
-	
+
 	@Test (expected = IncorrectLimitException.class)
 	public void testLimitDiaryNotModified() throws  IncorrectLimitException, CommandException, AccountNotFoundException, CardNotFoundException {
 		test = new ModifyBuyLimitCommand(this.handler, this.testCard, 1100.0, "Diary");
 		assertEquals(400.0, this.testCard.getBuyLimitDiary(), 0.0001);
 		test.execute();
 	}
-	
+
 	@Test
 	public void testLimitMonthlyModified() throws IncorrectLimitException, CommandException, AccountNotFoundException, CardNotFoundException {
 		test = new ModifyBuyLimitCommand(this.handler, this.testCard, 2000.0, "Monthly");
@@ -96,14 +96,14 @@ public class ModifyBuyLimitCommandTest {
 		test.execute();
 		assertEquals(2000.0, this.testCard.getBuyLimitMonthly(), 0.0001);
 	}
-	
+
 	@Test (expected = IncorrectLimitException.class)
 	public void testLimitMonthlyNotModified() throws IncorrectLimitException, CommandException, AccountNotFoundException, CardNotFoundException {
 		test = new ModifyBuyLimitCommand(this.handler, this.testCard, 300.0, "Monthly");
 		assertEquals(1000.0, this.testCard.getBuyLimitMonthly(), 0.0001);
 		test.execute();
 	}
-	
+
 	@Test
 	public void testTypeOK() throws IncorrectLimitException, CommandException, AccountNotFoundException, CardNotFoundException {
 		test = new ModifyBuyLimitCommand(this.handler, this.testCard, 300.0, "DIARY");
@@ -111,7 +111,7 @@ public class ModifyBuyLimitCommandTest {
 		assertTrue(this.testCard != null);
 		assertEquals(300.0, this.testCard.getBuyLimitDiary(), 0.0001);
 	}
-	
+
 	@Test
 	public void testTypeNotOK() throws IncorrectLimitException, CommandException, AccountNotFoundException, CardNotFoundException {
 		test = new ModifyBuyLimitCommand(this.handler, this.testCard, 300.0, "");
@@ -124,7 +124,7 @@ public class ModifyBuyLimitCommandTest {
 		assertEquals(400.0, testCard.getBuyLimitDiary(), 0.0001);
 		assertEquals(1000.0, testCard.getBuyLimitMonthly(), 0.0001);
 	}
-	
+
 	@Test
 	public void undoDiaryTest() throws IncorrectLimitException, CommandException, AccountNotFoundException, CardNotFoundException {
 		test = new ModifyBuyLimitCommand(this.handler, this.testCard, 300.0, "diary");
@@ -133,13 +133,13 @@ public class ModifyBuyLimitCommandTest {
 		test.undo();
 		assertEquals(400.0, testCard.getBuyLimitDiary(), 0.0001);
 	}
-	
+
 	@Test (expected = CommandException.class)
 	public void canNotUndoDiaryTest() throws IncorrectLimitException, CommandException, AccountNotFoundException, CardNotFoundException {
 		test = new ModifyBuyLimitCommand(this.handler, this.testCard, 300.0, "diary");
 		test.undo();
 	}
-	
+
 	@Test
 	public void redoDiaryTest() throws IncorrectLimitException, CommandException, AccountNotFoundException, CardNotFoundException {
 		test = new ModifyBuyLimitCommand(this.handler, this.testCard, 300.0, "diary");
@@ -150,14 +150,14 @@ public class ModifyBuyLimitCommandTest {
 		test.redo();
 		assertEquals(300.0, testCard.getBuyLimitDiary(), 0.0001);
 	}
-	
+
 	@Test (expected = CommandException.class)
 	public void canNotRedoDiaryTest() throws IncorrectLimitException, CommandException, AccountNotFoundException, CardNotFoundException {
 		test = new ModifyBuyLimitCommand(this.handler, this.testCard, 300.0, "diary");
 		test.execute();
 		test.redo();
 	}
-	
+
 	@Test
 	public void undoMonthlyTest() throws IncorrectLimitException, CommandException, AccountNotFoundException, CardNotFoundException {
 		test = new ModifyBuyLimitCommand(this.handler, this.testCard, 3000.0, "monthly");
@@ -166,13 +166,13 @@ public class ModifyBuyLimitCommandTest {
 		test.undo();
 		assertEquals(1000.0, testCard.getBuyLimitMonthly(), 0.0001);
 	}
-	
+
 	@Test (expected = CommandException.class)
 	public void canNotUndoMonthlyTest() throws IncorrectLimitException, CommandException, AccountNotFoundException, CardNotFoundException {
 		test = new ModifyBuyLimitCommand(this.handler, this.testCard, 300.0, "monthly");
 		test.undo();
 	}
-	
+
 	@Test
 	public void redoMonthlyTest() throws IncorrectLimitException, CommandException, AccountNotFoundException, CardNotFoundException {
 		test = new ModifyBuyLimitCommand(this.handler, this.testCard, 3000.0, "monthly");
@@ -183,7 +183,7 @@ public class ModifyBuyLimitCommandTest {
 		test.redo();
 		assertEquals(3000.0, testCard.getBuyLimitMonthly(), 0.0001);
 	}
-	
+
 	@Test (expected = CommandException.class)
 	public void canNotRedoMonthlyTest() throws IncorrectLimitException, CommandException, AccountNotFoundException, CardNotFoundException {
 		test = new ModifyBuyLimitCommand(this.handler, this.testCard, 3000.0, "monthly");

@@ -22,7 +22,10 @@ import es.unileon.ulebank.history.TransactionException;
 @Entity
 @Table (name = "cards")
 public class CreditCard extends Card {
-	
+
+	/**
+	 * Version
+	 */
 	private static final long serialVersionUID = 1L;
 	/**
 	 * Dia del mes en el que se carga los gastos de la tarjeta
@@ -57,7 +60,10 @@ public class CreditCard extends Card {
 				new LinearFee(0.0D, commissionRenovate));*/
 				commissionEmission, commissionMaintenance, commissionRenovate);
 	}
-	
+
+	/**
+	 * Constructor de la clase
+	 */
 	public CreditCard() {
 		super(CardType.CREDIT.toString());
 	}

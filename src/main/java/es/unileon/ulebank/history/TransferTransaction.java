@@ -12,7 +12,7 @@ import es.unileon.ulebank.exceptions.TransferException;
  * @brief Class that allows all monetary transactions with accounts
  */
 public class TransferTransaction extends GenericTransaction{
-	
+
 	/**
 	 * Account from transfer the money
 	 */
@@ -31,7 +31,7 @@ public class TransferTransaction extends GenericTransaction{
 	public TransferTransaction(double amount, Date date, String subject,
 			Account senderAccount, Account receiverAccount) throws TransferException, TransactionException {
 		super(amount, date, subject);
-		
+
 		if (!senderAccount.equals(receiverAccount)){
 			this.senderAccount = senderAccount;
 		}

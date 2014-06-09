@@ -29,7 +29,7 @@ import es.unileon.ulebank.utils.CardProperties;
 @MappedSuperclass
 public abstract class Card implements Serializable {
 	/**
-	 * 
+	 * Version
 	 */
 	private static final long serialVersionUID = 1L;
 	/**
@@ -155,6 +155,10 @@ public abstract class Card implements Serializable {
 		this.commissionRenovate = commissionRenovate;
 	}
 
+	/**
+	 * Constructor de tarjeta 
+	 * @param type
+	 */
 	public Card(String type) {
 		this.cardType = type;
 	}

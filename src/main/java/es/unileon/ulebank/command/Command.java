@@ -27,15 +27,18 @@ public interface Command {
 	 * @throws IOException 
 	 */
 	public void undo() throws Exception;
+
 	/**
 	 * Rehace los cambios deshechos
 	 * @throws TransactionException 
 	 * @throws PaymentException 
 	 */
 	public void redo() throws Exception;
+
 	/**
 	 * Devuelve el identificador del comando
 	 * @return
 	 */
 	public Handler getId();
+
 }

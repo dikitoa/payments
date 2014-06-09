@@ -27,14 +27,14 @@ import es.unileon.ulebank.office.Office;
 import es.unileon.ulebank.utils.CardProperties;
 
 public class DebitCardTest {
-	
+
 	DebitCard testCard;
 	DebitCard test;
 	Handler handler;
 	private Office office;
 	private Bank bank;
-    private String accountNumber = "0000000000";
-	
+	private String accountNumber = "0000000000";
+
 	@Before
 	public void setUp() throws Exception {
 		CardProperties properties = new CardProperties();
@@ -42,9 +42,9 @@ public class DebitCardTest {
 		properties.setPinSize(4);
 		properties.setMinimumLimit(200.0);
 		properties.setExpirationYear(3);
-        this.bank = new Bank(new BankHandler("1234"));
-        this.office = new Office(new GenericHandler("1234"), this.bank);
-        this.handler = new CardHandler(new BankHandler("1234"), "01", "987654321");
+		this.bank = new Bank(new BankHandler("1234"));
+		this.office = new Office(new GenericHandler("1234"), this.bank);
+		this.handler = new CardHandler(new BankHandler("1234"), "01", "987654321");
 		Client client = new Client(new DNIHandler("71451559N"));
 		Account account = new Account(office, bank, accountNumber, client);
 		FeeStrategy commissionEmission = new LinearFee(0, 25);
@@ -52,7 +52,7 @@ public class DebitCardTest {
 		FeeStrategy commissionRenovate = new LinearFee(0, 0);
 		testCard = new DebitCard(handler, client, account, 400F, 1000F, 400F, 1000F, commissionEmission.getFee(0), commissionMaintenance.getFee(0), commissionRenovate.getFee(0));
 	}
-	
+
 	@Test
 	public void cardOk() {
 		assertNotNull(testCard);
@@ -62,7 +62,7 @@ public class DebitCardTest {
 	public void cardNotOk() {
 		assertNull(test);
 	}
-	
+
 	@Test
 	public void testGeneratePinCode() {
 		assertTrue(testCard.generatePinCode().length() == 4);
@@ -74,7 +74,7 @@ public class DebitCardTest {
 		String today = dateFormat.format(new Date());
 		assertTrue(testCard.generateEmissionDate().equals(today));
 	}
-	
+
 	@Test
 	public void testGenerateExpirationDate() {
 		SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
@@ -97,7 +97,7 @@ public class DebitCardTest {
 	@Test
 	public void testGetPin() throws IOException {
 		assertTrue(testCard.getPin().length() == 4);
-		
+
 		testCard.setPin("5647");
 		assertTrue(testCard.getPin().equals("5647"));
 	}
@@ -122,22 +122,22 @@ public class DebitCardTest {
 	@Test
 	public void testSetBuyLimitDiaryOKUpLimit() throws IncorrectLimitException {
 		assertEquals(testCard.getBuyLimitMonthly(), 1000.0, 0.0001);
-		
+
 		testCard.setBuyLimitDiary(800.0);
 		assertEquals(800.0, testCard.getBuyLimitDiary(), 0.0001);
 	}
-	
+
 	@Test
 	public void testSetBuyLimitDiaryOKDownLimit() throws IncorrectLimitException{
 		testCard.setBuyLimitDiary(200); //Ok because buy limit diary is 200
 		assertEquals(200.0, testCard.getBuyLimitDiary(), 0.0001);
 	}
-	
+
 	@Test (expected = IncorrectLimitException.class)
 	public void testSetBuyLimitDiaryFAILUp() throws IncorrectLimitException{
 		testCard.setBuyLimitDiary(2000); //fail because buy limit diary is greater than buy limit monthly
 	}
-	
+
 	@Test (expected = IncorrectLimitException.class)
 	public void testSetBuyLimitDiaryFAILDownMinimumLimit() throws IncorrectLimitException{
 		testCard.setBuyLimitMonthly(190);
@@ -148,7 +148,7 @@ public class DebitCardTest {
 		testCard.setBuyLimitDiary(500.0);
 		assertTrue(testCard.checkBuyLimitDiary(500.0));
 	}
-	
+
 	@Test
 	public void testCheckBuyLimitDiaryFALSE() throws IncorrectLimitException {
 		testCard.setBuyLimitDiary(500.0);
@@ -163,17 +163,17 @@ public class DebitCardTest {
 	@Test
 	public void testSetBuyLimitMonthly() throws IncorrectLimitException {
 		assertEquals(1000.0, testCard.getBuyLimitMonthly(), 0.0001);
-		
+
 		testCard.setBuyLimitMonthly(1500.0);
 		assertEquals(1500.0, testCard.getBuyLimitMonthly(), 0.0001);
 	}
-	
+
 	@Test
 	public void testSetBuyLimitMonthlyOKDownLimit() throws IncorrectLimitException{
 		testCard.setBuyLimitMonthly(400.0); //Ok because buy limit diary is 400
 		assertEquals(400.0, testCard.getBuyLimitMonthly(), 0.0001);
 	}
-	
+
 	@Test  (expected = IncorrectLimitException.class)
 	public void testSetBuyLimitMonthlyFAILDownMinimumLimit() throws IncorrectLimitException{
 		testCard.setBuyLimitMonthly(399); //fail because buy limit diary is 400
@@ -187,22 +187,22 @@ public class DebitCardTest {
 	@Test
 	public void testSetCashLimitDiaryOKUpLimit() throws IncorrectLimitException {
 		assertEquals(testCard.getCashLimitMonthly(), 1000.0, 0.0001);
-		
+
 		testCard.setCashLimitDiary(800.0);
 		assertEquals(800.0, testCard.getCashLimitDiary(), 0.0001);
 	}
-	
+
 	@Test
 	public void testSetCashLimitDiaryOKDownLimit() throws IncorrectLimitException{
 		testCard.setCashLimitDiary(200); //Ok because cash limit diary is 200
 		assertEquals(200.0, testCard.getCashLimitDiary(), 0.0001);
 	}
-	
+
 	@Test (expected = IncorrectLimitException.class)
 	public void testSetCashLimitDiaryFAILUp() throws IncorrectLimitException{
 		testCard.setCashLimitDiary(2000); //fail because cash limit diary is greater than cash limit monthly
 	}
-	
+
 	@Test (expected = IncorrectLimitException.class)
 	public void testSetCashLimitDiaryFAILDownMinimumLimit() throws IncorrectLimitException{
 		testCard.setCashLimitMonthly(190);
@@ -214,7 +214,7 @@ public class DebitCardTest {
 		testCard.setCashLimitDiary(500.0);
 		assertTrue(testCard.checkCashLimitDiary(500.0));
 	}
-	
+
 	@Test
 	public void testCheckCashLimitDiaryFALSE() throws IncorrectLimitException {
 		testCard.setCashLimitDiary(500.0);
@@ -231,12 +231,12 @@ public class DebitCardTest {
 		testCard.setCashLimitMonthly(500.0); //Ok because cash limit diary is 500
 		assertEquals(500.0, testCard.getCashLimitMonthly(), 0.0001);
 	}
-	
+
 	@Test  (expected = IncorrectLimitException.class)
 	public void testSetCashLimitMonthlyFAILDownMinimumLimit() throws IncorrectLimitException{
 		testCard.setCashLimitMonthly(399); //fail because cash limit diary is 400
 	}
-	
+
 	@Test
 	public void testGetEmissionDate(){
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -273,12 +273,12 @@ public class DebitCardTest {
 	public void testSetCvvFAILLenght() throws IOException {
 		testCard.setCvv("5245");
 	}
-	
+
 	@Test (expected = IOException.class)
 	public void testSetCvvFAILLetter() throws IOException {
 		testCard.setCvv("r34");
 	}
-	
+
 	@Test
 	public void testSetCvvOK() throws IOException{
 		testCard.setCvv("863");

@@ -31,35 +31,35 @@ public class TransferTest {
 	public float quantity;
 	Transfer transfer;
 	Transfer transfer2;
-    private Office office;
-    private Bank bank;
-    private Client client1;
-    private Client client2;
+	private Office office;
+	private Bank bank;
+	private Client client1;
+	private Client client2;
 
-    private String accountNumber = "0000000000";
-	
+	private String accountNumber = "0000000000";
+
 	@Before
 	public void setUp() throws MalformedHandlerException, WrongArgsException{
-        this.bank = new Bank(new BankHandler("1234"));
-        this.office = new Office(new OfficeHandler("1234"), this.bank);
-        this.client1 = new Client(new DNIHandler("71557005A"));
-        this.client2 = new Client(new DNIHandler("71560136Y"));
+		this.bank = new Bank(new BankHandler("1234"));
+		this.office = new Office(new OfficeHandler("1234"), this.bank);
+		this.client1 = new Client(new DNIHandler("71557005A"));
+		this.client2 = new Client(new DNIHandler("71560136Y"));
 		this.senderAccount = new Account(office, bank, accountNumber, client1);
 		this.receiverAccount = new Account(office, bank, accountNumber, client2);
 		this.quantity = (float) 20.5;
 	}
-	
+
 	@Test
 	public void transferOk() throws TransferException {
 		this.transfer = new Transfer(this.senderAccount, this.receiverAccount, this.quantity);
 		assertNotNull(this.transfer);
 	}
-	
+
 	@Test
 	public void transferNull() throws TransferException {
 		assertNull(this.transfer2);
 	}
-	
+
 	@Test
 	public void transferMoneyWithBalanceTest() throws TransferException, TransactionException {
 		this.senderAccount.setBalance(100);
@@ -70,7 +70,7 @@ public class TransferTest {
 		this.transfer.make("Concepto");
 		double afterMoneyReceiver = this.receiverAccount.getBalance();
 		double afterMoneySender = this.senderAccount.getBalance();
-		
+
 		assertEquals(afterMoneyReceiver - beforeMoneyReceiver, this.quantity, 0.01);
 		assertEquals(afterMoneyReceiver, this.quantity + beforeMoneyReceiver, 0.01);
 		assertEquals(beforeMoneySender - afterMoneySender, this.quantity, 0.01);
@@ -84,7 +84,7 @@ public class TransferTest {
 		this.transfer = new Transfer(this.senderAccount, this.receiverAccount, this.quantity);
 		this.transfer.make("Concepto");
 	}
-	
+
 	@Test (expected = TransferException.class)
 	public void transferMoneyEqualsAccountTest()throws TransferException, MalformedHandlerException, WrongArgsException {
 		Account exAccount = new Account(office, bank, accountNumber, client1);

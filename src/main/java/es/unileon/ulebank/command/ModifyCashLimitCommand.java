@@ -1,6 +1,5 @@
 package es.unileon.ulebank.command;
 
-
 import javax.security.auth.login.AccountNotFoundException;
 
 import org.apache.log4j.Logger;
@@ -48,7 +47,7 @@ public class ModifyCashLimitCommand implements Command {
 	 * Variable para saber si el comando ha sido deshecho o no
 	 */
 	private boolean undone = false;
-	
+
 	/**
 	 * Constructor de la clase
 	 * @param cardId
@@ -69,7 +68,7 @@ public class ModifyCashLimitCommand implements Command {
 			LOG.info(e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * Realiza la modificacion del limite de extraccion en cajero ya sea diario o mensual
 	 * @throws CardNotFoundException 
@@ -81,18 +80,18 @@ public class ModifyCashLimitCommand implements Command {
 		try {			
 			//Si el limite a modificar es diario
 			if (type.equalsIgnoreCase("diary")) {
-					//Guardamos la cantidad anterior para poder deshacer la operacion
-					this.oldAmount = this.card.getCashLimitDiary();
-					//Cambiamos el limite por el indicado
-					this.card.setCashLimitDiary(newAmount);
-					this.executed = true;
+				//Guardamos la cantidad anterior para poder deshacer la operacion
+				this.oldAmount = this.card.getCashLimitDiary();
+				//Cambiamos el limite por el indicado
+				this.card.setCashLimitDiary(newAmount);
+				this.executed = true;
 				//Si el limite a modificar es mensual
 			} else if (type.equalsIgnoreCase("monthly")) {
-					//Guardamos la cantidad anterior para poder deshacer la operacion
-					this.oldAmount = this.card.getCashLimitMonthly();
-					//Cambiamos el limite por el indicado
-					this.card.setCashLimitMonthly(newAmount);
-					this.executed = true;
+				//Guardamos la cantidad anterior para poder deshacer la operacion
+				this.oldAmount = this.card.getCashLimitMonthly();
+				//Cambiamos el limite por el indicado
+				this.card.setCashLimitMonthly(newAmount);
+				this.executed = true;
 				//Si no se indica el tipo de limite a modificar adecuadamente no va a realizar la operacion
 			} else {
 				LOG.info("Limit type not defined");
@@ -176,9 +175,10 @@ public class ModifyCashLimitCommand implements Command {
 			throw new CommandException("Can't undo because command has not undoned yet.");
 		}
 	}
-	
+
 	/**
 	 * Devuelve el identificador del comando
+	 * @return command id
 	 */
 	@Override
 	public Handler getId() {

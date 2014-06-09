@@ -63,7 +63,7 @@ public class PaymentCommand implements Command {
 	 * Concept of the payment
 	 */
 	private String concept;
-	
+
 	/**
 	 * Class constructor
 	 * @param cardId
@@ -89,7 +89,10 @@ public class PaymentCommand implements Command {
 			LOG.info(e.getMessage());
 		}
 	}
-	
+
+	/**
+	 * Metodo que ejecuta el pago
+	 */
 	@Override
 	public void execute() throws PaymentException, TransactionException, es.unileon.ulebank.history.TransactionException {
 		try {
@@ -100,9 +103,12 @@ public class PaymentCommand implements Command {
 		} catch (NullPointerException e) {
 			LOG.info(e.getMessage());
 		}
-		
+
 	}
 
+	/**
+	 * Metodo que deshace el pago
+	 */
 	@Override
 	public void undo() throws TransferException, TransactionException, IOException {
 		try {
@@ -113,9 +119,12 @@ public class PaymentCommand implements Command {
 		} catch (NullPointerException e) {
 			LOG.info(e.getMessage());
 		}
-		
+
 	}
 
+	/**
+	 * Metodo que reace el pago
+	 */
 	@Override
 	public void redo() throws PaymentException, TransactionException {
 		try {
@@ -124,14 +133,18 @@ public class PaymentCommand implements Command {
 		} catch (NullPointerException e) {
 			LOG.info(e.getMessage());
 		}
-		
+
 	}
 
+	/**
+	 * Metodo que devuelve el identificador del comando
+	 * @return command id
+	 */
 	@Override
 	public Handler getId() {
 		return this.id;
 	}
-	
+
 	/**
 	 * Setter of undoConcept
 	 * @throws IOException 
@@ -140,7 +153,7 @@ public class PaymentCommand implements Command {
 		try {
 			Properties commissionProperty = new Properties();
 			commissionProperty.load(new FileInputStream("src/es/unileon/ulebank/properties/card.properties"));
-			
+
 			/*Obtain the paramentes in card.properties*/
 			this.undoConcept = commissionProperty.getProperty(this.UNDO_PROPERTY);
 		}

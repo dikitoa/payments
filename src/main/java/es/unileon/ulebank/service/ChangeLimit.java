@@ -13,46 +13,52 @@ import org.apache.commons.logging.LogFactory;
  */
 public class ChangeLimit {
 
-    /** Logger for this class and subclasses */
-    protected final Log logger = LogFactory.getLog(getClass());
+	/** Logger for this class and subclasses */
+	protected final Log logger = LogFactory.getLog(getClass());
 
-    @Min(100)
-    private int diaryLimit;
-    
-    @Min(300)
-    private int monthlyLimit;
+	/**
+	 * Diary limit of the form
+	 */
+	@Min(100)
+	private int diaryLimit;
 
-    /**
-     * Setter of the diary limit
-     * @param i
-     */
-    public void setDiaryLimit(int i) {
-        diaryLimit = i;
-        logger.info("Diary Limit set to " + i);
-    }
+	/**
+	 * Monthly limit of the form
+	 */
+	@Min(300)
+	private int monthlyLimit;
 
-    /**
-     * Getter of the diary limit
-     * @return
-     */
-    public int getDiaryLimit() {
-        return diaryLimit;
-    }
-    
-    /**
-     * Setter of the monthly limit
-     * @param i
-     */
-    public void setMonthlyLimit(int i) {
-        monthlyLimit = i;
-        logger.info("Monthly Limit set to " + i);
-    }
+	/**
+	 * Setter of the diary limit
+	 * @param i
+	 */
+	public void setDiaryLimit(int i) {
+		diaryLimit = i;
+		logger.info("Diary Limit set to " + i);
+	}
 
-    /**
-     * Getter of the monthly limit
-     * @return
-     */
-    public int getMonthlyLimit() {
-        return monthlyLimit;
-    }
+	/**
+	 * Getter of the diary limit
+	 * @return
+	 */
+	public int getDiaryLimit() {
+		return diaryLimit;
+	}
+
+	/**
+	 * Setter of the monthly limit
+	 * @param i
+	 */
+	public void setMonthlyLimit(int i) {
+		monthlyLimit = i;
+		logger.info("Monthly Limit set to " + i);
+	}
+
+	/**
+	 * Getter of the monthly limit
+	 * @return
+	 */
+	public int getMonthlyLimit() {
+		return monthlyLimit;
+	}
 }

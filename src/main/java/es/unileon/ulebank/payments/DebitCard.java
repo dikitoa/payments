@@ -19,7 +19,11 @@ import es.unileon.ulebank.handler.Handler;
 @Table (name = "cards")
 public class DebitCard extends Card {
 
+	/**
+	 * Version
+	 */
 	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * 
 	 * @param properties

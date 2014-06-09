@@ -35,7 +35,7 @@ public class SecurityCard {
 	 * Card which owns this security card
 	 */
 	private Card associatedCard;
-	
+
 	/**
 	 * @throws IOException 
 	 * @throws NumberFormatException 
@@ -49,21 +49,21 @@ public class SecurityCard {
 		this.associatedCard = card;
 		this.activate = false;
 	}
-	
+
 	/**
 	 * @brief Method fill the matrix of coordinates randomly
 	 * @param coordinates
 	 */
 	private void createCoordinates(Integer[][] coordinates){
 		Random randomGenerator = new Random();
-		
+
 		for (int i = 0; i < this.row; i++ ){
 			for (int j = 0; j < this.columns; j++){		
 				this.coordinates[i][j] = randomGenerator.nextInt(100);
 			}
 		}
 	}
-	
+
 	/**
 	 * @brief Method get the coordinate of a row and column specified
 	 * @param row of the matrix
@@ -77,7 +77,7 @@ public class SecurityCard {
 		else
 			throw new SecurityCardException("Index out of range");
 	}
-	
+
 	/**
 	 * @brief Method that probe if the coordinate to check is really in the coordinates indicated
 	 * @param row of the matrix
@@ -89,7 +89,7 @@ public class SecurityCard {
 	public boolean checkCoordinates(int row, int column, int coordinate) throws SecurityCardException{
 		return this.getCoordinate(row, column).equals(coordinate);
 	}
-	
+
 	/**
 	 * Method that deliver to the owner the security card coordinates only one time
 	 * if cardPin is correct
@@ -107,7 +107,7 @@ public class SecurityCard {
 			return this.coordinates;
 		}
 	}
-	
+
 	/**
 	 * Getter of the associated Card
 	 * @return associatedCard
@@ -115,7 +115,7 @@ public class SecurityCard {
 	public Card getAssociatedCard(){
 		return this.associatedCard;
 	}
-	
+
 	/**
 	 * Method that establish the number of the rows specified in card.properties
 	 * @throws NumberFormatException
@@ -124,7 +124,7 @@ public class SecurityCard {
 	private void setDefaultRow() throws NumberFormatException, IOException{
 		this.row = CardProperties.getDimensionRow();
 	}
-	
+
 	/**
 	 * Method that establish the number of the columns specified in card.properties 
 	 * @throws NumberFormatException
@@ -133,5 +133,5 @@ public class SecurityCard {
 	private void setDefaultColumns() throws NumberFormatException, IOException{
 		this.columns = CardProperties.getDimensionColumns();
 	}
-		
+
 }

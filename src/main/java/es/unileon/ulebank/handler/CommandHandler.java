@@ -20,7 +20,7 @@ public class CommandHandler implements Handler {
 	 * Date when the commandHandler is created
 	 */
 	private String date;
-	
+
 	/**
 	 * Class constructor
 	 * @param handler
@@ -30,12 +30,18 @@ public class CommandHandler implements Handler {
 		DateFormat dateFormat = new SimpleDateFormat("ddMMyyyyHHmmssss");
 		this.date = dateFormat.format(new Date());
 	}
-	
+
+	/**
+	 * Compara el identificador actual con el que se indica
+	 * @param another
+	 * @return devuelve un 0 si son iguales
+	 * @return devuelve otro numero si son distintos
+	 */
 	@Override
 	public int compareTo(Handler another) {
 		return this.toString().compareTo(another.toString());
 	}
-	
+
 	/**
 	 * Getter id
 	 * @return id
@@ -51,7 +57,7 @@ public class CommandHandler implements Handler {
 	public String getDate(){
 		return this.date.toString();
 	}
-	
+
 	/**
 	 * Devuelve en una cadena de strings el id y la fecha
 	 */

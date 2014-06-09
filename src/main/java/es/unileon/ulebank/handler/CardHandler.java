@@ -49,7 +49,6 @@ public class CardHandler implements Handler {
 
 	/**
 	 * Constructor de la clase
-	 * 
 	 * @param bankId
 	 * @param officeId
 	 * @param cardId

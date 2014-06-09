@@ -61,7 +61,7 @@ public class RenovateCardCommand implements Command {
 	 * Variable para saber si el comando ha sido deshecho o no
 	 */
 	private boolean undone = false;
-	
+
 	/**
 	 * Constructor de la clase
 	 * @param cardId
@@ -75,7 +75,7 @@ public class RenovateCardCommand implements Command {
 		this.cardId = cardId;
 		this.account = office.searchClient(dni).searchAccount(accountHandler);
 	}
-	
+
 	/**
 	 * Realiza la renovacion de la tarjeta
 	 * @throws IOException 
@@ -141,6 +141,7 @@ public class RenovateCardCommand implements Command {
 
 	/**
 	 * Devuelve el identificador del comando
+	 * @return command id
 	 */
 	@Override
 	public Handler getId() {
