@@ -48,7 +48,7 @@ public class TransferHandlerTest {
 
 	@Test
 	public void testTransferHandlerCompareEquals() {
-		assertEquals(this.transfer.compareTo(this.transfer),0);
+		assertEquals(0, this.transfer.compareTo(this.transfer));
 	}
 
 	@Test
@@ -60,12 +60,12 @@ public class TransferHandlerTest {
 	@Test
 	public void testTransferHandlerGetId() {
 		String date = this.calendar.get(Calendar.DAY_OF_MONTH) + Integer.toString(this.calendar.get(Calendar.MONTH) + 1) + this.calendar.get(Calendar.YEAR) + this.calendar.get(Calendar.HOUR_OF_DAY) + this.calendar.get(Calendar.MINUTE) + this.calendar.get(Calendar.SECOND);
-		assertEquals(this.transfer.getId(), "0-00000000005-0000000001"+date);
+		assertEquals("0-00000000005-0000000001"+date, this.transfer.getId());
 	}
 
 	@Test
 	public void testTransferHandlerToString() {
 		String date = this.calendar.get(Calendar.DAY_OF_MONTH) + Integer.toString(this.calendar.get(Calendar.MONTH) + 1) + this.calendar.get(Calendar.YEAR) + this.calendar.get(Calendar.HOUR_OF_DAY) + this.calendar.get(Calendar.MINUTE) + this.calendar.get(Calendar.SECOND);
-		assertEquals(this.transfer.toString(), "0-00000000005-0000000001"+date);
+		assertEquals("0-00000000005-0000000001"+date, this.transfer.toString());
 	}
 }

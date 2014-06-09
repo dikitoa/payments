@@ -3,7 +3,7 @@ package es.unileon.ulebank.handler;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import es.unileon.ulebank.exceptions.PaymentHandlerException;
+import es.unileon.ulebank.exceptions.MalformedHandlerException;
 
 /**
  * Class of Payment Handler
@@ -34,12 +34,13 @@ public class PaymentHandler implements Handler {
 	/**
 	 * Class constructor
 	 * @param handler
-	 * @throws PaymentHandlerException
+	 * @throws MalformedHandlerException
+	 * @throws PaymentHandlerException 
 	 */
-	public PaymentHandler(Handler handler, Date date) throws PaymentHandlerException{
+	public PaymentHandler(Handler handler, Date date) throws MalformedHandlerException{
 		this.id = this.obtainInitials(handler) + this.obtainFinals(date);
 		if (this.id.length() != this.LENGTH)
-			throw new PaymentHandlerException("Length of payment handler incorrect.");
+			throw new MalformedHandlerException("Length of payment handler incorrect.");
 	}
 
 	/**
@@ -57,13 +58,13 @@ public class PaymentHandler implements Handler {
 	 * @brief Method that obtains the first 4 numbers of the handler
 	 * @param cardNumber
 	 * @return 4 initials
-	 * @throws PaymentHandlerException
+	 * @throws MalformedHandlerException
 	 */
-	private String obtainInitials(Handler cardNumber) throws PaymentHandlerException{
+	private String obtainInitials(Handler cardNumber) throws MalformedHandlerException{
 		if (cardNumber.toString().substring(this.POSITION_CARD).length() == this.NUMBER_INITIALS)
 			return cardNumber.toString().substring(this.POSITION_CARD);
 		else
-			throw new PaymentHandlerException("Longitud de los numeros iniciales incorrecta");
+			throw new MalformedHandlerException("Longitud de los numeros iniciales incorrecta");
 	}
 
 	/**

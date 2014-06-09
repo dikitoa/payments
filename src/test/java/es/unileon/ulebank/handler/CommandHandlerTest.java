@@ -38,7 +38,7 @@ public class CommandHandlerTest {
 
 	@Test
 	public void testCommandHandlerCompareEquals() {
-		assertEquals(test.compareTo(test),0);
+		assertEquals(0, test.compareTo(test));
 	}
 
 	@Test
@@ -57,13 +57,13 @@ public class CommandHandlerTest {
 	public void testCommandGetDate() {
 		DateFormat dateFormat = new SimpleDateFormat("ddMMyyyyHHmmssss");
 		String date = dateFormat.format(new Date());
-		assertEquals(test.getDate(), date);
+		assertEquals(date, test.getDate());
 	}
 
 	@Test
 	public void testCommandToString() {
 		DateFormat dateFormat = new SimpleDateFormat("ddMMyyyyHHmmssss");
 		String date = dateFormat.format(new Date());
-		assertEquals(test.toString(), this.handler.toString() + " " + date.toString());
+		assertEquals(this.handler.toString() + " " + date.toString(), test.toString());
 	}
 }

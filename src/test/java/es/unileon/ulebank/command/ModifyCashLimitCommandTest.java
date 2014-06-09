@@ -71,7 +71,7 @@ public class ModifyCashLimitCommandTest {
 		test = new ModifyCashLimitCommand(this.handler, this.testCard, 200.0, "diary");
 		CommandHandler commandId = (CommandHandler) test.getId();
 		String date = commandId.getDate();
-		assertTrue(test.getId().toString().compareTo(handler.toString() + " " + date) == 0);
+		assertTrue(0 == test.getId().toString().compareTo(handler.toString() + " " + date));
 	}
 
 	@Test

@@ -34,7 +34,7 @@ public class CardHandlerTest {
 	@Test
 	public void testCardHandlerIntInt() {
 		test2 = new CardHandler(new BankHandler("1234"),"01", "123456789");
-		assertTrue(test2 != null);
+		assertNotNull(test2);
 	}
 
 	@Test

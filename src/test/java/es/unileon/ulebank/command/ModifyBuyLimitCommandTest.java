@@ -71,7 +71,7 @@ public class ModifyBuyLimitCommandTest {
 		test = new ModifyBuyLimitCommand(this.handler, this.testCard, 200.0, "diary");
 		CommandHandler commandId = (CommandHandler) test.getId();
 		String date = commandId.getDate();
-		assertTrue(test.getId().toString().compareTo(handler.toString() + " " + date) == 0);
+		assertTrue(0 == test.getId().toString().compareTo(handler.toString() + " " + date));
 	}
 
 	@Test
@@ -108,7 +108,7 @@ public class ModifyBuyLimitCommandTest {
 	public void testTypeOK() throws IncorrectLimitException, CommandException, AccountNotFoundException, CardNotFoundException {
 		test = new ModifyBuyLimitCommand(this.handler, this.testCard, 300.0, "DIARY");
 		test.execute();
-		assertTrue(this.testCard != null);
+		assertNotNull(this.testCard);
 		assertEquals(300.0, this.testCard.getBuyLimitDiary(), 0.0001);
 	}
 

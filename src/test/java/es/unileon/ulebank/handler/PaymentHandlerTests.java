@@ -13,7 +13,6 @@ import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.MalformedHandlerException;
-import es.unileon.ulebank.exceptions.PaymentHandlerException;
 import es.unileon.ulebank.exceptions.WrongArgsException;
 import es.unileon.ulebank.fees.FeeStrategy;
 import es.unileon.ulebank.fees.InvalidFeeException;
@@ -32,7 +31,7 @@ public class PaymentHandlerTests {
 	private Date paymentDate;
 
 	@Before
-	public void setUp() throws PaymentHandlerException, InvalidFeeException, CommissionException, MalformedHandlerException, WrongArgsException{
+	public void setUp() throws MalformedHandlerException, InvalidFeeException, CommissionException, MalformedHandlerException, WrongArgsException{
 		this.bank = new Bank(new BankHandler("1234"));
 		this.office = new Office(new GenericHandler("1234"), this.bank);
 		cardHandler = new CardHandler("123401123456789");
@@ -49,7 +48,7 @@ public class PaymentHandlerTests {
 	@Test
 	public void correctHandlerTest() {
 		assertNotNull(this.handler);
-		assertEquals(this.handler.toString().length(),15);
+		assertEquals(15, this.handler.toString().length());
 	}
 
 	@Test 
@@ -59,7 +58,7 @@ public class PaymentHandlerTests {
 	}
 
 	@Test (expected = MalformedHandlerException.class)
-	public void incorrectHandlerTest() throws PaymentHandlerException{
+	public void incorrectHandlerTest() throws MalformedHandlerException{
 		Handler card = new CardHandler(new BankHandler("1234"), "01", "1234567890");
 		@SuppressWarnings("unused")
 		PaymentHandler test = new PaymentHandler(card ,new Date());

@@ -1,6 +1,7 @@
 package es.unileon.ulebank.payments;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -65,19 +66,19 @@ public class CreditCardTest {
 
 	@Test
 	public void cardOk() {
-		assertTrue(testCard != null);
+		assertNotNull(testCard);
 	}
 
 	@Test
 	public void testGeneratePinCode() {
-		assertTrue(testCard.generatePinCode().length() == 4);
+		assertEquals(4, testCard.generatePinCode().length());
 	}
 
 	@Test
 	public void testGenerateEmissionDate() {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		String today = dateFormat.format(new Date());
-		assertTrue(testCard.generateEmissionDate().equals(today));
+		assertEquals(today, testCard.generateEmissionDate());
 	}
 
 	@Test
@@ -86,12 +87,12 @@ public class CreditCardTest {
 		SimpleDateFormat yearFormat = new SimpleDateFormat("yy");
 		String currentMonth = monthFormat.format(new Date());
 		String currentYear = String.valueOf(Integer.parseInt(yearFormat.format(new Date()))+3);
-		assertTrue(testCard.generateExpirationDate().equals(currentMonth+"/"+currentYear));
+		assertEquals(currentMonth+"/"+currentYear, testCard.generateExpirationDate());
 	}
 
 	@Test
 	public void testGenerateCVV() {
-		assertTrue(testCard.generateCVV().length() == 3);
+		assertEquals(3, testCard.generateCVV().length());
 	}
 
 	@Test
@@ -101,16 +102,16 @@ public class CreditCardTest {
 
 	@Test
 	public void testGetPin() throws IOException {
-		assertTrue(testCard.getPin().length() == 4);
+		assertEquals(4, testCard.getPin().length());
 
 		testCard.setPin("9182");
-		assertTrue(testCard.getPin().equals("9182"));
+		assertEquals("9182", testCard.getPin());
 	}
 
 	@Test
 	public void testSetPin() throws IOException {
 		testCard.setPin("1357");
-		assertTrue(testCard.getPin().equals("1357"));
+		assertEquals("1357", testCard.getPin());
 	}
 
 	@Test
@@ -158,7 +159,7 @@ public class CreditCardTest {
 	@Test
 	public void testCheckBuyLimitDiaryFALSE() throws IncorrectLimitException {
 		testCard.setBuyLimitDiary(500.0);
-		assertTrue(!testCard.checkBuyLimitDiary(600.0));
+		assertFalse(testCard.checkBuyLimitDiary(600.0));
 	}
 
 	@Test
@@ -225,7 +226,7 @@ public class CreditCardTest {
 	@Test
 	public void testCheckCashLimitDiaryFALSE() throws IncorrectLimitException {
 		testCard.setCashLimitDiary(500.0);
-		assertTrue(!testCard.checkCashLimitDiary(600.0));
+		assertFalse(testCard.checkCashLimitDiary(600.0));
 	}
 
 	@Test
@@ -248,7 +249,7 @@ public class CreditCardTest {
 	public void testGetEmissionDate(){
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		String today = dateFormat.format(new Date());
-		assertTrue(testCard.getEmissionDate().equals(today));
+		assertEquals(today, testCard.getEmissionDate());
 	}
 
 	@Test
@@ -258,23 +259,23 @@ public class CreditCardTest {
 		String currentMonth = monthFormat.format(new Date());
 		String currentYear = String.valueOf(Integer.parseInt(yearFormat.format(new Date()))+3);
 
-		assertTrue(testCard.getExpirationDate().equals(currentMonth+"/"+currentYear));
+		assertEquals(currentMonth+"/"+currentYear, testCard.getExpirationDate());
 	}
 
 	@Test
 	public void testSetExpirationDate() {
 		testCard.setExpirationDate("05/17");
-		assertTrue(testCard.getExpirationDate().equals("05/17"));
+		assertEquals("05/17", testCard.getExpirationDate());
 	}
 
 	@Test
 	public void testGetCardType() {
-		assertTrue(testCard.getCardType().toString().equals(CardType.CREDIT.toString()));
+		assertEquals(CardType.CREDIT.toString(), testCard.getCardType().toString());
 	}
 
 	@Test
 	public void testGetCvv() {
-		assertTrue(testCard.generateCVV().length() == 3);
+		assertEquals(3, testCard.generateCVV().length());
 	}
 
 	@Test (expected = IOException.class)
@@ -290,11 +291,11 @@ public class CreditCardTest {
 	@Test
 	public void testSetCvvOK() throws IOException{
 		testCard.setCvv("146");
-		assertTrue(testCard.getCvv().equals("146"));
+		assertEquals("146", testCard.getCvv());
 	}
 
 	@Test
 	public void testGetCardNumber(){
-		assertTrue(testCard.getId().toString().equals("1234 0112 3456 7892"));
+		assertEquals("1234 0112 3456 7892", testCard.getId().toString());
 	}
 }
