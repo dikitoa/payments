@@ -76,14 +76,14 @@ public class ModifyBuyLimitCommand implements Command {
 		//Buscamos la tarjeta con el identificador de la misma en la lista de tarjetas de la cuenta
 		try {
 			//Si el limite a modificar es diario
-			if (type.equalsIgnoreCase("diary")) {
+			if ("diary".equalsIgnoreCase(type)) {
 				//Guardamos la cantidad anterior para poder deshacer la operacion
 				this.oldAmount = this.card.getBuyLimitDiary();
 				//Cambiamos el limite por el indicado
 				this.card.setBuyLimitDiary(newAmount);
 				this.executed = true;
 				//Si el limite a modificar es mensual
-			} else if (type.equalsIgnoreCase("monthly")) {
+			} else if ("monthly".equalsIgnoreCase(type)) {
 				//Guardamos la cantidad anterior para poder deshacer la operacion
 				this.oldAmount = this.card.getBuyLimitMonthly();
 				//Cambiamos el limite por el indicado
@@ -109,7 +109,7 @@ public class ModifyBuyLimitCommand implements Command {
 	public void undo() throws CommandException {
 		//Si el tipo es diario
 		if (this.executed){
-			if (type.equalsIgnoreCase("diary")) {
+			if ("diary".equalsIgnoreCase(type)) {
 				try {
 					//Recuperamos el limite anterior
 					this.card.setBuyLimitDiary(oldAmount);
@@ -118,7 +118,7 @@ public class ModifyBuyLimitCommand implements Command {
 					LOG.info(e.getMessage());
 				}
 				//Si el tipo es mensual
-			} else if (type.equalsIgnoreCase("monthly")) {
+			} else if ("monthly".equalsIgnoreCase(type)) {
 				try {
 					//Recuperamos el limite anterior
 					this.card.setBuyLimitMonthly(oldAmount);
@@ -145,7 +145,7 @@ public class ModifyBuyLimitCommand implements Command {
 	public void redo() throws CommandException {
 		if (this.undone){
 			//Si el tipo es diario
-			if (type.equalsIgnoreCase("diary")) {
+			if ("diary".equalsIgnoreCase(type)) {
 				try {
 					//Volvemos a cambiar el limite por el que lo habiamos cambiado anteriormente
 					this.card.setBuyLimitDiary(newAmount);
@@ -154,7 +154,7 @@ public class ModifyBuyLimitCommand implements Command {
 					LOG.info(e.getMessage());
 				}
 				//Si el tipo es mensual
-			} else if (type.equalsIgnoreCase("monthly")) {
+			} else if ("monthly".equalsIgnoreCase(type)) {
 				try {
 					//Volvemos a cambiar el limite por el que lo habiamos cambiado anteriormente
 					this.card.setBuyLimitMonthly(newAmount);

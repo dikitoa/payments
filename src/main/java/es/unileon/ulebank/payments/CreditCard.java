@@ -107,9 +107,9 @@ public class CreditCard extends Card {
 	private Date obtainEffectiveDate(){
 		Date effectiveDate = new Date();
 		effectiveDate.setDate(this.monthDay);
-		if (effectiveDate.getMonth() != 11)
+		if (effectiveDate.getMonth() != 11) {
 			effectiveDate.setMonth(effectiveDate.getMonth()+1);
-		else {
+		} else {
 			effectiveDate.setMonth(0);
 			effectiveDate.setYear(effectiveDate.getYear()+1);
 		}

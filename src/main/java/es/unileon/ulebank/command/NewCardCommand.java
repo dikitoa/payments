@@ -122,17 +122,17 @@ public class NewCardCommand implements Command {
 	 */
 	public void execute()
 			throws CommissionException, NumberFormatException, IOException, InvalidFeeException {
-		if (this.cardType.equalsIgnoreCase("CREDIT")) {
+		if ("CREDIT".equalsIgnoreCase(this.cardType)) {
 			this.card = new CreditCard(this.cardHandler, this.client, this.account, 
 					this.buyLimitDiary, this.buyLimitMonthly, this.cashLimitDiary, 
 					this.cashLimitMonthly, this.commissionEmission, this.commissionMaintenance, 
 					this.commissionRenovate);
-		} else if (this.cardType.equalsIgnoreCase("DEBIT")) {
+		} else if ("DEBIT".equalsIgnoreCase(this.cardType)) {
 			this.card = new DebitCard(this.cardHandler, this.client, this.account, 
 					this.buyLimitDiary, this.buyLimitMonthly, this.cashLimitDiary, 
 					this.cashLimitMonthly, this.commissionEmission, this.commissionMaintenance, 
 					this.commissionRenovate);
-		} else if (this.cardType.equalsIgnoreCase("REVOLVING")) {
+		} else if ("REVOLVING".equalsIgnoreCase(this.cardType)) {
 			this.cardType.equalsIgnoreCase("REVOLVING");
 		}
 

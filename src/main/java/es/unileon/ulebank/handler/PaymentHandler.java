@@ -39,8 +39,9 @@ public class PaymentHandler implements Handler {
 	 */
 	public PaymentHandler(Handler handler, Date date) throws MalformedHandlerException{
 		this.id = this.obtainInitials(handler) + this.obtainFinals(date);
-		if (this.id.length() != this.LENGTH)
+		if (this.id.length() != PaymentHandler.LENGTH) {
 			throw new MalformedHandlerException("Length of payment handler incorrect.");
+		}
 	}
 
 	/**
@@ -61,10 +62,11 @@ public class PaymentHandler implements Handler {
 	 * @throws MalformedHandlerException
 	 */
 	private String obtainInitials(Handler cardNumber) throws MalformedHandlerException{
-		if (cardNumber.toString().substring(this.POSITION_CARD).length() == this.NUMBER_INITIALS)
-			return cardNumber.toString().substring(this.POSITION_CARD);
-		else
+		if (cardNumber.toString().substring(PaymentHandler.POSITION_CARD).length() == PaymentHandler.NUMBER_INITIALS) {
+			return cardNumber.toString().substring(PaymentHandler.POSITION_CARD);
+		} else {
 			throw new MalformedHandlerException("Longitud de los numeros iniciales incorrecta");
+		}
 	}
 
 	/**

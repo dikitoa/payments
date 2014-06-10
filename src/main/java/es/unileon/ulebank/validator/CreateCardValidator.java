@@ -27,7 +27,7 @@ public class CreateCardValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "buyLimitMonthly", "required.buyLimitMonthly", "Buy Limit Monthly field is necesary.");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "cashLimitDiary", "required.cashLimitDiary", "Cash Limit Diary field is necesary.");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "cashLimitMonthly", "required.cashLimitMonthly", "Cash Limit Monthly field is necesary.");
-		if (bean.getCardType().toString().equalsIgnoreCase("NONE")) {
+		if ("NONE".equalsIgnoreCase(bean.getCardType().toString())) {
 			errors.rejectValue("cardType", "required.cardType");
 		}
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "commissionEmission", "required.commissionEmission", "Commission Emission field is necesary.");

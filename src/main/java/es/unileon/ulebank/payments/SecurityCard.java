@@ -57,8 +57,8 @@ public class SecurityCard {
 	private void createCoordinates(Integer[][] coordinates){
 		Random randomGenerator = new Random();
 
-		for (int i = 0; i < this.row; i++ ){
-			for (int j = 0; j < this.columns; j++){		
+		for (int i = 0; i < this.row; i++ ) {
+			for (int j = 0; j < this.columns; j++) {		
 				this.coordinates[i][j] = randomGenerator.nextInt(100);
 			}
 		}
@@ -72,10 +72,11 @@ public class SecurityCard {
 	 * @throws SecurityCardException 
 	 */
 	private Integer getCoordinate(int row, int column) throws SecurityCardException{
-		if ( ( (row >= 0) && (row < this.row) ) && ( (column >= 0) && (column < this.columns) ) )
+		if ( ( (row >= 0) && (row < this.row) ) && ( (column >= 0) && (column < this.columns) ) ) {
 			return this.coordinates[row][column];
-		else
+		} else {
 			throw new SecurityCardException("Index out of range");
+		}
 	}
 
 	/**
@@ -98,11 +99,11 @@ public class SecurityCard {
 	 * @throws SecurityCardException 
 	 */
 	public Integer[][] deliverSecurityCard(String cardPin) throws SecurityCardException{
-		if (this.activate == true)
+		if (this.activate) {
 			throw new SecurityCardException("This Security Card has activated yet");
-		else if(!this.associatedCard.checkPin(cardPin))
+		} else if (!this.associatedCard.checkPin(cardPin)) {
 			throw new SecurityCardException("Invalid pin or this Security Card has activated yet");
-		else {
+		} else {
 			this.activate = true;
 			return this.coordinates;
 		}

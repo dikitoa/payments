@@ -44,7 +44,7 @@ public class DebitMaintenanceFee implements FeeStrategy {
 	/**
 	 * String for obtain the maximum age
 	 */
-	private final String AGE = "debit_age";
+	private static final String AGE = "debit_age";
 	
 	/**
 	 * String for obtain the default commission
@@ -64,10 +64,11 @@ public class DebitMaintenanceFee implements FeeStrategy {
 		this.setDefaultCommission();
 		this.setMaximumAge();
 		
-		if (quantity >= 0)
+		if (quantity >= 0) {
 			this.quantity = quantity;
-		else
+		} else {
 			throw new CommissionException("Commission can't been negative.");
+		}
     }
 
     /**
@@ -82,7 +83,7 @@ public class DebitMaintenanceFee implements FeeStrategy {
 			ageProperty.load(new FileInputStream("src/es/unileon/ulebank/properties/card.properties"));
 			
 			/**Obtenemos los parametros definidos en el archivo*/
-			this.maximum_age = Integer.parseInt(ageProperty.getProperty(this.AGE));
+			this.maximum_age = Integer.parseInt(ageProperty.getProperty(DebitMaintenanceFee.AGE));
 			
 		} catch(FileNotFoundException e){
 			throw new FileNotFoundException("The file card.properties is not found.");
