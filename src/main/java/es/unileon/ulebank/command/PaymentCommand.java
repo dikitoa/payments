@@ -88,8 +88,6 @@ public class PaymentCommand implements Command {
 			this.concept = concept;
 		} catch (ClientNotFoundException e) {
 			LOG.info("Client with dni " + dni.toString() + " is not found");
-		} catch (NullPointerException e) {
-			LOG.info(e.getMessage());
 		}
 	}
 
@@ -103,8 +101,9 @@ public class PaymentCommand implements Command {
 			this.card = accountSender.searchCard(cardId);
 			//Make the payment by the type of the card
 			this.card.makeTransaction(this.amount, this.concept);
-		} catch (NullPointerException e) {
+		} catch (TransactionException e) {
 			LOG.info(e.getMessage());
+			throw new TransactionException(e.getMessage());
 		}
 
 	}
@@ -119,8 +118,9 @@ public class PaymentCommand implements Command {
 			Transfer revertPayment = new Transfer(accountReceiver, accountSender, amount);
 			this.setUndoConcept();
 			revertPayment.make(this.undoConcept + this.cardId.toString());
-		} catch (NullPointerException e) {
+		} catch (TransactionException e) {
 			LOG.info(e.getMessage());
+			throw new TransactionException(e.getMessage());
 		}
 
 	}
@@ -133,8 +133,9 @@ public class PaymentCommand implements Command {
 		try {
 			//Make the payment by the type of the card
 			this.card.makeTransaction(this.amount, this.concept);
-		} catch (NullPointerException e) {
+		} catch (TransactionException e) {
 			LOG.info(e.getMessage());
+			throw new TransactionException(e.getMessage());
 		}
 
 	}

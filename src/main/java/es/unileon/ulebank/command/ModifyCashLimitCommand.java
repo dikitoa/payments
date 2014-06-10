@@ -20,6 +20,14 @@ public class ModifyCashLimitCommand implements Command {
 	 */
 	private static final Logger LOG = Logger.getLogger(ModifyCashLimitCommand.class.getName());
 	/**
+	 * String of type diary limit
+	 */
+	private static final String DIARY = "diary";
+	/**
+	 * String of type monthly limit
+	 */
+	private static final String MONTHLY = "monthly";
+	/**
 	 * Identificador del comando
 	 */
 	private Handler id;
@@ -58,15 +66,11 @@ public class ModifyCashLimitCommand implements Command {
 	 * @param type
 	 * @throws AccountNotFoundException 
 	 */
-	public ModifyCashLimitCommand(Handler cardId, Card card, double amount, String type) throws AccountNotFoundException {
-		try {
-			this.id = new CommandHandler(cardId);
-			this.card = card;
-			this.newAmount = amount;
-			this.type = type;
-		} catch (NullPointerException e) {
-			LOG.info(e.getMessage());
-		}
+	public ModifyCashLimitCommand(Handler cardId, Card card, double amount, String type) {
+		this.id = new CommandHandler(cardId);
+		this.card = card;
+		this.newAmount = amount;
+		this.type = type;
 	}
 
 	/**
@@ -79,14 +83,14 @@ public class ModifyCashLimitCommand implements Command {
 		//Buscamos la tarjeta con el identificador de la misma en la lista de tarjetas de la cuenta
 		try {			
 			//Si el limite a modificar es diario
-			if ("diary".equalsIgnoreCase(type)) {
+			if (this.checkTypeLimit(ModifyCashLimitCommand.DIARY)) {
 				//Guardamos la cantidad anterior para poder deshacer la operacion
 				this.oldAmount = this.card.getCashLimitDiary();
 				//Cambiamos el limite por el indicado
 				this.card.setCashLimitDiary(newAmount);
 				this.executed = true;
 				//Si el limite a modificar es mensual
-			} else if ("monthly".equalsIgnoreCase(type)) {
+			} else if (this.checkTypeLimit(ModifyCashLimitCommand.MONTHLY)) {
 				//Guardamos la cantidad anterior para poder deshacer la operacion
 				this.oldAmount = this.card.getCashLimitMonthly();
 				//Cambiamos el limite por el indicado
@@ -96,8 +100,6 @@ public class ModifyCashLimitCommand implements Command {
 			} else {
 				LOG.info("Limit type not defined");
 			}
-		} catch (NullPointerException e) {
-			LOG.info(e.getMessage());
 		} catch (IncorrectLimitException e) {
 			LOG.info(e.getMessage());
 			throw new IncorrectLimitException("Diary limit must been lower tha monthly limit");
@@ -112,7 +114,7 @@ public class ModifyCashLimitCommand implements Command {
 	public void undo() throws CommandException {
 		if (this.executed){
 			//Si el tipo es diario
-			if ("diary".equalsIgnoreCase(type)) {
+			if (this.checkTypeLimit(ModifyCashLimitCommand.DIARY)) {
 				try {
 					//Recuperamos el limite anterior
 					this.card.setCashLimitDiary(oldAmount);
@@ -121,7 +123,7 @@ public class ModifyCashLimitCommand implements Command {
 					LOG.info(e.getMessage());
 				}
 				//Si el tipo es mensual
-			} else if ("monthly".equalsIgnoreCase(type)) {
+			} else if (this.checkTypeLimit(ModifyCashLimitCommand.MONTHLY)) {
 				try {
 					//Recuperamos el limite anterior
 					this.card.setCashLimitMonthly(oldAmount);
@@ -147,7 +149,7 @@ public class ModifyCashLimitCommand implements Command {
 	public void redo() throws CommandException {
 		if (this.undone){
 			//Si el tipo es diario
-			if ("diary".equalsIgnoreCase(type)) {
+			if (this.checkTypeLimit(ModifyCashLimitCommand.DIARY)) {
 				try {
 					//Volvemos a cambiar el limite por el que lo habiamos cambiado anteriormente
 					this.card.setCashLimitDiary(newAmount);
@@ -156,7 +158,7 @@ public class ModifyCashLimitCommand implements Command {
 					LOG.info(e.getMessage());
 				}
 				//Si el tipo es mensual
-			} else if ("monthly".equalsIgnoreCase(type)) {
+			} else if (this.checkTypeLimit(ModifyCashLimitCommand.MONTHLY)) {
 				try {
 					//Volvemos a cambiar el limite por el que lo habiamos cambiado anteriormente
 					this.card.setCashLimitMonthly(newAmount);
@@ -181,5 +183,9 @@ public class ModifyCashLimitCommand implements Command {
 	@Override
 	public Handler getId() {
 		return this.id;
+	}
+	
+	private boolean checkTypeLimit(String typeLimit) {
+		return typeLimit.equalsIgnoreCase(this.type);
 	}
 }

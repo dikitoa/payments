@@ -50,6 +50,9 @@ public class DebitCard extends Card {
 				commissionEmission, commissionMaintenance, commissionRenovate);
 	}
 	
+	/**
+	 * Class constructor
+	 */
 	public DebitCard() {
 		super(CardType.DEBIT.toString());
 	}
