@@ -29,7 +29,7 @@ import es.unileon.ulebank.utils.CardProperties;
 @MappedSuperclass
 public abstract class Card implements Serializable {
 	/**
-	 * 
+	 * Version
 	 */
 	private static final long serialVersionUID = 1L;
 	/**
@@ -155,6 +155,10 @@ public abstract class Card implements Serializable {
 		this.commissionRenovate = commissionRenovate;
 	}
 
+	/**
+	 * Constructor de tarjeta 
+	 * @param type
+	 */
 	public Card(String type) {
 		this.cardType = type;
 	}
@@ -262,13 +266,8 @@ public abstract class Card implements Serializable {
 	 * @return boolean
 	 */
 	public boolean checkPin(String pin) {
-		//Si el pin coincide devuelve true
-		if (pin.equals(this.pin)) {
-			return true;
-			//Sino devuelve false
-		} else {
-			return false;
-		}
+
+		return pin.equals(this.pin);
 	}
 
 	/**
@@ -302,12 +301,7 @@ public abstract class Card implements Serializable {
 	 */
 	public boolean checkBuyLimitDiary(double price) {
 		//Si el precio es mayor que el limite de compra diario devuelve false
-		if (price > buyLimitDiary) {
-			return false;
-			//sino devuelve true
-		} else {
-			return true;
-		}
+		return !(price > buyLimitDiary);
 	}
 
 	/**
@@ -371,12 +365,7 @@ public abstract class Card implements Serializable {
 	 */
 	public boolean checkCashLimitDiary(double cash) {
 		//Si la cantidad solicitada para extraer es mayor que la cantidad maxima diaria devuelve false
-		if (cash > this.cashLimitDiary) {
-			return false;
-			//sino devuelve true
-		} else {
-			return true;
-		}
+		return !(cash > this.cashLimitDiary);
 	}
 
 	/**
@@ -523,12 +512,8 @@ public abstract class Card implements Serializable {
 		Matcher matcher = pattern.matcher(string);
 
 		//Si se cumple el patron devuelve true
-		if (matcher.find()) {
-			return true;
-			//sino devuelve false
-		} else {
-			return false;
-		}
+		return matcher.find();
+
 	}
 	
 	/**
