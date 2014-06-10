@@ -29,7 +29,7 @@ public class SecurityCardTest {
 	public Card card;
 	public SecurityCard secCard;
 	public SecurityCard secCard2;
-	
+
 	@Before
 	public void setUp() throws IOException, CommissionException, MalformedHandlerException, InvalidFeeException{
 		CardProperties properties = new CardProperties();
@@ -43,44 +43,44 @@ public class SecurityCardTest {
 		this.card.setPin("0000");
 		this.secCard = new SecurityCard(this.card);
 	}
-	
+
 	@Test
 	public void securityCardOk() {
 		assertNotNull(this.secCard);
 	}
-	
+
 	@Test
 	public void securityCardNull() {
 		assertNull(this.secCard2);
 	}
-	
+
 	@Test
 	public void securityCarNotdOk() {
 		assertNotNull(this.secCard);
 	}
-	
+
 	@Test
 	public void checkCoordinateTest() throws SecurityCardException {
 		Integer[][] auxSec = this.secCard.deliverSecurityCard("0000");
 		assertFalse(this.secCard.checkCoordinates(0, 0, auxSec[0][0]+1));
 		assertTrue(this.secCard.checkCoordinates(0, 0, auxSec[0][0]));
 	}
-	
+
 	@Test (expected = SecurityCardException.class)
 	public void checkCoordinateRowOutOfRangeTest() throws SecurityCardException{
 		this.secCard.checkCoordinates(4, 0, 20);
 	}
-	
+
 	@Test (expected = SecurityCardException.class)
 	public void checkCoordinateColumnOutOfRangeTest() throws SecurityCardException{
 		this.secCard.checkCoordinates(0, 10, 20);
 	}
-	
+
 	@Test
 	public void deliverSecurityCardOkTest() throws SecurityCardException{
 		assertNotNull(this.secCard.deliverSecurityCard("0000"));
 	}
-	
+
 	@Test (expected = SecurityCardException.class)
 	public void deliverSecurityCardNotOkTest() throws SecurityCardException{
 		this.secCard.deliverSecurityCard("00");

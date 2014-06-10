@@ -17,7 +17,7 @@ import es.unileon.ulebank.service.SimpleCardManager;
 public class ClientCardsControllerTests {
 
 	private ClientCardsController controller;
-	
+
 	@Before
 	public void setUp() throws Exception {
 		controller = new ClientCardsController();
@@ -32,7 +32,7 @@ public class ClientCardsControllerTests {
 		assertEquals("cards", model.getViewName());
 		assertNotNull(model.getModel());
 	}
-	
+
 	@Test
 	public void testControllerNotNull() throws ClientNotFoundException {
 		assertNotNull(controller);

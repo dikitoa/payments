@@ -30,7 +30,7 @@ public class InventoryController {
 	/**
 	 * Variable which store the information in the log
 	 */
-    protected final Log logger = LogFactory.getLog(getClass());
+	private static final Log logger = LogFactory.getLog(InventoryController.class);
 
     /**
      * Manager of the card

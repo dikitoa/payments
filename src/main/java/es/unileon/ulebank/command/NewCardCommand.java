@@ -99,8 +99,8 @@ public class NewCardCommand implements Command {
 	 */
 	public NewCardCommand(CardManager cardManager, CardBean bean) {
 		this.manager = cardManager;
-//		this.account = cardManager.getAccount(bean.getAccountNumber());
-//		this.client = cardManager.getClient(bean.getDni());
+		//		this.account = cardManager.getAccount(bean.getAccountNumber());
+		//		this.client = cardManager.getClient(bean.getDni());
 		this.cardHandler = new CardHandler(bean.getCardNumber());
 		this.id = new CommandHandler(this.cardHandler);
 		this.cardType = bean.getCardType();
@@ -122,20 +122,20 @@ public class NewCardCommand implements Command {
 	 */
 	public void execute()
 			throws CommissionException, NumberFormatException, IOException, InvalidFeeException {
-		if (this.cardType.equalsIgnoreCase("CREDIT")) {
+		if ("CREDIT".equalsIgnoreCase(this.cardType)) {
 			this.card = new CreditCard(this.cardHandler, this.client, this.account, 
 					this.buyLimitDiary, this.buyLimitMonthly, this.cashLimitDiary, 
 					this.cashLimitMonthly, this.commissionEmission, this.commissionMaintenance, 
 					this.commissionRenovate);
-		} else if (this.cardType.equalsIgnoreCase("DEBIT")) {
+		} else if ("DEBIT".equalsIgnoreCase(this.cardType)) {
 			this.card = new DebitCard(this.cardHandler, this.client, this.account, 
 					this.buyLimitDiary, this.buyLimitMonthly, this.cashLimitDiary, 
 					this.cashLimitMonthly, this.commissionEmission, this.commissionMaintenance, 
 					this.commissionRenovate);
-		} else if (this.cardType.equalsIgnoreCase("REVOLVING")) {
+		} else if ("REVOLVING".equalsIgnoreCase(this.cardType)) {
 			this.cardType.equalsIgnoreCase("REVOLVING");
 		}
-		
+
 		if (this.card != null) {
 			this.manager.saveNewCard(card);
 		}
@@ -161,6 +161,7 @@ public class NewCardCommand implements Command {
 
 	/**
 	 * Devuelve el identificador del comando
+	 * @return command id
 	 */
 	@Override
 	public Handler getId() {

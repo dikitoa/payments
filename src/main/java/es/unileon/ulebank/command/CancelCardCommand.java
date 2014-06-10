@@ -24,7 +24,7 @@ public class CancelCardCommand implements Command {
 	 * Cuenta a la que esta asociada la tarjeta que se va a cancelar
 	 */
 	private Account account;
-	
+
 	/**
 	 * Constructor de la clase
 	 * @param cardId
@@ -38,7 +38,7 @@ public class CancelCardCommand implements Command {
 		this.cardId = cardId;
 		this.account = office.searchClient(dni).searchAccount(account);	
 	}
-	
+
 	/**
 	 * Realiza la cancelacion de la tarjeta
 	 */
@@ -66,6 +66,7 @@ public class CancelCardCommand implements Command {
 
 	/**
 	 * Devuelve el identificador del comando
+	 * @return command id
 	 */
 	@Override
 	public Handler getId() {

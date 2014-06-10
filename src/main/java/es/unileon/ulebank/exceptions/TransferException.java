@@ -9,7 +9,7 @@ package es.unileon.ulebank.exceptions;
 public class TransferException extends Exception{
 
 	/**
-	 * 
+	 * Version
 	 */
 	private static final long serialVersionUID = 1L;
 

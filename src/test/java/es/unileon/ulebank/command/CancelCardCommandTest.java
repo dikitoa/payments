@@ -40,17 +40,17 @@ public class CancelCardCommandTest {
 	private Card card1;
 	private Card card2;
 	private CancelCardCommand test;
-    private Bank bank;
+	private Bank bank;
 
-    private String accountNumber = "0000000000";
-	
+	private String accountNumber = "0000000000";
+
 	@Before
 	public void setUp() throws NumberFormatException, CommissionException, IOException, InvalidFeeException, MalformedHandlerException, WrongArgsException {
 		Handler bankHandler = new BankHandler("1234");
 		handler1 = new CardHandler(bankHandler, "01", "123456789");
 		handler2 = new CardHandler(bankHandler, "01", "123456788");
-        this.bank = new Bank(bankHandler);
-        this.office = new Office(new GenericHandler("1234"), this.bank);
+		this.bank = new Bank(bankHandler);
+		this.office = new Office(new GenericHandler("1234"), this.bank);
 		this.dni = new DNIHandler("71557005A");
 		this.client = new Client(dni);
 		this.office.addClient(client);
@@ -62,25 +62,25 @@ public class CancelCardCommandTest {
 		account.addCard(card1);
 		account.addCard(card2);
 	}
-	
+
 	@Test 
 	public void testCommandNotNull() throws ClientNotFoundException {
 		test = new CancelCardCommand(handler1, office, dni, accountHandler);
 		assertNotNull(test);
 	}
-	
+
 	@Test 
 	public void testCommandNull() throws ClientNotFoundException {
 		assertNull(test);
 	}
-	
+
 	@Test
 	public void testCommandId() throws ClientNotFoundException {
 		test = new CancelCardCommand(handler1, office, dni, accountHandler);
 		CommandHandler handler = (CommandHandler) test.getId();
 		assertTrue(handler.getId().compareTo(card1.getId()) == 0);
 	}
-	
+
 	@Test
 	public void testCancelDebitCard() throws ClientNotFoundException {
 		test = new CancelCardCommand(handler1, office, dni, accountHandler);
@@ -88,21 +88,21 @@ public class CancelCardCommandTest {
 		test.execute();
 		assertEquals(1, account.getCardAmount());
 	}
-	
+
 	@Test (expected = UnsupportedOperationException.class)
 	public void testUndoCancelDebitCard() throws ClientNotFoundException {
 		test = new CancelCardCommand(handler1, office, dni, accountHandler);
 		test.execute();
 		test.undo();
 	}
-	
+
 	@Test (expected = UnsupportedOperationException.class)
 	public void testRedoCancelDebitCard() throws ClientNotFoundException {
 		test = new CancelCardCommand(handler1, office, dni, accountHandler);
 		test.execute();
 		test.redo();
 	}
-	
+
 	@Test
 	public void testCancelCreditCard() throws ClientNotFoundException {
 		test = new CancelCardCommand(handler2, office, dni, accountHandler);
@@ -110,14 +110,14 @@ public class CancelCardCommandTest {
 		test.execute();
 		assertEquals(1, account.getCardAmount());
 	}
-	
+
 	@Test (expected = UnsupportedOperationException.class)
 	public void testUndoCancelCreditCard() throws ClientNotFoundException {
 		test = new CancelCardCommand(handler2, office, dni, accountHandler);
 		test.execute();
 		test.undo();
 	}
-	
+
 	@Test (expected = UnsupportedOperationException.class)
 	public void testRedoCancelCreditCard() throws ClientNotFoundException {
 		test = new CancelCardCommand(handler2, office, dni, accountHandler);

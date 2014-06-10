@@ -24,19 +24,19 @@ import es.unileon.ulebank.service.SimpleCardManager;
 
 public class ChangeBuyLimitsFormControllerTest {
 
-    private SimpleCardManager productManager;
-    private ChangeBuyLimitsFormController controller;
-    private Card testCard;
+	private SimpleCardManager productManager;
+	private ChangeBuyLimitsFormController controller;
+	private Card testCard;
 	private CardHandler handler;
 	private Office office;
 	private Bank bank;
-    private String accountNumber = "0000000000";
-    
-    @Before
-    public void setUp() throws Exception {
-    	productManager = new SimpleCardManager();
-        this.bank = new Bank(new BankHandler("1234"));
-        this.office = new Office(new GenericHandler("1234"), this.bank);
+	private String accountNumber = "0000000000";
+
+	@Before
+	public void setUp() throws Exception {
+		productManager = new SimpleCardManager();
+		this.bank = new Bank(new BankHandler("1234"));
+		this.office = new Office(new GenericHandler("1234"), this.bank);
 		handler = new CardHandler(new BankHandler("1234"), "01", "123456789");
 		Client client = new Client(new DNIHandler("71451559N"));
 		Account account = new Account(office, bank, accountNumber, client);
@@ -46,18 +46,18 @@ public class ChangeBuyLimitsFormControllerTest {
 		testCard = new CreditCard(handler, client, account, 400.0, 1000.0, 400.0, 1000.0, commissionEmission.getFee(0), commissionMaintenance.getFee(0), commissionRenovate.getFee(0));
 		this.productManager.setCard(this.testCard);
 	}
-    
-    @Test
+
+	@Test
 	public void controllerNotNull() throws Exception{
-    	controller = new ChangeBuyLimitsFormController();
-    	assertNotNull(controller);
-    }
-    
-    @Test
+		controller = new ChangeBuyLimitsFormController();
+		assertNotNull(controller);
+	}
+
+	@Test
 	public void controllerNull() throws Exception{
-    	assertNull(controller);
-    }
-    
+		assertNull(controller);
+	}
+
 	@Test
 	public void testFormBackingObject() throws Exception{		
 		controller = new ChangeBuyLimitsFormController();		
@@ -65,7 +65,7 @@ public class ChangeBuyLimitsFormControllerTest {
 		//assertEquals(controller.formBackingObject(null).getDiaryLimit(),this.productManager.getLastCard().getBuyLimitDiary(),0.01);
 		//assertEquals(controller.formBackingObject(null).getMonthlyLimit(),this.productManager.getLastCard().getBuyLimitMonthly(),0.01);
 	}
-	
+
 	@Test
 	public void testOnSubmit() throws Exception{		
 		controller = new ChangeBuyLimitsFormController();		

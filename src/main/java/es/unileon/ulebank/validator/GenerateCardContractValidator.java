@@ -21,7 +21,7 @@ public class GenerateCardContractValidator implements Validator {
 	 */
 	public void validate(Object object, Errors errors) {
 		CardBean bean = (CardBean)object;
-		if (bean.getCardType().equalsIgnoreCase("NONE")) {
+		if ("NONE".equalsIgnoreCase(bean.getCardType())) {
 			errors.rejectValue("cardType", "required.cardType");
 		}
 	}

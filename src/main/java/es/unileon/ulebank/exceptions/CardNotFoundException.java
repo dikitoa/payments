@@ -1,9 +1,17 @@
 package es.unileon.ulebank.exceptions;
 
+/**
+ * Exception thrown when Card is not found
+ * @author Rober dCR
+ *
+ */
 public class CardNotFoundException extends Exception {
-	
-private static final long serialVersionUID = 1L;
-	
+
+	/**
+	 * Version
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Constructor de la clase
 	 * @param message

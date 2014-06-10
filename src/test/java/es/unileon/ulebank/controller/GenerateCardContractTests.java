@@ -15,7 +15,7 @@ import es.unileon.ulebank.exceptions.ClientNotFoundException;
 public class GenerateCardContractTests {
 
 	private GenerateCardContractController controller;
-	
+
 	@Before
 	public void setUp() throws Exception {
 		this.controller = new GenerateCardContractController();
@@ -37,7 +37,7 @@ public class GenerateCardContractTests {
 		assertTrue(map.containsKey("Debit"));
 		assertTrue(map.containsValue("DEBIT"));
 	}
-	
+
 	@Test
 	public void testControllerNotNull() throws ClientNotFoundException {
 		assertNotNull(controller);

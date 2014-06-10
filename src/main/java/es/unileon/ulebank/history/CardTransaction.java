@@ -9,7 +9,7 @@ import java.util.Date;
  * @brief Class that allows all monetary transactions with cards
  */
 public class CardTransaction extends Transaction{
-	
+
 	/**
 	 * Class constructor
 	 * @param amount
@@ -21,7 +21,7 @@ public class CardTransaction extends Transaction{
 	 * @throws TransactionException 
 	 */
 	public CardTransaction(double amount, Date date, String subject
-				) throws TransactionException {
+			) throws TransactionException {
 		super(amount, date, subject);
 	}
 

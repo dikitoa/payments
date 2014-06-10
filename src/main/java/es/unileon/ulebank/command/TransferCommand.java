@@ -50,7 +50,7 @@ public class TransferCommand implements Command {
 	 * Prove if we can redo the command
 	 */
 	private boolean redo = false;
-	
+
 	/**
 	 * Class constructor 
 	 * @param ofice
@@ -73,7 +73,10 @@ public class TransferCommand implements Command {
 			LOG.info(e.getMessage());
 		}
 	}
-	
+
+	/**
+	 * Metodo que realiza la transferencia
+	 */
 	@Override
 	public void execute() throws TransferException, TransactionException {
 		try {
@@ -87,6 +90,9 @@ public class TransferCommand implements Command {
 		}
 	}
 
+	/**
+	 * Metodo que deshace la transferencia
+	 */
 	@Override
 	public void undo() {
 		if (this.undo) {
@@ -103,6 +109,9 @@ public class TransferCommand implements Command {
 		}	
 	}
 
+	/**
+	 * Metodo que rehace la transferencia
+	 */
 	@Override
 	public void redo() {
 		if (this.redo) {
@@ -117,9 +126,13 @@ public class TransferCommand implements Command {
 				LOG.info(e.getMessage());
 			}
 		}
-		
+
 	}
 
+	/**
+	 * Metodo que devuelve el identificador del comando
+	 * @return command id
+	 */
 	@Override
 	public Handler getId() {
 		return this.id;

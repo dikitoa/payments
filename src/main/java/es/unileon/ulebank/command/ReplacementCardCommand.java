@@ -160,8 +160,7 @@ public class ReplacementCardCommand implements Command {
 			}catch (IOException e) {
 				LOG.info(e.getMessage());
 			}
-		}
-		else {
+		} else {
 			LOG.info("Can't undo because command has not undoned yet.");
 			throw new CommandException("Can't undo because command has not undoned yet.");
 		}
@@ -169,6 +168,7 @@ public class ReplacementCardCommand implements Command {
 
 	/**
 	 * Devuelve el identificador del comando
+	 * @return command id
 	 */
 	@Override
 	public Handler getId() {

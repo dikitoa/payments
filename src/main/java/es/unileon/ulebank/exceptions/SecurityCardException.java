@@ -9,17 +9,17 @@ package es.unileon.ulebank.exceptions;
 public class SecurityCardException extends Exception{
 
 	/**
-	 * 
+	 * Version
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * Class constructor
 	 */
 	public SecurityCardException(){
-		
+
 	}
-	
+
 	/**
 	 * Class constructor
 	 * @param message
@@ -27,6 +27,5 @@ public class SecurityCardException extends Exception{
 	public SecurityCardException(String message){
 		super(message);
 	}
-	
 
 }

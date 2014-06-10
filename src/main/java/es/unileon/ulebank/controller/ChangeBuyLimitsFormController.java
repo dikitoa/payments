@@ -26,68 +26,69 @@ import es.unileon.ulebank.service.ChangeLimit;
 @RequestMapping(value="/buyLimits.htm")
 public class ChangeBuyLimitsFormController {
 
-    /** Logger for this class and subclasses */
-    protected final Log logger = LogFactory.getLog(getClass());
+	/** Logger for this class and subclasses */
+	private static final Log logger = LogFactory.getLog(ChangeBuyLimitsFormController.class);
 
-    /**
-     * Card which change the limits in
-     */
-    @Autowired
-    private CardManager productManager;
+	/**
+	 * Card which change the limits in
+	 */
+	@Autowired
+	private CardManager productManager;
 
-    /**
-     * Method that obtains the data of the form in buyLimits.jsp and save the changes in the card
-     * @param changeLimit
-     * @param result
-     * @return
-     * @throws Exception 
-     */
-    @RequestMapping(method = RequestMethod.POST)
-    public String onSubmit(@Valid ChangeLimit changeLimit, BindingResult result) throws Exception
-    {
-        if (result.hasErrors()) {
-            return "buyLimits";
-        }
-		
-        int diaryLimit = (int) changeLimit.getDiaryLimit();
-        int monthlyLimit = (int) changeLimit.getMonthlyLimit();
-        logger.info("Modified diary limit: " + diaryLimit + "�.");
-        logger.info("Modified monthly limit: " + monthlyLimit + "�.");
-//TODO agnadir cliente
-//        productManager.changeBuyLimits(diaryLimit, monthlyLimit);
+	/**
+	 * Method that obtains the data of the form in buyLimits.jsp and save the changes in the card
+	 * @param changeLimit
+	 * @param result
+	 * @return
+	 * @throws Exception 
+	 */
+	@RequestMapping(method = RequestMethod.POST)
+	public String onSubmit(@Valid ChangeLimit changeLimit, BindingResult result) throws Exception {
+		if (result.hasErrors()) {
+			return "buyLimits";
+		}
 
-        return "redirect:/cards.htm";
-    }
+		int diaryLimit = (int) changeLimit.getDiaryLimit();
+		int monthlyLimit = (int) changeLimit.getMonthlyLimit();
+		logger.info("Modified diary limit: " + diaryLimit + "�.");
+		logger.info("Modified monthly limit: " + monthlyLimit + "�.");
+		//TODO agnadir cliente
+		//        productManager.changeBuyLimits(diaryLimit, monthlyLimit);
 
-    /**
-     * Method that sends the data of the card's buy limits to the form in buyLimits.jsp
-     * @param request
-     * @return
-     * @throws ServletException
-     */
-    @RequestMapping(method = RequestMethod.GET)
-    protected ChangeLimit formBackingObject(HttpServletRequest request) throws ServletException {
-        ChangeLimit changeLimit = new ChangeLimit();
-        //TODO corregir esto para que busque una tarjeta por el identificador
-//        changeLimit.setDiaryLimit((int) this.productManager.getCards().get(0).getBuyLimitDiary());
-//        changeLimit.setMonthlyLimit((int) this.productManager.getCards().get(0).getBuyLimitMonthly());
-        return changeLimit;
-    }
+		return "redirect:/cards.htm";
+	}
 
-    /**
-     * Setter of the card
-     * @param productManager
-     */
-    public void setProductManager(CardManager productManager) {
-        this.productManager = productManager;
-    }
+	/**
+	 * Method that sends the data of the card's buy limits to the form in buyLimits.jsp
+	 * @param request
+	 * @return
+	 * @throws ServletException
+	 */
+	@RequestMapping(method = RequestMethod.GET)
+	protected ChangeLimit formBackingObject(HttpServletRequest request) throws ServletException {
+		ChangeLimit changeLimit = new ChangeLimit();
+		//TODO corregir esto para que busque una tarjeta por el identificador
+		//changeLimit.setDiaryLimit((int) this.productManager.findById(//TODO Id).getBuyLimitDiary());
+		//changeLimit.setMonthlyLimit((int) this.productManager.findById(//TODO id).getBuyLimitMonthly());
+		//changeLimit.setDiaryLimit((int) this.productManager.getCards().get(0).getBuyLimitDiary());
+		//changeLimit.setMonthlyLimit((int) this.productManager.getCards().get(0).getBuyLimitMonthly());
+		return changeLimit;
+	}
 
-    /**
-     * Getter of the card
-     * @return card
-     */
-    public CardManager getProductManager() {
-        return productManager;
-    }
+	/**
+	 * Setter of the card
+	 * @param productManager
+	 */
+	public void setProductManager(CardManager productManager) {
+		this.productManager = productManager;
+	}
+
+	/**
+	 * Getter of the card
+	 * @return card
+	 */
+	public CardManager getProductManager() {
+		return productManager;
+	}
 
 }

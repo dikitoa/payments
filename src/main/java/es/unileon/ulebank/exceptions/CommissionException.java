@@ -7,7 +7,10 @@ package es.unileon.ulebank.exceptions;
  * @brief Exception that is thrown if the commission conditions are not accepted
  */
 public class CommissionException extends Exception {
-	
+
+	/**
+	 * Version
+	 */
 	private static final long serialVersionUID = 1L;
 
 	/**

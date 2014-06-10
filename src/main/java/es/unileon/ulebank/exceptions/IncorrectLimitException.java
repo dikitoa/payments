@@ -6,6 +6,10 @@ package es.unileon.ulebank.exceptions;
  * al limite minimo de la misma
  */
 public class IncorrectLimitException extends Exception {
+
+	/**
+	 * Version
+	 */
 	private static final long serialVersionUID = 1L;
 
 	/**

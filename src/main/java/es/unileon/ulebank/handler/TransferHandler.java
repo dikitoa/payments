@@ -11,11 +11,27 @@ import java.util.GregorianCalendar;
  */
 public class TransferHandler implements Handler {
 
+	/**
+	 * Identifier of the handler
+	 */
 	private String id;
+	/**
+	 * Date of the transfer
+	 */
 	private String date;
+	/**
+	 * Sender account of the transfer
+	 */
 	private String sender;
+	/**
+	 * Receiver account of the transfer
+	 */
 	private String receiver;
+	/**
+	 * Calendar for obtain the date of the transfer
+	 */
 	private Calendar calendar;
+
 	/**
 	 * Class constructor
 	 * @param sender
@@ -28,7 +44,7 @@ public class TransferHandler implements Handler {
 		this.setDateCode();
 		this.id = this.sender + this.receiver + this.date;
 	}
-	
+
 	/**
 	 * Compares one handler with other
 	 * @return
@@ -39,7 +55,7 @@ public class TransferHandler implements Handler {
 	public int compareTo(Handler another) {
 		return this.toString().compareTo(another.toString());
 	}
-	
+
 	/**
 	 * To String class method
 	 */
@@ -47,7 +63,7 @@ public class TransferHandler implements Handler {
 	public String toString() {
 		return this.id;
 	}
-	
+
 	/**
 	 * Getter id
 	 * @return

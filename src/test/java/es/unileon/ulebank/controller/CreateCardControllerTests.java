@@ -14,7 +14,7 @@ import es.unileon.ulebank.exceptions.ClientNotFoundException;
 public class CreateCardControllerTests {
 
 	private CreateCardController controller;
-	
+
 	@Before
 	public void setUp() throws Exception {
 		this.controller = new CreateCardController();
@@ -25,11 +25,11 @@ public class CreateCardControllerTests {
 		ModelMap map = new ModelMap();
 		String result = controller.initForm(map);
 		assertEquals("createcard", result);
-		
+
 		CardBean bean = (CardBean) map.get("newCard");
 		assertNotNull(bean);
 	}
-	
+
 	@Test
 	public void testPopulateCardType() {
 		Map<String, String> map = controller.populateCardType();
@@ -38,7 +38,7 @@ public class CreateCardControllerTests {
 		assertTrue(map.containsKey("Debit"));
 		assertTrue(map.containsValue("DEBIT"));
 	}
-	
+
 	@Test
 	public void testControllerNotNull() throws ClientNotFoundException {
 		assertNotNull(controller);

@@ -17,11 +17,13 @@ import es.unileon.ulebank.payments.Card;
  * Gestiona las operaciones que se realizan con la tarjeta
  */
 public interface CardManager extends Serializable {
+	
 	/**
 	 * Devuelve la lista de tarjetas
 	 * @return
 	 */
 	public List<Card> getCards(Handler dni);
+	
 	/**
 	 * Guarda la tarjeta creada
 	 */
@@ -53,5 +55,9 @@ public interface CardManager extends Serializable {
      */
     public void changeCashLimits(double diary, double monthly, Handler handler) throws IncorrectLimitException, AccountNotFoundException, PaymentException, TransactionException, CardNotFoundException, Exception;
     
+    /**
+     * Method that returns the last card
+     * @return last card
+     */
     public Card getLastCard();
 }
