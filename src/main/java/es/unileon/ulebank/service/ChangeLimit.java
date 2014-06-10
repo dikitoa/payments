@@ -14,7 +14,7 @@ import org.apache.commons.logging.LogFactory;
 public class ChangeLimit {
 
 	/** Logger for this class and subclasses */
-	protected final Log logger = LogFactory.getLog(getClass());
+	private static final Log logger = LogFactory.getLog(ChangeLimit.class);
 
 	/**
 	 * Diary limit of the form

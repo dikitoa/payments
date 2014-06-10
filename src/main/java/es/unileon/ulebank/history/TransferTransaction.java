@@ -34,8 +34,7 @@ public class TransferTransaction extends GenericTransaction{
 
 		if (!senderAccount.equals(receiverAccount)){
 			this.senderAccount = senderAccount;
-		}
-		else
+		} else
 			throw new TransferException("Sender Account number and Receiver Account number are the same.");
 	}
 

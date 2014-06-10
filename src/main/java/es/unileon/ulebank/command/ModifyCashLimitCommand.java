@@ -133,8 +133,7 @@ public class ModifyCashLimitCommand implements Command {
 			} else {
 				LOG.info("Limit type not defined");
 			}
-		}
-		else {
+		} else {
 			LOG.info("Can't undo because command has not executed yet.");
 			throw new CommandException("Can't undo because command has not executed yet.");
 		}
@@ -169,8 +168,7 @@ public class ModifyCashLimitCommand implements Command {
 			} else {
 				LOG.info("Limit type not defined");
 			}
-		}
-		else {
+		} else {
 			LOG.info("Can't undo because command has not undoned yet.");
 			throw new CommandException("Can't undo because command has not undoned yet.");
 		}

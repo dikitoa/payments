@@ -41,8 +41,7 @@ public class Transfer {
 			this.senderAccount = sender;
 			this.receiverAccount = receiver;
 			this.quantity = quantity;
-		}
-		else
+		} else
 			throw new TransferException("Sender Account number and Receiver Account number are the same.");
 	}
 	

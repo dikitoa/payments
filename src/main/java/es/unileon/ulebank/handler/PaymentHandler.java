@@ -17,15 +17,15 @@ public class PaymentHandler implements Handler {
 	/**
 	 * Length of the command identifier
 	 */
-	private final int LENGTH = 15;
+	private static final int LENGTH = 15;
 	/**
 	 * Posicion del numero de tarjeta a partir de la cual obtenemos la subcadena 
 	 */
-	private final int POSITION_CARD = 15;
+	private static final int POSITION_CARD = 15;
 	/**
 	 * Longitud de los numeros obtenidos del handler de la tarjeta
 	 */
-	private final int NUMBER_INITIALS = 4;
+	private static final int NUMBER_INITIALS = 4;
 	/**
 	 * Command Identifier
 	 */

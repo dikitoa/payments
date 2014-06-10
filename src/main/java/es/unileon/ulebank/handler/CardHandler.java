@@ -13,23 +13,23 @@ public class CardHandler implements Handler {
 	/**
 	 * Cantidad de digitos del identificador del banco
 	 */
-	private final int BANK_ID_LENGTH = 4;
+	private static final int BANK_ID_LENGTH = 4;
 	/**
 	 * Cantidad de digitos de la tarjeta
 	 */
-	private final int CARD_LENGTH = 16;
+	private static final int CARD_LENGTH = 16;
 	/**
 	 * Tamagno del identificador de la oficina
 	 */
-	private final int OFFICE_ID_LENGTH = 2;
+	private static final int OFFICE_ID_LENGTH = 2;
 	/**
 	 * Tamagno del identificador de la tarjeta
 	 */
-	private final int CARD_ID_LENGTH = CARD_LENGTH - BANK_ID_LENGTH - OFFICE_ID_LENGTH - 1;
+	private static final int CARD_ID_LENGTH = CARD_LENGTH - BANK_ID_LENGTH - OFFICE_ID_LENGTH - 1;
 	/**
 	 * Separador de bloques
 	 */
-	private final String SEPARATOR = " ";
+	private static final String SEPARATOR = " ";
 	/**
 	 * Identificador de nuestro banco
 	 */
@@ -160,7 +160,7 @@ public class CardHandler implements Handler {
 	 * @return int
 	 */
 	protected int verifyCardNumber(int[] digits) {
-		return ((sumOddPlaces(digits) + sumEvenPlaces(digits)) % 10);
+		return (sumOddPlaces(digits) + sumEvenPlaces(digits)) % 10;
 	}
 
 	/**

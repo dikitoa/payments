@@ -49,7 +49,7 @@ public class DebitMaintenanceFee implements FeeStrategy {
 	/**
 	 * String for obtain the default commission
 	 */
-	private final String COMMISSION = "debit_maintenance";
+	private static final String COMMISSION = "debit_maintenance";
 	
 	/**
 	 * Class constructor
@@ -84,8 +84,7 @@ public class DebitMaintenanceFee implements FeeStrategy {
 			/**Obtenemos los parametros definidos en el archivo*/
 			this.maximum_age = Integer.parseInt(ageProperty.getProperty(this.AGE));
 			
-		}
-		catch(FileNotFoundException e){
+		} catch(FileNotFoundException e){
 			throw new FileNotFoundException("The file card.properties is not found.");
 		}catch (IOException e2) {
 			throw new IOException("Fail to try open or close file card.properties");
@@ -104,11 +103,10 @@ public class DebitMaintenanceFee implements FeeStrategy {
 			commissionProperty.load(new FileInputStream("src/es/unileon/ulebank/properties/card.properties"));
 			
 			/**Obtenemos los parametros definidos en el archivo*/
-			this.default_commission = Float.parseFloat(commissionProperty.getProperty(this.COMMISSION));
-		}
-		catch(FileNotFoundException e){
+			this.default_commission = Float.parseFloat(commissionProperty.getProperty(DebitMaintenanceFee.COMMISSION));
+		} catch(FileNotFoundException e) {
 			throw new FileNotFoundException("The file card.properties is not found.");
-		}catch (IOException e2) {
+		} catch (IOException e2) {
 			throw new IOException("Fail to try open or close file card.properties");
 		}
 		

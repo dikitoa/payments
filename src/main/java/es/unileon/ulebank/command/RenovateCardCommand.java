@@ -112,8 +112,7 @@ public class RenovateCardCommand implements Command {
 			//Restaura la antigua fecha de caducidad
 			this.card.setExpirationDate(oldExpirationDate);
 			this.undone = true;
-		}
-		else {
+		} else {
 			LOG.info("Can't undo because command has not executed yet.");
 			throw new CommandException("Can't undo because command has not executed yet.");
 		}
@@ -132,8 +131,7 @@ public class RenovateCardCommand implements Command {
 			this.card.setCvv(newCvv);
 			//Vuelve a cambiar la fecha de caducidad por la nueva
 			this.card.setExpirationDate(newExpirationDate);
-		}
-		else {
+		} else {
 			LOG.info("Can't undo because command has not undoned yet.");
 			throw new CommandException("Can't undo because command has not undoned yet.");
 		}

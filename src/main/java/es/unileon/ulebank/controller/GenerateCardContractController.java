@@ -30,8 +30,7 @@ import es.unileon.ulebank.validator.GenerateCardContractValidator;
  */
 @Controller
 @RequestMapping({"/generatecontract.htm"})
-public class GenerateCardContractController
-{
+public class GenerateCardContractController {
 	/**
 	 * Tamagno de Buffer
 	 */
@@ -98,8 +97,7 @@ public class GenerateCardContractController
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public String init(ModelMap model)
-	{
+	public String init(ModelMap model) {
 		CardBean bean = new CardBean();
 
 		model.addAttribute("Contract", bean);
@@ -112,8 +110,7 @@ public class GenerateCardContractController
 	 * @return
 	 */
 	@ModelAttribute("cardType")
-	public Map<String, String> populateCardType()
-	{
+	public Map<String, String> populateCardType() {
 		Map<String, String> types = new LinkedHashMap<String, String>();
 		types.put("Debit", CardType.DEBIT.toString());
 		types.put("Credit", CardType.CREDIT.toString());

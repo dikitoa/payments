@@ -27,7 +27,7 @@ import es.unileon.ulebank.service.ChangeLimit;
 public class ChangeCashLimitsFormController {
 
 	/** Logger for this class and subclasses */
-	protected final Log logger = LogFactory.getLog(getClass());
+	private static final Log logger = LogFactory.getLog(ChangeCashLimitsFormController.class);
 
 	/**
 	 * Card which change the limits in
@@ -43,8 +43,7 @@ public class ChangeCashLimitsFormController {
 	 * @throws Exception 
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public String onSubmit(@Valid ChangeLimit changeLimit, BindingResult result) throws Exception
-	{
+	public String onSubmit(@Valid ChangeLimit changeLimit, BindingResult result) throws Exception {
 		if (result.hasErrors()) {
 			return "cashLimits";
 		}

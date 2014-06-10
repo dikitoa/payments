@@ -29,8 +29,11 @@ public class PaymentCommand implements Command {
 	/**
 	 * Logger Class
 	 */
-	private static final Logger LOG = Logger.getLogger(PaymentCommand.class.getName());
-	private final String UNDO_PROPERTY = "concept_undo_payment";
+	private static final Logger LOG = Logger.getLogger(PaymentCommand.class);
+	/**
+	 * Concept when undo the command
+	 */
+	private static final String UNDO_PROPERTY = "concept_undo_payment";
 	/**
 	 * String for add in the concept when makes the undo method
 	 */
@@ -155,9 +158,8 @@ public class PaymentCommand implements Command {
 			commissionProperty.load(new FileInputStream("src/es/unileon/ulebank/properties/card.properties"));
 
 			/*Obtain the paramentes in card.properties*/
-			this.undoConcept = commissionProperty.getProperty(this.UNDO_PROPERTY);
-		}
-		catch(FileNotFoundException e){
+			this.undoConcept = commissionProperty.getProperty(PaymentCommand.UNDO_PROPERTY);
+		} catch(FileNotFoundException e) {
 			throw new FileNotFoundException("File card.properties not found");
 		}catch (IOException e2) {
 			throw new IOException("Fail in card.properties when try open or close file.");
