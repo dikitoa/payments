@@ -1,5 +1,6 @@
 package es.unileon.ulebank.payments;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -90,5 +91,10 @@ public class SecurityCardTest {
 	public void deliverSecurityCardTwiceTest() throws SecurityCardException{
 		assertNotNull(this.secCard.deliverSecurityCard("0000"));
 		this.secCard.deliverSecurityCard("0000");
+	}
+	
+	@Test
+	public void getAssociatedCardTest() {
+		assertEquals(this.secCard.getAssociatedCard(), this.card);
 	}
 }

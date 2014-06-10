@@ -70,6 +70,14 @@ public class CreditCardTest {
 	}
 
 	@Test
+	public void testDefaultConstructor() {
+		CreditCard card = null;
+		assertNull(card);
+		card = new CreditCard();
+		assertNotNull(card);
+	}
+	
+	@Test
 	public void testGeneratePinCode() {
 		assertEquals(4, testCard.generatePinCode().length());
 	}

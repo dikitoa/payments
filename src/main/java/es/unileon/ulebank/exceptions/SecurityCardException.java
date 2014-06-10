@@ -15,13 +15,6 @@ public class SecurityCardException extends Exception{
 
 	/**
 	 * Class constructor
-	 */
-	public SecurityCardException(){
-
-	}
-
-	/**
-	 * Class constructor
 	 * @param message
 	 */
 	public SecurityCardException(String message){

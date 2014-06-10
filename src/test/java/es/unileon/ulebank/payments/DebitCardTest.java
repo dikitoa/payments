@@ -65,6 +65,14 @@ public class DebitCardTest {
 	}
 
 	@Test
+	public void testDefaultConstructor() {
+		DebitCard card = null;
+		assertNull(card);
+		card = new DebitCard();
+		assertNotNull(card);
+	}
+	
+	@Test
 	public void testGeneratePinCode() {
 		assertTrue(testCard.generatePinCode().length() == 4);
 	}

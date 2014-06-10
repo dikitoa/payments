@@ -90,4 +90,22 @@ public class TransferTest {
 		Account exAccount = new Account(office, bank, accountNumber, client1);
 		this.transfer = new Transfer(exAccount, exAccount, this.quantity);
 	}
+	
+	@Test
+	public void getSenderAccountTest() throws TransferException {
+		this.transfer = new Transfer(this.senderAccount, this.receiverAccount, this.quantity);
+		assertEquals(this.transfer.getSenderAccount(), this.senderAccount);		
+	}
+	
+	@Test
+	public void getReceiverAccountTest() throws TransferException {
+		this.transfer = new Transfer(this.senderAccount, this.receiverAccount, this.quantity);
+		assertEquals(this.transfer.getReceiverAccount(), this.receiverAccount);			
+	}
+	
+	@Test
+	public void getQuantityTest() throws TransferException {
+		this.transfer = new Transfer(this.senderAccount, this.receiverAccount, this.quantity);
+		assertEquals(this.transfer.getQuantity(), this.quantity, 0.0);
+	}
 }
