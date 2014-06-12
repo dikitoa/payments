@@ -21,6 +21,22 @@ public class ModifyBuyLimitCommand implements Command {
     private static final Logger LOG = Logger
             .getLogger(ModifyBuyLimitCommand.class.getName());
     /**
+     *  String of Limit type not defined
+     */
+    private static final String NOT_DEFINED_TYPE = "Limit type not defined";
+    /**
+     * String of incorrect limit error
+     */
+    private static final String INCORRECT_LIMIT = "Diary limit must been lower tha monthly limit";
+    /**
+     * String of incorrect undo error
+     */
+    private static final String ERROR_UNDO = "Can't undo because command has not undoned yet.";
+    /**
+     * String of incorrect redo error
+     */
+    private static final String ERROR_REDO = "Can't redo because command has not undoned yet.";
+    /**
      * String of type diary limit
      */
     private static final String DIARY = "diary";
@@ -103,12 +119,11 @@ public class ModifyBuyLimitCommand implements Command {
                 // Si no se indica el tipo de limite a modificar adecuadamente
                 // no va a realizar la operacion
             } else {
-                LOG.info("Limit type not defined");
+                LOG.info(ModifyBuyLimitCommand.NOT_DEFINED_TYPE);
             }
         } catch (IncorrectLimitException e) {
             LOG.info(e.getMessage());
-            throw new IncorrectLimitException(
-                    "Diary limit must been lower tha monthly limit");
+            throw new IncorrectLimitException(ModifyBuyLimitCommand.INCORRECT_LIMIT);
         }
     }
 
@@ -141,12 +156,11 @@ public class ModifyBuyLimitCommand implements Command {
                 // Si no se indica el tipo de limite a modificar adecuadamente
                 // no va a realizar la operacion
             } else {
-                LOG.info("Limit type not defined");
+                LOG.info(ModifyBuyLimitCommand.NOT_DEFINED_TYPE);
             }
         } else {
-            LOG.info("Can't undo because command has not executed yet.");
-            throw new PaymentException(
-                    "Can't undo because command has not executed yet.");
+            LOG.info(ModifyBuyLimitCommand.ERROR_UNDO);
+            throw new PaymentException(ModifyBuyLimitCommand.ERROR_UNDO);
         }
 
     }
@@ -182,12 +196,11 @@ public class ModifyBuyLimitCommand implements Command {
                 // Si no se indica el tipo de limite a modificar adecuadamente
                 // no va a realizar la operacion
             } else {
-                LOG.info("Limit type not defined");
+                LOG.info(ModifyBuyLimitCommand.NOT_DEFINED_TYPE);
             }
         } else {
-            LOG.info("Can't undo because command has not undoned yet.");
-            throw new PaymentException(
-                    "Can't undo because command has not undoned yet.");
+        	 LOG.info(ModifyBuyLimitCommand.ERROR_REDO);
+             throw new PaymentException(ModifyBuyLimitCommand.ERROR_REDO);
         }
     }
 
