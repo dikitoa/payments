@@ -2,16 +2,46 @@ package es.unileon.ulebank.account.liquidation;
 
 import java.util.Date;
 
+import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.history.Transaction;
-import es.unileon.ulebank.history.TransactionException;
 
+/**
+ * Define the liquidationFee's structure
+ * 
+ * @author runix
+ *
+ * @param <T>
+ */
 public interface AbstractLiquidationFee<T> {
 
-	public boolean addFeeCase(AbstractFeeCase<T> feeCase);
+    /**
+     * Add a new case
+     * 
+     * @param feeCase
+     *            (fee case to add)
+     * @return ( true if success, false otherwise)
+     */
+    public boolean addFeeCase(AbstractFeeCase<T> feeCase);
 
-	public Transaction calculateFee(Date min, Date max)
-			throws TransactionException;
+    /**
+     * Calculate the fee.
+     * 
+     * @param min
+     *            ( min date )
+     * @param max
+     *            ( max date )
+     * @return ( The transaction )
+     * @throws TransactionExceptiond
+     *             (If the transaction cannot be generated)
+     */
+    public Transaction calculateFee(Date min, Date max)
+            throws TransactionException;
 
-	public Handler getId();
+    /**
+     * Get the liquidationFee's id
+     * 
+     * @return
+     */
+    public Handler getId();
 }

@@ -1,10 +1,10 @@
 package es.unileon.ulebank.history;
 
-import es.unileon.ulebank.handler.Handler;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
+import es.unileon.ulebank.handler.Handler;
 
 /**
  *
@@ -13,13 +13,16 @@ import java.util.Iterator;
  */
 public class History<T extends Transaction> {
 
+    /**
+     * Collection to store the transactions
+     */
     private final Collection<T> transactions;
 
     /**
-     *
+     * Create a new history
      */
     public History() {
-        this.transactions = new ArrayList();
+        this.transactions = new ArrayList<T>();
     }
 
     /**
@@ -29,9 +32,9 @@ public class History<T extends Transaction> {
      */
     public boolean add(T transaction) {
         boolean found = false;
-        Iterator<T> it = this.transactions.iterator();
+        final Iterator<T> it = this.transactions.iterator();
         while (it.hasNext() && !found) {
-            T t = it.next();
+            final T t = it.next();
             if (t.getId().compareTo(transaction.getId()) == 0) {
                 found = true;
             }
@@ -44,8 +47,8 @@ public class History<T extends Transaction> {
     }
 
     /**
+     * Get the history iterator
      *
-     * @param args
      * @return
      */
     public Iterator<T> getIterator() {
@@ -53,18 +56,21 @@ public class History<T extends Transaction> {
     }
 
     /**
+     * Remove a transaction
      *
      * @param id
-     * @return
+     *            (transaction's id )
+     *
+     * @return ( true if success, false otherwise )
      */
     public boolean remove(Handler id) {
         boolean found = false;
-        Iterator<T> it = this.transactions.iterator();
+        final Iterator<T> it = this.transactions.iterator();
         while (it.hasNext() && !found) {
-            T t = it.next();
+            final T t = it.next();
             if (t.getId().compareTo(id) == 0) {
+                it.remove();
                 found = true;
-                this.transactions.remove(t);
             }
         }
         return found;

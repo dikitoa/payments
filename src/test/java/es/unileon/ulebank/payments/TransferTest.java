@@ -11,13 +11,13 @@ import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.bank.Bank;
 import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
-import es.unileon.ulebank.exceptions.MalformedHandlerException;
-import es.unileon.ulebank.exceptions.TransferException;
-import es.unileon.ulebank.exceptions.WrongArgsException;
-import es.unileon.ulebank.handler.DNIHandler;
-import es.unileon.ulebank.handler.OfficeHandler;
-import es.unileon.ulebank.history.TransactionException;
+import es.unileon.ulebank.client.Person;
+import es.unileon.ulebank.exceptions.TransactionException;
+import es.unileon.ulebank.handler.MalformedHandlerException;
+import es.unileon.ulebank.history.conditions.WrongArgsException;
 import es.unileon.ulebank.office.Office;
+import es.unileon.ulebank.office.OfficeHandler;
+import es.unileon.ulebank.payments.exceptions.TransferException;
 
 /**
  * Test about Transfer Class
@@ -42,8 +42,8 @@ public class TransferTest {
 	public void setUp() throws MalformedHandlerException, WrongArgsException{
 		this.bank = new Bank(new BankHandler("1234"));
 		this.office = new Office(new OfficeHandler("1234"), this.bank);
-		this.client1 = new Client(new DNIHandler("71557005A"));
-		this.client2 = new Client(new DNIHandler("71560136Y"));
+		this.client1 = new Person(71557005, 'A');
+		this.client2 = new Person(71560136, 'Y');
 		this.senderAccount = new Account(office, bank, accountNumber, client1);
 		this.receiverAccount = new Account(office, bank, accountNumber, client2);
 		this.quantity = (float) 20.5;

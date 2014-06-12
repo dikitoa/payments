@@ -154,6 +154,16 @@
     	<artifactId>javax.ejb-api</artifactId>
     	<version>3.2</version>
     </dependency>
+    <dependency>
+    	<groupId>com.fathzer</groupId>
+    	<artifactId>javaluator</artifactId>
+    	<version>2.0.0</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.mvel</groupId>
+    	<artifactId>mvel2</artifactId>
+    	<version>2.1.9.Final</version>
+    </dependency>
   </dependencies>
   <build>
 		<finalName>ulebank</finalName>

@@ -15,34 +15,34 @@ public class DniLetters {
     private static DniLetters instance = null;
 
     /**
+     * dni letters table
+     */
+    private final char[] dniLetters;
+
+    /**
      * Gets the unique instance of the class, if it doesn't exists, the instance
      * is created
      *
      * @return instance
      */
     public static DniLetters getInstance() {
-        if (instance == null) {
-            instance = new DniLetters();
+        if (DniLetters.instance == null) {
+            DniLetters.instance = new DniLetters();
         }
-        return instance;
+        return DniLetters.instance;
     }
-
-    /**
-     * dni letters table
-     */
-    private final char[] dniLetters;
 
     /**
      * Constructos that create the dni letters table.
      */
     private DniLetters() {
-
-        char[] dniLetters = {'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E'};
-        this.dniLetters = dniLetters;
+        this.dniLetters = new char[] { 'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F',
+                'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L',
+                'C', 'K', 'E' };
     }
 
     /**
-     * Obtaint the dni correct letter and compare it with the parametter
+     * Obtains the dni correct letter and compare it with the parameter
      * dniLetter
      *
      * @param dniNumber
@@ -51,8 +51,9 @@ public class DniLetters {
      */
     public boolean isDniValid(int dniNumber, char dniLetter) {
         boolean result = false;
-        int dniRest = dniNumber % 23;
-        if (dniRest < 23 && dniLetters[dniRest] == dniLetter && Integer.toString(dniNumber).length() <= 8) {
+        final int dniRest = dniNumber % 23;
+        if ((this.dniLetters[dniRest] == dniLetter)
+                && (Integer.toString(dniNumber).length() <= 8)) {
             result = true;
         }
         return result;

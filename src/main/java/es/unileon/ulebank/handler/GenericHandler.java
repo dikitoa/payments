@@ -17,7 +17,8 @@ public class GenericHandler implements Handler {
     /**
      * Create a new Generic Handler
      *
-     * @param id (The id)
+     * @param id
+     *            (The id)
      * @author runix
      */
     public GenericHandler(String id) {

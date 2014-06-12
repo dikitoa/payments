@@ -3,9 +3,9 @@ package es.unileon.ulebank.history;
 import es.unileon.ulebank.handler.Handler;
 
 /**
-*
-* @author roobre
-*/
+ *
+ * @author roobre
+ */
 public class TransactionHandler implements Handler {
 
     private final long id;
@@ -27,7 +27,7 @@ public class TransactionHandler implements Handler {
      */
     @Override
     public String toString() {
-        return timestamp + "." + Long.toString(id);
+        return this.timestamp + "." + Long.toString(this.id);
     }
 
     @Override

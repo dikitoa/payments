@@ -1,13 +1,36 @@
 package es.unileon.ulebank.account.liquidation;
 
+import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.history.Transaction;
-import es.unileon.ulebank.history.TransactionException;
 
+/**
+ * Define the structure for a liquidation case
+ * 
+ * @author runix
+ *
+ * @param <T>
+ */
 public interface AbstractFeeCase<T> {
 
-	public boolean triggerCase();
+    /**
+     * Check if the case if triggered
+     * 
+     * @return
+     */
+    public boolean triggerCase();
 
-	public Transaction calculateAmount() throws TransactionException;
+    /**
+     * Calculate the amount
+     * 
+     * @return
+     * @throws TransactionException
+     */
+    public Transaction calculateAmount() throws TransactionException;
 
-	public Features<T> getFeatures();
+    /**
+     * Get the features used by the FeeCase
+     * 
+     * @return
+     */
+    public Features<T> getFeatures();
 }

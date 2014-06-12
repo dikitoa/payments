@@ -11,13 +11,13 @@ import es.unileon.ulebank.handler.Handler;
  */
 public class DirectDebit {
 
-	private final Handler directDebitID;
+    private final Handler directDebitID;
 
-	public DirectDebit(Handler directDebitID) {
-		this.directDebitID = directDebitID;
-	}
+    public DirectDebit(Handler directDebitID) {
+        this.directDebitID = directDebitID;
+    }
 
-	public Handler getDirectDebitID() {
-		return this.directDebitID;
-	}
+    public Handler getDirectDebitID() {
+        return this.directDebitID;
+    }
 }

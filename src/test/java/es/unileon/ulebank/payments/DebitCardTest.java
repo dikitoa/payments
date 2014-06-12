@@ -17,14 +17,14 @@ import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.bank.Bank;
 import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
-import es.unileon.ulebank.exceptions.IncorrectLimitException;
+import es.unileon.ulebank.client.Person;
 import es.unileon.ulebank.fees.FeeStrategy;
 import es.unileon.ulebank.fees.LinearFee;
-import es.unileon.ulebank.handler.CardHandler;
-import es.unileon.ulebank.handler.DNIHandler;
 import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.office.Office;
+import es.unileon.ulebank.payments.exceptions.IncorrectLimitException;
+import es.unileon.ulebank.payments.handler.CardHandler;
 import es.unileon.ulebank.utils.CardProperties;
 
 public class DebitCardTest {
@@ -46,7 +46,7 @@ public class DebitCardTest {
 		this.bank = new Bank(new BankHandler("1234"));
 		this.office = new Office(new GenericHandler("1234"), this.bank);
 		this.handler = new CardHandler(new BankHandler("1234"), "01", "987654321");
-		Client client = new Client(new DNIHandler("71451559N"));
+		Client client = new Person(71451559, 'N');
 		Account account = new Account(office, bank, accountNumber, client);
 		FeeStrategy commissionEmission = new LinearFee(0, 25);
 		FeeStrategy commissionMaintenance = new LinearFee(0, 0);

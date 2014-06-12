@@ -8,6 +8,7 @@ package es.unileon.ulebank.history;
 import java.util.Date;
 
 import es.unileon.ulebank.account.DetailedInformation;
+import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.handler.Handler;
 
 /**
@@ -21,91 +22,93 @@ public abstract class Transaction {
     private final Date date;
     private Date effectiveDate;
     private final String subject;
+    private final DetailedInformation extraInformation;
 
     /**
      *
      * @param amount
      * @param date
      * @param subject
-     * @param info 
-     * @throws es.unileon.ulebank.history.TransactionException
      */
-    public Transaction(double amount, Date date, String subject, DetailedInformation info) throws TransactionException {
-        this.id = TransactionHandlerProvider.getTransactionHandler();
-        this.subject = subject;
-        this.amount = amount;
-        this.date = date;
-        
-        if (amount == 0) {
-            throw new TransactionException("Amount can't be 0");
-        }
-        
-        if (this.subject.isEmpty()) {
-            throw new TransactionException("Subject can't be empty");
-        }
+    public Transaction(double amount, Date date, String subject)
+            throws TransactionException {
+        this(amount, date, subject, new DetailedInformation(""));
     }
 
-    public Transaction(double amount, Date date, String subject) throws TransactionException {
-    	this.id = TransactionHandlerProvider.getTransactionHandler();
-        this.subject = subject;
+    /**
+     *
+     * @param amount
+     * @param date
+     * @param subject
+     * @param info
+     */
+    public Transaction(double amount, Date date, String subject,
+            DetailedInformation info) throws TransactionException {
+        this.id = TransactionHandlerProvider.getTransactionHandler();
+        final StringBuilder err = new StringBuilder();
+
+        if (subject == null) {
+            err.append("The subject cannot be null \n");
+        } else {
+            if (subject.length() == 0) {
+                err.append("Transaction length cannot be 0 \n");
+            }
+        }
+
+        if (info == null) {
+            err.append("DetailedInformation cannot be null\n");
+        }
+        if (date == null) {
+            err.append("The date cannot be null \n");
+        }
+
+        if (info == null) {
+            err.append("Extra info cannot be null \n");
+        }
+
+        if (err.length() > 0) {
+            throw new TransactionException(err.toString());
+        }
         this.amount = amount;
         this.date = date;
-        
-        if (amount == 0) {
-            throw new TransactionException("Amount can't be 0");
-        }
-        
-        if (this.subject.isEmpty()) {
-            throw new TransactionException("Subject can't be empty");
-        }
-	}
+        this.subject = subject;
+        this.extraInformation = info;
+        this.extraInformation.doFinal();
+    }
 
-	/**
+    /**
      * @return the id
      */
     public Handler getId() {
-        return id;
+        return this.id;
     }
 
     /**
      * @return the amount
      */
     public double getAmount() {
-        return amount;
+        return this.amount;
     }
 
     /**
      * @return the date
      */
     public Date getDate() {
-        return date;
+        return this.date;
     }
 
     /**
      * @return the effectiveDate
      */
     public Date getEffectiveDate() {
-        return effectiveDate;
+        return this.effectiveDate;
     }
 
     /**
      * @return the subject
      */
     public String getSubject() {
-        return subject;
-    }
-
-    /**
-     * @return the type
-     * @deprecated This method is no longer supported. Compare the sign of getBalance instead.
-     */
-    @Deprecated
-    public Enum<TransactionType> getType() {
-        if (this.amount < 0) {
-            return TransactionType.OUT;
-        } else {
-            return TransactionType.IN;
-        }
+        return this.subject;
     }
 
     /**
@@ -116,12 +119,18 @@ public abstract class Transaction {
         this.effectiveDate = effectiveDate;
     }
 
+    public DetailedInformation getDetailedInformation() {
+        return this.extraInformation;
+    }
+
     /**
      *
      * @return
      */
     @Override
     public String toString() {
-        return "Transaction " + "id=" + id + ", amount=" + amount + ", date=" + date + ", effectiveDate=" + effectiveDate + ", subject=" + subject;
+        return "Transaction " + "id=" + this.id + ", amount=" + this.amount
+                + ", date=" + this.date + ", effectiveDate="
+                + this.effectiveDate + ", subject=" + this.subject;
     }
 }

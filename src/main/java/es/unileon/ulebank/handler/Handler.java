@@ -4,16 +4,19 @@ package es.unileon.ulebank.handler;
 
 /**
  * Handler pattern.
+ * 
  * @author runix
  */
-public interface Handler {
+public interface Handler extends Comparable<Handler> {
 
     /**
      * Compare the actual handler with another
      *
-     * @param another ( Handler to compare )
+     * @param another
+     *            ( Handler to compare )
      * @return (0 if are equals, != 0 otherwise )
      */
+    @Override
     public int compareTo(Handler another);
 
     /**

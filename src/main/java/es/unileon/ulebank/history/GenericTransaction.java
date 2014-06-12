@@ -4,6 +4,9 @@ package es.unileon.ulebank.history;
 
 import java.util.Date;
 
+import es.unileon.ulebank.account.DetailedInformation;
+import es.unileon.ulebank.exceptions.TransactionException;
+
 /**
  * Generic transaction
  *
@@ -14,24 +17,30 @@ public class GenericTransaction extends Transaction {
     /**
      * Create a new generic transaction
      *
-     * @param amount ( Transaction amount )
-     * @param date ( Transaction date )
-     * @param subject ( Transaction subject )
-     * @throws es.unileon.ulebank.history.TransactionException
+     * @param amount
+     *            ( Transaction amount )
+     * @param date
+     *            ( Transaction date )
+     * @param subject
+     *            ( Transaction subject )
      */
-    public GenericTransaction(double amount, Date date, String subject) throws TransactionException {
+    public GenericTransaction(double amount, Date date, String subject)
+            throws TransactionException {
         super(amount, date, subject);
     }
-    
+
     /**
-     * @deprecated 
+     * Create a new generic transaction
+     *
      * @param amount
+     *            ( Transaction amount )
      * @param date
+     *            ( Transaction date )
      * @param subject
-     * @param type
-     * @throws TransactionException 
+     *            ( Transaction subject )
      */
-    public GenericTransaction(double amount, Date date, String subject, TransactionType type) throws TransactionException{
-        this(amount, date, subject);
+    public GenericTransaction(double amount, Date date, String subject,
+            DetailedInformation extraInfo) throws TransactionException {
+        super(amount, date, subject, extraInfo);
     }
 }

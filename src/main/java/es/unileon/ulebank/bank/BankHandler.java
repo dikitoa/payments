@@ -5,8 +5,8 @@ package es.unileon.ulebank.bank;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import es.unileon.ulebank.exceptions.MalformedHandlerException;
 import es.unileon.ulebank.handler.Handler;
+import es.unileon.ulebank.handler.MalformedHandlerException;
 
 /**
  *
@@ -26,16 +26,21 @@ public class BankHandler implements Handler {
     /**
      * Create a new Bank handler
      *
-     * @param number ( The number )
-     * @throws MalformedHandlerException (If the bank isn't correct )
+     * @param number
+     *            ( The number )
+     * @throws MalformedHandlerException
+     *             (If the bank isn't correct )
      */
     public BankHandler(String number) throws MalformedHandlerException {
-        Pattern numberPattern = Pattern.compile("^[0-9]*$");
-        Matcher matcher = numberPattern.matcher(number);
-        if (matcher.find() && number.length() == BANK_NUMBER_DIGITS) {
+        final Pattern numberPattern = Pattern.compile("^[0-9]*$");
+        final Matcher matcher = numberPattern.matcher(number);
+        if (matcher.find()
+                && (number.length() == BankHandler.BANK_NUMBER_DIGITS)) {
             this.number = number;
         } else {
-            String error = "Error, the number hasn't " + BANK_NUMBER_DIGITS + " digits or has letters \n";
+            final String error = "Error, the number hasn't "
+                    + BankHandler.BANK_NUMBER_DIGITS
+                    + " digits or has letters \n";
             throw new MalformedHandlerException(error);
         }
     }

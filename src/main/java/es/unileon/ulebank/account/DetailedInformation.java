@@ -8,48 +8,48 @@ package es.unileon.ulebank.account;
  */
 public class DetailedInformation {
 
-	private final StringBuilder info;
-	private boolean nonEditable;
+    private final StringBuilder info;
+    private boolean nonEditable;
 
-	/**
-	 *
-	 * @param information
-	 */
-	public DetailedInformation(String information) {
-		this.info = new StringBuilder(information);
-		this.nonEditable = false;
-	}
+    /**
+     *
+     * @param information
+     */
+    public DetailedInformation(String information) {
+        this.info = new StringBuilder(information);
+        this.nonEditable = false;
+    }
 
-	/**
+    /**
      *
      */
-	public DetailedInformation() {
-		this("");
-	}
+    public DetailedInformation() {
+        this("");
+    }
 
-	/**
-	 *
-	 * @param information
-	 */
-	public void appendInformation(String information) {
-		if (!this.nonEditable) {
-			this.info.append(information);
-		}
-	}
+    /**
+     *
+     * @param information
+     */
+    public void appendInformation(String information) {
+        if (!this.nonEditable) {
+            this.info.append(information);
+        }
+    }
 
-	/**
+    /**
      *
      */
-	public void doFinal() {
-		this.nonEditable = true;
-	}
+    public void doFinal() {
+        this.nonEditable = true;
+    }
 
-	/**
-	 *
-	 * @return
-	 */
-	@Override
-	public String toString() {
-		return this.info.toString();
-	}
+    /**
+     *
+     * @return
+     */
+    @Override
+    public String toString() {
+        return this.info.toString();
+    }
 }
