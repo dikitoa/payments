@@ -98,7 +98,7 @@ public class PaymentCommand implements Command {
             this.executed = true;
         } catch (TransactionException e) {
             PaymentCommand.LOG.info(e.getMessage());
-            throw new CommandException(e.getMessage());
+            throw new TransactionException(e.getMessage());
         } catch (PaymentException e) {
             PaymentCommand.LOG.info(e.getMessage());
             throw new CommandException(e.getMessage());
@@ -115,12 +115,11 @@ public class PaymentCommand implements Command {
     	if (this.executed) {
     		try {
                 // Make the payment by the type of the card
-    			//this.setUndoConcept();
     			this.card.makeTransaction(-this.amount, "Return payment from " + this.concept);
                 this.undone = true;
     		} catch (TransactionException e) {
     			PaymentCommand.LOG.info(e.getMessage());
-    			throw new CommandException(e.getMessage());
+    			throw new TransactionException(e.getMessage());
     		}
     	} else {
     		PaymentCommand.LOG.info("Can't undo because command has not executed yet.");

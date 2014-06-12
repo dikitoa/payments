@@ -5,7 +5,6 @@ import org.apache.log4j.Logger;
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.command.handler.CommandHandler;
 import es.unileon.ulebank.exceptions.CommandException;
-import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.office.Office;
 import es.unileon.ulebank.payments.Transfer;
@@ -94,9 +93,6 @@ public class TransferCommand implements Command {
         } catch (TransferException e) {
         	TransferCommand.LOG.info(e.getMessage());
             throw new CommandException(e.getMessage());
-        } catch (TransactionException e) {
-        	TransferCommand.LOG.info(e.getMessage());
-            throw new CommandException(e.getMessage());
         }
     }
 
@@ -113,9 +109,6 @@ public class TransferCommand implements Command {
                 transfer.make("Return transfer " + this.concept);
                 this.undone = true;
             } catch (TransferException e) {
-            	TransferCommand.LOG.info(e.getMessage());
-                throw new CommandException(e.getMessage());
-            } catch (TransactionException e) {
             	TransferCommand.LOG.info(e.getMessage());
                 throw new CommandException(e.getMessage());
             }
@@ -138,9 +131,6 @@ public class TransferCommand implements Command {
                 transfer.make(this.concept);
                 this.undone = false;
             } catch (TransferException e) {
-            	TransferCommand.LOG.info(e.getMessage());
-                throw new CommandException(e.getMessage());
-            } catch (TransactionException e) {
             	TransferCommand.LOG.info(e.getMessage());
                 throw new CommandException(e.getMessage());
             }
