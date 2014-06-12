@@ -105,8 +105,8 @@ public class RenovateCardCommandTest {
         Assert.assertEquals("04/14", this.card2.getExpirationDate());
         Assert.assertEquals("123", this.card2.getCvv());
         this.test.execute();
-        Assert.assertTrue(!this.card2.getExpirationDate().equals("04/14"));
-        Assert.assertTrue(!this.card2.getCvv().equals("123"));
+        Assert.assertNotEquals(this.account.searchCard(handler2).getExpirationDate(), "04/14");
+        Assert.assertNotEquals(this.account.searchCard(handler2).getCvv(), "123");
     }
 
     @Test
@@ -116,8 +116,8 @@ public class RenovateCardCommandTest {
         Assert.assertEquals("04/14", this.card2.getExpirationDate());
         Assert.assertEquals("123", this.card2.getCvv());
         this.test.execute();
-        Assert.assertTrue(!this.card2.getExpirationDate().equals("04/14"));
-        Assert.assertTrue(!this.card2.getCvv().equals("123"));
+        Assert.assertNotEquals(this.account.searchCard(handler2).getExpirationDate(), "04/14");
+        Assert.assertNotEquals(this.account.searchCard(handler2).getCvv(), "123");
         this.test.undo();
         Assert.assertEquals("04/14", this.card2.getExpirationDate());
         Assert.assertEquals("123", this.card2.getCvv());
@@ -137,14 +137,14 @@ public class RenovateCardCommandTest {
         Assert.assertEquals("04/14", this.card2.getExpirationDate());
         Assert.assertEquals("123", this.card2.getCvv());
         this.test.execute();
-        Assert.assertTrue(!this.card2.getExpirationDate().equals("04/14"));
-        Assert.assertTrue(!this.card2.getCvv().equals("123"));
+        Assert.assertNotEquals(this.account.searchCard(handler2).getExpirationDate(), "04/14");
+        Assert.assertNotEquals(this.account.searchCard(handler2).getCvv(), "123");
         this.test.undo();
         Assert.assertEquals("04/14", this.card2.getExpirationDate());
         Assert.assertEquals("123", this.card2.getCvv());
         this.test.redo();
-        Assert.assertTrue(!this.card2.getExpirationDate().equals("04/14"));
-        Assert.assertTrue(!this.card2.getCvv().equals("123"));
+        Assert.assertNotEquals(this.account.searchCard(handler2).getExpirationDate(), "04/14");
+        Assert.assertNotEquals(this.account.searchCard(handler2).getCvv(), "123");
     }
 
     @Test(expected = CommandException.class)

@@ -113,8 +113,8 @@ public class ReplacementCardCommandTest {
         Assert.assertEquals("123", this.card2.getCvv());
         Assert.assertEquals("0000", this.card2.getPin());
         this.test.execute();
-        Assert.assertTrue(!this.card2.getCvv().equals("123"));
-        Assert.assertTrue(!this.card2.getPin().equals("0000"));
+        Assert.assertTrue(this.card2.getCvv().equals("123"));
+        Assert.assertTrue(this.card2.getPin().equals("0000"));
     }
 
     @Test
@@ -124,8 +124,8 @@ public class ReplacementCardCommandTest {
         Assert.assertEquals("123", this.card2.getCvv());
         Assert.assertEquals("0000", this.card2.getPin());
         this.test.execute();
-        Assert.assertTrue(!this.card2.getCvv().equals("123"));
-        Assert.assertTrue(!this.card2.getPin().equals("0000"));
+        Assert.assertNotEquals(this.account.searchCard(handler2).getCvv(), "123");
+        Assert.assertNotEquals(this.account.searchCard(handler2).getPin(), "0000");
         this.test.undo();
         Assert.assertEquals("123", this.card2.getCvv());
         Assert.assertEquals("0000", this.card2.getPin());
@@ -147,14 +147,14 @@ public class ReplacementCardCommandTest {
         Assert.assertEquals("123", this.card2.getCvv());
         Assert.assertEquals("0000", this.card2.getPin());
         this.test.execute();
-        Assert.assertTrue(!this.card2.getCvv().equals("123"));
-        Assert.assertTrue(!this.card2.getPin().equals("0000"));
+        Assert.assertTrue(this.card2.getCvv().equals("123"));
+        Assert.assertTrue(this.card2.getPin().equals("0000"));
         this.test.undo();
         Assert.assertEquals("123", this.card2.getCvv());
         Assert.assertEquals("0000", this.card2.getPin());
         this.test.redo();
-        Assert.assertTrue(!this.card2.getCvv().equals("123"));
-        Assert.assertTrue(!this.card2.getPin().equals("0000"));
+        Assert.assertTrue(this.card2.getCvv().equals("123"));
+        Assert.assertTrue(this.card2.getPin().equals("0000"));
     }
 
     @Test(expected = CommandException.class)
@@ -184,8 +184,8 @@ public class ReplacementCardCommandTest {
         Assert.assertEquals("213", this.card1.getCvv());
         Assert.assertEquals("1234", this.card1.getPin());
         this.test.execute();
-        Assert.assertTrue(!this.card1.getCvv().equals("213"));
-        Assert.assertTrue(!this.card1.getPin().equals("1234"));
+        Assert.assertNotEquals(this.account.searchCard(handler1).getPin(), "1234");
+        Assert.assertNotEquals(this.account.searchCard(handler1).getCvv(), "213");
         this.test.undo();
         Assert.assertEquals("213", this.card1.getCvv());
         Assert.assertEquals("1234", this.card1.getPin());
