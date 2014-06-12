@@ -9,7 +9,6 @@ import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.office.Office;
 import es.unileon.ulebank.payments.Card;
-import es.unileon.ulebank.payments.exceptions.CardNotFoundException;
 import es.unileon.ulebank.payments.exceptions.PaymentException;
 
 /**
@@ -101,9 +100,6 @@ public class PaymentCommand implements Command {
             PaymentCommand.LOG.info(e.getMessage());
             throw new CommandException(e.getMessage());
         } catch (PaymentException e) {
-            PaymentCommand.LOG.info(e.getMessage());
-            throw new CommandException(e.getMessage());
-        } catch (CardNotFoundException e) {
             PaymentCommand.LOG.info(e.getMessage());
             throw new CommandException(e.getMessage());
         }
