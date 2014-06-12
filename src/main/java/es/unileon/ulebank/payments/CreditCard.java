@@ -1,5 +1,6 @@
 package es.unileon.ulebank.payments;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -57,6 +58,7 @@ public class CreditCard extends Card {
                 cashLimitMonthly, new LinearFee(0.0D, commissionEmission),
                 new LinearFee(0.0D, commissionMaintenance), new LinearFee(0.0D,
                         commissionRenovate));
+        this.transactionList = new ArrayList<CardTransaction>();
     }
 
     /**

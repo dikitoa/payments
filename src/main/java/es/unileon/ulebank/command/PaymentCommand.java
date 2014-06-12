@@ -1,10 +1,5 @@
 package es.unileon.ulebank.command;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Properties;
-
 import org.apache.log4j.Logger;
 
 import es.unileon.ulebank.account.Account;
@@ -14,11 +9,8 @@ import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.office.Office;
 import es.unileon.ulebank.payments.Card;
-import es.unileon.ulebank.payments.CardType;
-import es.unileon.ulebank.payments.Transfer;
 import es.unileon.ulebank.payments.exceptions.CardNotFoundException;
 import es.unileon.ulebank.payments.exceptions.PaymentException;
-import es.unileon.ulebank.payments.exceptions.TransferException;
 
 /**
  * Payment Command Class
@@ -32,14 +24,6 @@ public class PaymentCommand implements Command {
      * Logger Class
      */
     private static final Logger LOG = Logger.getLogger(PaymentCommand.class);
-    /**
-     * Concept when undo the command
-     */
-    private static final String UNDO_PROPERTY = "concept_undo_payment";
-    /**
-     * String for add in the concept when makes the undo method
-     */
-    private String undoConcept;
     /**
      * Command Identifier
      */
@@ -57,10 +41,6 @@ public class PaymentCommand implements Command {
      */
     private final Account accountSender;
     /**
-     * Account which receives the payment
-     */
-    private Account accountReceiver;
-    /**
      * Amount of the payment
      */
     private final double amount;
@@ -68,7 +48,15 @@ public class PaymentCommand implements Command {
      * Concept of the payment
      */
     private final String concept;
-
+    /**
+     * Variable para saber si el comando ha sido ejecutado o no
+     */
+    private boolean executed = false;
+    /**
+     * Variable para saber si el comando ha sido deshecho o no
+     */
+    private boolean undone = false;
+    
     /**
      * Class constructor
      * 
@@ -84,12 +72,16 @@ public class PaymentCommand implements Command {
      * @throws CommandException 
      */
     public PaymentCommand(Handler cardId, Office office, Handler dni,
-            Handler accountHandler, double amount, String concept, CardType type) throws CommandException {
+            Handler accountHandler, double amount, String concept) throws CommandException {
         this.id = new CommandHandler(cardId);
         this.cardId = cardId;
         this.accountSender = office.searchClient(dni).searchAccount(
                 accountHandler);
-        this.amount = amount;
+        if (amount != 0.00) {
+            this.amount = amount;
+        } else {
+        	throw new CommandException("Amount neutral.");
+        }
         this.concept = concept;
     }
 
@@ -104,6 +96,7 @@ public class PaymentCommand implements Command {
             this.card = this.accountSender.searchCard(this.cardId);
             // Make the payment by the type of the card
             this.card.makeTransaction(this.amount, this.concept);
+            this.executed = true;
         } catch (TransactionException e) {
             PaymentCommand.LOG.info(e.getMessage());
             throw new CommandException(e.getMessage());
@@ -119,36 +112,45 @@ public class PaymentCommand implements Command {
 
     /**
      * Method to undo payment
+     * @throws PaymentException 
      */
     @Override
-    public void undo() throws CommandException {
-        try {
-            // Make the transfer for revert the payment
-            final Transfer revertPayment = new Transfer(this.accountReceiver,
-                    this.accountSender, this.amount);
-            this.setUndoConcept();
-            revertPayment.make(this.undoConcept + this.cardId.toString());
-        } catch (TransactionException e) {
-            PaymentCommand.LOG.info(e.getMessage());
-            throw new CommandException(e.getMessage());
-        } catch (TransferException e) {
-            PaymentCommand.LOG.info(e.getMessage());
-            throw new CommandException(e.getMessage());
-        }
+    public void undo() throws CommandException, PaymentException {
+    	if (this.executed) {
+    		try {
+                // Make the payment by the type of the card
+    			//this.setUndoConcept();
+    			this.card.makeTransaction(-this.amount, "Return payment from " + this.concept);
+                this.undone = true;
+    		} catch (TransactionException e) {
+    			PaymentCommand.LOG.info(e.getMessage());
+    			throw new CommandException(e.getMessage());
+    		}
+    	} else {
+    		PaymentCommand.LOG.info("Can't undo because command has not executed yet.");
+    		throw new CommandException("Can't undo because command has not executed yet.");
+    	}
     }
 
     /**
      * Method to redo payment
+     * @throws CommandException 
      */
     @Override
-    public void redo() throws PaymentException, TransactionException {
-        try {
-            // Make the payment by the type of the card
-            this.card.makeTransaction(this.amount, this.concept);
-        } catch (TransactionException e) {
-            PaymentCommand.LOG.info(e.getMessage());
-            throw new TransactionException(e.getMessage());
-        }
+    public void redo() throws PaymentException, TransactionException, CommandException {
+    	if (this.undone) {
+    		try {
+    			// Make the payment by the type of the card
+    			this.card.makeTransaction(this.amount, this.concept);
+    			this.undone = false;
+    		} catch (TransactionException e) {
+    			PaymentCommand.LOG.info(e.getMessage());
+    			throw new TransactionException(e.getMessage());
+    		}
+    	} else {
+    		PaymentCommand.LOG.info("Can't undo because command has not undoned yet.");
+    		throw new CommandException("Can't undo because command has not undoned yet.");
+    	}
 
     }
 
@@ -160,28 +162,6 @@ public class PaymentCommand implements Command {
     @Override
     public Handler getID() {
         return this.id;
-    }
-
-    /**
-     * Setter of undoConcept
-     * 
-     * @throws IOException
-     */
-    private void setUndoConcept() throws CommandException {
-        try {
-            final Properties commissionProperty = new Properties();
-            commissionProperty.load(new FileInputStream(
-                    "src/es/unileon/ulebank/properties/card.properties"));
-
-            /* Obtain the paramentes in card.properties */
-            this.undoConcept = commissionProperty
-                    .getProperty(PaymentCommand.UNDO_PROPERTY);
-        } catch (FileNotFoundException e) {
-            throw new CommandException("File card.properties not found");
-        } catch (IOException e2) {
-            throw new CommandException(
-                    "Fail in card.properties when try open or close file.");
-        }
     }
 
 }
