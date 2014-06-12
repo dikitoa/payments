@@ -89,9 +89,10 @@ public class CancelCardCommandTest {
     public void testCancelDebitCard() throws CommandException {
         this.test = new CancelCardCommand(this.handler1, this.office, this.dni,
                 this.accountHandler);
-        //Assert.assertEquals(2, this.account.getCardAmount());
+        int i = this.account.getCardAmount();
+        System.out.println(i);
         this.test.execute();
-        Assert.assertEquals(1, this.account.getCardAmount());
+        Assert.assertEquals(i-1, this.account.getCardAmount());
     }
 
     @Test(expected = UnsupportedOperationException.class)
@@ -114,9 +115,9 @@ public class CancelCardCommandTest {
     public void testCancelCreditCard() throws CommandException {
         this.test = new CancelCardCommand(this.handler2, this.office, this.dni,
                 this.accountHandler);
-        Assert.assertEquals(2, this.account.getCardAmount());
+        int i = this.account.getCardAmount();
         this.test.execute();
-        Assert.assertEquals(1, this.account.getCardAmount());
+        Assert.assertEquals(i-1, this.account.getCardAmount());
     }
 
     @Test(expected = UnsupportedOperationException.class)
