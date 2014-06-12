@@ -2,11 +2,12 @@ package es.unileon.ulebank.command;
 
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
+
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.client.Client;
-import es.unileon.ulebank.command.exceptions.CommandException;
 import es.unileon.ulebank.command.handler.CommandHandler;
-import es.unileon.ulebank.exceptions.CommissionException;
+import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.fees.InvalidFeeException;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.handler.MalformedHandlerException;
@@ -21,6 +22,11 @@ import es.unileon.ulebank.payments.handler.CardHandler;
  * @author Israel Comando para la creacion de las tarjetas
  */
 public class NewCardCommand implements Command {
+    /**
+     * Logger de la clase
+     */
+    private static final Logger LOG = Logger
+            .getLogger(NewCardCommand.class.getName());
     /**
      * Tarjeta que se va a crear
      */
@@ -44,35 +50,7 @@ public class NewCardCommand implements Command {
     /**
      * Identificador de la tarjeta
      */
-    private final Handler cardHandler;
-    /**
-     * Limite de compra diario para la tarjeta
-     */
-    private final double buyLimitDiary;
-    /**
-     * Limite de compra mensual para la tarjeta
-     */
-    private final double buyLimitMonthly;
-    /**
-     * Limite de extraccion en cajero diario para la tarjeta
-     */
-    private final double cashLimitDiary;
-    /**
-     * Limite de extraccion en cajero mensual para la tarjeta
-     */
-    private final double cashLimitMonthly;
-    /**
-     * Comision de emision de la tarjeta
-     */
-    private final double commissionEmission;
-    /**
-     * Comision de mantenimiento de la tarjeta
-     */
-    private final double commissionMaintenance;
-    /**
-     * Comision de renovacion de la tarjeta
-     */
-    private final double commissionRenovate;
+    private Handler cardHandler;
     /**
      * Duegno de la tarjeta
      */
@@ -84,41 +62,22 @@ public class NewCardCommand implements Command {
      * @param client
      * @param account
      * @param cardType
-     * @param string
      * @param officeId
      * @param cardId
-     * @param buyLimitDiary
-     * @param buyLimitMonthly
-     * @param cashLimitDiary
-     * @param cashLimitMonthly
-     * @param commissionEmission
-     * @param commissionMaintenance
-     * @param commissionRenovate
-     * @throws MalformedHandlerException
+     * @throws CommandException
      */
     public NewCardCommand(Office office, Client client, Account account,
-            CardType cardType, String string, String officeId, String cardId,
-            double buyLimitDiary, double buyLimitMonthly,
-            double cashLimitDiary, double cashLimitMonthly,
-            double commissionEmission, double commissionMaintenance,
-            double commissionRenovate) throws CommandException {
+            CardType cardType, String officeId, String cardId) throws CommandException {
         this.office = office;
         this.account = account;
         this.client = client;
         try {
             this.cardHandler = new CardHandler(cardId);
         } catch (MalformedHandlerException e) {
-            throw new CommandException(e.getMessage());
+            LOG.info(e.getMessage());
         }
         this.cardType = cardType.toString();
         this.id = new CommandHandler(this.cardHandler);
-        this.buyLimitDiary = buyLimitDiary;
-        this.buyLimitMonthly = buyLimitMonthly;
-        this.cashLimitDiary = cashLimitDiary;
-        this.cashLimitMonthly = cashLimitMonthly;
-        this.commissionEmission = commissionEmission;
-        this.commissionMaintenance = commissionMaintenance;
-        this.commissionRenovate = commissionRenovate;
     }
 
     /**
@@ -136,25 +95,13 @@ public class NewCardCommand implements Command {
         try {
             if ("CREDIT".equalsIgnoreCase(this.cardType)) {
                 this.card = new CreditCard(this.cardHandler, this.client,
-                        this.account, this.buyLimitDiary, this.buyLimitMonthly,
-                        this.cashLimitDiary, this.cashLimitMonthly,
-                        this.commissionEmission, this.commissionMaintenance,
-                        this.commissionRenovate);
+                        this.account);
             } else if ("DEBIT".equalsIgnoreCase(this.cardType)) {
                 this.card = new DebitCard(this.cardHandler, this.client,
-                        this.account, this.buyLimitDiary, this.buyLimitMonthly,
-                        this.cashLimitDiary, this.cashLimitMonthly,
-                        this.commissionEmission, this.commissionMaintenance,
-                        this.commissionRenovate);
+                        this.account);
             } 
-        } catch (InvalidFeeException e) {
-            throw new CommandException(e.getMessage());
         } catch (NumberFormatException e) {
-            throw new CommandException(e.getMessage());
-        } catch (CommissionException e) {
-            throw new CommandException(e.getMessage());
-        } catch (IOException e) {
-            throw new CommandException(e.getMessage());
+            throw new NumberFormatException(e.getMessage());
         }
 
         if (this.card != null) {

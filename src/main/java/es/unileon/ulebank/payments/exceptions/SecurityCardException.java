@@ -1,15 +1,13 @@
 package es.unileon.ulebank.payments.exceptions;
 
-import es.unileon.ulebank.exceptions.CommandException;
-
 /**
- * PaymentException Class
+ * SecurityCardException Class
  * 
  * @author Rober dCR
- * @date 07/05/2014
- * @brief Exception that is thrown if the payment conditions are not accepted
+ * @date 26/03/2014
+ * @brief Exception that is thrown if the security conditions are not accepted
  */
-public class PaymentException extends CommandException {
+public class SecurityCardException extends PaymentException {
 
     /**
      * Version
@@ -21,7 +19,8 @@ public class PaymentException extends CommandException {
      * 
      * @param message
      */
-    public PaymentException(String message) {
+    public SecurityCardException(String message) {
         super(message);
     }
+
 }

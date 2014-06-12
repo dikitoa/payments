@@ -9,7 +9,6 @@ import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.fees.InvalidFeeException;
-import es.unileon.ulebank.fees.LinearFee;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.history.CardTransaction;
 import es.unileon.ulebank.payments.exceptions.PaymentException;
@@ -48,17 +47,9 @@ public class CreditCard extends Card {
      * @throws CommissionException
      * @throws InvalidFeeException
      */
-    public CreditCard(Handler cardId, Client owner, Account account,
-            double buyLimitDiary, double buyLimitMonthly,
-            double cashLimitDiary, double cashLimitMonthly,
-            double commissionEmission, double commissionMaintenance,
-            double commissionRenovate) throws InvalidFeeException {
-        super(cardId, CardType.CREDIT.toString(), account, owner,
-                buyLimitDiary, buyLimitMonthly, cashLimitDiary,
-                cashLimitMonthly, new LinearFee(0.0D, commissionEmission),
-                new LinearFee(0.0D, commissionMaintenance), new LinearFee(0.0D,
-                        commissionRenovate));
-        this.transactionList = new ArrayList<CardTransaction>();
+    public CreditCard(Handler cardId, Client owner, Account account) throws PaymentException {
+        super(cardId, CardType.CREDIT.toString(), account, owner);
+        transactionList = new ArrayList<CardTransaction>();
     }
 
     /**
@@ -81,7 +72,7 @@ public class CreditCard extends Card {
      */
     @Override
     public void makeTransaction(double quantity, String payConcept)
-            throws PaymentException, TransactionException {
+            throws PaymentException {
         // Agyadimos la transaccion a la lista
         final CardTransaction transaction = new CardTransaction(quantity,
                 new Date(), payConcept);

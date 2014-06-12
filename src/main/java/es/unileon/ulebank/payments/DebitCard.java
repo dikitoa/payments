@@ -1,14 +1,15 @@
 package es.unileon.ulebank.payments;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.fees.InvalidFeeException;
-import es.unileon.ulebank.fees.LinearFee;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.history.CardTransaction;
 import es.unileon.ulebank.payments.exceptions.PaymentException;
@@ -18,66 +19,124 @@ import es.unileon.ulebank.payments.exceptions.PaymentException;
  */
 public class DebitCard extends Card {
 
-	/**
-	 * Version
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     * Version
+     */
+    private static final long serialVersionUID = 1L;
+    /**
+     * Dia del mes en el que se carga los gastos de la tarjeta
+     */
+    private int monthDay;
+    /**
+     * Lista de transacciones de la tarjeta
+     */
+    private List<CardTransaction> transactionList;
+    
+    /**
+     * 
+     * @param properties
+     * @param cardId
+     * @param owner
+     * @param account
+     * @param buyLimitDiary
+     * @param buyLimitMonthly
+     * @param cashLimitDiary
+     * @param cashLimitMonthly
+     * @param commissionEmission
+     * @param commissionMaintenance
+     * @param commissionRenovate
+     * @throws NumberFormatException
+     * @throws CommissionException
+     * @throws IOException
+     * @throws InvalidFeeException
+     */
+    public DebitCard(Handler cardId, Client owner, Account account) throws PaymentException {
+        super(cardId, CardType.DEBIT.toString(), account, owner);
+        transactionList = new ArrayList<CardTransaction>();
+    }
 
-	/**
-	 * 
-	 * @param properties
-	 * @param cardId
-	 * @param owner
-	 * @param account
-	 * @param buyLimitDiary
-	 * @param buyLimitMonthly
-	 * @param cashLimitDiary
-	 * @param cashLimitMonthly
-	 * @param commissionEmission
-	 * @param commissionMaintenance
-	 * @param commissionRenovate
-	 * @throws NumberFormatException
-	 * @throws CommissionException
-	 * @throws IOException
-	 * @throws InvalidFeeException
-	 */
-	public DebitCard(Handler cardId, Client owner, Account account,
-			double buyLimitDiary, double buyLimitMonthly,
-			double cashLimitDiary, double cashLimitMonthly,
-			double commissionEmission, double commissionMaintenance,
-			double commissionRenovate) throws NumberFormatException,
-			CommissionException, IOException, InvalidFeeException {
-		super(cardId, CardType.DEBIT.toString(), account, owner, buyLimitDiary,
-				buyLimitMonthly, cashLimitDiary, cashLimitMonthly,
-				new LinearFee(0.0D, commissionEmission), new LinearFee(0.0D,
-						commissionMaintenance), new LinearFee(0.0D,
-								commissionRenovate));
-	}
+    /**
+     * Class constructor
+     */
+    public DebitCard() {
+        super(CardType.DEBIT.toString());
+    }
 
-	/**
-	 * Class constructor
-	 */
-	public DebitCard() {
-		super(CardType.DEBIT.toString());
-	}
+    /**
+     * Method that makes the payment
+     * @param quantity Amount of the payment
+     * @param payConcept Concept of the payment
+     * @throws PaymentException
+     * @throws TransactionException
+     */
+    @Override
+    public void makeTransaction(double quantity, String payConcept) throws
+    PaymentException {
 
-	/**
-	 * Method that makes the payment
-	 * @param quantity Amount of the payment
-	 * @param payConcept Concept of the payment
-	 * @throws PaymentException
-	 * @throws TransactionException
-	 */
-	@Override
-	public void makeTransaction(double quantity, String payConcept) throws
-	PaymentException, TransactionException {
+    	// Agyadimos la transaccion a la lista
+        final CardTransaction transaction = new CardTransaction(quantity,
+                new Date(), payConcept);
+        transaction.setEffectiveDate(this.obtainEffectiveDate());
+        this.transactionList.add(transaction);
 
-		try{
-			//Discount the quantity from sender account
-			this.account.doTransaction(new CardTransaction(-quantity, new Date(), payConcept));
-		}catch(TransactionException e){
-			throw new PaymentException("Denegate Transaction");
-		}
+    }
+    
+    /**
+     * Method that obtain the day when the amount of the purchases is done.
+     * 
+     * @return
+     */
+    public int getMonthDay() {
+        return this.monthDay;
+    }
 
-	}
+    /**
+     * Method that sets the day when the amount of the purchases is done.
+     * 
+     * @param monthDay
+     */
+    public void setMonthDay(int monthDay) {
+        this.monthDay = monthDay;
+    }
+
+    /**
+     * Method that calculate the effective day when the payment is taken
+     * 
+     * @return date
+     */
+    @SuppressWarnings("deprecation")
+    private Date obtainEffectiveDate() {
+        final Date effectiveDate = new Date();
+        effectiveDate.setDate(this.monthDay);
+        if (effectiveDate.getMonth() != 11) {
+            effectiveDate.setMonth(effectiveDate.getMonth() + 1);
+        } else {
+            effectiveDate.setMonth(0);
+            effectiveDate.setYear(effectiveDate.getYear() + 1);
+        }
+
+        return effectiveDate;
+    }
+    
+    /**
+     * Method that calculate the amount of all transaction which have the
+     * effectiveDate
+     * 
+     * @param effectiveDate
+     * @return amount of purchases
+     */
+    public double getAmount(Date effectiveDate) {
+        double amount = 0.0;
+
+        // Recorremos todas las transacciones de la lista acumulando las
+        // cantidades de dichas transacciones
+        for (int i = 0; i < this.transactionList.size(); i++) {
+            if (this.transactionList.get(i).getEffectiveDate()
+                    .compareTo(effectiveDate) == 0) {
+                amount += this.transactionList.get(i).getAmount();
+            }
+        }
+
+        return amount;
+    }
 }

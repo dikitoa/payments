@@ -12,8 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import es.unileon.ulebank.client.Person;
-import es.unileon.ulebank.exceptions.CommissionException;
-import es.unileon.ulebank.fees.InvalidFeeException;
+import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.handler.MalformedHandlerException;
 import es.unileon.ulebank.payments.handler.CardHandler;
 import es.unileon.ulebank.utils.CardProperties;
@@ -30,7 +29,7 @@ public class SecurityCardTest {
 	public SecurityCard secCard2;
 
 	@Before
-	public void setUp() throws IOException, CommissionException, MalformedHandlerException, InvalidFeeException{
+	public void setUp() throws CommandException, MalformedHandlerException, NumberFormatException, IOException{
 		CardProperties properties = new CardProperties();
 		properties.setCvvSize(3);
 		properties.setPinSize(4);
@@ -38,7 +37,7 @@ public class SecurityCardTest {
 		properties.setExpirationYear(3);
 		properties.setDimensionColumns(10);
 		properties.setDimensionRow(4);
-		this.card = new CreditCard(new CardHandler("123401123456789"), new Person(71034506,'H'), null, 0, 0, 0, 0, 0, 0, 0);
+		this.card = new CreditCard(new CardHandler("123401123456789"), new Person(71034506,'H'), null);
 		this.card.setPin("0000");
 		this.secCard = new SecurityCard(this.card);
 	}
@@ -59,7 +58,7 @@ public class SecurityCardTest {
 	}
 
 	@Test
-	public void checkCoordinateTest() throws SecurityCardException {
+	public void checkCoordinateTest() throws SecurityCardException, SecurityCardException {
 		Integer[][] auxSec = this.secCard.deliverSecurityCard("0000");
 		assertFalse(this.secCard.checkCoordinates(0, 0, auxSec[0][0]+1));
 		assertTrue(this.secCard.checkCoordinates(0, 0, auxSec[0][0]));

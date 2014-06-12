@@ -14,8 +14,8 @@ import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.client.Person;
 import es.unileon.ulebank.client.PersonHandler;
-import es.unileon.ulebank.command.exceptions.CommandException;
 import es.unileon.ulebank.command.handler.CommandHandler;
+import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.fees.InvalidFeeException;
 import es.unileon.ulebank.handler.GenericHandler;
@@ -26,6 +26,7 @@ import es.unileon.ulebank.office.Office;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.CreditCard;
 import es.unileon.ulebank.payments.DebitCard;
+import es.unileon.ulebank.payments.exceptions.PaymentException;
 import es.unileon.ulebank.payments.handler.CardHandler;
 import es.unileon.ulebank.utils.CardProperties;
 
@@ -47,7 +48,7 @@ public class RenovateCardCommandTest {
     @Before
     public void setUp() throws NumberFormatException, CommissionException,
             IOException, InvalidFeeException, MalformedHandlerException,
-            WrongArgsException {
+            WrongArgsException, PaymentException {
         final CardProperties properties = new CardProperties();
         properties.setCvvSize(3);
         final Handler bankHandler = new BankHandler("1234");
@@ -62,18 +63,12 @@ public class RenovateCardCommandTest {
                 this.client);
         this.accountHandler = this.account.getID();
         this.client.add(this.account);
-        this.card1 = new DebitCard(this.handler1, this.client, this.account,
-                400.0, 1000.0, 400.0, 1000.0, 25, 0, 0);
-        this.card2 = new CreditCard(this.handler2, this.client, this.account,
-                400.0, 1000.0, 400.0, 1000.0, 25, 0, 0);
+        this.card1 = new DebitCard(this.handler1, this.client, this.account);
+        this.card2 = new CreditCard(this.handler2, this.client, this.account);
         this.account.addCard(this.card1);
         this.account.addCard(this.card2);
-        try {
-            this.card1.setCvv("213");
-            this.card2.setCvv("123");
-        } catch (final IOException e) {
-            e.printStackTrace();
-        }
+        this.card1.setCvv("213");
+        this.card2.setCvv("123");
         this.card1.setExpirationDate("04/14");
         this.card2.setExpirationDate("04/14");
     }

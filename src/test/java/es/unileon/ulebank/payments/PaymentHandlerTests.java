@@ -15,10 +15,7 @@ import es.unileon.ulebank.bank.Bank;
 import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.client.Person;
-import es.unileon.ulebank.exceptions.CommissionException;
-import es.unileon.ulebank.fees.FeeStrategy;
-import es.unileon.ulebank.fees.InvalidFeeException;
-import es.unileon.ulebank.fees.LinearFee;
+import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.handler.MalformedHandlerException;
 import es.unileon.ulebank.history.conditions.WrongArgsException;
@@ -38,16 +35,13 @@ public class PaymentHandlerTests {
 	private Date paymentDate;
 
 	@Before
-	public void setUp() throws MalformedHandlerException, InvalidFeeException, CommissionException, MalformedHandlerException, WrongArgsException{
+	public void setUp() throws CommandException, MalformedHandlerException, WrongArgsException{
 		this.bank = new Bank(new BankHandler("1234"));
 		this.office = new Office(new OfficeHandler("1234"), this.bank);
 		cardHandler = new CardHandler("123401123456789");
 		Client client = new Person(71451559, 'N');
 		Account account = new Account(office, bank, accountNumber, client);
-		FeeStrategy commissionEmission = new LinearFee(0, 25);
-		FeeStrategy commissionMaintenance = new LinearFee(0, 0);
-		FeeStrategy commissionRenovate = new LinearFee(0, 0);
-		testCard = new CreditCard(cardHandler, client, account, 400.0, 1000.0, 400.0, 1000.0, commissionEmission.getFee(0), commissionMaintenance.getFee(0), commissionRenovate.getFee(0));
+		testCard = new CreditCard(cardHandler, client, account);
 		this.paymentDate = new Date();
 		this.handler = new PaymentHandler(this.testCard.getId(), this.paymentDate);
 	}

@@ -6,7 +6,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -23,7 +22,9 @@ import es.unileon.ulebank.fees.LinearFee;
 import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.office.Office;
+import es.unileon.ulebank.payments.exceptions.IncorrectLengthException;
 import es.unileon.ulebank.payments.exceptions.IncorrectLimitException;
+import es.unileon.ulebank.payments.exceptions.PaymentException;
 import es.unileon.ulebank.payments.handler.CardHandler;
 import es.unileon.ulebank.utils.CardProperties;
 
@@ -51,7 +52,14 @@ public class DebitCardTest {
 		FeeStrategy commissionEmission = new LinearFee(0, 25);
 		FeeStrategy commissionMaintenance = new LinearFee(0, 0);
 		FeeStrategy commissionRenovate = new LinearFee(0, 0);
-		testCard = new DebitCard(handler, client, account, 400F, 1000F, 400F, 1000F, commissionEmission.getFee(0), commissionMaintenance.getFee(0), commissionRenovate.getFee(0));
+		testCard = new DebitCard(handler, client, account);
+		testCard.setBuyLimitMonthly(1000.0);
+        testCard.setBuyLimitDiary(400.0);
+        testCard.setCashLimitMonthly(1000.0);
+        testCard.setCashLimitDiary(400.0);
+        testCard.setCommissionEmission(commissionEmission);
+        testCard.setCommissionMaintenance(commissionMaintenance);
+        testCard.setCommissionRenovate(commissionRenovate);
 	}
 
 	@Test
@@ -104,7 +112,7 @@ public class DebitCardTest {
 	}
 
 	@Test
-	public void testGetPin() throws IOException {
+	public void testGetPin() throws PaymentException {
 		assertTrue(testCard.getPin().length() == 4);
 
 		testCard.setPin("5647");
@@ -112,13 +120,13 @@ public class DebitCardTest {
 	}
 
 	@Test
-	public void testSetPin() throws IOException {
+	public void testSetPin() throws PaymentException {
 		testCard.setPin("9876");
 		assertEquals("9876", testCard.getPin());
 	}
 
 	@Test
-	public void testCheckPin() throws IOException {
+	public void testCheckPin() throws PaymentException {
 		testCard.setPin("1245");
 		assertTrue(testCard.checkPin("1245"));
 	}
@@ -278,18 +286,18 @@ public class DebitCardTest {
 		assertEquals(3, testCard.generateCVV().length());
 	}
 
-	@Test (expected = IOException.class)
-	public void testSetCvvFAILLenght() throws IOException {
+	@Test (expected = IncorrectLengthException.class)
+	public void testSetCvvFAILLenght() throws PaymentException {
 		testCard.setCvv("5245");
 	}
 
-	@Test (expected = IOException.class)
-	public void testSetCvvFAILLetter() throws IOException {
+	@Test (expected = NumberFormatException.class)
+	public void testSetCvvFAILLetter() throws PaymentException {
 		testCard.setCvv("r34");
 	}
 
 	@Test
-	public void testSetCvvOK() throws IOException{
+	public void testSetCvvOK() throws PaymentException{
 		testCard.setCvv("863");
 		assertEquals("863", testCard.getCvv());
 	}

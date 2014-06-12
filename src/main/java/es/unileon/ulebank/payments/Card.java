@@ -13,6 +13,7 @@ import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.fees.FeeStrategy;
 import es.unileon.ulebank.handler.Handler;
+import es.unileon.ulebank.payments.exceptions.IncorrectLengthException;
 import es.unileon.ulebank.payments.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.payments.exceptions.PaymentException;
 import es.unileon.ulebank.utils.CardProperties;
@@ -20,7 +21,6 @@ import es.unileon.ulebank.utils.CardProperties;
 /**
  * @author Israel
  */
-// @MappedSuperclass
 public abstract class Card implements Serializable {
     /**
      * Version
@@ -81,7 +81,7 @@ public abstract class Card implements Serializable {
     /**
      * Cuenta a la que esta asociada la tarjeta
      */
-    protected Account account;
+    private Account account;
     /**
      * Duegno de la tarjeta
      */
@@ -106,26 +106,15 @@ public abstract class Card implements Serializable {
      * @param commissionMaintenance
      * @param commissionRenovate
      */
-    public Card(Handler cardId, String type, Account account, Client client,
-            double buyLimitDiary, double buyLimitMonthly,
-            double cashLimitDiary, double cashLimitMonthly,
-            FeeStrategy commissionEmission, FeeStrategy commissionMaintenance,
-            FeeStrategy commissionRenovate) {
+    public Card(Handler cardId, String type, Account account, Client client) {
         this.id = cardId;
         this.cardType = type;
         this.account = account;
         this.owner = client;
         this.pin = this.generatePinCode();
-        this.buyLimitDiary = buyLimitDiary;
-        this.buyLimitMonthly = buyLimitMonthly;
-        this.cashLimitDiary = cashLimitDiary;
-        this.cashLimitMonthly = cashLimitMonthly;
         this.emissionDate = this.generateEmissionDate();
         this.expirationDate = this.generateExpirationDate();
         this.cvv = this.generateCVV();
-        this.commissionEmission = commissionEmission;
-        this.commissionMaintenance = commissionMaintenance;
-        this.commissionRenovate = commissionRenovate;
     }
 
     /**
@@ -208,14 +197,6 @@ public abstract class Card implements Serializable {
         return result.toString();
     }
 
-    // /**
-    // * Devuelve el identificador de la tarjeta
-    // * @return String
-    // */
-    // public Handler getCardHandler() {
-    // return this.id;
-    // }
-
     /**
      * Devuelve el codigo PIN de la tarjeta
      * 
@@ -231,7 +212,7 @@ public abstract class Card implements Serializable {
      * @param pin
      * @throws IOException
      */
-    public void setPin(String pin) throws IOException {
+    public void setPin(String pin) throws PaymentException {
         // Comprobamos que el String recibido contiene solo numeros
         if (this.checkStringNumber(pin)) {
             // Si el pin tiene el tamagno adecuado lo cambiamos
@@ -239,11 +220,11 @@ public abstract class Card implements Serializable {
                 this.pin = pin;
                 // Sino lanzamos una excepcion
             } else {
-                throw new IOException("Incorrect length");
+                throw new IncorrectLengthException("Incorrect length");
             }
             // Sino lanzamos una excepcion ya que solo puede haber numeros
         } else {
-            throw new IOException("The pin must only contain numbers");
+            throw new NumberFormatException("The pin must only contain numbers");
         }
     }
 
@@ -448,7 +429,7 @@ public abstract class Card implements Serializable {
      * @param cvv
      * @throws IOException
      */
-    public void setCvv(String cvv) throws IOException {
+    public void setCvv(String cvv) throws PaymentException {
         // Comprueba que el String contenga solo numeros
         if (this.checkStringNumber(cvv)) {
             // Si el tamagno del cvv es correcto se cambia
@@ -456,11 +437,11 @@ public abstract class Card implements Serializable {
                 this.cvv = cvv;
                 // sino se lanza una excepcion
             } else {
-                throw new IOException("Incorrect length");
+                throw new IncorrectLengthException("Incorrect length");
             }
             // sino se lanza una excepcion
         } else {
-            throw new IOException("The cvv must only contains numbers");
+            throw new NumberFormatException("The cvv must only contains numbers");
         }
     }
 
@@ -561,18 +542,6 @@ public abstract class Card implements Serializable {
     public Account getAccount() {
         return this.account;
     }
-
-    // /**
-    // * Method that adds new transaction in the list
-    // * @param transaction
-    // * @throws TransactionException
-    // */
-    // public void addTransaction(Transaction transaction) throws
-    // TransactionException{
-    // //Si devuelve false la transaccion ya esta incluida
-    // if (!this.transactionHistory.add(transaction))
-    // throw new TransactionException("Transacion already exists.");
-    // }
 
     /**
      * Method that makes the payment

@@ -3,8 +3,8 @@ package es.unileon.ulebank.command;
 import org.apache.log4j.Logger;
 
 import es.unileon.ulebank.account.Account;
-import es.unileon.ulebank.command.exceptions.CommandException;
 import es.unileon.ulebank.command.handler.CommandHandler;
+import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.office.Office;
@@ -98,10 +98,10 @@ public class PaymentCommand implements Command {
             this.executed = true;
         } catch (TransactionException e) {
             PaymentCommand.LOG.info(e.getMessage());
-            throw new CommandException(e.getMessage());
+            throw new TransactionException(e.getMessage());
         } catch (PaymentException e) {
             PaymentCommand.LOG.info(e.getMessage());
-            throw new CommandException(e.getMessage());
+            throw new PaymentException(e.getMessage());
         }
 
     }
@@ -111,7 +111,7 @@ public class PaymentCommand implements Command {
      * @throws PaymentException 
      */
     @Override
-    public void undo() throws CommandException, PaymentException {
+    public void undo() throws CommandException {
     	if (this.executed) {
     		try {
                 // Make the payment by the type of the card
@@ -120,7 +120,7 @@ public class PaymentCommand implements Command {
                 this.undone = true;
     		} catch (TransactionException e) {
     			PaymentCommand.LOG.info(e.getMessage());
-    			throw new CommandException(e.getMessage());
+    			throw new TransactionException(e.getMessage());
     		}
     	} else {
     		PaymentCommand.LOG.info("Can't undo because command has not executed yet.");
@@ -133,7 +133,7 @@ public class PaymentCommand implements Command {
      * @throws CommandException 
      */
     @Override
-    public void redo() throws PaymentException, TransactionException, CommandException {
+    public void redo() throws CommandException {
     	if (this.undone) {
     		try {
     			// Make the payment by the type of the card
@@ -159,5 +159,4 @@ public class PaymentCommand implements Command {
     public Handler getID() {
         return this.id;
     }
-
 }

@@ -3,8 +3,8 @@ package es.unileon.ulebank.command;
 import org.apache.log4j.Logger;
 
 import es.unileon.ulebank.account.Account;
-import es.unileon.ulebank.command.exceptions.CommandException;
 import es.unileon.ulebank.command.handler.CommandHandler;
+import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.office.Office;
@@ -23,7 +23,7 @@ public class TransferCommand implements Command {
      * Class Logger
      */
     private static final Logger LOG = Logger
-            .getLogger(TransferCommand.class.getName());
+            .getLogger(ModifyBuyLimitCommand.class.getName());
     /**
      * Identifier of the command
      */
@@ -45,13 +45,13 @@ public class TransferCommand implements Command {
      */
     private String concept;
     /**
-     * Variable para saber si el comando ha sido ejecutado o no
+     * Prove if we can undo the command
      */
-    private boolean executed = false;
+    private boolean undo = false;
     /**
-     * Variable para saber si el comando ha sido deshecho o no
+     * Prove if we can redo the command
      */
-    private boolean undone = false;
+    private boolean redo = false;
 
     /**
      * Class constructor
@@ -66,18 +66,13 @@ public class TransferCommand implements Command {
      */
     public TransferCommand(Office office, Handler accountSender,
             Handler dniSender, Handler accountReceiver, Handler dniReceiver,
-            double amount, String concept) throws CommandException {
+            double amount, String concept) {
         this.id = new CommandHandler(accountSender);
         this.accountSender = office.searchClient(dniSender).searchAccount(
                 accountSender);
         this.accountReceiver = office.searchClient(dniReceiver)
                 .searchAccount(accountReceiver);
-        if (amount > 0.00) {
-            this.amount = amount;
-        } else {
-        	throw new CommandException("Amount negative or neutral.");
-        }
-
+        this.amount = amount;
         this.concept = concept;
     }
 
@@ -90,13 +85,13 @@ public class TransferCommand implements Command {
             final Transfer transfer = new Transfer(this.accountSender,
                     this.accountReceiver, this.amount);
             transfer.make(this.concept);
-            this.executed = true;
+            this.undo = true;
         } catch (TransferException e) {
-        	TransferCommand.LOG.info(e.getMessage());
-            throw new CommandException(e.getMessage());
+            LOG.info(e.getMessage());
+            throw new TransferException(e.getMessage());
         } catch (TransactionException e) {
-        	TransferCommand.LOG.info(e.getMessage());
-            throw new CommandException(e.getMessage());
+            LOG.info(e.getMessage());
+            throw new TransactionException(e.getMessage());
         }
     }
 
@@ -106,22 +101,20 @@ public class TransferCommand implements Command {
      */
     @Override
     public void undo() throws CommandException {
-        if (this.executed) {
+        if (this.undo) {
             try {
                 final Transfer transfer = new Transfer(this.accountReceiver,
                         this.accountSender, this.amount);
                 transfer.make("Return transfer " + this.concept);
-                this.undone = true;
+                this.redo = true;
+                this.undo = false;
             } catch (TransferException e) {
-            	TransferCommand.LOG.info(e.getMessage());
-                throw new CommandException(e.getMessage());
+                LOG.info(e.getMessage());
+                throw new TransferException(e.getMessage());
             } catch (TransactionException e) {
-            	TransferCommand.LOG.info(e.getMessage());
-                throw new CommandException(e.getMessage());
+                LOG.info(e.getMessage());
+                throw new TransactionException(e.getMessage());
             }
-        } else {
-        	TransferCommand.LOG.info("Can't undo because command has not executed yet.");
-        	throw new CommandException("Can't undo because command has not executed yet.");
         }
     }
 
@@ -131,29 +124,27 @@ public class TransferCommand implements Command {
      */
     @Override
     public void redo() throws CommandException {
-        if (this.undone) {
+        if (this.redo) {
             try {
                 final Transfer transfer = new Transfer(this.accountSender,
                         this.accountReceiver, this.amount);
                 transfer.make(this.concept);
-                this.undone = false;
+                this.undo = true;
+                this.redo = false;
             } catch (TransferException e) {
-            	TransferCommand.LOG.info(e.getMessage());
-                throw new CommandException(e.getMessage());
+                LOG.info(e.getMessage());
+                throw new TransferException(e.getMessage());
             } catch (TransactionException e) {
-            	TransferCommand.LOG.info(e.getMessage());
-                throw new CommandException(e.getMessage());
+                LOG.info(e.getMessage());
+                throw new TransactionException(e.getMessage());
             }
-        } else {
-        	TransferCommand.LOG.info("Can't undo because command has not undoned yet.");
-            throw new CommandException(
-                    "Can't undo because command has not undoned yet.");
         }
 
     }
 
     /**
      * Metodo que devuelve el identificador del comando
+     * 
      * @return command id
      */
     @Override
