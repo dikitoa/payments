@@ -31,7 +31,7 @@ public class CreditCard extends Card {
      */
     private List<CardTransaction> transactionList;
 
-    /**
+	/**
      * Constructor de la clase que crea una tarjeta de Credito
      * 
      * @param cardId
@@ -79,6 +79,24 @@ public class CreditCard extends Card {
         transaction.setEffectiveDate(this.obtainEffectiveDate());
         this.transactionList.add(transaction);
     }
+    
+    /**
+     * Method that obtain the list of transactions
+     * 
+     * @return
+     */
+    public List<CardTransaction> getTransactionList() {
+		return transactionList;
+	}
+
+    /**
+     * Method to set the transaction list
+     * 
+     * @param transactionList
+     */
+	public void setTransactionList(List<CardTransaction> transactionList) {
+		this.transactionList = transactionList;
+	}
 
     /**
      * Method that obtain the day when the amount of the purchases is done.
