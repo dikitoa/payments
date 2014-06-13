@@ -131,9 +131,21 @@ public class DebitCardTest {
 	}
 
 	@Test
-	public void testSetPin() throws PaymentException {
-		testCard.setPin("9876");
-		assertEquals("9876", testCard.getPin());
+	public void testSetPinOK() throws PaymentException {
+		testCard.setPin("1357");
+		assertEquals("1357", testCard.getPin());
+	}
+	
+	@Test (expected = IncorrectLengthException.class)
+	public void testSetPinFailLength() throws PaymentException {
+		testCard.setPin("135");
+		assertEquals("1357", testCard.getPin());
+	}
+	
+	@Test (expected = NumberFormatException.class)
+	public void testSetPinFailFormat() throws PaymentException {
+		testCard.setPin("13f7");
+		assertEquals("1357", testCard.getPin());
 	}
 
 	@Test

@@ -7,7 +7,10 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+
+import javax.persistence.UniqueConstraint;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -135,8 +138,20 @@ public class CreditCardTest {
 	}
 
 	@Test
-	public void testSetPin() throws PaymentException {
+	public void testSetPinOK() throws PaymentException {
 		testCard.setPin("1357");
+		assertEquals("1357", testCard.getPin());
+	}
+	
+	@Test (expected = IncorrectLengthException.class)
+	public void testSetPinFailLength() throws PaymentException {
+		testCard.setPin("135");
+		assertEquals("1357", testCard.getPin());
+	}
+	
+	@Test (expected = NumberFormatException.class)
+	public void testSetPinFailFormat() throws PaymentException {
+		testCard.setPin("13f7");
 		assertEquals("1357", testCard.getPin());
 	}
 
@@ -357,6 +372,18 @@ public class CreditCardTest {
 		assertEquals(1, testCard.getTransactionList().size());
 		testCard.makeTransaction(350.00, "Test2 makeTransaction");
 		assertEquals(2, testCard.getTransactionList().size());
+	}
+	
+	@Test
+	public void setMonthDay(){
+		testCard.setMonthDay(Calendar.DAY_OF_MONTH);
+		assertEquals(Calendar.DAY_OF_MONTH, testCard.getMonthDay());
+	}
+	
+	@Test
+	public void getMonthDay(){
+		testCard.setMonthDay(Calendar.DAY_OF_MONTH-1);
+		assertEquals(Calendar.DAY_OF_MONTH-1, testCard.getMonthDay());
 	}
 	
 	
