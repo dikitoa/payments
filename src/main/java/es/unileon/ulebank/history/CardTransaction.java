@@ -17,13 +17,9 @@ public class CardTransaction extends Transaction {
      * Class constructor
      * 
      * @param amount
-     * @param datezz
+     * @param date
      * @param subject
-     * @param type
-     * @param senderAccount
-     * @param receiverAccount
      * @throws TransactionException
-     * @throws es.unileon.ulebank.exceptions.TransactionException
      */
     public CardTransaction(double amount, Date date, String subject)
             throws TransactionException {

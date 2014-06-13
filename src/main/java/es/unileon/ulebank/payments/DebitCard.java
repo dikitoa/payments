@@ -1,13 +1,10 @@
 package es.unileon.ulebank.payments;
 
-import java.io.IOException;
 import java.util.Date;
 
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.client.Client;
-import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.TransactionException;
-import es.unileon.ulebank.fees.InvalidFeeException;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.history.CardTransaction;
 import es.unileon.ulebank.payments.exceptions.PaymentException;
@@ -28,17 +25,7 @@ public class DebitCard extends Card {
      * @param cardId
      * @param owner
      * @param account
-     * @param buyLimitDiary
-     * @param buyLimitMonthly
-     * @param cashLimitDiary
-     * @param cashLimitMonthly
-     * @param commissionEmission
-     * @param commissionMaintenance
-     * @param commissionRenovate
-     * @throws NumberFormatException
-     * @throws CommissionException
-     * @throws IOException
-     * @throws InvalidFeeException
+     * @throws PaymentException
      */
     public DebitCard(Handler cardId, Client owner, Account account) throws PaymentException {
         super(cardId, CardType.DEBIT.toString(), account, owner);
