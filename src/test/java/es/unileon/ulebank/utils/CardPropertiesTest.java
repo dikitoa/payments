@@ -28,146 +28,146 @@ public class CardPropertiesTest {
 
 	@Test
 	public void testGetMinimumLimit() {
-		assertEquals(200.00, properties.getMinimumLimit(), 0.0001);
+		assertEquals(200.00, CardProperties.getMinimumLimit(), 0.0001);
 	}
 
 	@Test
 	public void testSetMinimumLimit() {
-		assertEquals(200.00, this.properties.getMinimumLimit(), 0.0001);
+		assertEquals(200.00, CardProperties.getMinimumLimit(), 0.0001);
 		properties.setMinimumLimit(300.0);
-		assertEquals(300.00, this.properties.getMinimumLimit(), 0.0001);
+		assertEquals(300.00, CardProperties.getMinimumLimit(), 0.0001);
 	}
 
 	@Test
 	public void testGetExpirationYear() {
-		assertEquals(3, this.properties.getExpirationYear());
+		assertEquals(3, CardProperties.getExpirationYear());
 	}
 
 	@Test
 	public void testSetExpirationYear() {
-		assertEquals(3, this.properties.getExpirationYear());
+		assertEquals(3, CardProperties.getExpirationYear());
 		properties.setExpirationYear(4);
-		assertEquals(4, this.properties.getExpirationYear());
+		assertEquals(4, CardProperties.getExpirationYear());
 	}
 
 	@Test
 	public void testGetCvvSize() {
-		assertEquals(3, this.properties.getCvvSize());
+		assertEquals(3, CardProperties.getCvvSize());
 	}
 
 	@Test
 	public void testSetCvvSize() {
-		assertEquals(3, this.properties.getCvvSize());
+		assertEquals(3, CardProperties.getCvvSize());
 		properties.setCvvSize(4);
-		assertEquals(4, this.properties.getCvvSize());
+		assertEquals(4, CardProperties.getCvvSize());
 	}
 
 	@Test
 	public void testGetPinSize() {
-		assertEquals(4, this.properties.getPinSize());
+		assertEquals(4, CardProperties.getPinSize());
 	}
 
 	@Test
 	public void testSetPinSize() {
-		assertEquals(4, this.properties.getPinSize());
+		assertEquals(4, CardProperties.getPinSize());
 		properties.setPinSize(5);
-		assertEquals(5, this.properties.getPinSize());
+		assertEquals(5, CardProperties.getPinSize());
 	}
 
 	@Test
 	public void testGetBuyLimitDiary() {
-		assertEquals(200.00, this.properties.getBuyLimitDiary(), 0.0001);
+		assertEquals(200.00, CardProperties.getBuyLimitDiary(), 0.0001);
 	}
 
 	@Test
 	public void testSetBuyLimitDiary() {
-		assertEquals(200.00, this.properties.getBuyLimitDiary(), 0.0001);
+		assertEquals(200.00, CardProperties.getBuyLimitDiary(), 0.0001);
 		properties.setBuyLimitDiary(250.00);
-		assertEquals(250.00, this.properties.getBuyLimitDiary(), 0.0001);
+		assertEquals(250.00, CardProperties.getBuyLimitDiary(), 0.0001);
 	}
 
 	@Test
 	public void testGetBuyLimitMonthly() {
-		assertEquals(2000.00, this.properties.getBuyLimitMonthly(), 0.0001);
+		assertEquals(2000.00, CardProperties.getBuyLimitMonthly(), 0.0001);
 	}
 
 	@Test
 	public void testSetBuyLimitMonthly() {
-		assertEquals(2000.00, this.properties.getBuyLimitMonthly(), 0.0001);
+		assertEquals(2000.00, CardProperties.getBuyLimitMonthly(), 0.0001);
 		properties.setBuyLimitMonthly(2500.00);
-		assertEquals(2500.00, this.properties.getBuyLimitMonthly(), 0.0001);
+		assertEquals(2500.00, CardProperties.getBuyLimitMonthly(), 0.0001);
 	}
 
 	@Test
 	public void testGetCashLimitDiary() {
-		assertEquals(200.00, this.properties.getCashLimitDiary(), 0.0001);
+		assertEquals(200.00, CardProperties.getCashLimitDiary(), 0.0001);
 	}
 
 	@Test
 	public void testSetCashLimitDiary() {
-		assertEquals(200.00, this.properties.getCashLimitDiary(), 0.0001);
+		assertEquals(200.00, CardProperties.getCashLimitDiary(), 0.0001);
 		properties.setCashLimitDiary(250.00);
-		assertEquals(250.00, this.properties.getCashLimitDiary(), 0.0001);
+		assertEquals(250.00, CardProperties.getCashLimitDiary(), 0.0001);
 	}
 
 	@Test
 	public void testGetCashLimitMonthly() {
-		assertEquals(2000.00, this.properties.getCashLimitMonthly(), 0.0001);
+		assertEquals(2000.00, CardProperties.getCashLimitMonthly(), 0.0001);
 	}
 
 	@Test
 	public void testSetCashLimitMonthly() {
-		assertEquals(2000.00, this.properties.getCashLimitMonthly(), 0.0001);
+		assertEquals(2000.00, CardProperties.getCashLimitMonthly(), 0.0001);
 		properties.setCashLimitMonthly(2500.00);
-		assertEquals(2500.00, this.properties.getCashLimitMonthly(), 0.0001);
+		assertEquals(2500.00, CardProperties.getCashLimitMonthly(), 0.0001);
 	}
 
 	@Test
 	public void testGetDimensionRow() {
-		assertEquals(20, this.properties.getDimensionRow());
+		assertEquals(20, CardProperties.getDimensionRow());
 	}
 
 	@Test
 	public void testSetDimensionRow() {
-		assertEquals(20, this.properties.getDimensionRow());
+		assertEquals(20, CardProperties.getDimensionRow());
 		properties.setDimensionRow(30);
-		assertEquals(30, this.properties.getDimensionRow());
+		assertEquals(30, CardProperties.getDimensionRow());
 	}
 
 	@Test
 	public void testGetDimensionColumns() {
-		assertEquals(20, this.properties.getDimensionColumns());
+		assertEquals(20, CardProperties.getDimensionColumns());
 	}
 
 	@Test
 	public void testSetDimensionColumns() {
-		assertEquals(20, this.properties.getDimensionColumns());
+		assertEquals(20, CardProperties.getDimensionColumns());
 		properties.setDimensionColumns(30);
-		assertEquals(30, this.properties.getDimensionColumns());
+		assertEquals(30, CardProperties.getDimensionColumns());
 	}
 
 	@Test
 	public void testGetDefaultFee() {
-		assertEquals(20.00, this.properties.getDefaultFee(), 0.0001);
+		assertEquals(20.00, CardProperties.getDefaultFee(), 0.0001);
 	}
 
 	@Test
 	public void testSetDefaultFee() {
-		assertEquals(20.00, this.properties.getDefaultFee(), 0.0001);
+		assertEquals(20.00, CardProperties.getDefaultFee(), 0.0001);
 		properties.setDefaultFee(30.00);
-		assertEquals(30.00, this.properties.getDefaultFee(), 0.0001);
+		assertEquals(30.00, CardProperties.getDefaultFee(), 0.0001);
 	}
 
 	@Test
 	public void testGetMaximumAge() {
-		assertEquals(35, this.properties.getMaximumAge());
+		assertEquals(35, CardProperties.getMaximumAge());
 	}
 
 	@Test
 	public void testSetMaximumAge() {
-		assertEquals(35, this.properties.getMaximumAge());
+		assertEquals(35, CardProperties.getMaximumAge());
 		properties.setMaximumAge(30);
-		assertEquals(30, this.properties.getMaximumAge());
+		assertEquals(30, CardProperties.getMaximumAge());
 	}
 
 }
