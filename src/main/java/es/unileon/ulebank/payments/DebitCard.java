@@ -81,4 +81,22 @@ public class DebitCard extends Card {
 		}
 
 	}
+	
+    /**
+     * Method that obtain the list of transactions
+     * 
+     * @return
+     */
+    public List<CardTransaction> getTransactionList() {
+		return transactionList;
+	}
+
+    /**
+     * Method to set the transaction list
+     * 
+     * @param transactionList
+     */
+	public void setTransactionList(List<CardTransaction> transactionList) {
+		this.transactionList = transactionList;
+	}
 }
