@@ -88,11 +88,6 @@ public abstract class Card implements Serializable {
     private Client owner;
 
     /**
-     * Historia de las transacciones realizadas con la tarjeta
-     */
-    // private History<Transaction> transactionHistory;
-
-    /**
      * Constructor de la clase que crea una nueva tarjeta
      * 
      * @param properties
@@ -555,7 +550,7 @@ public abstract class Card implements Serializable {
      * @throws es.unileon.ulebank.history.TransactionException
      */
     public void makeTransaction(double quantity, String payConcept)
-            throws PaymentException, TransactionException {
+            throws PaymentException {
 
     }
 }
