@@ -41,6 +41,19 @@
 				<td>Cash limit monthly: </td>
 				<td><c:out value="${card.cashLimitMonthly}"></c:out></td> 
 			</tr>
+			<tr>
+				<td>Comission Emission: </td>
+				<td><c:out value="${card.commissionEmission}"></c:out></td>
+				<td><a href="<c:url value="comissionchange.htm"/>">Modify Comissions</</a></td>
+			</tr>
+			<tr>
+				<td>Comission Maintenance: </td>
+				<td><c:out value="${card.commissionMaintenance}"></c:out></td> 
+			</tr>
+			<tr>
+				<td>Comission Renovate: </td>
+				<td><c:out value="${card.commissionRenovate}"></c:out></td> 
+			</tr>
 			</table>
 		</c:forEach>
 		<br><br>

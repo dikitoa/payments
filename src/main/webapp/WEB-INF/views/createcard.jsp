@@ -62,7 +62,7 @@
 				</tr>
 				
 				<tr>
-				<td>Commissionn emissionn: </td>
+				<td>Commission emissionn: </td>
 				<td><form:input path="commissionEmission" size="15"/></td>
 				<td><form:errors path="commissionEmission" cssClass="error"></form:errors></td>
 				</tr>
