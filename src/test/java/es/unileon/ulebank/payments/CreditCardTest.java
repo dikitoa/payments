@@ -60,6 +60,14 @@ public class CreditCardTest {
 		testCard.setCommissionEmission(commissionEmission);
 		testCard.setCommissionMaintenance(commissionMaintenance);
 		testCard.setCommissionRenovate(commissionRenovate);
+		testCard2 = new CreditCard(handler, client, account);
+		testCard2.setBuyLimitMonthly(1000.0);
+		testCard2.setBuyLimitDiary(400.0);
+		testCard2.setCashLimitMonthly(1000.0);
+		testCard2.setCashLimitDiary(400.0);
+		testCard2.setCommissionEmission(commissionEmission);
+		testCard2.setCommissionMaintenance(commissionMaintenance);
+		testCard2.setCommissionRenovate(commissionRenovate);
 	}
 
 	@Test
@@ -69,7 +77,9 @@ public class CreditCardTest {
 
 	@Test
 	public void cardNull() {
-		assertNull(testCard2);
+		testCard = null;
+		
+		assertNull(testCard);
 	}
 
 	@Test
@@ -314,4 +324,40 @@ public class CreditCardTest {
 	public void testGetCardNumber(){
 		assertEquals("1234 0112 3456 7892", testCard.getId().toString());
 	}
+	
+	@Test
+	public void testGetAmount() throws PaymentException{
+		testCard.makeTransaction(100.00, "Test getAmount");
+		Date effectiveDate = testCard.getTransactionList().get(0).getEffectiveDate();
+		assertEquals(100.00, testCard.getAmount(effectiveDate), 0.0001);
+	}
+	
+	@Test
+	public void testGetTransactionList() throws PaymentException{
+		testCard.makeTransaction(200.00, "Test getTransaction");
+		assertEquals(200.00, testCard.getTransactionList().get(0).getAmount(), 0.0001);
+		assertEquals("Test getTransaction", testCard.getTransactionList().get(0).getSubject());
+	}
+	
+	@Test
+	public void testSetTransactionList() throws PaymentException{
+		testCard.makeTransaction(200.00, "Test getTransaction Card1");
+		assertEquals(200.00, testCard.getTransactionList().get(0).getAmount(), 0.0001);
+		
+		testCard2.makeTransaction(500.00, "Test getTransaction Card2");
+		assertEquals(500.00, testCard2.getTransactionList().get(0).getAmount(), 0.0001);
+		
+		testCard.setTransactionList(testCard2.getTransactionList());
+		assertEquals(500.00, testCard.getTransactionList().get(0).getAmount(), 0.0001);
+	}
+	
+	@Test
+	public void testMakeTransaction() throws PaymentException{
+		testCard.makeTransaction(500.00, "Test makeTransaction");
+		assertEquals(1, testCard.getTransactionList().size());
+		testCard.makeTransaction(350.00, "Test2 makeTransaction");
+		assertEquals(2, testCard.getTransactionList().size());
+	}
+	
+	
 }

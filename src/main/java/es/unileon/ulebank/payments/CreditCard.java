@@ -79,24 +79,6 @@ public class CreditCard extends Card {
         transaction.setEffectiveDate(this.obtainEffectiveDate());
         this.transactionList.add(transaction);
     }
-    
-    /**
-     * Method that obtain the list of transactions
-     * 
-     * @return
-     */
-    public List<CardTransaction> getTransactionList() {
-		return transactionList;
-	}
-
-    /**
-     * Method to set the transaction list
-     * 
-     * @param transactionList
-     */
-	public void setTransactionList(List<CardTransaction> transactionList) {
-		this.transactionList = transactionList;
-	}
 
     /**
      * Method that obtain the day when the amount of the purchases is done.
@@ -156,4 +138,22 @@ public class CreditCard extends Card {
 
         return amount;
     }
+    
+    /**
+     * Method that obtain the list of transactions
+     * 
+     * @return
+     */
+    public List<CardTransaction> getTransactionList() {
+		return transactionList;
+	}
+
+    /**
+     * Method to set the transaction list
+     * 
+     * @param transactionList
+     */
+	public void setTransactionList(List<CardTransaction> transactionList) {
+		this.transactionList = transactionList;
+	}
 }
