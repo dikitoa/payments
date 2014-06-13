@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import es.unileon.ulebank.bank.BankHandler;
+import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.handler.MalformedHandlerException;
 import es.unileon.ulebank.payments.handler.CardHandler;
 
@@ -57,7 +58,53 @@ public class CardHandlerTest {
 	public void testCardHandlerFailCardNumberSize() throws MalformedHandlerException {
 		test2 = new CardHandler("12345678901234567");
 	}
-
+	
+	@Test
+	public void testCardHandlerString() throws MalformedHandlerException {
+		test2 = new CardHandler("123400009876123");
+		assertEquals("1234", test2.getBankHandler().toString());
+		assertEquals("00", test2.getOfficeId());
+		assertEquals("009876123", test2.getCardId());
+	}
+	
+	@Test (expected = MalformedHandlerException.class)
+	public void testCardHandlerStringFailLength() throws MalformedHandlerException {
+		test2 = new CardHandler("1232546546789052");
+	}
+	
+	@Test (expected = MalformedHandlerException.class)
+	public void testCardHandlerStringContainsLetter() throws MalformedHandlerException {
+		test2 = new CardHandler("908423489j34242");
+	}
+	
+	@Test (expected = MalformedHandlerException.class)
+	public void testCardHandlerStringEmpty() throws MalformedHandlerException {
+		test2 = new CardHandler("");
+	}
+	
+	@Test
+	public void testCardHandlerWithHandler() throws MalformedHandlerException {
+		test2 = new CardHandler(new GenericHandler("123456789098765"));
+		assertEquals("1234", test2.getBankHandler().toString());
+		assertEquals("56", test2.getOfficeId());
+		assertEquals("789098765", test2.getCardId());
+	}
+	
+	@Test (expected = MalformedHandlerException.class)
+	public void testCardHandlerWithHandlerFailLength() throws MalformedHandlerException {
+		test2 = new CardHandler(new GenericHandler("1234567890987651"));
+	}
+	
+	@Test (expected = MalformedHandlerException.class)
+	public void testCardHandlerWithHandlerContainsLetter() throws MalformedHandlerException {
+		test2 = new CardHandler(new GenericHandler("1234567890T8765"));
+	}
+	
+	@Test (expected = MalformedHandlerException.class)
+	public void testCardHandlerWithHandlerEmpty() throws MalformedHandlerException {
+		test2 = new CardHandler(new GenericHandler(""));
+	}
+	
 	@Test
 	public void testGetBankIdOK() {
 		assertTrue(test.getBankHandler().toString().length() == test.getBankIdLength());
