@@ -1,8 +1,9 @@
 package es.unileon.ulebank.command;
 
-import javax.security.auth.login.AccountNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import org.apache.log4j.Logger;
+import javax.security.auth.login.AccountNotFoundException;
 
 import es.unileon.ulebank.command.handler.CommandHandler;
 import es.unileon.ulebank.exceptions.CommandException;
@@ -123,10 +124,10 @@ public class ModifyCashLimitCommand implements Command {
                 // Si no se indica el tipo de limite a modificar adecuadamente
                 // no va a realizar la operacion
             } else {
-                LOG.info(ModifyCashLimitCommand.NOT_DEFINED_TYPE);
+                LOG.log(Level.SEVERE, NOT_DEFINED_TYPE);
             }
         } catch (final IncorrectLimitException e) {
-            LOG.info(e.getMessage());
+        	LOG.log(Level.SEVERE, e.getMessage());
             throw new IncorrectLimitException(ModifyCashLimitCommand.INCORRECT_LIMIT);
         }
     }
@@ -146,7 +147,7 @@ public class ModifyCashLimitCommand implements Command {
                     this.card.setCashLimitDiary(this.oldAmount);
                     this.undone = true;
                 } catch (IncorrectLimitException e) {
-                    LOG.info(e.getMessage());
+                	LOG.log(Level.SEVERE, e.getMessage());
                 }
                 // Si el tipo es mensual
             } else if (this.checkTypeLimit(ModifyCashLimitCommand.MONTHLY)) {
@@ -160,10 +161,10 @@ public class ModifyCashLimitCommand implements Command {
                 // Si no se indica el tipo de limite a modificar adecuadamente
                 // no va a realizar la operacion
             } else {
-                LOG.info(ModifyCashLimitCommand.INCORRECT_LIMIT);
+            	LOG.log(Level.SEVERE, INCORRECT_LIMIT);
             }
         } else {
-            LOG.info(ModifyCashLimitCommand.ERROR_UNDO);
+        	LOG.log(Level.SEVERE, ERROR_UNDO);
             throw new PaymentException(ModifyCashLimitCommand.ERROR_UNDO);
         }
     }
@@ -184,7 +185,7 @@ public class ModifyCashLimitCommand implements Command {
                     this.card.setCashLimitDiary(this.newAmount);
                     this.undone = false;
                 } catch (IncorrectLimitException e) {
-                    LOG.info(e.getMessage());
+                	LOG.log(Level.SEVERE, e.getMessage());
                 }
                 // Si el tipo es mensual
             } else if (this.checkTypeLimit(ModifyCashLimitCommand.MONTHLY)) {
@@ -194,15 +195,15 @@ public class ModifyCashLimitCommand implements Command {
                     this.card.setCashLimitMonthly(this.newAmount);
                     this.undone = false;
                 } catch (IncorrectLimitException e) {
-                    LOG.info(e.getMessage());
+                	LOG.log(Level.SEVERE, e.getMessage());
                 }
                 // Si no se indica el tipo de limite a modificar adecuadamente
                 // no va a realizar la operacion
             } else {
-                LOG.info(ModifyCashLimitCommand.INCORRECT_LIMIT);
+            	LOG.log(Level.SEVERE, INCORRECT_LIMIT);
             }
         } else {
-        	LOG.info(ModifyCashLimitCommand.ERROR_REDO);
+        	LOG.log(Level.SEVERE, ERROR_REDO);
             throw new PaymentException(ModifyCashLimitCommand.ERROR_REDO);
         }
     }

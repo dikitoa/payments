@@ -1,8 +1,9 @@
 package es.unileon.ulebank.command;
 
-import javax.security.auth.login.AccountNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import org.apache.log4j.Logger;
+import javax.security.auth.login.AccountNotFoundException;
 
 import es.unileon.ulebank.command.handler.CommandHandler;
 import es.unileon.ulebank.exceptions.CommandException;
@@ -119,10 +120,10 @@ public class ModifyBuyLimitCommand implements Command {
                 // Si no se indica el tipo de limite a modificar adecuadamente
                 // no va a realizar la operacion
             } else {
-                LOG.info(ModifyBuyLimitCommand.NOT_DEFINED_TYPE);
+            	LOG.log(Level.SEVERE, NOT_DEFINED_TYPE);
             }
         } catch (IncorrectLimitException e) {
-            LOG.info(e.getMessage());
+            LOG.log(Level.SEVERE, INCORRECT_LIMIT);
             throw new IncorrectLimitException(ModifyBuyLimitCommand.INCORRECT_LIMIT);
         }
     }
@@ -156,10 +157,10 @@ public class ModifyBuyLimitCommand implements Command {
                 // Si no se indica el tipo de limite a modificar adecuadamente
                 // no va a realizar la operacion
             } else {
-                LOG.info(ModifyBuyLimitCommand.NOT_DEFINED_TYPE);
+            	LOG.log(Level.SEVERE, NOT_DEFINED_TYPE);
             }
         } else {
-            LOG.info(ModifyBuyLimitCommand.ERROR_UNDO);
+        	LOG.log(Level.SEVERE, ERROR_UNDO);
             throw new PaymentException(ModifyBuyLimitCommand.ERROR_UNDO);
         }
 
@@ -196,10 +197,10 @@ public class ModifyBuyLimitCommand implements Command {
                 // Si no se indica el tipo de limite a modificar adecuadamente
                 // no va a realizar la operacion
             } else {
-                LOG.info(ModifyBuyLimitCommand.NOT_DEFINED_TYPE);
+            	LOG.log(Level.SEVERE, NOT_DEFINED_TYPE);
             }
         } else {
-        	 LOG.info(ModifyBuyLimitCommand.ERROR_REDO);
+        	LOG.log(Level.SEVERE, ERROR_REDO);
              throw new PaymentException(ModifyBuyLimitCommand.ERROR_REDO);
         }
     }
