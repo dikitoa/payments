@@ -1,9 +1,7 @@
 package es.unileon.ulebank.payments;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.client.Client;
@@ -23,14 +21,6 @@ public class DebitCard extends Card {
      * Version
      */
     private static final long serialVersionUID = 1L;
-    /**
-     * Dia del mes en el que se carga los gastos de la tarjeta
-     */
-    private int monthDay;
-    /**
-     * Lista de transacciones de la tarjeta
-     */
-    private List<CardTransaction> transactionList;
     
     /**
      * 
@@ -52,7 +42,6 @@ public class DebitCard extends Card {
      */
     public DebitCard(Handler cardId, Client owner, Account account) throws PaymentException {
         super(cardId, CardType.DEBIT.toString(), account, owner);
-        transactionList = new ArrayList<CardTransaction>();
     }
 
     /**
@@ -71,13 +60,13 @@ public class DebitCard extends Card {
 	 */
 	@Override
 	public void makeTransaction(double quantity, String payConcept) throws
-	PaymentException, TransactionException {
+	PaymentException {
 
 		try{
 			//Discount the quantity from sender account
 			this.account.doTransaction(new CardTransaction(-quantity, new Date(), payConcept));
 		}catch(TransactionException e){
-			throw new PaymentException("Denegate Transaction");
+			throw new TransactionException("Denegate Transaction");
 		}
 
 	}
