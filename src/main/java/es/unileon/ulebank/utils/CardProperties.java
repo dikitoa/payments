@@ -234,4 +234,36 @@ public class CardProperties {
     public void setDimensionColumns(int dimensionColumns) {
         CardProperties.dimensionColumns = dimensionColumns;
     }
+
+    /**
+     * Devuelve la comision por defecto
+     * @return
+     */
+    public static double getDefaultFee() {
+        return CardProperties.defaultFee;
+    }
+    
+    /**
+     * Cambia la comsision por defecto por la recibida
+     * @param defaultFee
+     */
+    public void setDefaultFee(double defaultFee) {
+        CardProperties.defaultFee = defaultFee;
+    }
+
+    /**
+     * Devuele la edad maxima posible
+     * @return
+     */
+    public static int getMaximumAge() {
+        return CardProperties.maximumAge;
+    }
+    
+    /**
+     * Cambia la edad maxima por la que se indica
+     * @param maximumAge
+     */
+    public void setMaximumAge(int maximumAge) {
+        CardProperties.maximumAge = maximumAge;
+    }
 }
