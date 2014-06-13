@@ -17,7 +17,6 @@ import es.unileon.ulebank.bank.Bank;
 import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.client.Person;
-import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.fees.FeeStrategy;
 import es.unileon.ulebank.fees.LinearFee;
 import es.unileon.ulebank.handler.GenericHandler;
