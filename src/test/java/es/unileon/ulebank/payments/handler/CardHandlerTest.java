@@ -37,6 +37,26 @@ public class CardHandlerTest {
 		test2 = new CardHandler(new BankHandler("1234"),"01", "123456789");
 		assertNotNull(test2);
 	}
+	
+	@Test (expected = MalformedHandlerException.class)
+	public void testCardHandlerFailOffice() throws MalformedHandlerException {
+		test2 = new CardHandler(new BankHandler("1234"),"0f", "123456789");
+	}
+	
+	@Test (expected = MalformedHandlerException.class)
+	public void testCardHandlerFailCardId() throws MalformedHandlerException {
+		test2 = new CardHandler(new BankHandler("1234"),"01", "12345678g");
+	}
+	
+	@Test (expected = MalformedHandlerException.class)
+	public void testCardHandlerFailCardNumberFormat() throws MalformedHandlerException {
+		test2 = new CardHandler("12345678g012345");
+	}
+	
+	@Test (expected = MalformedHandlerException.class)
+	public void testCardHandlerFailCardNumberSize() throws MalformedHandlerException {
+		test2 = new CardHandler("12345678901234567");
+	}
 
 	@Test
 	public void testGetBankIdOK() {
