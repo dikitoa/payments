@@ -76,4 +76,10 @@ public class OfficeHandler implements Handler {
         return this.numberOffice;
     }
 
+	@Override
+	public boolean equals(Handler another) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

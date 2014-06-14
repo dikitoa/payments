@@ -39,4 +39,10 @@ public class GenericHandler implements Handler {
         return this.id;
     }
 
+	@Override
+	public boolean equals(Handler another) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

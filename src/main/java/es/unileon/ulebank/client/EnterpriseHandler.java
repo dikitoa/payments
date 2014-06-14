@@ -72,4 +72,10 @@ public class EnterpriseHandler implements Handler {
                 + Integer.toString(this.registrationCode) + this.controlCode;
     }
 
+	@Override
+	public boolean equals(Handler another) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

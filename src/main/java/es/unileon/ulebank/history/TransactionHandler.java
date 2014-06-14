@@ -35,4 +35,10 @@ public class TransactionHandler implements Handler {
         return this.toString().compareTo(another.toString());
     }
 
+	@Override
+	public boolean equals(Handler another) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

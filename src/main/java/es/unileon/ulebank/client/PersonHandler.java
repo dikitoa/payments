@@ -97,4 +97,10 @@ public class PersonHandler implements Handler {
         return result;
     }
 
+	@Override
+	public boolean equals(Handler another) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

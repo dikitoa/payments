@@ -329,4 +329,10 @@ public class CardHandler implements Handler {
 		return CardHandler.OFFICE_ID_LENGTH;
 	}
 
+	@Override
+	public boolean equals(Handler another) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

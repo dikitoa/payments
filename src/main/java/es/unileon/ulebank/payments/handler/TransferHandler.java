@@ -87,4 +87,10 @@ public class TransferHandler implements Handler {
                 + this.calendar.get(Calendar.MINUTE)
                 + this.calendar.get(Calendar.SECOND);
     }
+
+	@Override
+	public boolean equals(Handler another) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

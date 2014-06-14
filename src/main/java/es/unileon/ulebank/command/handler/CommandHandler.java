@@ -72,4 +72,10 @@ public class CommandHandler implements Handler {
     public String toString() {
         return this.id.toString() + " " + this.date.toString();
     }
+
+	@Override
+	public boolean equals(Handler another) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
