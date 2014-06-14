@@ -17,8 +17,6 @@ import es.unileon.ulebank.bank.Bank;
 import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.client.Person;
-import es.unileon.ulebank.command.handler.CommandHandler;
-import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.handler.MalformedHandlerException;
 import es.unileon.ulebank.office.Office;
 import es.unileon.ulebank.office.OfficeHandler;
@@ -88,6 +86,8 @@ public class TransferHandlerTest {
 	public void testNotEquals() throws MalformedHandlerException{
 		this.auxTransfer = new TransferHandler(this.accountAux.getID().toString(), this.account.getID().toString());
 		assertFalse(auxTransfer.equals(transfer));
+		assertFalse(auxTransfer.equals(null));
+		assertFalse(auxTransfer.equals(this.account));
 	}
 	
 	@Test
