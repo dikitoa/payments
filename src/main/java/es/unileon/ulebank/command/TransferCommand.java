@@ -24,6 +24,14 @@ public class TransferCommand implements Command {
     private static final Logger LOG = Logger
             .getLogger(TransferCommand.class.getName());
     /**
+     * String of incorrect undo error
+     */
+    private static final String ERROR_UNDO = "Can't undo because command has not undoned yet.";
+    /**
+     * String of incorrect redo error
+     */
+    private static final String ERROR_REDO = "Can't redo because command has not undoned yet.";
+    /**
      * Identifier of the command
      */
     private Handler id;
@@ -114,8 +122,8 @@ public class TransferCommand implements Command {
                 throw new CommandException(e.getMessage());
             }
         } else {
-        	LOG.severe("Can't undo because command has not executed yet.");
-        	throw new CommandException("Can't undo because command has not executed yet.");
+        	LOG.severe(TransferCommand.ERROR_UNDO);
+        	throw new CommandException(TransferCommand.ERROR_UNDO);
         }
     }
 
@@ -136,9 +144,8 @@ public class TransferCommand implements Command {
                 throw new CommandException(e.getMessage());
             }
         } else {
-        	LOG.severe("Can't undo because command has not undoned yet.");
-            throw new CommandException(
-                    "Can't undo because command has not undoned yet.");
+        	LOG.severe(TransferCommand.ERROR_REDO);
+            throw new CommandException(TransferCommand.ERROR_REDO);
         }
 
     }

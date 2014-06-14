@@ -73,9 +73,31 @@ public class CommandHandler implements Handler {
         return this.id.toString() + " " + this.date.toString();
     }
 
+	/**
+	 * Comprueba que dos handler son iguales
+	 * @param another
+	 * @return true si son iguales, false en cualquier otro caso
+	 */
 	@Override
 	public boolean equals(Handler another) {
-		// TODO Auto-generated method stub
+		if (another == null) {
+			return false;
+		}
+		
+		if (another.getClass() != getClass()) {
+			return false;
+		}
+		
+		Handler other = (Handler) another;
+		
+		if (this.toString().equals(other.toString())) {
+			return true;
+		}
 		return false;
+	}
+	
+	@Override
+	public int hashCode() {
+		return this.hashCode();
 	}
 }

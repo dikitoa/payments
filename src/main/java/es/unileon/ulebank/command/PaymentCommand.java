@@ -25,6 +25,22 @@ public class PaymentCommand implements Command {
      */
     private static final Logger LOG = Logger.getLogger(PaymentCommand.class.getName());
     /**
+     * Concept which add when makes the undo method
+     */
+    private static final String UNDO_CONCEPT = "Return payment from ";
+    /**
+     * String of incorrect undo error
+     */
+    private static final String ERROR_UNDO = "Can't undo because command has not undoned yet.";
+    /**
+     * String of incorrect redo error
+     */
+    private static final String ERROR_REDO = "Can't redo because command has not undoned yet.";
+    /**
+     * String of error when the amount is neutral
+     */
+    private static final String NEUTRAL_AMOUNT = "Amount neutral.";
+    /**
      * Command Identifier
      */
     private final Handler id;
@@ -80,8 +96,8 @@ public class PaymentCommand implements Command {
         if (amount != 0.00) {
             this.amount = amount;
         } else {
-        	LOG.log(Level.SEVERE, "Amount neutral.");
-        	throw new CommandException("Amount neutral.");
+        	LOG.log(Level.SEVERE, PaymentCommand.NEUTRAL_AMOUNT);
+        	throw new CommandException(PaymentCommand.NEUTRAL_AMOUNT);
         }
         this.concept = concept;
     }
@@ -113,19 +129,19 @@ public class PaymentCommand implements Command {
      * @throws PaymentException 
      */
     @Override
-    public void undo() throws CommandException, PaymentException {
+    public void undo() throws CommandException {
     	if (this.executed) {
     		try {
                 // Make the payment by the type of the card
-    			this.card.makeTransaction(-this.amount, "Return payment from " + this.concept);
+    			this.card.makeTransaction(-this.amount, PaymentCommand.UNDO_CONCEPT + this.concept);
                 this.undone = true;
     		} catch (TransactionException e) {
     			 LOG.log(Level.SEVERE, e.getMessage());
     			throw new TransactionException(e.getMessage());
     		}
     	} else {
-    		 LOG.log(Level.SEVERE, "Can't undo because command has not executed yet.");
-    		throw new CommandException("Can't undo because command has not executed yet.");
+    		 LOG.log(Level.SEVERE, PaymentCommand.ERROR_UNDO);
+    		throw new CommandException(PaymentCommand.ERROR_UNDO);
     	}
     }
 
@@ -134,7 +150,7 @@ public class PaymentCommand implements Command {
      * @throws CommandException 
      */
     @Override
-    public void redo() throws PaymentException, TransactionException, CommandException {
+    public void redo() throws TransactionException, CommandException {
     	if (this.undone) {
     		try {
     			// Make the payment by the type of the card
@@ -145,8 +161,8 @@ public class PaymentCommand implements Command {
     			throw new TransactionException(e.getMessage());
     		}
     	} else {
-    		LOG.severe("Can't undo because command has not undoned yet.");
-    		throw new CommandException("Can't undo because command has not undoned yet.");
+    		LOG.severe(PaymentCommand.ERROR_REDO);
+    		throw new CommandException(PaymentCommand.ERROR_REDO);
     	}
 
     }
