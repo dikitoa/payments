@@ -74,6 +74,8 @@ public class PaymentHandlerTest {
 	@Test
 	public void testNotEquals() throws MalformedHandlerException{
 		assertFalse(handler.equals(cardHandler));
+		assertFalse(handler.equals(null));
+		assertFalse(handler.equals(this.bank));
 	}
 	
 	@Test

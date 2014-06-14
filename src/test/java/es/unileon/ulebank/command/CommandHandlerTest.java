@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -17,8 +18,6 @@ import es.unileon.ulebank.command.handler.CommandHandler;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.handler.MalformedHandlerException;
 import es.unileon.ulebank.payments.handler.CardHandler;
-import es.unileon.ulebank.payments.handler.TransferHandler;
-
 
 public class CommandHandlerTest {
 
@@ -79,11 +78,24 @@ public class CommandHandlerTest {
 	public void testTransferHandlerCompareEquals() {
 		assertEquals(0, this.test.compareTo(this.test));
 	}
+	
+	@Test
+	public void testTransferHandlerEquals() {
+		assertTrue(this.test.equals(this.test));
+	}
 
+	@Test
+	public void testTransferHandlerCompareNotEquals() throws MalformedHandlerException {
+		this.test2 = new CommandHandler(new CardHandler(this.bankHandler, "01", "123456787"));
+		assertFalse(0 == this.test.compareTo(this.test2));
+	}
+	
 	@Test
 	public void testTransferHandlerNotEquals() throws MalformedHandlerException {
 		this.test2 = new CommandHandler(new CardHandler(this.bankHandler, "01", "123456787"));
-		assertFalse(0 == this.test.compareTo(this.test2));
+		assertFalse(this.test.equals(this.test2));
+		assertFalse(this.test.equals(null));
+		assertFalse(this.test.equals(this.bankHandler));
 	}
 	
 	@Test

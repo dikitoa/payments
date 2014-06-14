@@ -196,6 +196,8 @@ public class CardHandlerTest {
 	public void testNotEquals() throws MalformedHandlerException{
 		test2 = new CardHandler(new BankHandler("1234"), "01", "321012345");
 		assertFalse(test.equals(test2));
+		assertFalse(test.equals(null));
+		assertFalse(test.equals(new BankHandler("1234")));
 	}
 
 	@Test
