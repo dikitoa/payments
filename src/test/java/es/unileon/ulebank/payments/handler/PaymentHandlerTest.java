@@ -25,7 +25,7 @@ import es.unileon.ulebank.payments.CreditCard;
 import es.unileon.ulebank.payments.handler.CardHandler;
 import es.unileon.ulebank.payments.handler.PaymentHandler;
 
-public class PaymentHandlerTests {
+public class PaymentHandlerTest {
 
 	CreditCard testCard;
 	Handler cardHandler;
