@@ -14,6 +14,7 @@ import org.junit.Test;
 import es.unileon.ulebank.client.Person;
 import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.handler.MalformedHandlerException;
+import es.unileon.ulebank.payments.exceptions.SecurityCardException;
 import es.unileon.ulebank.payments.handler.CardHandler;
 import es.unileon.ulebank.utils.CardProperties;
 
