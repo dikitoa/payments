@@ -9,6 +9,7 @@ import es.unileon.ulebank.client.Person;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.handler.MalformedHandlerException;
+import es.unileon.ulebank.utils.CardProperties;
 
 public class DebitMaintenanceFeeTest {
 	
@@ -22,13 +23,27 @@ public class DebitMaintenanceFeeTest {
     }
 
 	@Test
-	public void testDebitMaintenanceFee() {
+	public void testDebitMaintenanceFeeOk() {
 		assertNotNull(fee);
+	}
+	
+	@Test (expected = CommissionException.class)
+	public void testDebitMaintenanceFeeFail() throws CommissionException, MalformedHandlerException {
+		DebitMaintenanceFee fee2 = new DebitMaintenanceFee(new Person(71451559, 'N'), -1.00);
 	}
 
 	@Test
 	public void testGetFee() {
 		assertEquals(20.00, fee.getFee(20.00), 0.0001);
+	}
+	
+	@Test
+	public void testGetFeeB() throws CommissionException, MalformedHandlerException {
+		Person person = new Person(71451559, 'N');
+		person.setAge(35);
+		DebitMaintenanceFee fee2 = new DebitMaintenanceFee(person, 20.00);
+
+		assertEquals(0.00, fee2.getFee(20.00), 0.0001);
 	}
 
 }
