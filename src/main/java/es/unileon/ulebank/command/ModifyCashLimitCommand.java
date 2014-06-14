@@ -218,6 +218,11 @@ public class ModifyCashLimitCommand implements Command {
         return this.id;
     }
 
+    /**
+     * Method that checks the type of the limit we want change
+     * @param typeLimit
+     * @return true if is a type admited, false anyway
+     */
     private boolean checkTypeLimit(String typeLimit) {
         return typeLimit.equalsIgnoreCase(this.type);
     }

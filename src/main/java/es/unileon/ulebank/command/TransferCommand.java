@@ -75,10 +75,8 @@ public class TransferCommand implements Command {
             Handler dniSender, Handler accountReceiver, Handler dniReceiver,
             double amount, String concept) throws CommandException {
         this.id = new CommandHandler(accountSender);
-        this.accountSender = office.searchClient(dniSender).searchAccount(
-                accountSender);
-        this.accountReceiver = office.searchClient(dniReceiver)
-                .searchAccount(accountReceiver);
+        this.accountSender = office.searchClient(dniSender).searchAccount(accountSender);
+        this.accountReceiver = office.searchClient(dniReceiver).searchAccount(accountReceiver);
         if (amount > 0.00) {
             this.amount = amount;
         } else {
@@ -95,8 +93,8 @@ public class TransferCommand implements Command {
     @Override
     public void execute() throws CommandException {
         try {
-            final Transfer transfer = new Transfer(this.accountSender,
-                    this.accountReceiver, this.amount);
+            final Transfer transfer = new Transfer(this.accountSender,this.accountReceiver,
+            		this.amount);
             transfer.make(this.concept);
             this.executed = true;
         } catch (TransferException e) {

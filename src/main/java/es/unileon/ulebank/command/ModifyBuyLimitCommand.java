@@ -3,8 +3,6 @@ package es.unileon.ulebank.command;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.security.auth.login.AccountNotFoundException;
-
 import es.unileon.ulebank.command.handler.CommandHandler;
 import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.handler.Handler;
@@ -19,8 +17,7 @@ public class ModifyBuyLimitCommand implements Command {
     /**
      * Logger de la clase
      */
-    private static final Logger LOG = Logger
-            .getLogger(ModifyBuyLimitCommand.class.getName());
+    private static final Logger LOG = Logger.getLogger(ModifyBuyLimitCommand.class.getName());
     /**
      *  String of Limit type not defined
      */
@@ -81,7 +78,6 @@ public class ModifyBuyLimitCommand implements Command {
      * @param card
      * @param amount
      * @param type
-     * @throws AccountNotFoundException
      */
     public ModifyBuyLimitCommand(Handler cardId, Card card, double amount,
             String type) {
@@ -94,7 +90,7 @@ public class ModifyBuyLimitCommand implements Command {
     /**
      * Realiza la modificacion del limite de compra ya sea diario o mensual
      * 
-     * @throws CardNotFoundException
+     * @throws CommandException
      */
     @Override
     public void execute() throws CommandException {
@@ -215,6 +211,11 @@ public class ModifyBuyLimitCommand implements Command {
         return this.id;
     }
 
+    /**
+     * Method that checks the type of the limit we want change
+     * @param typeLimit
+     * @return true if is a type admited, false anyway
+     */
     private boolean checkTypeLimit(String typeLimit) {
         return typeLimit.equalsIgnoreCase(this.type);
     }

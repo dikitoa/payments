@@ -5,7 +5,6 @@ import java.util.logging.Logger;
 
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.command.handler.CommandHandler;
-import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.office.Office;
 
@@ -16,8 +15,7 @@ public class CancelCardCommand implements Command {
 	 /**
      * Logger de la clase
      */
-    private static final Logger LOG = Logger
-            .getLogger(CancelCardCommand.class.getName());
+    private static final Logger LOG = Logger.getLogger(CancelCardCommand.class.getName());
     /**
      * Identificador del comando
      */
@@ -38,7 +36,6 @@ public class CancelCardCommand implements Command {
      * @param office
      * @param dni
      * @param account
-     * @throws ClientNotFoundException
      */
     public CancelCardCommand(Handler cardId, Office office, Handler dni,
             Handler account) {
@@ -49,7 +46,6 @@ public class CancelCardCommand implements Command {
 
     /**
      * Realiza la cancelacion de la tarjeta
-     * @throws CommandException 
      */
     @Override
     public void execute() {
@@ -63,6 +59,7 @@ public class CancelCardCommand implements Command {
 
     /**
      * Operacion no soportada, no se puede deshacer una cancelacion
+     * @throws UnsupportedOperationException
      */
     @Override
     public void undo() {
@@ -72,6 +69,7 @@ public class CancelCardCommand implements Command {
     /**
      * Operacion no soportada, como no se puede deshacer una cancelacion tampoco
      * se puede rehacer
+     * @throws UnsupportedOperationException
      */
     @Override
     public void redo() {

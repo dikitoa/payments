@@ -18,8 +18,15 @@ public class RenovateCardCommand implements Command {
     /**
      * Logger de la clase
      */
-    private static final Logger LOG = Logger
-            .getLogger(ModifyBuyLimitCommand.class.getName());
+    private static final Logger LOG = Logger.getLogger(ModifyBuyLimitCommand.class.getName());
+    /**
+     * String of incorrect undo error
+     */
+    private static final String ERROR_UNDO = "Can't undo because command has not undoned yet.";
+    /**
+     * String of incorrect redo error
+     */
+    private static final String ERROR_REDO = "Can't redo because command has not undoned yet.";
     /**
      * Identificador del comando
      */
@@ -68,8 +75,6 @@ public class RenovateCardCommand implements Command {
      * @param office
      * @param dni
      * @param accountHandler
-     * @throws CommandException 
-     * @throws ClientNotFoundException
      */
     public RenovateCardCommand(Handler cardId, Office office, Handler dni,
             Handler accountHandler) {
@@ -81,7 +86,6 @@ public class RenovateCardCommand implements Command {
     /**
      * Realiza la renovacion de la tarjeta
      * 
-     * @throws IOException
      * @throws CommandException 
      */
     @Override
@@ -106,7 +110,6 @@ public class RenovateCardCommand implements Command {
     /**
      * Deshace la renovacion de la tarjeta
      * 
-     * @throws IOException
      * @throws CommandException
      */
     @Override
@@ -119,9 +122,8 @@ public class RenovateCardCommand implements Command {
             this.undone = true;
 
         } else {
-            LOG.severe("Can't undo because command has not executed yet.");
-            throw new PaymentException(
-                    "Can't undo because command has not executed yet.");
+            LOG.severe(RenovateCardCommand.ERROR_UNDO);
+            throw new PaymentException(RenovateCardCommand.ERROR_UNDO);
         }
 
     }
@@ -140,9 +142,8 @@ public class RenovateCardCommand implements Command {
             // Vuelve a cambiar la fecha de caducidad por la nueva
             this.card.setExpirationDate(this.newExpirationDate);
         } else {
-            LOG.severe("Can't undo because command has not undoned yet.");
-            throw new PaymentException(
-                    "Can't undo because command has not undoned yet.");
+            LOG.severe(RenovateCardCommand.ERROR_REDO);
+            throw new PaymentException(RenovateCardCommand.ERROR_REDO);
         }
     }
 

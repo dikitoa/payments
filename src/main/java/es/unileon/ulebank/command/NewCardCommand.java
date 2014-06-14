@@ -25,8 +25,7 @@ public class NewCardCommand implements Command {
     /**
      * Logger de la clase
      */
-    private static final Logger LOG = Logger
-            .getLogger(NewCardCommand.class.getName());
+    private static final Logger LOG = Logger.getLogger(NewCardCommand.class.getName());
     /**
      * Tarjeta que se va a crear
      */

@@ -1,6 +1,5 @@
 package es.unileon.ulebank.payments;
 
-import java.io.IOException;
 import java.util.Random;
 
 import es.unileon.ulebank.utils.CardProperties;
@@ -37,11 +36,9 @@ public class SecurityCard {
     private final Card associatedCard;
 
     /**
-     * @throws IOException
-     * @throws NumberFormatException
      * @brief Security Card constructor
      */
-    public SecurityCard(Card card) throws NumberFormatException, IOException {
+    public SecurityCard(Card card) {
         this.setDefaultRow();
         this.setDefaultColumns();
         this.coordinates = new Integer[this.row][this.columns];
@@ -115,7 +112,7 @@ public class SecurityCard {
                     "This Security Card has activated yet");
         } else if (!this.associatedCard.checkPin(cardPin)) {
             throw new SecurityCardException(
-                    "Invalid pin or this Security Card has activated yet");
+                    "Invalid pin");
         } else {
             this.activate = true;
             return this.coordinates;
@@ -133,22 +130,16 @@ public class SecurityCard {
 
     /**
      * Method that establish the number of the rows specified in card.properties
-     * 
-     * @throws NumberFormatException
-     * @throws IOException
      */
-    private void setDefaultRow() throws NumberFormatException, IOException {
+    private void setDefaultRow() {
         this.row = CardProperties.getDimensionRow();
     }
 
     /**
      * Method that establish the number of the columns specified in
      * card.properties
-     * 
-     * @throws NumberFormatException
-     * @throws IOException
      */
-    private void setDefaultColumns() throws NumberFormatException, IOException {
+    private void setDefaultColumns() {
         this.columns = CardProperties.getDimensionColumns();
     }
 

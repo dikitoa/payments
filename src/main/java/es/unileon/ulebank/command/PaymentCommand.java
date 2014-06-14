@@ -136,11 +136,11 @@ public class PaymentCommand implements Command {
     			this.card.makeTransaction(-this.amount, PaymentCommand.UNDO_CONCEPT + this.concept);
                 this.undone = true;
     		} catch (TransactionException e) {
-    			 LOG.log(Level.SEVERE, e.getMessage());
+    			LOG.log(Level.SEVERE, e.getMessage());
     			throw new TransactionException(e.getMessage());
     		}
     	} else {
-    		 LOG.log(Level.SEVERE, PaymentCommand.ERROR_UNDO);
+    		LOG.log(Level.SEVERE, PaymentCommand.ERROR_UNDO);
     		throw new CommandException(PaymentCommand.ERROR_UNDO);
     	}
     }
