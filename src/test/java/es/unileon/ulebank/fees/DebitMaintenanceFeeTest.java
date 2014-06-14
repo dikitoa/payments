@@ -39,11 +39,14 @@ public class DebitMaintenanceFeeTest {
 	
 	@Test
 	public void testGetFeeB() throws CommissionException, MalformedHandlerException {
+		CardProperties properties = new CardProperties();
+		properties.setMaximumAge(30);
+		properties.setDefaultFee(10.00);
 		Person person = new Person(71451559, 'N');
 		person.setAge(35);
 		DebitMaintenanceFee fee2 = new DebitMaintenanceFee(person, 20.00);
 
-		assertEquals(0.00, fee2.getFee(20.00), 0.0001);
+		assertEquals(10.00, fee2.getFee(20.00), 0.0001);
 	}
 
 }
