@@ -22,7 +22,7 @@ import es.unileon.ulebank.history.conditions.WrongArgsException;
 import es.unileon.ulebank.office.Office;
 import es.unileon.ulebank.office.OfficeHandler;
 
-public class TransferCommandTests {
+public class TransferCommandTest {
 
 	private Office office;
 	private Handler dni;

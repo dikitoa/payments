@@ -27,7 +27,7 @@ import es.unileon.ulebank.payments.DebitCard;
 import es.unileon.ulebank.payments.exceptions.PaymentException;
 import es.unileon.ulebank.payments.handler.CardHandler;
 
-public class PaymentCommandTests {
+public class PaymentCommandTest {
 	
 	private Handler handler1;
     private Office office;
