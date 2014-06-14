@@ -63,6 +63,16 @@ public class PaymentHandler implements Handler {
     public int compareTo(Handler another) {
         return this.toString().compareTo(another.toString());
     }
+    
+    @Override
+    public boolean equals(Handler another) {
+        //correct argument check
+        if (!(another instanceof Handler)) {
+             return false;
+        }
+        
+        return this.toString().equals(another.toString());
+    }
 
     /**
      * @brief Method that obtains the first 4 numbers of the handler

@@ -18,6 +18,13 @@ public interface Handler extends Comparable<Handler> {
      */
     @Override
     public int compareTo(Handler another);
+    
+    /**
+     * Compare two handler and determine if they are equals or not
+     * @param another
+     * @return (true if are equals, false if aren't equals)
+     */
+    boolean equals(Handler another);
 
     /**
      *
@@ -25,4 +32,6 @@ public interface Handler extends Comparable<Handler> {
      */
     @Override
     public String toString();
+
+	
 }
