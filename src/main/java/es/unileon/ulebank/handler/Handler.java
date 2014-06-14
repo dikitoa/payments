@@ -24,9 +24,5 @@ public interface Handler extends Comparable<Handler> {
      * @return
      */
     @Override
-    public String toString();
-    
-    @Override
-    public int hashCode();
-	
+    public String toString();	
 }
