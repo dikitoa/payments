@@ -120,7 +120,7 @@ public class ModifyBuyLimitCommand implements Command {
             }
         } catch (IncorrectLimitException e) {
             LOG.log(Level.SEVERE, INCORRECT_LIMIT);
-            throw new IncorrectLimitException(ModifyBuyLimitCommand.INCORRECT_LIMIT);
+            throw new IncorrectLimitException(ModifyBuyLimitCommand.INCORRECT_LIMIT,e);
         }
     }
 
@@ -140,6 +140,7 @@ public class ModifyBuyLimitCommand implements Command {
                     this.undone = true;
                 } catch (IncorrectLimitException e) {
                     LOG.info(e.getMessage());
+                    throw new IncorrectLimitException(ModifyBuyLimitCommand.INCORRECT_LIMIT,e);
                 }
                 // Si el tipo es mensual
             } else if (this.checkTypeLimit(ModifyBuyLimitCommand.MONTHLY)) {
@@ -149,6 +150,7 @@ public class ModifyBuyLimitCommand implements Command {
                     this.undone = true;
                 } catch (IncorrectLimitException e) {
                     LOG.info(e.getMessage());
+                    throw new IncorrectLimitException(ModifyBuyLimitCommand.INCORRECT_LIMIT,e);
                 }
                 // Si no se indica el tipo de limite a modificar adecuadamente
                 // no va a realizar la operacion
@@ -179,6 +181,7 @@ public class ModifyBuyLimitCommand implements Command {
                     this.undone = false;
                 } catch (IncorrectLimitException e) {
                     LOG.info(e.getMessage());
+                    throw new IncorrectLimitException(ModifyBuyLimitCommand.INCORRECT_LIMIT,e);
                 }
                 // Si el tipo es mensual
             } else if (this.checkTypeLimit(ModifyBuyLimitCommand.MONTHLY)) {
@@ -189,6 +192,7 @@ public class ModifyBuyLimitCommand implements Command {
                     this.undone = false;
                 } catch (IncorrectLimitException e) {
                     LOG.info(e.getMessage());
+                    throw new IncorrectLimitException(ModifyBuyLimitCommand.INCORRECT_LIMIT,e);
                 }
                 // Si no se indica el tipo de limite a modificar adecuadamente
                 // no va a realizar la operacion

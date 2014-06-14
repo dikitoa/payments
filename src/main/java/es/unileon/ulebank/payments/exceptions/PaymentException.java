@@ -24,4 +24,9 @@ public class PaymentException extends CommandException {
     public PaymentException(String message) {
         super(message);
     }
-}
+	public PaymentException(String message,
+			PaymentException e) {
+		super(message,e);
+	}
+	}
+

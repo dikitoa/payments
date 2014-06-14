@@ -128,7 +128,7 @@ public class ModifyCashLimitCommand implements Command {
             }
         } catch (final IncorrectLimitException e) {
         	LOG.log(Level.SEVERE, e.getMessage());
-            throw new IncorrectLimitException(ModifyCashLimitCommand.INCORRECT_LIMIT);
+            throw new IncorrectLimitException(ModifyCashLimitCommand.INCORRECT_LIMIT,e);
         }
     }
 
@@ -148,6 +148,7 @@ public class ModifyCashLimitCommand implements Command {
                     this.undone = true;
                 } catch (IncorrectLimitException e) {
                 	LOG.log(Level.SEVERE, e.getMessage());
+                	throw new IncorrectLimitException(ModifyCashLimitCommand.INCORRECT_LIMIT,e);
                 }
                 // Si el tipo es mensual
             } else if (this.checkTypeLimit(ModifyCashLimitCommand.MONTHLY)) {
@@ -157,6 +158,7 @@ public class ModifyCashLimitCommand implements Command {
                     this.undone = true;
                 } catch (IncorrectLimitException e) {
                     LOG.info(e.getMessage());
+                    throw new IncorrectLimitException(ModifyCashLimitCommand.INCORRECT_LIMIT,e);
                 }
                 // Si no se indica el tipo de limite a modificar adecuadamente
                 // no va a realizar la operacion
@@ -186,6 +188,7 @@ public class ModifyCashLimitCommand implements Command {
                     this.undone = false;
                 } catch (IncorrectLimitException e) {
                 	LOG.log(Level.SEVERE, e.getMessage());
+                	throw new IncorrectLimitException(ModifyCashLimitCommand.INCORRECT_LIMIT,e);
                 }
                 // Si el tipo es mensual
             } else if (this.checkTypeLimit(ModifyCashLimitCommand.MONTHLY)) {
@@ -196,6 +199,7 @@ public class ModifyCashLimitCommand implements Command {
                     this.undone = false;
                 } catch (IncorrectLimitException e) {
                 	LOG.log(Level.SEVERE, e.getMessage());
+                	throw new IncorrectLimitException(ModifyCashLimitCommand.INCORRECT_LIMIT,e);
                 }
                 // Si no se indica el tipo de limite a modificar adecuadamente
                 // no va a realizar la operacion

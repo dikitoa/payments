@@ -19,4 +19,8 @@ public class TransactionException extends PaymentException {
     public TransactionException(String msg) {
         super(msg);
     }
+
+	public TransactionException(String message, TransactionException e) {
+		super(message,e);
+	}
 }
