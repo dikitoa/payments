@@ -17,17 +17,10 @@ import es.unileon.ulebank.handler.MalformedHandlerException;
 public class PaymentHandler implements Handler {
 
 	/**
-	 * Length of the command identifier
-	 */
-	private static final int LENGTH = 15;
-	/**
 	 * Posicion del numero de tarjeta a partir de la cual obtenemos la subcadena
 	 */
 	private static final int POSITION_CARD = 15;
-	/**
-	 * Longitud de los numeros obtenidos del handler de la tarjeta
-	 */
-	private static final int NUMBER_INITIALS = 4;
+
 	/**
 	 * Command Identifier
 	 */
@@ -35,26 +28,16 @@ public class PaymentHandler implements Handler {
 
 	/**
 	 * Class constructor
-	 * 
 	 * @param handler
+	 * @param date
 	 * @throws MalformedHandlerException
-	 * @throws PaymentHandlerException
 	 */
-	public PaymentHandler(Handler handler, Date date)
-			throws MalformedHandlerException {
+	public PaymentHandler(Handler handler, Date date) {
 		this.id = this.obtainInitials(handler) + this.obtainFinals(date);
-		System.out.println(this.obtainInitials(handler));
-		System.out.println(this.obtainFinals(date));
-		System.out.println(this.id.length());
-//		if (this.id.length() != PaymentHandler.LENGTH) {
-//			throw new MalformedHandlerException(
-//					"Length of payment handler incorrect.");
-//		}
 	}
 
 	/**
 	 * Compara el identificador actual con el que se indica
-	 * 
 	 * @param another
 	 * @return devuelve un 0 si son iguales
 	 * @return devuelve otro numero si son distintos
@@ -63,32 +46,12 @@ public class PaymentHandler implements Handler {
 	public int compareTo(Handler another) {
 		return this.toString().compareTo(another.toString());
 	}
-
-//	@Override
-//	public boolean equals(Object another) {
-//		// correct argument check
-////		if (!(another instanceof Handler)) {
-////			return false;
-////		}
-////
-////		return this.toString().equals(another.toString());
-//
-//		if (another == null) {
-//			return false;
-//		}
-//		
-//		if (another.getClass() != getClass()) {
-//			return false;
-//		}
-//		
-//		Handler other = (Handler) another;
-//		
-//		if (this.toString().equals(other.toString())) {
-//			return true;
-//		}
-//		return false;
-//	}
 	
+	/**
+	 * Comprueba que dos handler son iguales
+	 * @param another
+	 * @return true si son iguales, false en cualquier otro caso
+	 */
 	@Override
 	public boolean equals(Handler another) {
 		if (another == null) {
@@ -116,25 +79,15 @@ public class PaymentHandler implements Handler {
 	 * @brief Method that obtains the first 4 numbers of the handler
 	 * @param cardNumber
 	 * @return 4 initials
-	 * @throws MalformedHandlerException
 	 */
-	private String obtainInitials(Handler cardNumber)
-			throws MalformedHandlerException {
-//		if (cardNumber.toString().substring(PaymentHandler.POSITION_CARD)
-//				.length() == PaymentHandler.NUMBER_INITIALS) {
-			return cardNumber.toString()
-					.substring(PaymentHandler.POSITION_CARD);
-//		} else {
-//			throw new MalformedHandlerException(
-//					"Longitud de los numeros iniciales incorrecta");
-//		}
+	private String obtainInitials(Handler cardNumber) {
+		return cardNumber.toString().substring(PaymentHandler.POSITION_CARD);
 	}
 
 	/**
 	 * Method that obtains the 11 final numbers
-	 * 
 	 * @param date
-	 * @return
+	 * @return final id of the handler
 	 */
 	private String obtainFinals(Date date) {
 		final SimpleDateFormat format = new SimpleDateFormat("MMyyHHmmSS");
@@ -147,7 +100,6 @@ public class PaymentHandler implements Handler {
 
 	/**
 	 * To String class method
-	 * 
 	 * @return this handler in string
 	 */
 	@Override
@@ -157,7 +109,6 @@ public class PaymentHandler implements Handler {
 
 	/**
 	 * Getter of id
-	 * 
 	 * @return id
 	 */
 	public String getId() {
