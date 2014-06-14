@@ -150,7 +150,7 @@ public class PaymentCommand implements Command {
      * @throws CommandException 
      */
     @Override
-    public void redo() throws TransactionException, CommandException {
+    public void redo() throws CommandException {
     	if (this.undone) {
     		try {
     			// Make the payment by the type of the card
