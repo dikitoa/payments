@@ -64,15 +64,33 @@ public class PaymentHandler implements Handler {
 		return this.toString().compareTo(another.toString());
 	}
 
-	@Override
-	public boolean equals(Handler another) {
-		// correct argument check
-//		if (!(another instanceof Handler)) {
+//	@Override
+//	public boolean equals(Object another) {
+//		// correct argument check
+////		if (!(another instanceof Handler)) {
+////			return false;
+////		}
+////
+////		return this.toString().equals(another.toString());
+//
+//		if (another == null) {
 //			return false;
 //		}
-//
-//		return this.toString().equals(another.toString());
-
+//		
+//		if (another.getClass() != getClass()) {
+//			return false;
+//		}
+//		
+//		Handler other = (Handler) another;
+//		
+//		if (this.toString().equals(other.toString())) {
+//			return true;
+//		}
+//		return false;
+//	}
+	
+	@Override
+	public boolean equals(Handler another) {
 		if (another == null) {
 			return false;
 		}
