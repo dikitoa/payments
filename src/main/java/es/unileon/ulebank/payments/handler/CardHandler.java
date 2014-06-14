@@ -273,7 +273,7 @@ public class CardHandler implements Handler {
 	public int compareTo(Handler another) {
 		return this.toString().compareTo(another.toString());
 	}
-	
+
 	/**
 	 * Compare two identifiers and determine if are equals or not
 	 * 
@@ -286,21 +286,22 @@ public class CardHandler implements Handler {
 		if (another == null) {
 			return false;
 		}
-		
+
 		if (another.getClass() != getClass()) {
 			return false;
 		}
-		
+
 		Handler other = (Handler) another;
-		
+
 		if (this.toString().equals(other.toString())) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Method that obtains hasCode of handler
+	 * 
 	 * @return hasCode of handler
 	 */
 	@Override
