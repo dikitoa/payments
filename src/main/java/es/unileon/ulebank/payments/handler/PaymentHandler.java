@@ -72,6 +72,10 @@ public class PaymentHandler implements Handler {
 		return false;
 	}
 
+	/**
+	 * Method that obtains hasCode of handler
+	 * @return hasCode of handler
+	 */
 	@Override
 	public int hashCode() {
 		return 1 * 17 + id.hashCode();
