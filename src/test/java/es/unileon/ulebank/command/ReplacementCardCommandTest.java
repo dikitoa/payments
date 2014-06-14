@@ -17,7 +17,6 @@ import es.unileon.ulebank.client.PersonHandler;
 import es.unileon.ulebank.command.handler.CommandHandler;
 import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.exceptions.CommissionException;
-import es.unileon.ulebank.fees.InvalidFeeException;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.handler.MalformedHandlerException;
 import es.unileon.ulebank.history.conditions.WrongArgsException;
@@ -48,7 +47,7 @@ public class ReplacementCardCommandTest {
 
     @Before
     public void setUp() throws NumberFormatException, CommissionException,
-    IOException, InvalidFeeException, MalformedHandlerException,
+    IOException, MalformedHandlerException,
     WrongArgsException, PaymentException {
         final CardProperties properties = new CardProperties();
         properties.setCvvSize(3);

@@ -16,7 +16,6 @@ import es.unileon.ulebank.command.handler.CommandHandler;
 import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.TransactionException;
-import es.unileon.ulebank.fees.InvalidFeeException;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.handler.MalformedHandlerException;
 import es.unileon.ulebank.history.conditions.WrongArgsException;
@@ -43,7 +42,7 @@ public class PaymentCommandTest {
 
     @Before
     public void setUp() throws NumberFormatException, CommissionException,
-            IOException, InvalidFeeException, MalformedHandlerException,
+            IOException, MalformedHandlerException,
             WrongArgsException, PaymentException {
         final Handler bankHandler = new BankHandler("1234");
         this.handler1 = new CardHandler(bankHandler, "01", "123456789");
