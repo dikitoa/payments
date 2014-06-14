@@ -48,17 +48,11 @@ public class PaymentHandler implements Handler {
 	}
 	
 	/**
-<<<<<<< HEAD
 	 * Compare two identifiers and determine if are equals or not
 	 * 
 	 * @param another
 	 * @return true if are equals
 	 * @return false if aren't equals
-=======
-	 * Comprueba que dos handler son iguales
-	 * @param another
-	 * @return true si son iguales, false en cualquier otro caso
->>>>>>> branch 'master' of git@github.com:ULE-Bank/payments.git
 	 */
 	@Override
 	public boolean equals(Object another) {
