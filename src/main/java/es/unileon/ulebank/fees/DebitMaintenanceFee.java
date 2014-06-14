@@ -33,12 +33,12 @@ public class DebitMaintenanceFee implements FeeStrategy {
     /**
      * Maximum age to differentiate commissions
      */
-    private int maximum_age;
+    private int maximumAge;
 
     /**
      * Quantity of the default commission
      */
-    private double default_commission;
+    private double defaultCommission;
 
     /**
      * Class constructor
@@ -52,8 +52,8 @@ public class DebitMaintenanceFee implements FeeStrategy {
     public DebitMaintenanceFee(Client owner, double quantity)
             throws CommissionException {
         this.owner = owner;
-        this.default_commission = CardProperties.getDefaultFee();
-        this.maximum_age = CardProperties.getMaximumAge();
+        this.defaultCommission = CardProperties.getDefaultFee();
+        this.maximumAge = CardProperties.getMaximumAge();
 
         if (quantity >= 0) {
             this.quantity = quantity;
@@ -64,8 +64,8 @@ public class DebitMaintenanceFee implements FeeStrategy {
 
     @Override
     public double getFee(double value) {
-        if (((Person) this.owner).getAge() > this.maximum_age) {
-            return this.default_commission;
+        if (((Person) this.owner).getAge() > this.maximumAge) {
+            return this.defaultCommission;
         } else {
             return this.quantity;
         }
