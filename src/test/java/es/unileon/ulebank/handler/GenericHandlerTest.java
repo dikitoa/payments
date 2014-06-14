@@ -2,9 +2,16 @@
  group.*/
 package es.unileon.ulebank.handler;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import es.unileon.ulebank.command.handler.CommandHandler;
+import es.unileon.ulebank.payments.handler.CardHandler;
 
 /**
  *
@@ -39,6 +46,21 @@ public class GenericHandlerTest {
         Assert.assertFalse(this.genericHandler1.compareTo(this.genericHandler2) == 0);
         Assert.assertFalse(this.genericHandler2.compareTo(this.genericHandler1) == 0);
     }
+    
+	@Test
+	public void testEquals(){
+		assertTrue(genericHandler1.equals(genericHandler1));
+	}
+	
+	@Test
+	public void testNotEquals() throws MalformedHandlerException{
+		assertFalse(genericHandler1.equals(genericHandler2));
+	}
+	
+	@Test
+	public void testHashCode(){
+		assertNotNull(genericHandler1.hashCode());
+	}
 
     /**
      * Test of toString method, of class GenericHandler.

@@ -1,6 +1,7 @@
 package es.unileon.ulebank.payments.handler;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -179,6 +180,22 @@ public class CardHandlerTest {
 		test2 = new CardHandler(new BankHandler("1234"), "01", "321012345");
 
 		assertTrue(test.compareTo(test2) != 0);
+	}
+	
+	@Test
+	public void testEquals(){
+		assertTrue(test.equals(test));
+	}
+	
+	@Test
+	public void testHashCode(){
+		assertNotNull(test.hashCode());
+	}
+	
+	@Test
+	public void testNotEquals() throws MalformedHandlerException{
+		test2 = new CardHandler(new BankHandler("1234"), "01", "321012345");
+		assertFalse(test.equals(test2));
 	}
 
 	@Test

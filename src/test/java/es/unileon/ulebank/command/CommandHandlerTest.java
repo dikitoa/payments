@@ -85,4 +85,9 @@ public class CommandHandlerTest {
 		this.test2 = new CommandHandler(new CardHandler(this.bankHandler, "01", "123456787"));
 		assertFalse(0 == this.test.compareTo(this.test2));
 	}
+	
+	@Test
+	public void testHashCode(){
+		assertNotNull(test.hashCode());
+	}
 }

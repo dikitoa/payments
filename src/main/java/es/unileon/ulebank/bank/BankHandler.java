@@ -77,7 +77,7 @@ public class BankHandler implements Handler {
 	
 	@Override
 	public int hashCode() {
-		return this.hashCode();
+        return 1 * 17 + number.hashCode();
 	}
 
     /**

@@ -65,4 +65,19 @@ public class PaymentHandlerTest {
 		@SuppressWarnings("unused")
 		PaymentHandler test = new PaymentHandler(card ,new Date());
 	}
+	
+	@Test
+	public void testEquals(){
+		assertTrue(handler.equals(handler));
+	}
+	
+	@Test
+	public void testNotEquals() throws MalformedHandlerException{
+		assertFalse(handler.equals(cardHandler));
+	}
+	
+	@Test
+	public void testHashCode(){
+		assertNotNull(handler.hashCode());
+	}
 }

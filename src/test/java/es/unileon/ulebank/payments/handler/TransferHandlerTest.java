@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -16,6 +17,9 @@ import es.unileon.ulebank.bank.Bank;
 import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.client.Person;
+import es.unileon.ulebank.command.handler.CommandHandler;
+import es.unileon.ulebank.handler.Handler;
+import es.unileon.ulebank.handler.MalformedHandlerException;
 import es.unileon.ulebank.office.Office;
 import es.unileon.ulebank.office.OfficeHandler;
 import es.unileon.ulebank.payments.handler.TransferHandler;
@@ -73,5 +77,21 @@ public class TransferHandlerTest {
 	public void testTransferHandlerToString() {
 		String date = this.calendar.get(Calendar.DAY_OF_MONTH) + Integer.toString(this.calendar.get(Calendar.MONTH) + 1) + this.calendar.get(Calendar.YEAR) + this.calendar.get(Calendar.HOUR_OF_DAY) + this.calendar.get(Calendar.MINUTE) + this.calendar.get(Calendar.SECOND);
 		assertEquals("0-00000000005-0000000001"+date, this.transfer.toString());
+	}
+	
+	@Test
+	public void testEquals(){
+		assertTrue(transfer.equals(transfer));
+	}
+	
+	@Test
+	public void testNotEquals() throws MalformedHandlerException{
+		this.auxTransfer = new TransferHandler(this.accountAux.getID().toString(), this.account.getID().toString());
+		assertFalse(auxTransfer.equals(transfer));
+	}
+	
+	@Test
+	public void testHashCode(){
+		assertNotNull(transfer.hashCode());
 	}
 }
