@@ -63,34 +63,16 @@ public class PaymentHandler implements Handler {
 	public int compareTo(Handler another) {
 		return this.toString().compareTo(another.toString());
 	}
-
-//	@Override
-//	public boolean equals(Object another) {
-//		// correct argument check
-////		if (!(another instanceof Handler)) {
-////			return false;
-////		}
-////
-////		return this.toString().equals(another.toString());
-//
-//		if (another == null) {
-//			return false;
-//		}
-//		
-//		if (another.getClass() != getClass()) {
-//			return false;
-//		}
-//		
-//		Handler other = (Handler) another;
-//		
-//		if (this.toString().equals(other.toString())) {
-//			return true;
-//		}
-//		return false;
-//	}
 	
+	/**
+	 * Compare two identifiers and determine if are equals or not
+	 * 
+	 * @param another
+	 * @return true if are equals
+	 * @return false if aren't equals
+	 */
 	@Override
-	public boolean equals(Handler another) {
+	public boolean equals(Object another) {
 		if (another == null) {
 			return false;
 		}
