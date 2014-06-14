@@ -14,45 +14,50 @@ import es.unileon.ulebank.payments.exceptions.PaymentException;
  */
 public class DebitCard extends Card {
 
-    /**
-     * Version
-     */
-    private static final long serialVersionUID = 1L;
-    
-    /**
-     * 
-     * @param properties
-     * @param cardId
-     * @param owner
-     * @param account
-     * @throws PaymentException
-     */
-    public DebitCard(Handler cardId, Client owner, Account account) throws PaymentException {
-        super(cardId, CardType.DEBIT.toString(), account, owner);
-    }
+	/**
+	 * Version
+	 */
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * Class constructor
-     */
-    public DebitCard() {
-        super(CardType.DEBIT.toString());
-    }
+	/**
+	 * 
+	 * @param properties
+	 * @param cardId
+	 * @param owner
+	 * @param account
+	 * @throws PaymentException
+	 */
+	public DebitCard(Handler cardId, Client owner, Account account)
+			throws PaymentException {
+		super(cardId, CardType.DEBIT.toString(), account, owner);
+	}
+
+	/**
+	 * Class constructor
+	 */
+	public DebitCard() {
+		super(CardType.DEBIT.toString());
+	}
 
 	/**
 	 * Method that makes the payment
-	 * @param quantity Amount of the payment
-	 * @param payConcept Concept of the payment
+	 * 
+	 * @param quantity
+	 *            Amount of the payment
+	 * @param payConcept
+	 *            Concept of the payment
 	 * @throws PaymentException
 	 * @throws TransactionException
 	 */
 	@Override
-	public void makeTransaction(double quantity, String payConcept) throws
-	PaymentException {
+	public void makeTransaction(double quantity, String payConcept)
+			throws PaymentException {
 
-		try{
-			//Discount the quantity from sender account
-			this.account.doTransaction(new CardTransaction(-quantity, new Date(), payConcept));
-		}catch(TransactionException e){
+		try {
+			// Discount the quantity from sender account
+			this.account.doTransaction(new CardTransaction(-quantity,
+					new Date(), payConcept));
+		} catch (TransactionException e) {
 			throw new TransactionException("Denegate Transaction");
 		}
 
