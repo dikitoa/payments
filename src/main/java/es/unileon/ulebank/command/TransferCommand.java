@@ -99,7 +99,7 @@ public class TransferCommand implements Command {
             this.executed = true;
         } catch (TransferException e) {
         	LOG.severe(e.getMessage());
-            throw new CommandException(e.getMessage());
+            throw new CommandException(e.getMessage(),e);
         }
     }
 
@@ -117,7 +117,7 @@ public class TransferCommand implements Command {
                 this.undone = true;
             } catch (TransferException e) {
             	LOG.severe(e.getMessage());
-                throw new CommandException(e.getMessage());
+                throw new CommandException(e.getMessage(),e);
             }
         } else {
         	LOG.severe(TransferCommand.ERROR_UNDO);
@@ -139,7 +139,7 @@ public class TransferCommand implements Command {
                 this.undone = false;
             } catch (TransferException e) {
             	LOG.severe(e.getMessage());
-                throw new CommandException(e.getMessage());
+                throw new CommandException(e.getMessage(),e);
             }
         } else {
         	LOG.severe(TransferCommand.ERROR_REDO);

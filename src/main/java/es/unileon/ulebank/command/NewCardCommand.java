@@ -72,7 +72,7 @@ public class NewCardCommand implements Command {
         try {
             this.cardHandler = new CardHandler(cardId);
         } catch (MalformedHandlerException e) {
-            LOG.log(Level.SEVERE, e.getMessage());
+            LOG.log(Level.SEVERE, e.getMessage(),e);
         }
         this.cardType = cardType.toString();
         this.id = new CommandHandler(this.cardHandler);

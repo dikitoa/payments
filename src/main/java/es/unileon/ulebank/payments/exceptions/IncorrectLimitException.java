@@ -19,4 +19,10 @@ public class IncorrectLimitException extends PaymentException {
     public IncorrectLimitException(String message) {
         super(message);
     }
+
+    
+	public IncorrectLimitException(String message,
+			IncorrectLimitException e) {
+		super(message,e);
+	}
 }

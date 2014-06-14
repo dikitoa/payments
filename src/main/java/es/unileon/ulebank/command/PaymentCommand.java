@@ -116,10 +116,10 @@ public class PaymentCommand implements Command {
             this.executed = true;
         } catch (TransactionException e) {
             LOG.log(Level.SEVERE, e.getMessage());
-            throw new TransactionException(e.getMessage());
+            throw new TransactionException(e.getMessage(),e);
         } catch (PaymentException e) {
         	LOG.log(Level.SEVERE, e.getMessage());
-            throw new CommandException(e.getMessage());
+            throw new CommandException(e.getMessage(),e);
         }
 
     }
@@ -137,7 +137,7 @@ public class PaymentCommand implements Command {
                 this.undone = true;
     		} catch (TransactionException e) {
     			LOG.log(Level.SEVERE, e.getMessage());
-    			throw new TransactionException(e.getMessage());
+    			throw new TransactionException(e.getMessage(),e);
     		}
     	} else {
     		LOG.log(Level.SEVERE, PaymentCommand.ERROR_UNDO);
@@ -158,7 +158,7 @@ public class PaymentCommand implements Command {
     			this.undone = false;
     		} catch (TransactionException e) {
     			LOG.severe(e.getMessage());
-    			throw new TransactionException(e.getMessage());
+    			throw new TransactionException(e.getMessage(),e);
     		}
     	} else {
     		LOG.severe(PaymentCommand.ERROR_REDO);
