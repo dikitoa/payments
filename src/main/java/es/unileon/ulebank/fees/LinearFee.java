@@ -45,9 +45,8 @@ public class LinearFee implements FeeStrategy {
 
     @Override
     public double getFee(double value) {
-        final double total = this.fee * value;
 
-        return total;
+        return this.fee * value;
 
     }
 
