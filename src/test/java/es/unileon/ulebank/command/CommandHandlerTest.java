@@ -17,6 +17,7 @@ import es.unileon.ulebank.command.handler.CommandHandler;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.handler.MalformedHandlerException;
 import es.unileon.ulebank.payments.handler.CardHandler;
+import es.unileon.ulebank.payments.handler.TransferHandler;
 
 
 public class CommandHandlerTest {
@@ -72,5 +73,16 @@ public class CommandHandlerTest {
 		DateFormat dateFormat = new SimpleDateFormat("ddMMyyyyHHmmssss");
 		String date = dateFormat.format(new Date());
 		assertEquals(this.handler.toString() + " " + date.toString(), test.toString());
+	}
+	
+	@Test
+	public void testTransferHandlerCompareEquals() {
+		assertEquals(0, this.test.compareTo(this.test));
+	}
+
+	@Test
+	public void testTransferHandlerNotEquals() throws MalformedHandlerException {
+		this.test2 = new CommandHandler(new CardHandler(this.bankHandler, "01", "123456787"));
+		assertFalse(0 == this.test.compareTo(this.test2));
 	}
 }
