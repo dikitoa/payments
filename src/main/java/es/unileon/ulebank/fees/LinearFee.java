@@ -30,7 +30,6 @@ public class LinearFee implements FeeStrategy {
     /**
      * Minimum value which is always paid.
      */
-    // private final double minimum;
 
     public LinearFee(double fee, double minimum) throws InvalidFeeException {
         if ((fee < 0) || (minimum < 0)) {
@@ -38,7 +37,6 @@ public class LinearFee implements FeeStrategy {
         }
 
         this.fee = fee;
-        // this.minimum = minimum;
     }
 
     public LinearFee() {
@@ -48,9 +46,6 @@ public class LinearFee implements FeeStrategy {
     @Override
     public double getFee(double value) {
         final double total = this.fee * value;
-        // if(total < this.minimum) {
-        // total = this.minimum;
-        // }
 
         return total;
 

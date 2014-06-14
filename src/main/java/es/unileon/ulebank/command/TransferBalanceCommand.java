@@ -20,12 +20,6 @@ public class TransferBalanceCommand implements Command {
         // To change body of generated methods, choose Tools | Templates.
     }
 
-    // @Override
-    // public Date getEffectiveDate() {
-    // // TODO Auto-generated method stub
-    // return null;
-    // }
-
     @Override
     public Handler getID() {
         // TODO Auto-generated method stub
