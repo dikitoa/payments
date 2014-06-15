@@ -61,7 +61,7 @@ public class ChangeCashLimitsFormControllerTest {
 	@Test
 	public void testFormBackingObject() throws Exception{		
 		ChangeCashLimitsFormController controller = new ChangeCashLimitsFormController();		
-		controller.setProductManager(this.cardManager);	
+		controller.setCardManager(this.cardManager);	
 		assertEquals(controller.formBackingObject(null).getDiaryLimit(),this.cardManager.getCard().getBuyLimitDiary(),0.01);
 		assertEquals(controller.formBackingObject(null).getMonthlyLimit(),this.cardManager.getCard().getBuyLimitMonthly(),0.01);
 	}
@@ -69,13 +69,20 @@ public class ChangeCashLimitsFormControllerTest {
 	@Test
 	public void testOnSubmit() throws Exception{		
 		ChangeCashLimitsFormController controller = new ChangeCashLimitsFormController();		
-		controller.setProductManager(this.cardManager);	
+		controller.setCardManager(this.cardManager);	
 		ChangeLimit limit = new ChangeLimit();
 		limit.setDiaryLimit(150);
 		limit.setMonthlyLimit(300);
 		/*controller.onSubmit(limit, new BindingResult());
 		assertEquals(150,this.productManager.getCard().getBuyLimitDiary(),0.01);
 		assertEquals(300,this.productManager.getCard().getBuyLimitDiary(),0.01);*/
+	}
+	
+	@Test
+	public void testGetCardManager() {
+		ChangeCashLimitsFormController controller = new ChangeCashLimitsFormController();		
+		controller.setCardManager(this.cardManager);	
+		assertEquals(this.cardManager, controller.getCardManager());
 	}
 
 }

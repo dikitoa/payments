@@ -77,7 +77,7 @@ public class ChangeCashLimitsFormController {
      * Setter of the card
      * @param productManager
      */
-    public void setProductManager(CardManager productManager) {
+    public void setCardManager(CardManager productManager) {
         this.cardManager = productManager;
     }
 
@@ -85,7 +85,7 @@ public class ChangeCashLimitsFormController {
      * Getter of the card
      * @return
      */
-    public CardManager getProductManager() {
+    public CardManager getCardManager() {
         return cardManager;
     }
 

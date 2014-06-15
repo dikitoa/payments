@@ -20,7 +20,7 @@ import es.unileon.ulebank.payments.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.payments.handler.CardHandler;
 import es.unileon.ulebank.utils.CardProperties;
 
-public class SimpleCardManagerTests {
+public class SimpleCardManagerTest {
 
     private SimpleCardManager cardManager;
     
