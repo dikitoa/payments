@@ -74,4 +74,10 @@ public class SimpleCardManager implements CardManager {
 		
 	}
 
+	@Override
+	public void modifyPin(Card card) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

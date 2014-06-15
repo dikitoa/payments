@@ -40,5 +40,11 @@ public interface CardManager extends Serializable {
      * @throws CommandException
      */
     public void changeFee(int feeChange) throws CommandException;
+    
+    /**
+     * 
+     * @param card
+     */
+    public void modifyPin(Card card);
 
 }
