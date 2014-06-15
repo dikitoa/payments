@@ -1,7 +1,5 @@
 package es.unileon.ulebank.exceptions;
 
-import es.unileon.ulebank.payments.exceptions.PaymentException;
-
 /**
  * Generic exception that extends Exception and all exceptions depends that
  * @author Israel

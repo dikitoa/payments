@@ -35,7 +35,7 @@ public class ChangeBuyLimitsFormController {
      * Card which change the limits in
      */
     @Autowired
-    private CardManager productManager;
+    private CardManager cardManager;
 
     /**
      * Method that obtains the data of the form in buyLimits.jsp and save the changes in the card
@@ -56,7 +56,7 @@ public class ChangeBuyLimitsFormController {
         logger.info("Modified diary limit: " + diaryLimit + "€.");
         logger.info("Modified monthly limit: " + monthlyLimit + "€.");
 
-        productManager.changeBuyLimits(diaryLimit, monthlyLimit);
+        cardManager.changeBuyLimits(diaryLimit, monthlyLimit);
 
         return "redirect:/changeLimits.htm";
     }
@@ -70,8 +70,8 @@ public class ChangeBuyLimitsFormController {
     @RequestMapping(method = RequestMethod.GET)
     protected ChangeLimit formBackingObject(HttpServletRequest request) throws ServletException {
         ChangeLimit changeLimit = new ChangeLimit();
-        changeLimit.setDiaryLimit((int) this.productManager.getCard().getBuyLimitDiary());
-        changeLimit.setMonthlyLimit((int) this.productManager.getCard().getBuyLimitMonthly());
+        changeLimit.setDiaryLimit((int) this.cardManager.getCard().getBuyLimitDiary());
+        changeLimit.setMonthlyLimit((int) this.cardManager.getCard().getBuyLimitMonthly());
         return changeLimit;
     }
 
@@ -80,7 +80,7 @@ public class ChangeBuyLimitsFormController {
      * @param productManager
      */
     public void setProductManager(CardManager productManager) {
-        this.productManager = productManager;
+        this.cardManager = productManager;
     }
 
     /**
@@ -88,7 +88,7 @@ public class ChangeBuyLimitsFormController {
      * @return card
      */
     public CardManager getProductManager() {
-        return productManager;
+        return cardManager;
     }
 
 }
