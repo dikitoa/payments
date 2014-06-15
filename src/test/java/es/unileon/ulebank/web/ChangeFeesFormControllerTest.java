@@ -1,7 +1,6 @@
 package es.unileon.ulebank.web;
 
 import static org.junit.Assert.*;
-import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +17,6 @@ import es.unileon.ulebank.office.Office;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.CreditCard;
 import es.unileon.ulebank.payments.handler.CardHandler;
-import es.unileon.ulebank.service.ChangeLimit;
 import es.unileon.ulebank.service.FeeChange;
 import es.unileon.ulebank.service.SimpleCardManager;
 import es.unileon.ulebank.utils.CardProperties;
