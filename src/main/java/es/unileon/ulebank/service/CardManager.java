@@ -2,6 +2,7 @@ package es.unileon.ulebank.service;
 
 import java.io.Serializable;
 
+import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.payments.Card;
 
 /**
@@ -33,5 +34,7 @@ public interface CardManager extends Serializable {
      * @return
      */
     public Card getCard();
+    
+    public void changeFee(int feeChange) throws CommandException;
 
 }

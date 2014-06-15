@@ -3,6 +3,7 @@ package es.unileon.ulebank.service;
 import es.unileon.ulebank.command.Command;
 import es.unileon.ulebank.command.ModifyBuyLimitCommand;
 import es.unileon.ulebank.command.ModifyCashLimitCommand;
+import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.payments.Card;
 
 /**
@@ -65,6 +66,12 @@ public class SimpleCardManager implements CardManager {
 	 */
 	public void setCard(Card card) {
 		this.card = card;
+	}
+
+	@Override
+	public void changeFee(int feeChange) throws CommandException {
+		//Change the total fee.
+		
 	}
 
 }
