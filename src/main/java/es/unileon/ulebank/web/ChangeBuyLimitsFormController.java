@@ -16,8 +16,6 @@ import org.apache.commons.logging.LogFactory;
 import es.unileon.ulebank.service.CardManager;
 import es.unileon.ulebank.service.ChangeLimit;
 
-
-
 /**
  * Class Controller of the page buyLimits.jsp
  * @author Rober dCR
@@ -53,8 +51,8 @@ public class ChangeBuyLimitsFormController {
 		
         int diaryLimit = (int) changeLimit.getDiaryLimit();
         int monthlyLimit = (int) changeLimit.getMonthlyLimit();
-        logger.info("Modified diary limit: " + diaryLimit + "€.");
-        logger.info("Modified monthly limit: " + monthlyLimit + "€.");
+        logger.info("Modified diary limit: " + diaryLimit + "Euros.");
+        logger.info("Modified monthly limit: " + monthlyLimit + "Euros.");
 
         cardManager.changeBuyLimits(diaryLimit, monthlyLimit);
 

@@ -6,7 +6,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.security.auth.login.AccountNotFoundException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -41,11 +40,7 @@ public class ChangeCashLimitsFormController {
      * @param changeLimit
      * @param result
      * @return
-     * @throws IncorrectLimitException
-     * @throws CardNotFoundException 
-     * @throws TransactionException 
-     * @throws PaymentException 
-     * @throws AccountNotFoundException 
+     * @throws Exception 
      */
     @RequestMapping(method = RequestMethod.POST)
     public String onSubmit(@Valid ChangeLimit changeLimit, BindingResult result) throws Exception
@@ -56,8 +51,8 @@ public class ChangeCashLimitsFormController {
 		
         int diaryLimit = (int) changeLimit.getDiaryLimit();
         int monthlyLimit = (int) changeLimit.getMonthlyLimit();
-        logger.info("Modified diary limit: " + diaryLimit + "€.");
-        logger.info("Modified monthly limit: " + monthlyLimit + "€.");
+        logger.info("Modified diary limit: " + diaryLimit + "Euros.");
+        logger.info("Modified monthly limit: " + monthlyLimit + "Euros.");
 
         cardManager.changeCashLimits(diaryLimit, monthlyLimit);
 
