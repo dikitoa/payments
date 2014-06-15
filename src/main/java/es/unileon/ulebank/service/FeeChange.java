@@ -7,7 +7,7 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  * 
- * @author David Gómez Riesgo
+ * @author David Gomez Riesgo
  *
  */
 public class FeeChange {
