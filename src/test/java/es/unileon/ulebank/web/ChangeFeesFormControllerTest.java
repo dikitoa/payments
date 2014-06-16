@@ -60,11 +60,9 @@ public class ChangeFeesFormControllerTest {
     
 	@Test
 	public void testFormBackingObject() throws Exception{		
-	/**	ChangeFeesFormController controllerFee = new ChangeFeesFormController();		
+		ChangeFeesFormController controllerFee = new ChangeFeesFormController();		
 		controllerFee.setCardManager(this.cardManager);	
 		assertEquals(controllerFee.formBackingObject(null).getFeeChange(),this.cardManager.getCard().getFee(),0.01);
-		**/
-		fail("Not yet implemented");
 	}
 	
 	@Test
