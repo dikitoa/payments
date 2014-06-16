@@ -87,7 +87,16 @@ public abstract class Card implements Serializable {
      */
     private Client owner;
 
-    /**
+    private int fee;
+    public int getFee() {
+		return fee;
+	}
+
+	public void setFee(int fee) {
+		this.fee = fee;
+	}
+
+	/**
      * Constructor de la clase que crea una nueva tarjeta
      * 
      * @param properties

@@ -65,6 +65,8 @@
 		<br/>
      	<b><i>Limite Efectivo Mensual:</i></b> ${model.card.getCashLimitMonthly()} &euro;
 		<br/>
+		<b><i>Comision:</i></b> ${model.card.getFee()} &euro;
+		<br/>
     </div> 
   </body>
 </html>
