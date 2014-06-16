@@ -35,7 +35,7 @@ public class ModifyPinFormController {
     /**
      * Validador para el formilario del cambio de PIN
      */
-    @Autowired
+    /*@Autowired*/
     private PinValidator pinValidator;
     
     private Card card;
