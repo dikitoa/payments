@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import es.unileon.ulebank.payments.Card;
+import es.unileon.ulebank.domain.Cards;
 import es.unileon.ulebank.service.CardManager;
 
 @Controller
@@ -28,7 +28,7 @@ public class CardController {
     /**
      * Objeto tarjeta del que se modificaran los datos
      */
-    private Card card;
+    private Cards card;
     /**
      * Manejador de las tarjetas
      */
@@ -69,7 +69,7 @@ public class CardController {
      * Metodo que asigna a nuestra tarjeta una tarjeta pasada por parametro
      * @param card
      */
-    public void setCard(Card card) {
+    public void setCard(Cards card) {
         this.card = card;
     }
     
@@ -77,7 +77,7 @@ public class CardController {
      * Metodo que obtiene la tarjeta del controlador
      * @return tarjeta
      */
-    public Card getCard(){
+    public Cards getCard(){
     	return this.card;
     }
 }

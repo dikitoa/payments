@@ -2,7 +2,7 @@ package es.unileon.ulebank.payments;
 
 import java.util.Date;
 
-import es.unileon.ulebank.account.Account;
+import es.unileon.ulebank.domain.Accounts;
 import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.history.TransferTransaction;
 import es.unileon.ulebank.payments.exceptions.TransferException;
@@ -17,13 +17,13 @@ import es.unileon.ulebank.payments.exceptions.TransferException;
 public class Transfer {
 
     /**
-     * Account from transfer the money
+     * Accounts from transfer the money
      */
-    private Account senderAccount;
+    private Accounts senderAccount;
     /**
-     * Account which receives the money
+     * Accounts which receives the money
      */
-    private Account receiverAccount;
+    private Accounts receiverAccount;
     /**
      * Quantity of the transfer
      */
@@ -41,7 +41,7 @@ public class Transfer {
      * @param quantity
      * @throws TransferException
      */
-    public Transfer(Account sender, Account receiver, double quantity)
+    public Transfer(Accounts sender, Accounts receiver, double quantity)
             throws TransferException {
         if (!sender.equals(receiver)) {
             this.senderAccount = sender;
@@ -49,7 +49,7 @@ public class Transfer {
             this.quantity = quantity;
         } else {
             throw new TransferException(
-                    "Sender Account number and Receiver Account number are the same.");
+                    "Sender Accounts number and Receiver Accounts number are the same.");
         }
     }
 
@@ -58,16 +58,16 @@ public class Transfer {
      * 
      * @return senderAccount
      */
-    public Account getSenderAccount() {
+    public Accounts getSenderAccount() {
         return this.senderAccount;
     }
 
     /**
      * Getter receiverAccount
      * 
-     * @return Account
+     * @return Accounts
      */
-    public Account getReceiverAccount() {
+    public Accounts getReceiverAccount() {
         return this.receiverAccount;
     }
 
@@ -91,14 +91,14 @@ public class Transfer {
     public void make(String concept) throws TransferException,
             TransactionException {
         try {
-            // Discount the quantity from sender account
+            // Discount the quantity from sender Accounts
             this.senderAccount.doTransaction(new TransferTransaction(
-                    -this.quantity, new Date(), concept, this.receiverAccount,
-                    this.senderAccount));
-            // Add the money to receiver account
+                    -this.quantity, new Date(), concept, this.receiverAccount/*,
+                    this.senderAccount*/));
+            // Add the money to receiver Accounts
             this.receiverAccount.doTransaction(new TransferTransaction(
-                    this.quantity, new Date(), concept, this.receiverAccount,
-                    this.senderAccount));
+                    this.quantity, new Date(), concept, this.receiverAccount/*,
+                    this.senderAccount*/));
         } catch (TransactionException e) {
             throw new TransferException("Denegate Transaction");
         }

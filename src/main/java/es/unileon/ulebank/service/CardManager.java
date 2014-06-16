@@ -1,50 +1,42 @@
 package es.unileon.ulebank.service;
 
-import java.io.Serializable;
+import java.util.List;
 
-import es.unileon.ulebank.exceptions.CommandException;
-import es.unileon.ulebank.payments.Card;
+import es.unileon.ulebank.domain.Cards;
 
 /**
- * Card Manager Interface
- * @author Rober dCR
- * @date 10/05/2014
- * @brief Interface for the managers used to modify card attributes
+ * Interface that provides Cards data access
+ * @author isra
  */
-public interface CardManager extends Serializable {
-
-	/**
-	 * Method that changes the buy limits using the command with the limits from buyLimits.jsp
-	 * @param diary amount limit
-	 * @param monthly amount limit
-	 * @throws Exception 
-	 */
-    public void changeBuyLimits(double diary, double monthly) throws Exception;
-    
+public interface CardManager {
     /**
-     * Method that changes the cash limits using the command with the limits from cashLimits.jsp
-     * @param diary amount limit
-     * @param monthly amount limit
-     * @throws Exception 
-     */
-    public void changeCashLimits(double diary, double monthly) throws Exception;
-    
-    /**
-     * Method that returns the card of the management
+     * Save received Cards
+     * @param Cards
      * @return
      */
-    public Card getCard();
+    public boolean saveCard(Cards Cards);
     /**
-     * 
-     * @param feeChange
-     * @throws CommandException
+     * Removes Cards with received String
+     * @param cardId
+     * @return
      */
-    public void changeFee(int feeChange) throws CommandException;
-    
+    public boolean removeCard(Cards Cards);
     /**
-     * 
-     * @param card
+     * Searches Cards with received ID
+     * @param cardId
+     * @return
      */
-    public void modifyPin(Card card);
-
+    public Cards findCard(String cardId);
+    /**
+     * Return Cards client list
+     * @param dni
+     * @return
+     */
+    public List<Cards> getCardClientList(String dni);
+    /**
+     * Return Cards account list
+     * @param accountNumber
+     * @return
+     */
+    public List<Cards> getCardAccountList(String accountNumber);
 }

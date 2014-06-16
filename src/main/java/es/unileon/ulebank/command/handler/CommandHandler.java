@@ -3,8 +3,16 @@ package es.unileon.ulebank.command.handler;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
+
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import es.unileon.ulebank.handler.Handler;
+import es.unileon.ulebank.time.Time;
 
 /**
  * CommandHandler class
@@ -13,16 +21,16 @@ import es.unileon.ulebank.handler.Handler;
  * @date 9/04/2014
  * @brief Class of the identifier for Commands
  */
-public class CommandHandler implements Handler {
+@Entity
+@Table(name = "GENERIC_HANDLER", catalog = "ULEBANK_FINAL")
+@DiscriminatorColumn(name = "discriminator", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue(value = "CommandHandler")
+public class CommandHandler extends Handler {
 
     /**
-     * Identifier of the object which makes the command
+     * 
      */
-    private final Handler id;
-    /**
-     * Date when the commandHandler is created
-     */
-    private final String date;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Class constructor
@@ -30,76 +38,14 @@ public class CommandHandler implements Handler {
      * @param handler
      */
     public CommandHandler(Handler handler) {
-        this.id = handler;
         final DateFormat dateFormat = new SimpleDateFormat("ddMMyyyyHHmmssss");
-        this.date = dateFormat.format(new Date());
+        this.setId(handler.toString() + " "
+                + dateFormat.format(new Date()).toString());
     }
 
-    /**
-     * Compara el identificador actual con el que se indica
-     * 
-     * @param another
-     * @return devuelve un 0 si son iguales
-     * @return devuelve otro numero si son distintos
-     */
-    @Override
-    public int compareTo(Handler another) {
-        return this.toString().compareTo(another.toString());
-    }
-    
-	/**
-	 * Compare two identifiers and determine if are equals or not
-	 * 
-	 * @param another
-	 * @return true if are equals
-	 * @return false if aren't equals
-	 */
-	@Override
-	public boolean equals(Object another) {
-		if (another == null) {
-			return false;
-		}
-		
-		if (another.getClass() != getClass()) {
-			return false;
-		}
-		
-		Handler other = (Handler) another;
-		
-		if (this.toString().equals(other.toString())) {
-			return true;
-		}
-		return false;
-	}
-	
-	@Override
-	public int hashCode() {
-		return 1 * 17 + id.hashCode();
-	}
-
-    /**
-     * Getter id
-     * 
-     * @return id
-     */
-    public Handler getId() {
-        return this.id;
-    }
-
-    /**
-     * Getter date
-     * 
-     * @return String
-     */
-    public String getDate() {
-        return this.date.toString();
-    }
-
-    /**
-     * Devuelve en una cadena de strings el id y la fecha
-     */
-    @Override
-    public String toString() {
-        return this.id.toString() + " " + this.date.toString();
+    public CommandHandler() {
+        String uuid = UUID.randomUUID().toString();
+        String time = String.valueOf(Time.getInstance().getTime());
+        this.setId(uuid + "-" + time);
     }
 }

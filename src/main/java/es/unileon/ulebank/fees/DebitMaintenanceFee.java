@@ -3,7 +3,6 @@ package es.unileon.ulebank.fees;
 import java.io.IOException;
 
 import es.unileon.ulebank.client.Client;
-import es.unileon.ulebank.client.Person;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.utils.CardProperties;
 
@@ -64,11 +63,11 @@ public class DebitMaintenanceFee implements FeeStrategy {
 
     @Override
     public double getFee(double value) {
-        if (((Person) this.owner).getAge() > this.maximumAge) {
+//        if (((Person) this.owner).getAge() > this.maximumAge) {
             return this.defaultCommission;
-        } else {
-            return this.quantity;
-        }
+//        } else {
+//            return this.quantity;
+//        }
     }
 
 }

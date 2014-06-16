@@ -10,13 +10,13 @@ import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.client.Person;
 import es.unileon.ulebank.command.handler.CommandHandler;
+import es.unileon.ulebank.domain.Cards;
 import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.handler.MalformedHandlerException;
 import es.unileon.ulebank.history.conditions.WrongArgsException;
 import es.unileon.ulebank.office.Office;
-import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.CreditCard;
 import es.unileon.ulebank.payments.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.payments.exceptions.PaymentException;
@@ -24,7 +24,7 @@ import es.unileon.ulebank.payments.handler.CardHandler;
 import es.unileon.ulebank.utils.CardProperties;
 
 public class ModifyBuyLimitCommandTest {
-    private Card testCard;
+    private Cards testCard;
     private Handler handler;
     private Office office;
     private Client client;

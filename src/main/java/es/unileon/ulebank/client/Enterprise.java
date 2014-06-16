@@ -7,20 +7,36 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.handler.MalformedHandlerException;
 
 /**
  * Class that implements the data of an enterprise
  * 
- * @author Gonzalo Nicolás Barreales
+ * @author Gonzalo Nicol��s Barreales
  */
+@Entity
+@Table(name = "CLIENTS", catalog = "ULEBANK_FINAL")
+@DiscriminatorColumn(name = "discriminator", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue(value = "Enterprise")
 public class Enterprise extends Client {
+
+    /**
+     * Serial version uid
+     */
+    private static final long serialVersionUID = 1L;
 
     /**
      * 
      */
-    private final List<Person> authorizedPersons;
+    private List<Person> authorizedPersons;
 
     /**
      * 
@@ -30,7 +46,7 @@ public class Enterprise extends Client {
     /**
      * 
      */
-    private Address address;
+    private String address;
 
     /**
      * 
@@ -51,7 +67,7 @@ public class Enterprise extends Client {
      * @param address
      */
     public Enterprise(char cifLetter, int cifNumber, char cifControl,
-            String enterpriseName, Address address)
+            String enterpriseName, String address)
             throws MalformedHandlerException {
         super(new EnterpriseHandler(cifLetter, cifNumber, cifControl));
         this.authorizedPersons = new ArrayList<Person>();
@@ -59,12 +75,16 @@ public class Enterprise extends Client {
         this.address = address;
     }
 
+    public Enterprise() {
+
+    }
+
     /**
      * 
      * @param person
      */
     public void addAuthorizedPerson(Person person) {
-        if (!this.existsAuthorizedPerson(person.getId())) {
+        if (!this.existsAuthorizedPerson(person.getGenericHandler())) {
             this.authorizedPersons.add(person);
         }
     }
@@ -79,7 +99,7 @@ public class Enterprise extends Client {
         final Iterator<Person> iterator = this.authorizedPersons.iterator();
         while ((removed == null) && iterator.hasNext()) {
             final Person person = iterator.next();
-            if (person.getId().compareTo(personHandler) == 0) {
+            if (person.getGenericHandler().compareTo(personHandler) == 0) {
                 removed = person;
                 iterator.remove();
             }
@@ -98,7 +118,7 @@ public class Enterprise extends Client {
         final Iterator<Person> iterator = this.authorizedPersons.iterator();
         while (iterator.hasNext()) {
             final Person person = iterator.next();
-            if (person.getId().compareTo(personHandler) == 0) {
+            if (person.getGenericHandler().compareTo(personHandler) == 0) {
                 result = true;
             }
         }
@@ -109,6 +129,7 @@ public class Enterprise extends Client {
      * 
      * @return
      */
+    @Column(name = "enterprise_name", length = 32)
     public String getEnterpriseName() {
         return this.enterpriseName;
     }
@@ -125,15 +146,26 @@ public class Enterprise extends Client {
      * 
      * @return
      */
-    public Address getAddress() {
+    @Column(name = "address", nullable = false, length = 256)
+    public String getAddress() {
         return this.address;
     }
+//
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "ACCOUNTS_CLIENTS", catalog = "ULEBANK_FINAL", joinColumns = { @JoinColumn(name = "account_number", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "id", nullable = false, updatable = false) })
+//    public List<Person> getAuthorizedPersons() {
+//        return authorizedPersons;
+//    }
+//
+//    public void setAuthorizedPersons(List<Person> authorizedPersons) {
+//        this.authorizedPersons = authorizedPersons;
+//    }
 
     /**
      * 
      * @param address
      */
-    public void setAddress(Address address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 

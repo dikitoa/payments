@@ -13,13 +13,13 @@ import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.client.Person;
 import es.unileon.ulebank.client.PersonHandler;
 import es.unileon.ulebank.command.handler.CommandHandler;
+import es.unileon.ulebank.domain.Cards;
 import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.handler.MalformedHandlerException;
 import es.unileon.ulebank.history.conditions.WrongArgsException;
 import es.unileon.ulebank.office.Office;
 import es.unileon.ulebank.office.OfficeHandler;
-import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.CardType;
 import es.unileon.ulebank.payments.handler.CardHandler;
 
@@ -86,7 +86,7 @@ public class NewCardCommandTest {
         this.test.execute();
         final CommandHandler id = (CommandHandler) this.test.getID();
         final CardHandler cardHandler = (CardHandler) id.getId();
-        final Card card = this.office.searchClient(this.dni)
+        final Cards card = this.office.searchClient(this.dni)
                 .searchAccount(this.accountHandler).searchCard(cardHandler);
         Assert.assertEquals(this.cardTypeCredit.toString(), card.getCardType());
     }
@@ -99,7 +99,7 @@ public class NewCardCommandTest {
         this.test.execute();
         final CommandHandler id = (CommandHandler) this.test.getID();
         final CardHandler cardHandler = (CardHandler) id.getId();
-        final Card card = this.office.searchClient(this.dni)
+        final Cards card = this.office.searchClient(this.dni)
                 .searchAccount(this.accountHandler).searchCard(cardHandler);
         Assert.assertEquals(this.cardTypeDebit.toString(), card.getCardType());
     }

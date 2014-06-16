@@ -19,7 +19,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import es.unileon.ulebank.command.ModifyPinCommand;
-import es.unileon.ulebank.payments.Card;
+import es.unileon.ulebank.domain.Cards;
 import es.unileon.ulebank.payments.exceptions.PaymentException;
 import es.unileon.ulebank.service.CardManager;
 import es.unileon.ulebank.service.ModifyPin;
@@ -38,7 +38,7 @@ public class ModifyPinFormController {
     /*@Autowired*/
     private PinValidator pinValidator;
     
-    private Card card;
+    private Cards card;
 
     @Autowired
     private CardManager cardManager;
@@ -79,7 +79,7 @@ public class ModifyPinFormController {
     @RequestMapping(method = RequestMethod.GET)
     protected ModelAndView formBackingObject(HttpServletRequest request) throws ServletException {
         ModifyPin modifyPin = new ModifyPin();
-        Card card = cardManager.getCard();
+        Cards card = cardManager.getCard();
  
         modifyPin.setNewPin(card.getPin());
         return new ModelAndView("priceincrease", "card", modifyPin );
@@ -93,7 +93,7 @@ public class ModifyPinFormController {
         return cardManager;
     }
     
-    public void setCard(Card card){
+    public void setCard(Cards card){
     	this.card = card;
     }
     

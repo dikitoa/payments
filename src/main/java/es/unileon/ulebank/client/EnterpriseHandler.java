@@ -3,6 +3,12 @@
 
 package es.unileon.ulebank.client;
 
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.handler.MalformedHandlerException;
 import es.unileon.ulebank.utils.CifControl;
@@ -14,29 +20,20 @@ import es.unileon.ulebank.utils.CifControl;
  */
 
 // TODO modify cif with the corresponding data
-public class EnterpriseHandler implements Handler {
-
+@Entity
+@Table(name = "GENERIC_HANDLER", catalog = "ULEBANK_FINAL")
+@DiscriminatorColumn(name = "discriminator", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue(value = "EnterpriseHandler")
+public class EnterpriseHandler extends Handler {
+    
     /**
      * 
      */
-    char entityLetter;
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * Two digits to identify the province
-     */
-    int provinceCode;
-
-    /**
-     * Five digits imposed by the Administration in function of the provice
-     */
-    int registrationCode;
-
-    /**
-     * The control code is a number if the entity letter is K, Q or S, and is a
-     * number if the entitity letter is A, B, E or H With the rest of the entity
-     * letters, the control code can be a number or a letter
-     */
-    char controlCode;
+    public EnterpriseHandler(){
+        
+    }
 
     /**
      * 
@@ -48,58 +45,26 @@ public class EnterpriseHandler implements Handler {
             char cifFinalDigit) throws MalformedHandlerException {
         if ((Integer.toString(cifNumber).length() <= 7)
                 && (Integer.toString(cifNumber).length() >= 6)) {
-            this.entityLetter = entityLetter;
-            this.provinceCode = cifNumber / 100000;
-            this.registrationCode = cifNumber - (this.provinceCode * 100000);
-            this.controlCode = cifFinalDigit;
-            if (!CifControl.instance().isCifValid(entityLetter,
-                    this.provinceCode, this.registrationCode, this.controlCode)) {
+            int provinceCode = cifNumber / 100000;
+            int registrationCode = cifNumber - (provinceCode * 100000);
+            char controlCode = cifFinalDigit;
+            if (!CifControl.instance().isCifValid(entityLetter, provinceCode,
+                    registrationCode, controlCode)) {
                 throw new MalformedHandlerException("Invalid control code");
             }
+            this.setId(entityLetter + Integer.toString(provinceCode)
+                    + Integer.toString(registrationCode) + controlCode);
         } else {
             throw new MalformedHandlerException("Invalid CIF");
         }
     }
-
-    @Override
-    public int compareTo(Handler another) {
-        return this.toString().compareTo(another.toString());
-    }
     
-	/**
-	 * Compare two identifiers and determine if are equals or not
-	 * 
-	 * @param another
-	 * @return true if are equals
-	 * @return false if aren't equals
-	 */
-	@Override
-	public boolean equals(Object another) {
-		if (another == null) {
-			return false;
-		}
-		
-		if (another.getClass() != getClass()) {
-			return false;
-		}
-		
-		Handler other = (Handler) another;
-		
-		if (this.toString().equals(other.toString())) {
-			return true;
-		}
-		return false;
-	}
-	
-	@Override
-	public int hashCode() {
-		return this.hashCode();
-	}
 
-    @Override
-    public String toString() {
-        return this.entityLetter + Integer.toString(this.provinceCode)
-                + Integer.toString(this.registrationCode) + this.controlCode;
+    public EnterpriseHandler(String ticker) throws MalformedHandlerException {
+        if(ticker.length() < 6){
+            this.setId(ticker);
+        }else{
+            throw new MalformedHandlerException("Invalid ticker");
+        }
     }
-
 }

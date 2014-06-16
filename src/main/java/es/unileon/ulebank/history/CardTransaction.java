@@ -2,6 +2,12 @@ package es.unileon.ulebank.history;
 
 import java.util.Date;
 
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import es.unileon.ulebank.exceptions.TransactionException;
 
 /**
@@ -11,19 +17,36 @@ import es.unileon.ulebank.exceptions.TransactionException;
  * @date 8/05/2014
  * @brief Class that allows all monetary transactions with cards
  */
+@Entity
+@Table(name = "TRANSACTIONS", catalog = "ULEBANK_FINAL")
+@DiscriminatorColumn(name = "discriminator", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue(value = "CardTransaction")
 public class CardTransaction extends Transaction {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
 
     /**
      * Class constructor
      * 
      * @param amount
-     * @param date
+     * @param datezz
      * @param subject
+     * @param type
+     * @param senderAccount
+     * @param receiverAccount
      * @throws TransactionException
+     * @throws es.unileon.ulebank.exceptions.TransactionException
      */
     public CardTransaction(double amount, Date date, String subject)
             throws TransactionException {
         super(amount, date, subject);
+    }
+    
+    public CardTransaction() {
+        
     }
 
 }

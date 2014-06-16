@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
 	<!-- Bean para que funcione sin persistencia -->
-	<bean id="cardManager" class="es.unileon.ulebank.service.SimpleCardManager">
+	<bean id="cardManager" class="es.unileon.ulebank.service.impl.SimpleCardManager">
 		<property name="card" ref="card1" />
 	</bean>
 	

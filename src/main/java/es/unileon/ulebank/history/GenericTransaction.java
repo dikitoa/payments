@@ -4,7 +4,12 @@ package es.unileon.ulebank.history;
 
 import java.util.Date;
 
-import es.unileon.ulebank.account.DetailedInformation;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import es.unileon.ulebank.exceptions.TransactionException;
 
 /**
@@ -12,7 +17,16 @@ import es.unileon.ulebank.exceptions.TransactionException;
  *
  * @author runix
  */
+@Entity
+@Table(name = "TRANSACTIONS", catalog = "ULEBANK_FINAL")
+@DiscriminatorColumn(name = "discriminator", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue(value="GenericTransaction") 
 public class GenericTransaction extends Transaction {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
 
     /**
      * Create a new generic transaction
@@ -40,7 +54,11 @@ public class GenericTransaction extends Transaction {
      *            ( Transaction subject )
      */
     public GenericTransaction(double amount, Date date, String subject,
-            DetailedInformation extraInfo) throws TransactionException {
+            String extraInfo) throws TransactionException {
         super(amount, date, subject, extraInfo);
+    }
+
+    public GenericTransaction() {
+
     }
 }

@@ -3,6 +3,12 @@
 
 package es.unileon.ulebank.client;
 
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.handler.MalformedHandlerException;
 import es.unileon.ulebank.utils.DniLetters;
@@ -12,19 +18,17 @@ import es.unileon.ulebank.utils.DniLetters;
  * 
  * @author Gonzalo Nicolas Barreales
  */
-public class PersonHandler implements Handler {
+@Entity
+@Table(name = "GENERIC_HANDLER", catalog = "ULEBANK_FINAL")
+@DiscriminatorColumn(name = "discriminator", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue(value = "PersonHandler")
+public class PersonHandler extends Handler {
+
 
     /**
-     * DNI number
+     * 
      */
-    private int dni;
-
-    /**
-     * DNI letter
-     */
-    private char letter;
-
-    private char foreingLetter;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Creates the handler of the person with the dni data
@@ -37,12 +41,13 @@ public class PersonHandler implements Handler {
     public PersonHandler(int dni, char letter) throws MalformedHandlerException {
         if (DniLetters.getInstance().isDniValid(dni,
                 Character.toUpperCase(letter))) {
-            this.dni = dni;
-            this.letter = Character.toUpperCase(letter);
-            this.foreingLetter = ' ';
+            this.setId(Integer.toString(dni) + letter);
         } else {
             throw new MalformedHandlerException("Incorrect DNI");
         }
+    }
+    
+    public PersonHandler() {
     }
 
     /**
@@ -57,6 +62,7 @@ public class PersonHandler implements Handler {
         final char foreingLetterRaw = Character.toUpperCase(foreingLetter);
         final char letterRaw = Character.toUpperCase(letter);
         int addFactor = 0;
+        String result = "";
         switch (foreingLetterRaw) {
             case 'X':
                 break;
@@ -70,61 +76,16 @@ public class PersonHandler implements Handler {
                 throw new MalformedHandlerException("Incorrect NIE");
         }
         if (DniLetters.getInstance().isDniValid(addFactor + dni, letterRaw)) {
-            this.foreingLetter = foreingLetterRaw;
-            this.dni = dni;
-            this.letter = letterRaw;
+            // this.foreingLetter = foreingLetterRaw;
+            // this.dni = dni;
+            // this.letter = letterRaw;
+            if (foreingLetterRaw != ' ') {
+                result += foreingLetterRaw;
+            }
+            result += Integer.toString(dni) + letter;
+            this.setId(result);
         } else {
             throw new MalformedHandlerException("Invalid NIE");
         }
     }
-
-    @Override
-    public int compareTo(Handler another) {
-        return this.toString().compareTo(another.toString());
-    }
-    
-	/**
-	 * Compare two identifiers and determine if are equals or not
-	 * 
-	 * @param another
-	 * @return true if are equals
-	 * @return false if aren't equals
-	 */
-	@Override
-	public boolean equals(Object another) {
-		if (another == null) {
-			return false;
-		}
-		
-		if (another.getClass() != getClass()) {
-			return false;
-		}
-		
-		Handler other = (Handler) another;
-		
-		if (this.toString().equals(other.toString())) {
-			return true;
-		}
-		return false;
-	}
-	
-	@Override
-	public int hashCode() {
-		return this.hashCode();
-	}
-
-    /**
-     *
-     * @return
-     */
-    @Override
-    public String toString() {
-        String result = "";
-        if (this.foreingLetter != ' ') {
-            result += this.foreingLetter;
-        }
-        result += Integer.toString(this.dni) + this.letter;
-        return result;
-    }
-
 }

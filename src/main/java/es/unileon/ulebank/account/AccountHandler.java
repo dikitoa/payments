@@ -5,6 +5,12 @@ package es.unileon.ulebank.account;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.handler.MalformedHandlerException;
@@ -13,7 +19,15 @@ import es.unileon.ulebank.handler.MalformedHandlerException;
  *
  * @author runix
  */
-public class AccountHandler implements Handler {
+@Entity
+@Table(name = "GENERIC_HANDLER", catalog = "ULEBANK_FINAL")
+@DiscriminatorColumn(name = "discriminator", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue("AccountHandler")
+public class AccountHandler extends Handler {
+    /**
+     * Serial version uid
+     */
+    private static final long serialVersionUID = 1L;
     /**
      * the number of digits ( account number )
      */
@@ -42,25 +56,10 @@ public class AccountHandler implements Handler {
      * Separator of the fields
      */
     public static final String SEPARATOR = "-";
-    /**
-     * The account number, the number of digits of this number is given by {
-     *
-     * @see ACCOUNT_NUMBER_LENGHT
-     */
-    private final String accountNumber;
 
-    /**
-     * The office identifier
-     */
-    private final Handler officeHandler;
-    /**
-     * The bank identifier
-     */
-    private final Handler bankHandler;
-    /**
-     * The control digits
-     */
-    private final String dc;
+    public AccountHandler() {
+
+    }
 
     /**
      * Create a new AccountHandler
@@ -125,11 +124,14 @@ public class AccountHandler implements Handler {
         if (errors.length() > 1) {
             throw new MalformedHandlerException(errors.toString());
         }
-        this.officeHandler = office;
-        this.bankHandler = bank;
-        this.accountNumber = accountNumber;
-        this.dc = AccountHandler.calculateDC(office.toString(),
-                bank.toString(), accountNumber + "");
+
+        this.setId(office.toString()
+                + AccountHandler.SEPARATOR
+                + bank.toString()
+                + AccountHandler.SEPARATOR
+                + AccountHandler.calculateDC(office.toString(),
+                        bank.toString(), accountNumber + "")
+                + AccountHandler.SEPARATOR + accountNumber);
     }
 
     /**
@@ -141,90 +143,15 @@ public class AccountHandler implements Handler {
         this(AccountHandler.getField(another, 1), AccountHandler.getField(
                 another, 0), AccountHandler.getField(another, 3).toString());
         final StringBuilder error = new StringBuilder();
-        if (!AccountHandler.getField(another, 2).toString().equals(this.dc)) {
+        String dc = calculateDC(AccountHandler.getField(another, 1).toString(),
+                AccountHandler.getField(another, 0).toString(), AccountHandler
+                        .getField(another, 3).toString());
+        if (!AccountHandler.getField(another, 2).toString().equals(dc)) {
             error.append("Wrong control digits");
         }
         if (error.length() > 0) {
             throw new MalformedHandlerException(error.toString());
         }
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Handler getBankHandler() {
-        return this.bankHandler;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Handler getOfficeHandler() {
-        return this.officeHandler;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getNumber() {
-        return this.accountNumber;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getDC() {
-        return this.dc;
-    }
-
-    @Override
-    public int compareTo(Handler another) {
-        return this.toString().compareTo(another.toString());
-    }
-    
-	/**
-	 * Compare two identifiers and determine if are equals or not
-	 * 
-	 * @param another
-	 * @return true if are equals
-	 * @return false if aren't equals
-	 */
-	@Override
-	public boolean equals(Object another) {
-		if (another == null) {
-			return false;
-		}
-		
-		if (another.getClass() != getClass()) {
-			return false;
-		}
-		
-		Handler other = (Handler) another;
-		
-		if (this.toString().equals(other.toString())) {
-			return true;
-		}
-		return false;
-	}
-	
-	@Override
-	public int hashCode() {
-		return this.hashCode();
-	}
-
-    /**
-     *
-     * @return
-     */
-    @Override
-    public String toString() {
-        return this.bankHandler.toString() + AccountHandler.SEPARATOR
-                + this.officeHandler.toString() + AccountHandler.SEPARATOR
-                + this.dc + AccountHandler.SEPARATOR + this.accountNumber;
     }
 
     private static Handler getField(Handler another, int number)

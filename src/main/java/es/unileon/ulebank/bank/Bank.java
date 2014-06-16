@@ -5,9 +5,9 @@ package es.unileon.ulebank.bank;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.unileon.ulebank.domain.Offices;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.handler.MalformedHandlerException;
-import es.unileon.ulebank.office.Office;
 
 /**
  *
@@ -15,7 +15,7 @@ import es.unileon.ulebank.office.Office;
  */
 public class Bank {
 
-    private final List<Office> offices;
+    private final List<Offices> offices;
 
     private final Handler bankID;
 
@@ -26,7 +26,7 @@ public class Bank {
      */
     public Bank(Handler bankID) throws MalformedHandlerException {
         this.bankID = new BankHandler(bankID.toString());
-        this.offices = new ArrayList<Office>();
+        this.offices = new ArrayList<Offices>();
     }
 
     /**
@@ -42,9 +42,9 @@ public class Bank {
      * @param office
      * @return
      */
-    public boolean addOffice(Office office) {
+    public boolean addOffice(Offices office) {
         if ((office != null)
-                && (this.searchOffice(office.getIdOffice()) == null)) {
+                && (this.searchOffice(office.getOfficeId()) == null)) {
             return this.offices.add(office);
         }
         return false;
@@ -55,12 +55,12 @@ public class Bank {
      * @param office
      * @return
      */
-    public boolean removeOffice(Handler office) {
+    public boolean removeOffice(String office) {
         boolean removed = false;
         if (office != null) {
             int i = -1;
             while ((++i < this.offices.size()) && !removed) {
-                if (this.offices.get(i).getIdOffice().compareTo(office) == 0) {
+                if (this.offices.get(i).getOfficeId().compareTo(office) == 0) {
                     this.offices.remove(i);
                     removed = true;
                 }
@@ -69,11 +69,11 @@ public class Bank {
         return removed;
     }
 
-    public Office searchOffice(Handler id) {
-        Office result = null;
+    public Offices searchOffice(String id) {
+        Offices result = null;
         int i = -1;
         while ((++i < this.offices.size()) && (result == null)) {
-            if (this.offices.get(i).getIdOffice().compareTo(id) == 0) {
+            if (this.offices.get(i).getOfficeId().compareTo(id) == 0) {
                 result = this.offices.get(i);
             }
         }

@@ -1,5 +1,11 @@
 package es.unileon.ulebank.office;
 
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.handler.MalformedHandlerException;
 
@@ -8,27 +14,36 @@ import es.unileon.ulebank.handler.MalformedHandlerException;
  * @author Patricia
  * 
  */
-public class OfficeHandler implements Handler {
+@Entity
+@Table(name = "GENERIC_HANDLER", catalog = "ULEBANK_FINAL")
+@DiscriminatorColumn(name = "discriminator", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue(value = "OfficeHandler")
+public class OfficeHandler extends Handler {
 
-    private String numberOffice;
+    /**
+     * Serial version UID
+     */
+    private static final long serialVersionUID = 1L;
+
 
     public OfficeHandler(int number) throws MalformedHandlerException {
-
+        String id = "";
         if (number >= 0) {
 
             if (Integer.toString(number).length() == 4) {
-                this.numberOffice = Integer.toString(number);
+                id = Integer.toString(number);
             } else {
                 if (Integer.toString(number).length() < 4) {
-                    this.numberOffice = Integer.toString(number);
-                    while (this.numberOffice.length() <= 4) {
-                        this.numberOffice = 0 + this.numberOffice;
+                    id = Integer.toString(number);
+                    while (id.length() <= 4) {
+                        id = 0 + id;
                     }
                 } else {
                     throw new MalformedHandlerException(
                             "The idOffice is malformed");
                 }
             }
+            this.setId(id);
         } else {
             throw new MalformedHandlerException(
                     "The idOffice has to be a positive number");
@@ -45,12 +60,13 @@ public class OfficeHandler implements Handler {
 
         if (Integer.parseInt(numberOffice) >= 0) {
             if (numberOffice.length() == 4) {
-                this.numberOffice = numberOffice;
+                this.setId(numberOffice);
             } else {
                 if (numberOffice.length() < 4) {
-                    while (numberOffice.length() <= 4) {
+                    while (numberOffice.length() < 4) {
                         numberOffice = 0 + numberOffice;
                     }
+                    this.setId(numberOffice);
                 } else {
                     throw new MalformedHandlerException(
                             "The idOffice is malformed");
@@ -62,48 +78,6 @@ public class OfficeHandler implements Handler {
         }
     }
 
-    public int getIdOffice() {
-        return Integer.parseInt(this.numberOffice);
+    public OfficeHandler() {
     }
-
-    @Override
-    public int compareTo(Handler another) {
-        return this.numberOffice.compareTo(another.toString());
-    }
-    
-	/**
-	 * Compare two identifiers and determine if are equals or not
-	 * 
-	 * @param another
-	 * @return true if are equals
-	 * @return false if aren't equals
-	 */
-	@Override
-	public boolean equals(Object another) {
-		if (another == null) {
-			return false;
-		}
-		
-		if (another.getClass() != getClass()) {
-			return false;
-		}
-		
-		Handler other = (Handler) another;
-		
-		if (this.toString().equals(other.toString())) {
-			return true;
-		}
-		return false;
-	}
-	
-	@Override
-	public int hashCode() {
-		return this.hashCode();
-	}
-
-    @Override
-    public String toString() {
-        return this.numberOffice;
-    }
-
 }

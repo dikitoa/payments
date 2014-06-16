@@ -10,22 +10,22 @@ import es.unileon.ulebank.bank.Bank;
 import es.unileon.ulebank.bank.BankHandler;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.client.Person;
+import es.unileon.ulebank.domain.Cards;
 import es.unileon.ulebank.fees.FeeStrategy;
 import es.unileon.ulebank.fees.LinearFee;
 import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.office.Office;
-import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.CreditCard;
 import es.unileon.ulebank.payments.handler.CardHandler;
 import es.unileon.ulebank.service.FeeChange;
-import es.unileon.ulebank.service.SimpleCardManager;
+import es.unileon.ulebank.service.impl.SimpleCardManager;
 import es.unileon.ulebank.utils.CardProperties;
 
 public class ChangeFeesFormControllerTest {
     
 	private SimpleCardManager cardManager;
     
-    Card testCard;
+    Cards testCard;
 	CardHandler handler;
 	private Office office;
 	private Bank bank;

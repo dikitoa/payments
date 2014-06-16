@@ -5,6 +5,12 @@ package es.unileon.ulebank.bank;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.handler.MalformedHandlerException;
 
@@ -12,16 +18,24 @@ import es.unileon.ulebank.handler.MalformedHandlerException;
  *
  * @author runix
  */
-public class BankHandler implements Handler {
+@Entity
+@Table(name = "GENERIC_HANDLER", catalog = "ULEBANK_FINAL")
+@DiscriminatorColumn(name = "discriminator", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue(value = "BankHandler")
+public class BankHandler extends Handler {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     /**
      * The number of digits
      */
     private static final int BANK_NUMBER_DIGITS = 4;
-    /**
-     * Bank's number
-     */
-    private final String number;
+    
+    public BankHandler(){
+        
+    }
 
     /**
      * Create a new Bank handler
@@ -36,56 +50,12 @@ public class BankHandler implements Handler {
         final Matcher matcher = numberPattern.matcher(number);
         if (matcher.find()
                 && (number.length() == BankHandler.BANK_NUMBER_DIGITS)) {
-            this.number = number;
+            this.setId(number);
         } else {
             final String error = "Error, the number hasn't "
                     + BankHandler.BANK_NUMBER_DIGITS
                     + " digits or has letters \n";
             throw new MalformedHandlerException(error);
         }
-    }
-
-    @Override
-    public int compareTo(Handler another) {
-        return this.toString().compareTo(another.toString());
-    }
-    
-	/**
-	 * Compare two identifiers and determine if are equals or not
-	 * 
-	 * @param another
-	 * @return true if are equals
-	 * @return false if aren't equals
-	 */
-	@Override
-	public boolean equals(Object another) {
-		if (another == null) {
-			return false;
-		}
-		
-		if (another.getClass() != getClass()) {
-			return false;
-		}
-		
-		Handler other = (Handler) another;
-		
-		if (this.toString().equals(other.toString())) {
-			return true;
-		}
-		return false;
-	}
-	
-	@Override
-	public int hashCode() {
-        return 1 * 17 + number.hashCode();
-	}
-
-    /**
-     *
-     * @return ( Return the number)
-     */
-    @Override
-    public String toString() {
-        return this.number;
     }
 }
