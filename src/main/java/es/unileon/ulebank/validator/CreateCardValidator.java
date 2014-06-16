@@ -1,10 +1,10 @@
 package es.unileon.ulebank.validator;
 
-import es.unileon.ulebank.payments.CardBean;
-
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+
+import es.unileon.ulebank.domain.CardBean;
 
 /**
  * @author Israel

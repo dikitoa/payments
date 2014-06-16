@@ -41,6 +41,12 @@
 	<bean id="owner" class="es.unileon.ulebank.client.Person">
 		<constructor-arg value="71451559" />
 		<constructor-arg value="N" />
+		<property name="name">
+			<value>Pepito</value>
+		</property>
+		<property name="surnames">
+			<value>Marquez Rodriguez</value>
+		</property>
 	</bean>
 
 	<bean id="account" class="es.unileon.ulebank.account.Account">
@@ -73,6 +79,8 @@
 	
 	<context:property-placeholder location="classpath*:card.properties" system-properties-mode="OVERRIDE" ignore-unresolvable="true"/>
 	<bean class="es.unileon.ulebank.validator.CreateCardValidator"></bean>
+	<bean class="es.unileon.ulebank.validator.GenerateCardContractValidator"></bean>
+	
 	<bean id="properties" class="es.unileon.ulebank.utils.CardProperties">
 		<property name="minimumLimit"><value type="java.lang.Double">${minimum_limit}</value></property>
 		<property name="expirationYear"><value type="int">${expiration_year}</value></property>

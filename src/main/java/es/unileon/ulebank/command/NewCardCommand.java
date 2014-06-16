@@ -1,6 +1,7 @@
 package es.unileon.ulebank.command;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -59,6 +60,8 @@ public class NewCardCommand implements Command {
 	private Client client;
 	
 	private CardBean bean;
+	
+	private List<Card> result;
 
 	/**
 	 * Constructor del comando que recibe los datos necesarios para crear una
@@ -73,12 +76,12 @@ public class NewCardCommand implements Command {
 	 * @throws CommandException
 	 */
 	public NewCardCommand(Office office, String clientId, String accountNumber, String cardType,
-			CardBean bean, Card result) throws CommandException {
+			CardBean bean, List<Card> result) throws CommandException {
 		
 		try {
 			this.office = office;
 			this.bean = bean;
-			this.card = result;
+			this.result = result;
 			this.client = office.searchClient(new GenericHandler(clientId));
 			this.account = client.searchAccount(new AccountHandler(new GenericHandler(accountNumber)));
 			this.cardHandler = new CardHandler(bean.getCardNumber());
@@ -121,6 +124,7 @@ public class NewCardCommand implements Command {
 		}
 		if (this.card != null) {
 			this.account.addCard(this.card);
+			result.add(card);
 		}
 	}
 

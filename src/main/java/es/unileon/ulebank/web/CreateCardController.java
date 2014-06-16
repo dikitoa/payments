@@ -1,9 +1,9 @@
 package es.unileon.ulebank.web;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
-
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -74,17 +74,16 @@ public class CreateCardController {
 	 * @throws CommandException 
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView submit(@Valid CardBean bean, BindingResult result, SessionStatus status) throws CommandException
+	public ModelAndView submit(@ModelAttribute("newCard") CardBean bean, BindingResult result, SessionStatus status) throws CommandException
 	{
-		this.cardValidator.validate(bean, result);
-
+		cardValidator.validate(bean, result);
 		if (result.hasErrors()) {
 			return new ModelAndView("createcard", "newCard", bean);
 		}
 		this.office.addClient(this.client);
 		this.client.add(this.account);
-		Card card = null;
-		NewCardCommand command = new NewCardCommand(this.office, this.client.getId().toString(), this.account.getID().toString(), bean.getCardType(), bean, card);
+		List<Card> cards = new ArrayList<Card>();
+		NewCardCommand command = new NewCardCommand(this.office, this.client.getId().toString(), this.account.getID().toString(), bean.getCardType(), bean, cards);
 		try {
 			command.execute();
 		} catch (CommandException e) {
@@ -92,7 +91,7 @@ public class CreateCardController {
 		}
 		
 		
-		return new ModelAndView("result", "card", card);
+		return new ModelAndView("result", "card", cards.get(0));
 	}
 
 	/**
