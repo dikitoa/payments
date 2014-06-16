@@ -16,6 +16,8 @@ import org.apache.commons.logging.LogFactory;
 import es.unileon.ulebank.command.ChangeFeeCommand;
 import es.unileon.ulebank.command.Command;
 import es.unileon.ulebank.command.ModifyBuyLimitCommand;
+import es.unileon.ulebank.command.ModifyCashLimitCommand;
+import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.service.CardManager;
 import es.unileon.ulebank.service.FeeChange;
 
@@ -37,6 +39,7 @@ public class ChangeFeesFormController {
 	@Autowired
 	private CardManager cardManager;
 
+	private Handler cardId;
 	/**
 	 * Method that obtains the data of the form in buyLimits.jsp and save the changes in the card
 	 * @param feeChange
@@ -48,16 +51,16 @@ public class ChangeFeesFormController {
 	public String onSubmit(@Valid FeeChange feeChange, BindingResult result) throws Exception
 	{
 		if (result.hasErrors()) {
-			return "feechange";
+			return "cards";
 		}
 
 		int change = (int) feeChange.getFeeChange();
 		logger.info("Modified fee Change: " + feeChange + "Euros.");
 
-		Command change = new ChangeFeeCommand(cardId, this.cardManager.findCard(cardId), change, "change");
-		change.execute();
+		Command changeFee = new ChangeFeeCommand(cardId, this.cardManager.findCard(cardId.toString()), change, "change");
+		changeFee.execute();
 		
-		return "redirect:/changeLimits.htm";
+		return "redirect:/feechange.htm";
 	}
 
 	/**
@@ -69,7 +72,7 @@ public class ChangeFeesFormController {
 	@RequestMapping(method = RequestMethod.GET)
 	protected FeeChange formBackingObject(HttpServletRequest request) throws ServletException {
 		FeeChange feeChange = new FeeChange();
-		feeChange.setFeeChange(this.cardManager.getCard().getFee());
+		feeChange.setFeeChange(this.cardManager.findCard(cardId.toString()).getFees());
 		return feeChange;
 	}
 
