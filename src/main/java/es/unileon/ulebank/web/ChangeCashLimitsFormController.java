@@ -13,6 +13,8 @@ import javax.validation.Valid;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import es.unileon.ulebank.command.Command;
+import es.unileon.ulebank.command.ModifyCashLimitCommand;
 import es.unileon.ulebank.service.CardManager;
 import es.unileon.ulebank.service.ChangeLimit;
 
@@ -53,8 +55,11 @@ public class ChangeCashLimitsFormController {
         int monthlyLimit = (int) changeLimit.getMonthlyLimit();
         logger.info("Modified diary limit: " + diaryLimit + "Euros.");
         logger.info("Modified monthly limit: " + monthlyLimit + "Euros.");
-
-        cardManager.changeCashLimits(diaryLimit, monthlyLimit);
+        
+        Command cashLimitsDiary = new ModifyCashLimitCommand(cardId, this.cardManager.findCard(cardId), diaryLimit, "diary");
+		Command cashLimitsMonthly = new ModifyCashLimitCommand(cardId, this.cardManager.findCard(cardId), monthlyLimit, "monthly");
+		cashLimitsMonthly.execute();
+		cashLimitsDiary.execute();
 
         return "redirect:/changeLimits.htm";
     }
@@ -68,8 +73,8 @@ public class ChangeCashLimitsFormController {
     @RequestMapping(method = RequestMethod.GET)
     protected ChangeLimit formBackingObject(HttpServletRequest request) throws ServletException {
         ChangeLimit changeLimit = new ChangeLimit();
-        changeLimit.setDiaryLimit((int) this.cardManager.getCard().getCashLimitDiary());
-        changeLimit.setMonthlyLimit((int) this.cardManager.getCard().getCashLimitMonthly());
+        changeLimit.setDiaryLimit((int) this.cardManager.findCard(cardId).getCashLimitDiary());
+        changeLimit.setMonthlyLimit((int) this.cardManager.findCard(cardId).getCashLimitMonthly());
         return changeLimit;
     }
 
