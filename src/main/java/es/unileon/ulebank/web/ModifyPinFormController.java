@@ -58,7 +58,7 @@ public class ModifyPinFormController {
     	try {
 			command.execute();
 //			System.out.println("PIN QUE QUIERO VER DESPUES COMMAND ->> "+card.getPin());
-			cardManager.modifyPin(card);
+			cardManager.saveCard(card);
 		} catch (IOException e) {
 			logger.info(e.getMessage());
 		}
@@ -79,7 +79,7 @@ public class ModifyPinFormController {
     @RequestMapping(method = RequestMethod.GET)
     protected ModelAndView formBackingObject(HttpServletRequest request) throws ServletException {
         ModifyPin modifyPin = new ModifyPin();
-        Cards card = cardManager.getCard();
+        Cards card = cardManager.findCard(cardId);
  
         modifyPin.setNewPin(card.getPin());
         return new ModelAndView("priceincrease", "card", modifyPin );

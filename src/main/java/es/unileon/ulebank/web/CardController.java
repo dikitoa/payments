@@ -46,7 +46,7 @@ public class CardController {
     @RequestMapping(value="/hello.htm", method = RequestMethod.GET)
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	card = cardManager.getCard();
+    	card = cardManager.findCard(cardId);
 
         Map<String, Object> myModel = new HashMap<String, Object>();
         myModel.put("id", this.card.getId());
