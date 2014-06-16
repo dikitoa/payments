@@ -67,6 +67,10 @@ public class Cards implements java.io.Serializable {
         this.accounts = account;
         this.client = Client;
         this.id = cardId.toString();
+        this.pin = generatePinCode();
+        this.cvv = generateCVV();
+        this.emissionDate = generateEmissionDate();
+        this.expirationDate = generateExpirationDate();
     }
     
     /**
