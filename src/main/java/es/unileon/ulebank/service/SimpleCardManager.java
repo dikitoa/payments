@@ -1,8 +1,6 @@
 package es.unileon.ulebank.service;
 
-import es.unileon.ulebank.command.ChangeFeeCommand;
-
-import es.unileon.ulebank.command.Command;
+import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.payments.Card;
 
 /**
@@ -12,8 +10,6 @@ import es.unileon.ulebank.payments.Card;
  * @brief Simple Class which manages the card for change buy and cash limits
  */
 public class SimpleCardManager implements CardManager {
-
-	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Card which modifies from changeLimits.jsp
@@ -38,14 +34,8 @@ public class SimpleCardManager implements CardManager {
 	}
 
 	@Override
-	public void changeFee(int feeChange) {
-		Command changeFee = new ChangeFeeCommand(this.card.getId(), this.card, feeChange, "change");
-		try {
-			changeFee.execute();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void changeFee(int feeChange) throws CommandException {
+		//Change the total fee.
 		
 	}
 

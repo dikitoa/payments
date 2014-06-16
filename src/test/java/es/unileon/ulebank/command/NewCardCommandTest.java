@@ -13,6 +13,7 @@ import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.client.Person;
 import es.unileon.ulebank.client.PersonHandler;
 import es.unileon.ulebank.command.handler.CommandHandler;
+import es.unileon.ulebank.domain.CardBean;
 import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.handler.MalformedHandlerException;
@@ -21,14 +22,13 @@ import es.unileon.ulebank.office.Office;
 import es.unileon.ulebank.office.OfficeHandler;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.CardType;
+import es.unileon.ulebank.payments.DebitCard;
 import es.unileon.ulebank.payments.handler.CardHandler;
 
 public class NewCardCommandTest {
     private NewCardCommand test;
     private Handler bankHandler;
     private Handler dni;
-    private String officeId;
-    private String cardId;
     private Office office;
     private Handler accountHandler;
     private CardType cardTypeCredit;
@@ -36,6 +36,8 @@ public class NewCardCommandTest {
     private Bank bank;
     private Client client;
     private Account account;
+    private CardBean bean;
+    private Card card;
 
     private final String accountNumber = "0000000000";
 
@@ -47,14 +49,20 @@ public class NewCardCommandTest {
         this.dni = new PersonHandler(71557005, 'A');
         this.client = new Person(71557005, 'A');
         this.office.addClient(this.client);
-        this.officeId = "01";
-        this.cardId = "123401123456789";
         this.account = new Account(this.office, this.bank, this.accountNumber,
                 this.client);
         this.accountHandler = this.account.getID();
         this.client.add(this.account);
         this.cardTypeCredit = CardType.CREDIT;
         this.cardTypeDebit = CardType.DEBIT;
+        this.bean = new CardBean();
+        this.bean.setCardNumber("123456789012345");
+        this.bean.setBuyLimitDiary(200);
+        this.bean.setBuyLimitMonthly(2000);
+        this.bean.setCashLimitDiary(200);
+        this.bean.setCashLimitMonthly(1000);
+        this.bean.setCommissionEmission(15.0);
+        this.card = new DebitCard();
     }
 
     @Test
@@ -64,25 +72,22 @@ public class NewCardCommandTest {
 
     @Test
     public void testCommandNotNull() throws CommandException {
-        this.test = new NewCardCommand(this.office, this.client, this.account,
-                this.cardTypeCredit,
-                this.officeId, this.cardId);
+        this.test = new NewCardCommand(this.office, this.client.getId().toString(), this.account.getID().toString(),
+                this.cardTypeCredit.toString(), this.bean, card);
         Assert.assertNotNull(this.test);
     }
 
     @Test
     public void testCommandId() throws CommandException {
-        this.test = new NewCardCommand(this.office, this.client, this.account,
-                this.cardTypeCredit,
-                this.officeId, this.cardId);
+        this.test = new NewCardCommand(this.office, this.client.getId().toString(), this.account.getID().toString(),
+                this.cardTypeCredit.toString(), this.bean, card);
         Assert.assertTrue(this.test.getID() != null);
     }
 
     @Test
     public void testCreateCreditCard() throws Exception {
-        this.test = new NewCardCommand(this.office, this.client, this.account,
-                this.cardTypeCredit, 
-                this.officeId, this.cardId);
+        this.test = new NewCardCommand(this.office, this.client.getId().toString(), this.account.getID().toString(),
+                this.cardTypeCredit.toString(), this.bean, card);
         this.test.execute();
         final CommandHandler id = (CommandHandler) this.test.getID();
         final CardHandler cardHandler = (CardHandler) id.getId();
@@ -93,9 +98,8 @@ public class NewCardCommandTest {
 
     @Test
     public void testCreateDebitCard() throws Exception {
-        this.test = new NewCardCommand(this.office, this.client, this.account,
-                this.cardTypeDebit, this.officeId,
-                this.cardId);
+        this.test = new NewCardCommand(this.office, this.client.getId().toString(), this.account.getID().toString(),
+                this.cardTypeDebit.toString(), this.bean, card);
         this.test.execute();
         final CommandHandler id = (CommandHandler) this.test.getID();
         final CardHandler cardHandler = (CardHandler) id.getId();
@@ -105,9 +109,8 @@ public class NewCardCommandTest {
     }
 
     public void testUndoNewCreditCardCommand() throws Exception {
-        this.test = new NewCardCommand(this.office, this.client, this.account,
-                this.cardTypeCredit,
-                this.officeId, this.cardId);
+        this.test = new NewCardCommand(this.office, this.client.getId().toString(), this.account.getID().toString(),
+                this.cardTypeCredit.toString(), this.bean, card);
         this.test.execute();
         Assert.assertEquals(1, this.office.searchClient(this.dni)
                 .searchAccount(this.accountHandler).getCardAmount());
@@ -117,9 +120,8 @@ public class NewCardCommandTest {
     }
 
     public void testUndoNewDebitCardCommand() throws Exception {
-        this.test = new NewCardCommand(this.office, this.client, this.account,
-                this.cardTypeDebit, this.officeId,
-                this.cardId);
+        this.test = new NewCardCommand(this.office, this.client.getId().toString(), this.account.getID().toString(),
+                this.cardTypeDebit.toString(), this.bean, card);
         this.test.execute();
         final CommandHandler id = (CommandHandler) this.test.getID();
         final CardHandler cardHandler = (CardHandler) id.getId();
@@ -134,9 +136,8 @@ public class NewCardCommandTest {
 
     @Test(expected = UnsupportedOperationException.class)
     public void testRedoNewCreditCardCommand() throws Exception {
-        this.test = new NewCardCommand(this.office, this.client, this.account,
-                this.cardTypeCredit,
-                this.officeId, this.cardId);
+        this.test = new NewCardCommand(this.office, this.client.getId().toString(), this.account.getID().toString(),
+                this.cardTypeCredit.toString(), this.bean, card);
         this.test.execute();
         this.test.undo();
         this.test.redo();
@@ -144,9 +145,8 @@ public class NewCardCommandTest {
 
     @Test(expected = UnsupportedOperationException.class)
     public void testRedoNewDebitCardCommand() throws Exception {
-        this.test = new NewCardCommand(this.office, this.client, this.account,
-                this.cardTypeDebit, this.officeId,
-                this.cardId);
+        this.test = new NewCardCommand(this.office, this.client.getId().toString(), this.account.getID().toString(),
+                this.cardTypeDebit.toString(), this.bean, card);
         this.test.execute();
         this.test.undo();
         this.test.redo();

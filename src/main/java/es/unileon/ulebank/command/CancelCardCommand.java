@@ -5,6 +5,8 @@ import java.util.logging.Logger;
 
 import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.command.handler.CommandHandler;
+import es.unileon.ulebank.exceptions.CommandException;
+import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.office.Office;
 
@@ -15,19 +17,20 @@ public class CancelCardCommand implements Command {
 	 /**
      * Logger de la clase
      */
-    private static final Logger LOG = Logger.getLogger(CancelCardCommand.class.getName());
+    private static final Logger LOG = Logger
+            .getLogger(CancelCardCommand.class.getName());
     /**
      * Identificador del comando
      */
-    private final Handler id;
+    private Handler id;
     /**
      * Identificador de la tarjeta a cancelar
      */
-    private final Handler cardId;
+    private Handler cardId;
     /**
      * Cuenta a la que esta asociada la tarjeta que se va a cancelar
      */
-    private final Account account;
+    private Account account;
 
     /**
      * Constructor de la clase
@@ -35,17 +38,19 @@ public class CancelCardCommand implements Command {
      * @param cardId
      * @param office
      * @param dni
-     * @param account
+     * @param accountNumber
+     * @throws ClientNotFoundException
      */
-    public CancelCardCommand(Handler cardId, Office office, Handler dni,
-            Handler account) {
-        this.id = new CommandHandler(cardId);
-        this.cardId = cardId;
-        this.account = office.searchClient(dni).searchAccount(account);
+    public CancelCardCommand(String cardId, Office office, String dni,
+            String accountNumber) {
+        this.cardId = new GenericHandler(cardId);
+        this.id = new CommandHandler(this.cardId);
+        this.account = office.searchClient(new GenericHandler(dni)).searchAccount(new GenericHandler(accountNumber));
     }
 
     /**
      * Realiza la cancelacion de la tarjeta
+     * @throws CommandException 
      */
     @Override
     public void execute() {
@@ -59,7 +64,6 @@ public class CancelCardCommand implements Command {
 
     /**
      * Operacion no soportada, no se puede deshacer una cancelacion
-     * @throws UnsupportedOperationException
      */
     @Override
     public void undo() {
@@ -69,7 +73,6 @@ public class CancelCardCommand implements Command {
     /**
      * Operacion no soportada, como no se puede deshacer una cancelacion tampoco
      * se puede rehacer
-     * @throws UnsupportedOperationException
      */
     @Override
     public void redo() {

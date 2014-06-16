@@ -59,8 +59,8 @@ public class CancelCardCommandTest {
 
     @Test
     public void testCommandNotNull() {
-        this.test = new CancelCardCommand(this.handler1, this.office, this.dni,
-                this.accountHandler);
+        this.test = new CancelCardCommand(this.handler1.toString(), this.office, this.dni.toString(),
+                this.accountHandler.toString());
         Assert.assertNotNull(this.test);
     }
 
@@ -71,16 +71,16 @@ public class CancelCardCommandTest {
 
     @Test
     public void testCommandId() {
-        this.test = new CancelCardCommand(this.handler1, this.office, this.dni,
-                this.accountHandler);
+    	this.test = new CancelCardCommand(this.handler1.toString(), this.office, this.dni.toString(),
+                this.accountHandler.toString());
         final CommandHandler handler = (CommandHandler) this.test.getID();
         Assert.assertTrue(handler.getId().compareTo(this.card1.getId()) == 0);
     }
 
     @Test
     public void testCancelDebitCard() {
-        this.test = new CancelCardCommand(this.handler1, this.office, this.dni,
-                this.accountHandler);
+    	this.test = new CancelCardCommand(this.handler1.toString(), this.office, this.dni.toString(),
+                this.accountHandler.toString());
         Assert.assertEquals(2, this.account.getCardAmount());
         this.test.execute();
         Assert.assertEquals(1, this.account.getCardAmount());
@@ -88,24 +88,24 @@ public class CancelCardCommandTest {
 
     @Test(expected = UnsupportedOperationException.class)
     public void testUndoCancelDebitCard() {
-        this.test = new CancelCardCommand(this.handler1, this.office, this.dni,
-                this.accountHandler);
+    	this.test = new CancelCardCommand(this.handler1.toString(), this.office, this.dni.toString(),
+                this.accountHandler.toString());
         this.test.execute();
         this.test.undo();
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void testRedoCancelDebitCard() {
-        this.test = new CancelCardCommand(this.handler1, this.office, this.dni,
-                this.accountHandler);
+    	this.test = new CancelCardCommand(this.handler1.toString(), this.office, this.dni.toString(),
+                this.accountHandler.toString());
         this.test.execute();
         this.test.redo();
     }
 
     @Test
     public void testCancelCreditCard() {
-        this.test = new CancelCardCommand(this.handler2, this.office, this.dni,
-                this.accountHandler);
+    	this.test = new CancelCardCommand(this.handler1.toString(), this.office, this.dni.toString(),
+                this.accountHandler.toString());
         Assert.assertEquals(2, this.account.getCardAmount());
         this.test.execute();
         Assert.assertEquals(1, this.account.getCardAmount());
@@ -113,16 +113,16 @@ public class CancelCardCommandTest {
 
     @Test(expected = UnsupportedOperationException.class)
     public void testUndoCancelCreditCard() {
-        this.test = new CancelCardCommand(this.handler2, this.office, this.dni,
-                this.accountHandler);
+    	this.test = new CancelCardCommand(this.handler1.toString(), this.office, this.dni.toString(),
+                this.accountHandler.toString());
         this.test.execute();
         this.test.undo();
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void testRedoCancelCreditCard() {
-        this.test = new CancelCardCommand(this.handler2, this.office, this.dni,
-                this.accountHandler);
+    	this.test = new CancelCardCommand(this.handler1.toString(), this.office, this.dni.toString(),
+                this.accountHandler.toString());
         this.test.execute();
         this.test.redo();
     }
