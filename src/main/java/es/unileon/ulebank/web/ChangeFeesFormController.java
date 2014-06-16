@@ -13,6 +13,9 @@ import javax.validation.Valid;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import es.unileon.ulebank.command.ChangeFeeCommand;
+import es.unileon.ulebank.command.Command;
+import es.unileon.ulebank.command.ModifyBuyLimitCommand;
 import es.unileon.ulebank.service.CardManager;
 import es.unileon.ulebank.service.FeeChange;
 
@@ -51,7 +54,8 @@ public class ChangeFeesFormController {
 		int change = (int) feeChange.getFeeChange();
 		logger.info("Modified fee Change: " + feeChange + "Euros.");
 
-		cardManager.changeFee(change);
+		Command changeFee = new ChangeFeeCommand(this.cardManager.getCard().getId(), this.cardManager.getCard(), change, "change");
+		changeFee.execute();
 
 		return "redirect:/hello.htm";
 	}
