@@ -45,19 +45,25 @@
  				<fmt:message key="heading-hello"/>
     		</b>
     	</div> 	
-    	<b>Numero de tarjeta:</b> ${model.card.getId().toString()} 
+    	<b><i>Numero de tarjeta:</i></b> ${model.card.getId().toString()} 
     	<br/>
-    	<b>PIN:</b> ${model.card.getPin()}
+    	<b><i>Cuenta Asociada:</i></b> ${model.card.getAccount().getID().toString()}
     	<br/>
-		<b>Fecha de Caducidad:</b> ${model.card.getExpirationDate()}
+    	<b><i>Tipo de tarjeta:</i></b> ${model.card.getCardType()}
+    	<br/>
+    	<b><i>PIN:</i></b> ${model.card.getPin()}
+    	<br/>
+    	<b><i>Fecha de Emisión:</i></b> ${model.card.getEmissionDate()}
 		<br/>
-     	<b>Limite Compras Diario:</b> ${model.card.getBuyLimitDiary()} &euro;
+		<b><i>Fecha de Caducidad:</i></b> ${model.card.getExpirationDate()}
 		<br/>
-     	<b>Limite Compras Mensual:</b> ${model.card.getBuyLimitMonthly()} &euro;
+     	<b><i>Limite Compras Diario:</i></b> ${model.card.getBuyLimitDiary()} &euro;
+		<br/>
+     	<b><i>Limite Compras Mensual:</i></b> ${model.card.getBuyLimitMonthly()} &euro;
      	<br/>
-     	<b>Limite Efectivo Diario:</b> ${model.card.getCashLimitDiary()} &euro;
+     	<b><i>Limite Efectivo Diario:</i></b> ${model.card.getCashLimitDiary()} &euro;
 		<br/>
-     	<b>Limite Efectivo Mensual:</b> ${model.card.getCashLimitMonthly()} &euro;
+     	<b><i>Limite Efectivo Mensual:</i></b> ${model.card.getCashLimitMonthly()} &euro;
 		<br/>
     </div> 
   </body>
