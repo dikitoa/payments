@@ -24,66 +24,66 @@ import es.unileon.ulebank.service.FeeChange;
 @Controller
 @RequestMapping(value="/feechange.htm")	
 public class ChangeFeesFormController {
-	
-	    /** Logger for this class and subclasses */
-	    protected final Log logger = LogFactory.getLog(getClass());
 
-	    /**
-	     * Card which change the limits in
-	     */
-	    @Autowired
-	    private CardManager cardManager;
+	/** Logger for this class and subclasses */
+	protected final Log logger = LogFactory.getLog(getClass());
 
-	    /**
-	     * Method that obtains the data of the form in buyLimits.jsp and save the changes in the card
-	     * @param feeChange
-	     * @param result
-	     * @return
-	     * @throws Exception 
-	     */
-	    @RequestMapping(method = RequestMethod.POST)
-	    public String onSubmit(@Valid FeeChange feeChange, BindingResult result) throws Exception
-	    {
-	        if (result.hasErrors()) {
-	            return "feechange";
-	        }
-			
-	        int change = (int) feeChange.getFeeChange();
-	        logger.info("Modified fee Change: " + feeChange + "Euros.");
+	/**
+	 * Card which change the limits in
+	 */
+	@Autowired
+	private CardManager cardManager;
 
-	        cardManager.changeFee(change);
+	/**
+	 * Method that obtains the data of the form in buyLimits.jsp and save the changes in the card
+	 * @param feeChange
+	 * @param result
+	 * @return
+	 * @throws Exception 
+	 */
+	@RequestMapping(method = RequestMethod.POST)
+	public String onSubmit(@Valid FeeChange feeChange, BindingResult result) throws Exception
+	{
+		if (result.hasErrors()) {
+			return "feechange";
+		}
 
-	        return "redirect:/changeLimits.htm";
-	    }
+		int change = (int) feeChange.getFeeChange();
+		logger.info("Modified fee Change: " + feeChange + "Euros.");
 
-	    /**
-	     * Method that sends the data of the card's buy limits to the form in buyLimits.jsp
-	     * @param request
-	     * @return
-	     * @throws ServletException
-	     */
-	    @RequestMapping(method = RequestMethod.GET)
-	    protected FeeChange formBackingObject(HttpServletRequest request) throws ServletException {
-	        FeeChange feeChange = new FeeChange();
-	       // feeChange.setFeeChange(this.cardManager.getCard().getFee());
-	        return feeChange;
-	    }
+		cardManager.changeFee(change);
 
-	    /**
-	     * Setter of the card
-	     * @param productManager
-	     */
-	    public void setCardManager(CardManager productManager) {
-	        this.cardManager = productManager;
-	    }
-
-	    /**
-	     * Getter of the card
-	     * @return card
-	     */
-	    public CardManager getCardManager() {
-	        return cardManager;
-	    }
-
+		return "redirect:/changeLimits.htm";
 	}
+
+	/**
+	 * Method that sends the data of the card's buy limits to the form in buyLimits.jsp
+	 * @param request
+	 * @return
+	 * @throws ServletException
+	 */
+	@RequestMapping(method = RequestMethod.GET)
+	protected FeeChange formBackingObject(HttpServletRequest request) throws ServletException {
+		FeeChange feeChange = new FeeChange();
+		// feeChange.setFeeChange(this.cardManager.getCard().getFee());
+		return feeChange;
+	}
+
+	/**
+	 * Setter of the card
+	 * @param productManager
+	 */
+	public void setCardManager(CardManager productManager) {
+		this.cardManager = productManager;
+	}
+
+	/**
+	 * Getter of the card
+	 * @return card
+	 */
+	public CardManager getCardManager() {
+		return cardManager;
+	}
+
+}
 

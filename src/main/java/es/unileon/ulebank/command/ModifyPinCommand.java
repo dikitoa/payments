@@ -8,8 +8,6 @@ import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.exceptions.PaymentException;
 
-
-
 /**
  * @author Israel
  * Comando para modificar el codigo PIN de la tarjeta
@@ -60,6 +58,7 @@ public class ModifyPinCommand implements Command {
 			this.oldPin = card.getPin();
 			//Cambiamos el PIN por el nuevo
 			this.card.setPin(newPin);
+			LOG.info("Command executed.");
 	}
 
 	/**
@@ -69,6 +68,7 @@ public class ModifyPinCommand implements Command {
 	public void undo() throws PaymentException {
 		//Restaura el PIN al valor anterior
 		this.card.setPin(oldPin);
+		LOG.info("Command undoned.");
 	}
 
 	/**
@@ -78,6 +78,7 @@ public class ModifyPinCommand implements Command {
 	public void redo() throws PaymentException {
 		//Recuperamos la modificacion del PIN
 		this.card.setPin(newPin);
+		LOG.info("Command re-done.");
 	}
 
 	/**

@@ -30,7 +30,7 @@ public class ChangeBuyLimitsFormController {
     protected final Log logger = LogFactory.getLog(getClass());
 
     /**
-     * Card which change the limits in
+     * Manejador de las tarjetas
      */
     @Autowired
     private CardManager cardManager;

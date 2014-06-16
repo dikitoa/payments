@@ -21,14 +21,28 @@ import es.unileon.ulebank.service.CardManager;
 
 @Controller
 public class CardController {
-
+	/**
+	 * Logger de la clase
+	 */
     protected final Log logger = LogFactory.getLog(getClass());
-    
+    /**
+     * Objeto tarjeta del que se modificaran los datos
+     */
     private Card card;
-     
+    /**
+     * Manejador de las tarjetas
+     */
     @Autowired
     private CardManager cardManager;
 
+    /**
+     * Metodo que crea el modelo y vista para hello.htm
+     * @param request
+     * @param response
+     * @return
+     * @throws ServletException
+     * @throws IOException
+     */
     @RequestMapping(value="/hello.htm", method = RequestMethod.GET)
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -43,6 +57,10 @@ public class CardController {
         return new ModelAndView("hello", "card", myModel);
     }
     
+    /**
+     * Metodo que asigna el cardManager
+     * @param cardManager
+     */
     public void setCardManager(CardManager cardManager) {
         this.cardManager = cardManager;
     }
@@ -55,6 +73,10 @@ public class CardController {
         this.card = card;
     }
     
+    /**
+     * Metodo que obtiene la tarjeta del controlador
+     * @return tarjeta
+     */
     public Card getCard(){
     	return this.card;
     }
