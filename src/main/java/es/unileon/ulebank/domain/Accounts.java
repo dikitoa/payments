@@ -53,7 +53,7 @@ public class Accounts implements java.io.Serializable {
     /**
      * The id in handler format
      */
-    private Handler handler;
+    private Handler genericHandler;
     /**
      * DirectDebit transactions
      */
@@ -108,6 +108,15 @@ public class Accounts implements java.io.Serializable {
      * Empty constructor for hibernate
      */
     public Accounts() {
+    	this.historyByDirectDebitHistory = new History();
+        this.historyByFailedHistory = new History();
+        this.historyByHistoryId = new History();
+        this.lastLiquidation = new Date(0);
+        this.authorizeds = new HashSet<Client>(0);
+        this.clientses = new HashSet<Client>(0);
+        this.liquidationFees = new HashSet<LiquidationFee>(0);
+        this.balance = 0.0d;
+        this.maxOverdraft = 0.0d;
     }
 
     /**
@@ -126,7 +135,7 @@ public class Accounts implements java.io.Serializable {
             History historyByHistoryId, double balance, Date lastLiquidation,
             int liquidationFrequency, double maxOverdraft) {
         this.historyByFailedHistory = historyByFailedHistory;
-        this.handler = genericHandler;
+        this.genericHandler = genericHandler;
         this.historyByDirectDebitHistory = historyByDirectDebitHistory;
         this.historyByHistoryId = historyByHistoryId;
         this.balance = balance;
@@ -142,7 +151,7 @@ public class Accounts implements java.io.Serializable {
             Set<LiquidationFee> liquidationFees, Set<Client> clientses,
             Set<Client> authorizeds, Set<Cards> cardses) {
         this.historyByFailedHistory = historyByFailedHistory;
-        this.handler = genericHandler;
+        this.genericHandler = genericHandler;
         this.historyByDirectDebitHistory = historyByDirectDebitHistory;
         this.historyByHistoryId = historyByHistoryId;
         this.balance = balance;
@@ -177,15 +186,15 @@ public class Accounts implements java.io.Serializable {
         this.historyByFailedHistory = historyByFailedHistory;
     }
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
-    public Handler getHandler() {
-        return this.handler;
-    }
-
-    public void setHandler(GenericHandler genericHandler) {
-        this.handler = genericHandler;
-    }
+//    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    @PrimaryKeyJoinColumn
+//    public Handler getHandler() {
+//        return this.genericHandler;
+//    }
+//
+//    public void setHandler(GenericHandler genericHandler) {
+//        this.genericHandler = genericHandler;
+//    }
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "directDebitHistory", nullable = false)
@@ -310,7 +319,7 @@ public class Accounts implements java.io.Serializable {
         this.cardses = cardses;
     }
 
-    public boolean removeCard(Handler cardId) {
+    public boolean removeCard(String cardId) {
         // TODO Auto-generated method stub
         return false;
     }
@@ -320,7 +329,7 @@ public class Accounts implements java.io.Serializable {
         
     }
 
-    public Cards searchCard(Handler cardId) {
+    public Cards searchCard(String cardId) {
         // TODO Auto-generated method stub
         return null;
     }

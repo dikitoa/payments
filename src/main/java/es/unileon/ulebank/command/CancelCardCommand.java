@@ -25,7 +25,7 @@ public class CancelCardCommand implements Command {
     /**
      * Identificador de la tarjeta a cancelar
      */
-    private Handler cardId;
+    private String cardId;
     /**
      * Cuenta a la que esta asociada la tarjeta que se va a cancelar
      */
@@ -37,11 +37,11 @@ public class CancelCardCommand implements Command {
      * @param cardId
      * @param office
      * @param dni
-     * @param account
+     * @param accountNumber
      * @throws ClientNotFoundException
      */
-    public CancelCardCommand(Handler cardId, Offices office, Handler dni,
-            Handler account) {
+    public CancelCardCommand(String cardId, Offices office, String dni,
+            String accountNumber) {
         this.id = new CommandHandler(cardId);
         this.cardId = cardId;
     }

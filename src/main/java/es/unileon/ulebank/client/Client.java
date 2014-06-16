@@ -82,12 +82,12 @@ public class Client implements Serializable {
      * @param accountHandler
      * @return true if account is deleted, false if account doesn't exists
      */
-    public boolean removeAccount(Handler accountHandler) {
+    public boolean removeAccount(String accountHandler) {
         boolean removed = false;
         final Iterator<Accounts> iterator = this.accounts.iterator();
         while (!removed && iterator.hasNext()) {
             final Accounts account = iterator.next();
-            if (account.getHandler().compareTo(accountHandler) == 0) {
+            if (account.getAccountNumber().compareTo(accountHandler) == 0) {
                 removed = true;
                 iterator.remove();
             }
@@ -102,12 +102,12 @@ public class Client implements Serializable {
      * @param accountHandler
      * @return true if the account exists, false if it doesn't exists
      */
-    public boolean existsAccount(Handler accountHandler) {
+    public boolean existsAccount(String accountHandler) {
         boolean result = false;
         final Iterator<Accounts> iterator = this.accounts.iterator();
         while (iterator.hasNext()) {
             final Accounts account = iterator.next();
-            if (account.getHandler().compareTo(accountHandler) == 0) {
+            if (account.getAccountNumber().compareTo(accountHandler) == 0) {
                 result = true;
             }
         }
@@ -120,7 +120,7 @@ public class Client implements Serializable {
      * @param handler
      * @return
      */
-    public Accounts searchAccount(Handler handler) {
+    public Accounts searchAccount(String handler) {
         final Iterator<Accounts> iterator = this.accounts.iterator();
         Accounts account = null;
 
@@ -131,7 +131,7 @@ public class Client implements Serializable {
         while (iterator.hasNext()) {
             account = iterator.next();
 
-            if (account.getHandler().compareTo(handler) == 0) {
+            if (account.getAccountNumber().compareTo(handler) == 0) {
                 break;
             }
         }

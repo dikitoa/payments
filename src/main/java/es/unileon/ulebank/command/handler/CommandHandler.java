@@ -42,6 +42,11 @@ public class CommandHandler extends Handler {
         this.setId(handler.toString() + " "
                 + dateFormat.format(new Date()).toString());
     }
+    
+    public CommandHandler (String handler) {
+    	final DateFormat dateFormat = new SimpleDateFormat("ddMMyyyyHHmmssss");
+    	this.setId(handler + " " + dateFormat.format(new Date()).toString());
+    }
 
     public CommandHandler() {
         String uuid = UUID.randomUUID().toString();

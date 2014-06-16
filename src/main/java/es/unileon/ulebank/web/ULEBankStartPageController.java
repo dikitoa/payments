@@ -19,7 +19,7 @@ public class ULEBankStartPageController {
 
     protected final Log LOGGER = LogFactory.getLog(getClass());
 
-    @RequestMapping(value = "/startpage.htm", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public ModelAndView handleRequest(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
         LOGGER.info("Returning startpage view");
