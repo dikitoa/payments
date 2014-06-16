@@ -63,6 +63,7 @@ public class CreateCardController {
 		NewCardCommand command = new NewCardCommand(office, bean.getDni(), bean.getAccountNumber(), bean.getCardType(), bean.getCardNumber(), card);
 		try {
 			command.execute();
+			cardManager.saveCard(card);
 		} catch (NumberFormatException e) {
 			LOG.info(e.getMessage());
 		} 
@@ -76,7 +77,7 @@ public class CreateCardController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public String initForm(ModelMap model) {
+	public CardBean initForm(ModelMap model) {
 		CardBean bean = new CardBean();
 
 		bean.setBuyLimitDiary(CardProperties.getBuyLimitDiary());
@@ -85,7 +86,7 @@ public class CreateCardController {
 		bean.setCashLimitMonthly(CardProperties.getCashLimitMonthly());
 		model.addAttribute("newCard", bean);
 
-		return "createcard";
+		return bean;
 	}
 
 	/**
