@@ -49,7 +49,7 @@ public class JPAAccountsDao implements AccountDao{
         log.debug("persisting Accounts instance");
         try {
 
-            entityManager.persist(transientInstance.getHandler());
+//            entityManager.persist(transientInstance.getHandler());
             entityManager.persist(transientInstance
                     .getHistoryByDirectDebitHistory().getGenericHandler());
             entityManager.persist(transientInstance.getHistoryByFailedHistory()

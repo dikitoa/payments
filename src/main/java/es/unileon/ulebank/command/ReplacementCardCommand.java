@@ -98,7 +98,7 @@ public class ReplacementCardCommand implements Command {
 	public void execute() throws CommandException {
 		// Buscamos la tarjeta en la cuenta a la que esta asociada a traves
 		// del identificador
-		this.card = this.account.searchCard(this.cardId);
+		this.card = this.account.searchCard(this.cardId.toString());
 		// Guardamos el PIN anterior
 		this.oldPin = this.card.getPin();
 		// Generamos el nuevo PIN y lo almacenamos

@@ -97,7 +97,7 @@ public class PaymentCommand implements Command {
 	public void execute() throws CommandException {
 		try {
 			// Search the account for that card
-			this.card = this.accountSender.searchCard(this.cardId);
+			this.card = this.accountSender.searchCard(this.cardId.toString());
 			// Make the payment by the type of the card
 			this.card.makeTransaction(this.amount, this.concept);
 			this.executed = true;

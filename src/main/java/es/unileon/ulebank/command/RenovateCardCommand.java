@@ -88,7 +88,7 @@ public class RenovateCardCommand implements Command {
 	@Override
 	public void execute() throws CommandException {
 		// Buscamos la tarjeta en la cuenta con el identificador de la misma
-		this.card = this.account.searchCard(this.cardId);
+		this.card = this.account.searchCard(this.cardId.toString());
 		// Guardamos el CVV para poder deshacer la operacion
 		this.oldCvv = this.card.getCvv();
 		// Guardamos la fecha de caducidad para poder deshacer la operacion
