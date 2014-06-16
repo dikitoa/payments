@@ -61,7 +61,7 @@ public class ChangeCashLimitsFormController {
 		cashLimitsMonthly.execute();
 		cashLimitsDiary.execute();
 
-        return "redirect:/hello.htm";
+		return "redirect:/cards.htm";
     }
 
     /**

@@ -39,7 +39,7 @@ include file ="/resources/css/style.css " %> .error {
 
 	<nav class="menu">
 		<ul>
-			<li><a href="<c:url value="hello.htm"/>">Datos Tarjeta</a></li>
+			<li><a href="<c:url value="cards.htm"/>">Tarjetas</a></li>
 			<li><a href="<c:url value="createcard.htm"/>">Nueva Tarjeta</a>
 			</li>
 			<li><a href="<c:url value="priceincrease.htm"/>">Modificar

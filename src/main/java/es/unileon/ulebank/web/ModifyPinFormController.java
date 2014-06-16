@@ -92,7 +92,7 @@ public class ModifyPinFormController {
 //        myModel.put("expirationDate", this.card.getExpirationDate());
 //        myModel.put("buyLimitDiary",this.card.getBuyLimitDiary());
 
-        return new ModelAndView("hello", "card", card);
+        return new ModelAndView("cards", "card", card);
 //        return "redirect:/hello.htm";
 //        return new ModelAndView("hello");
     }

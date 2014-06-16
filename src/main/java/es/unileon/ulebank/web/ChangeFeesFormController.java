@@ -56,7 +56,7 @@ public class ChangeFeesFormController {
 		Command changeFee = new ChangeFeeCommand(this.cardManager.getCard().getId(), this.cardManager.getCard(), change, "change");
 		changeFee.execute();
 
-		return "redirect:/hello.htm";
+		return "redirect:/cards.htm";
 	}
 
 	/**
