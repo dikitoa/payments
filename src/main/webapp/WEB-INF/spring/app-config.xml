@@ -6,64 +6,6 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
-
-	<!-- Bean para que funcione sin persistencia -->
-	<bean id="cardManager" class="es.unileon.ulebank.service.impl.SimpleCardManager">
-		<property name="card" ref="card1" />
-	</bean>
-	
-	<bean id="card1" class="es.unileon.ulebank.payments.CreditCard">
-		<constructor-arg ref="cardId" />
-		<constructor-arg ref="owner" />
-		<constructor-arg ref="account" />
-	</bean>
-	
-	<bean id="cardId" class="es.unileon.ulebank.payments.handler.CardHandler">
-		<constructor-arg>
-			<ref bean="bankId" />
-		</constructor-arg>
-		<constructor-arg value="01" />
-		<constructor-arg value="123456789" />
-	</bean>
-	
-	<bean id="bank" class="es.unileon.ulebank.bank.Bank">
-		<constructor-arg ref="bankId" />
-	</bean>
-	
-	<bean id="bankId" class="es.unileon.ulebank.bank.BankHandler">
-		<constructor-arg value="1234" />
-	</bean>
-	
-	<bean id="owner" class="es.unileon.ulebank.client.Person">
-		<constructor-arg value="71451559" />
-		<constructor-arg value="N" />
-	</bean>
-	
-	<bean id="account" class="es.unileon.ulebank.account.Account">
-		<constructor-arg>
-			<ref bean="office" />
-		</constructor-arg>
-		<constructor-arg>
-			<ref bean="bank" />
-		</constructor-arg>
-		<constructor-arg value="0000000000" />
-		<constructor-arg ref = "owner" />
-	</bean>
-	
-	<bean id="office" class="es.unileon.ulebank.office.Office">
-		<constructor-arg>
-			<ref bean="genericOfficeId" />
-		</constructor-arg>
-		<constructor-arg>
-			<ref bean="bank" />
-		</constructor-arg>
-	</bean>
-
-	<bean id="genericOfficeId" class="es.unileon.ulebank.handler.GenericHandler">
-		<constructor-arg value="1234" />
-	</bean>
-	
-	<!-- Fin del bean -->
 	
 	<context:component-scan base-package="es.unileon.ulebank.web"></context:component-scan>
 	
