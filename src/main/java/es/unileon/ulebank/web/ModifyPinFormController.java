@@ -1,8 +1,12 @@
 package es.unileon.ulebank.web;
 
 import java.io.IOException;
-import java.util.List;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -11,15 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import es.unileon.ulebank.command.ModifyPinCommand;
 import es.unileon.ulebank.domain.Cards;
+import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.payments.exceptions.PaymentException;
 import es.unileon.ulebank.service.CardManager;
 import es.unileon.ulebank.service.ModifyPin;
@@ -39,6 +37,8 @@ public class ModifyPinFormController {
     private PinValidator pinValidator;
     
     private Cards card;
+    
+    private Handler cardId;
 
     @Autowired
     private CardManager cardManager;
@@ -79,7 +79,7 @@ public class ModifyPinFormController {
     @RequestMapping(method = RequestMethod.GET)
     protected ModelAndView formBackingObject(HttpServletRequest request) throws ServletException {
         ModifyPin modifyPin = new ModifyPin();
-        Cards card = cardManager.findCard(cardId);
+        Cards card = cardManager.findCard(cardId.toString());
  
         modifyPin.setNewPin(card.getPin());
         return new ModelAndView("priceincrease", "card", modifyPin );

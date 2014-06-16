@@ -53,7 +53,7 @@ public class Accounts implements java.io.Serializable {
     /**
      * The id in handler format
      */
-    private Handler genericHandler;
+    private Handler handler;
     /**
      * DirectDebit transactions
      */
@@ -126,7 +126,7 @@ public class Accounts implements java.io.Serializable {
             History historyByHistoryId, double balance, Date lastLiquidation,
             int liquidationFrequency, double maxOverdraft) {
         this.historyByFailedHistory = historyByFailedHistory;
-        this.genericHandler = genericHandler;
+        this.handler = genericHandler;
         this.historyByDirectDebitHistory = historyByDirectDebitHistory;
         this.historyByHistoryId = historyByHistoryId;
         this.balance = balance;
@@ -142,7 +142,7 @@ public class Accounts implements java.io.Serializable {
             Set<LiquidationFee> liquidationFees, Set<Client> clientses,
             Set<Client> authorizeds, Set<Cards> cardses) {
         this.historyByFailedHistory = historyByFailedHistory;
-        this.genericHandler = genericHandler;
+        this.handler = genericHandler;
         this.historyByDirectDebitHistory = historyByDirectDebitHistory;
         this.historyByHistoryId = historyByHistoryId;
         this.balance = balance;
@@ -180,11 +180,11 @@ public class Accounts implements java.io.Serializable {
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     public Handler getHandler() {
-        return this.genericHandler;
+        return this.handler;
     }
 
-    public void setGenericHandler(GenericHandler genericHandler) {
-        this.genericHandler = genericHandler;
+    public void setHandler(GenericHandler genericHandler) {
+        this.handler = genericHandler;
     }
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

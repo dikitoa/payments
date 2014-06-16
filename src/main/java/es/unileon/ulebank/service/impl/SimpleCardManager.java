@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import es.unileon.ulebank.domain.Cards;
-import es.unileon.ulebank.repository.impl.JPACardsDao;
+import es.unileon.ulebank.repository.CardDao;
 import es.unileon.ulebank.service.CardManager;
 
 @Component
 public class SimpleCardManager implements CardManager {
     @Autowired
-    private JPACardsDao cardDao;
+    private CardDao cardDao;
 
     public boolean saveCard(Cards Cards) {
         if (cardDao.findById(Cards.getId()) == null) {

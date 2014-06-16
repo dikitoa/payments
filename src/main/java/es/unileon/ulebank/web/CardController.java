@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import es.unileon.ulebank.domain.Cards;
+import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.service.CardManager;
 
 @Controller
@@ -34,6 +35,8 @@ public class CardController {
      */
     @Autowired
     private CardManager cardManager;
+    
+    private Handler cardId;
 
     /**
      * Metodo que crea el modelo y vista para hello.htm
@@ -46,7 +49,7 @@ public class CardController {
     @RequestMapping(value="/hello.htm", method = RequestMethod.GET)
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	card = cardManager.findCard(cardId);
+    	card = cardManager.findCard(cardId.toString());
 
         Map<String, Object> myModel = new HashMap<String, Object>();
         myModel.put("id", this.card.getId());
