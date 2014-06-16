@@ -69,7 +69,7 @@ public class ChangeFeesFormController {
 	@RequestMapping(method = RequestMethod.GET)
 	protected FeeChange formBackingObject(HttpServletRequest request) throws ServletException {
 		FeeChange feeChange = new FeeChange();
-		// feeChange.setFeeChange(this.cardManager.getCard().getFee());
+		feeChange.setFeeChange(this.cardManager.getCard().getFee());
 		return feeChange;
 	}
 
