@@ -6,9 +6,9 @@ import java.util.logging.Logger;
 import javax.security.auth.login.AccountNotFoundException;
 
 import es.unileon.ulebank.command.handler.CommandHandler;
-import es.unileon.ulebank.domain.Cards;
 import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.handler.Handler;
+import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.payments.exceptions.PaymentException;
 
@@ -52,7 +52,7 @@ public class ModifyCashLimitCommand implements Command {
     /**
      * Objeto tarjeta cuyos limites se van a modificar
      */
-    private final Cards card;
+    private final Card card;
     /**
      * Nueva cantidad a modificar
      */
@@ -85,7 +85,7 @@ public class ModifyCashLimitCommand implements Command {
      * @param type
      * @throws AccountNotFoundException
      */
-    public ModifyCashLimitCommand(Handler cardId, Cards card, double amount,
+    public ModifyCashLimitCommand(Handler cardId, Card card, double amount,
             String type) {
         this.id = new CommandHandler(cardId);
         this.card = card;

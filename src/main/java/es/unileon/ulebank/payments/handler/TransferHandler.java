@@ -3,12 +3,6 @@ package es.unileon.ulebank.payments.handler;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
 import es.unileon.ulebank.handler.Handler;
 
 /**
@@ -18,16 +12,28 @@ import es.unileon.ulebank.handler.Handler;
  * @date 9/04/2014
  * @brief Identifier of Transfer
  */
-@Entity
-@Table(name = "GENERIC_HANDLER", catalog = "ULEBANK_FINAL")
-@DiscriminatorColumn(name = "discriminator", discriminatorType = DiscriminatorType.STRING)
-@DiscriminatorValue(value = "TransferHandler")
-public class TransferHandler extends Handler {
+public class TransferHandler implements Handler {
 
     /**
-     * Serial Version UID
+     * Identifier of the handler
      */
-    private static final long serialVersionUID = 1L;
+    private final String id;
+    /**
+     * Date of the transfer
+     */
+    private String date;
+    /**
+     * Sender account of the transfer
+     */
+    private final String sender;
+    /**
+     * Receiver account of the transfer
+     */
+    private final String receiver;
+    /**
+     * Calendar for obtain the date of the transfer
+     */
+    private final Calendar calendar;
 
     /**
      * Class constructor
@@ -36,13 +42,11 @@ public class TransferHandler extends Handler {
      * @param receiver
      */
     public TransferHandler(String sender, String receiver) {
-        Calendar calendar = new GregorianCalendar();
-        String date = this.setDateCode(calendar);
-        this.setId(sender.substring(sender.length() / 2)
-                + receiver.substring(receiver.length() / 2) + date);
-    }
-
-    public TransferHandler() {
+        this.sender = sender.substring(sender.length() / 2);
+        this.receiver = receiver.substring(receiver.length() / 2);
+        this.calendar = new GregorianCalendar();
+        this.setDateCode();
+        this.id = this.sender + this.receiver + this.date;
     }
 
     /**
@@ -54,16 +58,67 @@ public class TransferHandler extends Handler {
     public int compareTo(Handler another) {
         return this.toString().compareTo(another.toString());
     }
+    
+	/**
+	 * Compare two identifiers and determine if are equals or not
+	 * 
+	 * @param another
+	 * @return true if are equals
+	 * @return false if aren't equals
+	 */
+	@Override
+	public boolean equals(Object another) {
+		if (another == null) {
+			return false;
+		}
+		
+		if (another.getClass() != getClass()) {
+			return false;
+		}
+		
+		Handler other = (Handler) another;
+		
+		if (this.toString().equals(other.toString())) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Method that obtains hasCode of handler
+	 * @return hasCode of handler
+	 */
+	@Override
+	public int hashCode() {
+		return 1 * 17 + id.hashCode();
+	}
+
+    /**
+     * To String class method
+     */
+    @Override
+    public String toString() {
+        return this.id;
+    }
+
+    /**
+     * Getter id
+     * 
+     * @return
+     */
+    public String getId() {
+        return this.id;
+    }
 
     /**
      * Method that obtains the code from the date
      */
-    private String setDateCode(Calendar calendar) {
-        return calendar.get(Calendar.DAY_OF_MONTH)
-                + Integer.toString(calendar.get(Calendar.MONTH) + 1)
-                + calendar.get(Calendar.YEAR)
-                + calendar.get(Calendar.HOUR_OF_DAY)
-                + calendar.get(Calendar.MINUTE)
-                + calendar.get(Calendar.SECOND);
+    private void setDateCode() {
+        this.date = this.calendar.get(Calendar.DAY_OF_MONTH)
+                + Integer.toString(this.calendar.get(Calendar.MONTH) + 1)
+                + this.calendar.get(Calendar.YEAR)
+                + this.calendar.get(Calendar.HOUR_OF_DAY)
+                + this.calendar.get(Calendar.MINUTE)
+                + this.calendar.get(Calendar.SECOND);
     }
 }

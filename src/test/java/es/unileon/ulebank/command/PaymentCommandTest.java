@@ -13,7 +13,6 @@ import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.client.Person;
 import es.unileon.ulebank.client.PersonHandler;
 import es.unileon.ulebank.command.handler.CommandHandler;
-import es.unileon.ulebank.domain.Cards;
 import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.exceptions.CommissionException;
 import es.unileon.ulebank.exceptions.TransactionException;
@@ -22,6 +21,7 @@ import es.unileon.ulebank.handler.MalformedHandlerException;
 import es.unileon.ulebank.history.conditions.WrongArgsException;
 import es.unileon.ulebank.office.Office;
 import es.unileon.ulebank.office.OfficeHandler;
+import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.DebitCard;
 import es.unileon.ulebank.payments.exceptions.PaymentException;
 import es.unileon.ulebank.payments.handler.CardHandler;
@@ -34,7 +34,7 @@ public class PaymentCommandTest {
     private Handler accountHandler;
     private Client client;
     private Account account;
-    private Cards card1;
+    private Card card1;
     private PaymentCommand test;
     private Bank bank;
 

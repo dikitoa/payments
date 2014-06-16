@@ -1,20 +1,18 @@
 package es.unileon.ulebank.web;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import es.unileon.ulebank.command.Command;
-import es.unileon.ulebank.command.ModifyBuyLimitCommand;
-import es.unileon.ulebank.handler.Handler;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import es.unileon.ulebank.service.CardManager;
 import es.unileon.ulebank.service.ChangeLimit;
 
@@ -36,8 +34,6 @@ public class ChangeBuyLimitsFormController {
      */
     @Autowired
     private CardManager cardManager;
-    
-    private Handler cardId;
 
     /**
      * Method that obtains the data of the form in buyLimits.jsp and save the changes in the card
@@ -57,13 +53,10 @@ public class ChangeBuyLimitsFormController {
         int monthlyLimit = (int) changeLimit.getMonthlyLimit();
         logger.info("Modified diary limit: " + diaryLimit + "Euros.");
         logger.info("Modified monthly limit: " + monthlyLimit + "Euros.");
-        
-        Command buyLimitsDiary = new ModifyBuyLimitCommand(cardId, this.cardManager.findCard(cardId.toString()), diaryLimit, "diary");
-		Command buyLimitsMonthly = new ModifyBuyLimitCommand(cardId, this.cardManager.findCard(cardId.toString()), monthlyLimit, "monthly");
-		buyLimitsMonthly.execute();
-		buyLimitsDiary.execute();
 
-        return "redirect:/changeLimits.htm";
+        cardManager.changeBuyLimits(diaryLimit, monthlyLimit);
+
+        return "redirect:/hello.htm";
     }
 
     /**
@@ -74,10 +67,9 @@ public class ChangeBuyLimitsFormController {
      */
     @RequestMapping(method = RequestMethod.GET)
     protected ChangeLimit formBackingObject(HttpServletRequest request) throws ServletException {
-    	request.getAttribute("cardId");
         ChangeLimit changeLimit = new ChangeLimit();
-        changeLimit.setDiaryLimit((int) this.cardManager.findCard(cardId.toString()).getBuyLimitDiary());
-        changeLimit.setMonthlyLimit((int) this.cardManager.findCard(cardId.toString()).getBuyLimitMonthly());
+        changeLimit.setDiaryLimit((int) this.cardManager.getCard().getBuyLimitDiary());
+        changeLimit.setMonthlyLimit((int) this.cardManager.getCard().getBuyLimitMonthly());
         return changeLimit;
     }
 

@@ -20,6 +20,9 @@
 		<nav class="menu">
 			<ul>
 				<li>
+					<a href="<c:url value="hello.htm"/>">Datos Tarjeta</a>
+				</li>
+				<li>
 					<a href="<c:url value="createcard.htm"/>">Nueva Tarjeta</a>
 				</li>
 				<li>

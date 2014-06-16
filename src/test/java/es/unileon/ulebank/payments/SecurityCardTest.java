@@ -12,7 +12,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import es.unileon.ulebank.client.Person;
-import es.unileon.ulebank.domain.Cards;
 import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.handler.MalformedHandlerException;
 import es.unileon.ulebank.payments.exceptions.SecurityCardException;
@@ -26,7 +25,7 @@ import es.unileon.ulebank.utils.CardProperties;
  */
 public class SecurityCardTest {
 
-	public Cards card;
+	public Card card;
 	public SecurityCard secCard;
 	public SecurityCard secCard2;
 

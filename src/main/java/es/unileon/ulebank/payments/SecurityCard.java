@@ -3,7 +3,6 @@ package es.unileon.ulebank.payments;
 import java.io.IOException;
 import java.util.Random;
 
-import es.unileon.ulebank.domain.Cards;
 import es.unileon.ulebank.payments.exceptions.PaymentException;
 import es.unileon.ulebank.payments.exceptions.SecurityCardException;
 import es.unileon.ulebank.utils.CardProperties;
@@ -37,14 +36,14 @@ public class SecurityCard {
     /**
      * Card which owns this security card
      */
-    private final Cards associatedCard;
+    private final Card associatedCard;
 
     /**
      * @throws IOException
      * @throws NumberFormatException
      * @brief Security Card constructor
      */
-    public SecurityCard(Cards card) throws PaymentException {
+    public SecurityCard(Card card) throws PaymentException {
         this.setDefaultRow();
         this.setDefaultColumns();
         this.coordinates = new Integer[this.row][this.columns];
@@ -130,7 +129,7 @@ public class SecurityCard {
      * 
      * @return associatedCard
      */
-    public Cards getAssociatedCard() {
+    public Card getAssociatedCard() {
         return this.associatedCard;
     }
 

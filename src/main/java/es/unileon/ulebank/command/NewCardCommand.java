@@ -4,15 +4,14 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.command.handler.CommandHandler;
-import es.unileon.ulebank.domain.Accounts;
-import es.unileon.ulebank.domain.Cards;
-import es.unileon.ulebank.domain.Offices;
 import es.unileon.ulebank.exceptions.CommandException;
-import es.unileon.ulebank.fees.InvalidFeeException;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.handler.MalformedHandlerException;
+import es.unileon.ulebank.office.Office;
+import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.CardType;
 import es.unileon.ulebank.payments.CreditCard;
 import es.unileon.ulebank.payments.DebitCard;
@@ -25,12 +24,11 @@ public class NewCardCommand implements Command {
     /**
      * Logger de la clase
      */
-    private static final Logger LOG = Logger.getLogger(NewCardCommand.class
-            .getName());
+    private static final Logger LOG = Logger.getLogger(NewCardCommand.class.getName());
     /**
      * Tarjeta que se va a crear
      */
-    private Cards card;
+    private Card card;
     /**
      * Identificador del comando
      */
@@ -38,11 +36,11 @@ public class NewCardCommand implements Command {
     /**
      * Cuenta a la que se ha de asociar la tarjeta
      */
-    private final Accounts account;
+    private final Account account;
     /**
      * Oficina en la que esta la cuenta a la que se va a asociar la tarjeta
      */
-    private final Offices office;
+    private final Office office;
     /**
      * Tipo de tarjeta a crear
      */
@@ -57,9 +55,7 @@ public class NewCardCommand implements Command {
     private final Client client;
 
     /**
-     * Constructor del comando que recibe los datos necesarios para crear una
-     * tarjeta
-     * 
+     * Constructor del comando que recibe los datos necesarios para crear una tarjeta
      * @param office
      * @param client
      * @param account
@@ -68,16 +64,15 @@ public class NewCardCommand implements Command {
      * @param cardId
      * @throws CommandException
      */
-    public NewCardCommand(Offices office, Client client, Accounts account,
-            CardType cardType, String officeId, String cardId)
-            throws CommandException {
+    public NewCardCommand(Office office, Client client, Account account,
+            CardType cardType, String officeId, String cardId) throws CommandException {
         this.office = office;
         this.account = account;
         this.client = client;
         try {
             this.cardHandler = new CardHandler(cardId);
         } catch (MalformedHandlerException e) {
-            LOG.log(Level.SEVERE, e.getMessage());
+            LOG.log(Level.SEVERE, e.getMessage(),e);
         }
         this.cardType = cardType.toString();
         this.id = new CommandHandler(this.cardHandler);
@@ -85,8 +80,7 @@ public class NewCardCommand implements Command {
 
     /**
      * Realiza la creacion de la tarjeta con todos los parametros necesarios
-     * 
-     * @throws CommandException
+     * @throws CommandException 
      * 
      * @throws InvalidFeeException
      * @throws ClientNotFoundException
@@ -103,9 +97,9 @@ public class NewCardCommand implements Command {
             } else if ("DEBIT".equalsIgnoreCase(this.cardType)) {
                 this.card = new DebitCard(this.cardHandler, this.client,
                         this.account);
-            }
+            } 
         } catch (NumberFormatException e) {
-            LOG.log(Level.SEVERE, e.getMessage());
+        	LOG.log(Level.SEVERE, e.getMessage());
             throw new NumberFormatException(e.getMessage());
         }
 
@@ -116,16 +110,16 @@ public class NewCardCommand implements Command {
 
     /**
      * Deshace la creacion de la tarjeta
-     * 
-     * @throws CommandException
+     * @throws CommandException 
      * 
      * @throws ClientNotFoundException
      */
     @Override
     public void undo() throws CommandException {
         CancelCardCommand cancel;
-        cancel = new CancelCardCommand(this.cardHandler, this.office,
-                this.client.getGenericHandler(), this.account.getHandler());
+        cancel = new CancelCardCommand(
+                this.cardHandler, this.office, this.client.getId(),
+                this.account.getID());
         cancel.execute();
     }
 

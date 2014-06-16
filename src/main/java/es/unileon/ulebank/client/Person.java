@@ -5,31 +5,13 @@ package es.unileon.ulebank.client;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import es.unileon.ulebank.handler.MalformedHandlerException;
 
 /**
  *
  * @author Gonzalo
  */
-@Entity
-@Table(name = "CLIENTS", catalog = "ULEBANK_FINAL")
-@DiscriminatorColumn(name = "discriminator", discriminatorType = DiscriminatorType.STRING)
-@DiscriminatorValue(value = "Person")
 public class Person extends Client {
-
-    /**
-     * Serial version uid
-     */
-    private static final long serialVersionUID = 1L;
 
     /**
      * Name of the person
@@ -44,7 +26,7 @@ public class Person extends Client {
     /**
      * address of the person
      */
-    private String address;
+    private Address address;
 
     /**
      * marritage state of the person
@@ -52,14 +34,10 @@ public class Person extends Client {
     private String civilState;
 
     /**
-     * phone numbers 1
+     * phone numbers of the person
      */
-    private int phoneNumber1;
+    private final int[] phoneNumbers;
 
-    /**
-     * phone number 2
-     */
-    private int phoneNumber2;
     /**
      * proffesion of the person
      */
@@ -69,6 +47,10 @@ public class Person extends Client {
      * birth date of the person
      */
     private Date birthDate;
+    /**
+     * Person age
+     */
+    private int age;
 
     /**
      * creates a new Person instance with only the dni
@@ -80,6 +62,7 @@ public class Person extends Client {
     public Person(int dniNumber, char dniLetter)
             throws MalformedHandlerException {
         super(new PersonHandler(dniNumber, dniLetter));
+        this.phoneNumbers = new int[2];
     }
 
     /**
@@ -92,17 +75,13 @@ public class Person extends Client {
     public Person(char foreingLetter, int dniNumber, char dniLetter)
             throws MalformedHandlerException {
         super(new PersonHandler(foreingLetter, dniNumber, dniLetter));
-    }
-
-    public Person() {
-
+        this.phoneNumbers = new int[2];
     }
 
     /**
      *
      * @return the name of the person
      */
-    @Column(name = "name", length = 64)
     public String getName() {
         return this.name;
     }
@@ -120,7 +99,6 @@ public class Person extends Client {
      * 
      * @return the surnames of the person
      */
-    @Column(name = "surnames", length = 64)
     public String getSurnames() {
         return this.surnames;
     }
@@ -138,8 +116,7 @@ public class Person extends Client {
      * 
      * @return the address of the person
      */
-    @Column(name = "address", nullable = false, length = 256)
-    public String getAddress() {
+    public Address getAddress() {
         return this.address;
     }
 
@@ -148,7 +125,7 @@ public class Person extends Client {
      * 
      * @param address
      */
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 
@@ -156,7 +133,6 @@ public class Person extends Client {
      * 
      * @return the marital status of the person
      */
-    @Column(name = "civil_state", length = 2)
     public String getCivilState() {
         return this.civilState;
     }
@@ -176,30 +152,10 @@ public class Person extends Client {
      * @return the phone number of the person in pos
      */
     public int getPhoneNumber(int pos) {
-        if (pos == 1) {
-            return this.phoneNumber1;
-        } else if (pos == 2) {
-            return this.phoneNumber2;
+        if ((pos <= 1) && (pos >= 0)) {
+            return this.phoneNumbers[pos];
         }
         return 0;
-    }
-
-    @Column(name = "phone_number1")
-    public int getPhoneNumber1() {
-        return phoneNumber1;
-    }
-
-    public void setPhoneNumber1(int phoneNumber1) {
-        this.phoneNumber1 = phoneNumber1;
-    }
-
-    @Column(name = "phone_number2")
-    public int getPhoneNumber2() {
-        return phoneNumber2;
-    }
-
-    public void setPhoneNumber2(int phoneNumber2) {
-        this.phoneNumber2 = phoneNumber2;
     }
 
     /**
@@ -209,10 +165,8 @@ public class Person extends Client {
      * @param phoneNumbers
      */
     public void replacePhoneNumber(int pos, int phoneNumbers) {
-        if (pos == 1) {
-            this.phoneNumber1 = phoneNumbers;
-        } else if (pos == 2) {
-            this.phoneNumber2 = phoneNumbers;
+        if ((pos <= 1) && (pos >= 0)) {
+            this.phoneNumbers[pos] = phoneNumbers;
         }
     }
 
@@ -229,7 +183,6 @@ public class Person extends Client {
      * 
      * @return the profession of the person
      */
-    @Column(name = "profession", length = 64)
     public String getProfession() {
         return this.profession;
     }
@@ -247,8 +200,6 @@ public class Person extends Client {
      * 
      * @return the birth date of the person
      */
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "birth_date", length = 19)
     public Date getBirthDate() {
         return this.birthDate;
     }
@@ -260,5 +211,23 @@ public class Person extends Client {
      */
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
+    }
+
+    /**
+     * Returns person age
+     * 
+     * @return
+     */
+    public int getAge() {
+        return this.age;
+    }
+
+    /**
+     * Changes person age with received age
+     * 
+     * @param age
+     */
+    public void setAge(int age) {
+        this.age = age;
     }
 }

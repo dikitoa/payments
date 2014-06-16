@@ -1,42 +1,50 @@
 package es.unileon.ulebank.service;
 
-import java.util.List;
+import java.io.Serializable;
 
-import es.unileon.ulebank.domain.Cards;
+import es.unileon.ulebank.exceptions.CommandException;
+import es.unileon.ulebank.payments.Card;
 
 /**
- * Interface that provides Cards data access
- * @author isra
+ * Card Manager Interface
+ * @author Rober dCR
+ * @date 10/05/2014
+ * @brief Interface for the managers used to modify card attributes
  */
-public interface CardManager {
+public interface CardManager extends Serializable {
+
+	/**
+	 * Method that changes the buy limits using the command with the limits from buyLimits.jsp
+	 * @param diary amount limit
+	 * @param monthly amount limit
+	 * @throws Exception 
+	 */
+    public void changeBuyLimits(double diary, double monthly) throws Exception;
+    
     /**
-     * Save received Cards
-     * @param Cards
+     * Method that changes the cash limits using the command with the limits from cashLimits.jsp
+     * @param diary amount limit
+     * @param monthly amount limit
+     * @throws Exception 
+     */
+    public void changeCashLimits(double diary, double monthly) throws Exception;
+    
+    /**
+     * Method that returns the card of the management
      * @return
      */
-    public boolean saveCard(Cards Cards);
+    public Card getCard();
     /**
-     * Removes Cards with received String
-     * @param cardId
-     * @return
+     * 
+     * @param feeChange
+     * @throws CommandException
      */
-    public boolean removeCard(Cards Cards);
+    public void changeFee(int feeChange) throws CommandException;
+    
     /**
-     * Searches Cards with received ID
-     * @param cardId
-     * @return
+     * 
+     * @param card
      */
-    public Cards findCard(String cardId);
-    /**
-     * Return Cards client list
-     * @param dni
-     * @return
-     */
-    public List<Cards> getCardClientList(String dni);
-    /**
-     * Return Cards account list
-     * @param accountNumber
-     * @return
-     */
-    public List<Cards> getCardAccountList(String accountNumber);
+    public void modifyPin(Card card);
+
 }

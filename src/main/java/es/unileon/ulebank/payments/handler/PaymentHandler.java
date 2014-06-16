@@ -3,12 +3,6 @@ package es.unileon.ulebank.payments.handler;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.handler.MalformedHandlerException;
 
@@ -20,79 +14,111 @@ import es.unileon.ulebank.handler.MalformedHandlerException;
  * @brief Identifier of Payment formed by the 4 last numbers of Card Handler,
  *        and 11 numbers of the month, year and complete hour.
  */
-@Entity
-@Table(name = "GENERIC_HANDLER", catalog = "ULEBANK_FINAL")
-@DiscriminatorColumn(name = "discriminator", discriminatorType = DiscriminatorType.STRING)
-@DiscriminatorValue(value = "PaymentHandler")
-public class PaymentHandler extends Handler {
+public class PaymentHandler implements Handler {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
-    /**
-     * Length of the command identifier
-     */
-    private static final int LENGTH = 15;
-    /**
-     * Posicion del numero de tarjeta a partir de la cual obtenemos la subcadena
-     */
-    private static final int POSITION_CARD = 15;
-    /**
-     * Longitud de los numeros obtenidos del handler de la tarjeta
-     */
-    private static final int NUMBER_INITIALS = 4;
+	/**
+	 * Posicion del numero de tarjeta a partir de la cual obtenemos la subcadena
+	 */
+	private static final int POSITION_CARD = 15;
 
-    /**
-     * Class constructor
-     * 
-     * @param handler
-     * @throws MalformedHandlerException
-     * @throws PaymentHandlerException
-     */
-    public PaymentHandler(Handler handler, Date date)
-            throws MalformedHandlerException {
-        this.setId(this.obtainInitials(handler) + this.obtainFinals(date));
-        if (this.getId().length() != PaymentHandler.LENGTH) {
-            throw new MalformedHandlerException(
-                    "Length of payment handler incorrect.");
-        }
-    }
+	/**
+	 * Command Identifier
+	 */
+	private final String id;
 
-    public PaymentHandler() {
-    }
+	/**
+	 * Class constructor
+	 * @param handler
+	 * @param date
+	 * @throws MalformedHandlerException
+	 */
+	public PaymentHandler(Handler handler, Date date) {
+		this.id = this.obtainInitials(handler) + this.obtainFinals(date);
+	}
 
+	/**
+	 * Compara el identificador actual con el que se indica
+	 * @param another
+	 * @return devuelve un 0 si son iguales
+	 * @return devuelve otro numero si son distintos
+	 */
+	@Override
+	public int compareTo(Handler another) {
+		return this.toString().compareTo(another.toString());
+	}
+	
+	/**
+	 * Compare two identifiers and determine if are equals or not
+	 * 
+	 * @param another
+	 * @return true if are equals
+	 * @return false if aren't equals
+	 */
+	@Override
+	public boolean equals(Object another) {
+		if (another == null) {
+			return false;
+		}
+		
+		if (another.getClass() != getClass()) {
+			return false;
+		}
+		
+		Handler other = (Handler) another;
+		
+		if (this.toString().equals(other.toString())) {
+			return true;
+		}
+		return false;
+	}
 
-    /**
-     * @brief Method that obtains the first 4 numbers of the handler
-     * @param cardNumber
-     * @return 4 initials
-     * @throws MalformedHandlerException
-     */
-    private String obtainInitials(Handler cardNumber)
-            throws MalformedHandlerException {
-        if (cardNumber.toString().substring(PaymentHandler.POSITION_CARD)
-                .length() == PaymentHandler.NUMBER_INITIALS) {
-            return cardNumber.toString()
-                    .substring(PaymentHandler.POSITION_CARD);
-        } else {
-            throw new MalformedHandlerException(
-                    "Longitud de los numeros iniciales incorrecta");
-        }
-    }
+	/**
+	 * Method that obtains hasCode of handler
+	 * @return hasCode of handler
+	 */
+	@Override
+	public int hashCode() {
+		return 1 * 17 + id.hashCode();
+	}
 
-    /**
-     * Method that obtains the 11 final numbers
-     * 
-     * @param date
-     * @return
-     */
-    private String obtainFinals(Date date) {
-        final SimpleDateFormat format = new SimpleDateFormat("MMyyHHmmSS");
-        if (format.format(date).length() < 11) {
-            return "0" + format.format(date);
-        } else {
-            return format.format(date);
-        }
-    }
+	/**
+	 * @brief Method that obtains the first 4 numbers of the handler
+	 * @param cardNumber
+	 * @return 4 initials
+	 */
+	private String obtainInitials(Handler cardNumber) {
+		return cardNumber.toString().substring(PaymentHandler.POSITION_CARD);
+	}
+
+	/**
+	 * Method that obtains the 11 final numbers
+	 * @param date
+	 * @return final id of the handler
+	 */
+	private String obtainFinals(Date date) {
+		final SimpleDateFormat format = new SimpleDateFormat("MMyyHHmmSS");
+		if (format.format(date).length() < 11) {
+			return "0" + format.format(date);
+		} else {
+			return format.format(date);
+		}
+	}
+
+	/**
+	 * To String class method
+	 * @return this handler in string
+	 */
+	@Override
+	public String toString() {
+		return this.id;
+	}
+
+	/**
+	 * Getter of id
+	 * @return id
+	 */
+	public String getId() {
+		return this.id;
+	}
+
 }

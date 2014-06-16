@@ -17,7 +17,7 @@ import es.unileon.ulebank.handler.Handler;
 public final class TransactionHandlerProvider {
 
     private static final SimpleDateFormat FORMAT = new SimpleDateFormat(
-            "yyyyMMddssmmmm");
+            "yyyyMMdd");
     private static String lastTimestamp = "";
     private static long currentId = 0;
 

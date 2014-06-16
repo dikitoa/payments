@@ -16,8 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import es.unileon.ulebank.domain.Cards;
-import es.unileon.ulebank.handler.Handler;
+import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.service.CardManager;
 
 @Controller
@@ -29,14 +28,12 @@ public class CardController {
     /**
      * Objeto tarjeta del que se modificaran los datos
      */
-    private Cards card;
+    private Card card;
     /**
      * Manejador de las tarjetas
      */
     @Autowired
     private CardManager cardManager;
-    
-    private Handler cardId;
 
     /**
      * Metodo que crea el modelo y vista para hello.htm
@@ -49,15 +46,12 @@ public class CardController {
     @RequestMapping(value="/hello.htm", method = RequestMethod.GET)
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	card = cardManager.findCard(cardId.toString());
+    	card = cardManager.getCard();
 
         Map<String, Object> myModel = new HashMap<String, Object>();
-        myModel.put("id", this.card.getId());
-        myModel.put("pin", this.card.getPin());
-        myModel.put("expirationDate", this.card.getExpirationDate());
-        myModel.put("buyLimitDiary",this.card.getBuyLimitDiary());
+        myModel.put("card", this.cardManager.getCard());
 
-        return new ModelAndView("hello", "card", myModel);
+        return new ModelAndView("hello", "model", myModel);
     }
     
     /**
@@ -72,7 +66,7 @@ public class CardController {
      * Metodo que asigna a nuestra tarjeta una tarjeta pasada por parametro
      * @param card
      */
-    public void setCard(Cards card) {
+    public void setCard(Card card) {
         this.card = card;
     }
     
@@ -80,7 +74,7 @@ public class CardController {
      * Metodo que obtiene la tarjeta del controlador
      * @return tarjeta
      */
-    public Cards getCard(){
+    public Card getCard(){
     	return this.card;
     }
 }

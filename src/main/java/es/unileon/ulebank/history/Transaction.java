@@ -5,22 +5,9 @@
  */
 package es.unileon.ulebank.history;
 
-import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
+import es.unileon.ulebank.account.DetailedInformation;
 import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.handler.Handler;
 
@@ -28,22 +15,15 @@ import es.unileon.ulebank.handler.Handler;
  *
  * @author roobre
  */
-@Entity
-@Table(name = "TRANSACTIONS", catalog = "ULEBANK_FINAL")
-@DiscriminatorColumn(name = "discriminator", discriminatorType = DiscriminatorType.STRING)
-public abstract class Transaction implements Serializable {
+public abstract class Transaction {
 
-    /**
-     * the serial id
-     */
-    private static final long serialVersionUID = 1L;
-    private Handler id;
-    private double amount;
-    private Date date;
+    private final Handler id;
+    private final double amount;
+    private final Date date;
     private Date effectiveDate;
-    private String subject;
-    private String extraInformation;
-//    private Collection<History<Transaction>> histories;
+    private final String subject;
+    private final DetailedInformation extraInformation;
+
     /**
      *
      * @param amount
@@ -52,11 +32,7 @@ public abstract class Transaction implements Serializable {
      */
     public Transaction(double amount, Date date, String subject)
             throws TransactionException {
-        this(amount, date, subject, "");
-    }
-
-    public Transaction() {
-
+        this(amount, date, subject, new DetailedInformation(""));
     }
 
     /**
@@ -66,8 +42,8 @@ public abstract class Transaction implements Serializable {
      * @param subject
      * @param info
      */
-    public Transaction(double amount, Date date, String subject, String info)
-            throws TransactionException {
+    public Transaction(double amount, Date date, String subject,
+            DetailedInformation info) throws TransactionException {
         this.id = TransactionHandlerProvider.getTransactionHandler();
         final StringBuilder err = new StringBuilder();
 
@@ -97,39 +73,19 @@ public abstract class Transaction implements Serializable {
         this.date = date;
         this.subject = subject;
         this.extraInformation = info;
+        this.extraInformation.doFinal();
     }
 
-    @Id
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", nullable = false)
+    /**
+     * @return the id
+     */
     public Handler getId() {
         return this.id;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public void setExtraInformation(String extraInformation) {
-        this.extraInformation = extraInformation;
-    }
-
-    public void setId(Handler id) {
-        this.id = id;
     }
 
     /**
      * @return the amount
      */
-    @Column(name = "amount", nullable = false, precision = 22, scale = 0)
     public double getAmount() {
         return this.amount;
     }
@@ -137,8 +93,6 @@ public abstract class Transaction implements Serializable {
     /**
      * @return the date
      */
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "date", nullable = false, length = 19)
     public Date getDate() {
         return this.date;
     }
@@ -146,8 +100,6 @@ public abstract class Transaction implements Serializable {
     /**
      * @return the effectiveDate
      */
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "effective_date", nullable = false, length = 19)
     public Date getEffectiveDate() {
         return this.effectiveDate;
     }
@@ -155,7 +107,6 @@ public abstract class Transaction implements Serializable {
     /**
      * @return the subject
      */
-    @Column(name = "subject", nullable = false, length = 64)
     public String getSubject() {
         return this.subject;
     }
@@ -168,23 +119,9 @@ public abstract class Transaction implements Serializable {
         this.effectiveDate = effectiveDate;
     }
 
-    @Column(name = "extra_information", nullable = false, length = 64)
-    public String getExtraInformation() {
+    public DetailedInformation getDetailedInformation() {
         return this.extraInformation;
     }
-    
-    
-//    private Collection<History<Transaction>> histories;
-//    
-//    @OneToMany(targetEntity = History.class, fetch = FetchType.LAZY)
-//    @JoinTable(name = "HISTORY_TRANSACTIONS", catalog = "ULEBANK_FINAL", joinColumns = { @JoinColumn(name = "transaction_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "history_id", nullable = false, updatable = false) })
-//    public Collection<History<Transaction>> getHistories() {
-//        return this.histories;
-//    }
-//    
-//    public void setHistories(Collection<History<Transaction>> histories) {
-//        this.histories = histories;
-//    }
 
     /**
      *

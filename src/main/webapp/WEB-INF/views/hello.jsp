@@ -19,6 +19,9 @@
 		<nav class="menu">
 			<ul>
 				<li>
+					<a href="<c:url value="hello.htm"/>">Datos Tarjeta</a>
+				</li>
+				<li>
 					<a href="<c:url value="createcard.htm"/>">Nueva Tarjeta</a>
 				</li>
 				<li>
@@ -41,13 +44,21 @@
  			<b class="titleContent">
  				<fmt:message key="heading-hello"/>
     		</b>
-    	</div> 
-    	<h3>Cards</h3>		
-    	<b>Numero de tarjeta: ${card.cardNumber} </b>
-    	<b>PIN: ${card.pin}</b>
-<%--     <b>Fecha de Caducidad: ${model.expirationDate}</b> --%>
-<%--     <b>Limite Diario: ${model.buyLimitDiary}</b> --%>
-		<br>
+    	</div> 	
+    	<b>Numero de tarjeta:</b> ${model.card.getId().toString()} 
+    	<br/>
+    	<b>PIN:</b> ${model.card.getPin()}
+    	<br/>
+		<b>Fecha de Caducidad:</b> ${model.card.getExpirationDate()}
+		<br/>
+     	<b>Limite Compras Diario:</b> ${model.card.getBuyLimitDiary()} &euro;
+		<br/>
+     	<b>Limite Compras Mensual:</b> ${model.card.getBuyLimitMonthly()} &euro;
+     	<br/>
+     	<b>Limite Efectivo Diario:</b> ${model.card.getCashLimitDiary()} &euro;
+		<br/>
+     	<b>Limite Efectivo Mensual:</b> ${model.card.getCashLimitMonthly()} &euro;
+		<br/>
     </div> 
   </body>
 </html>

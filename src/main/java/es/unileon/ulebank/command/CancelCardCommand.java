@@ -3,11 +3,10 @@ package es.unileon.ulebank.command;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.command.handler.CommandHandler;
-import es.unileon.ulebank.domain.Accounts;
-import es.unileon.ulebank.domain.Offices;
-import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.handler.Handler;
+import es.unileon.ulebank.office.Office;
 
 /**
  * @author Israel Comando para realizar la cancelacion de la tarjeta
@@ -16,20 +15,19 @@ public class CancelCardCommand implements Command {
 	 /**
      * Logger de la clase
      */
-    private static final Logger LOG = Logger
-            .getLogger(CancelCardCommand.class.getName());
+    private static final Logger LOG = Logger.getLogger(CancelCardCommand.class.getName());
     /**
      * Identificador del comando
      */
-    private Handler id;
+    private final Handler id;
     /**
      * Identificador de la tarjeta a cancelar
      */
-    private Handler cardId;
+    private final Handler cardId;
     /**
      * Cuenta a la que esta asociada la tarjeta que se va a cancelar
      */
-    private Accounts account;
+    private final Account account;
 
     /**
      * Constructor de la clase
@@ -38,17 +36,16 @@ public class CancelCardCommand implements Command {
      * @param office
      * @param dni
      * @param account
-     * @throws ClientNotFoundException
      */
-    public CancelCardCommand(Handler cardId, Offices office, Handler dni,
+    public CancelCardCommand(Handler cardId, Office office, Handler dni,
             Handler account) {
         this.id = new CommandHandler(cardId);
         this.cardId = cardId;
+        this.account = office.searchClient(dni).searchAccount(account);
     }
 
     /**
      * Realiza la cancelacion de la tarjeta
-     * @throws CommandException 
      */
     @Override
     public void execute() {
@@ -62,6 +59,7 @@ public class CancelCardCommand implements Command {
 
     /**
      * Operacion no soportada, no se puede deshacer una cancelacion
+     * @throws UnsupportedOperationException
      */
     @Override
     public void undo() {
@@ -71,6 +69,7 @@ public class CancelCardCommand implements Command {
     /**
      * Operacion no soportada, como no se puede deshacer una cancelacion tampoco
      * se puede rehacer
+     * @throws UnsupportedOperationException
      */
     @Override
     public void redo() {

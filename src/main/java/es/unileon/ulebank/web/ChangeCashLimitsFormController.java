@@ -1,20 +1,18 @@
 package es.unileon.ulebank.web;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import es.unileon.ulebank.command.Command;
-import es.unileon.ulebank.command.ModifyCashLimitCommand;
-import es.unileon.ulebank.handler.Handler;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import es.unileon.ulebank.service.CardManager;
 import es.unileon.ulebank.service.ChangeLimit;
 
@@ -36,8 +34,6 @@ public class ChangeCashLimitsFormController {
      */
     @Autowired
     private CardManager cardManager;
-    
-    private Handler cardId;
 
     /**
      * Method that obtains the data of the form in cashLimits.jsp and save the changes in the card
@@ -57,13 +53,10 @@ public class ChangeCashLimitsFormController {
         int monthlyLimit = (int) changeLimit.getMonthlyLimit();
         logger.info("Modified diary limit: " + diaryLimit + "Euros.");
         logger.info("Modified monthly limit: " + monthlyLimit + "Euros.");
-        
-        Command cashLimitsDiary = new ModifyCashLimitCommand(cardId, this.cardManager.findCard(cardId.toString()), diaryLimit, "diary");
-		Command cashLimitsMonthly = new ModifyCashLimitCommand(cardId, this.cardManager.findCard(cardId.toString()), monthlyLimit, "monthly");
-		cashLimitsMonthly.execute();
-		cashLimitsDiary.execute();
 
-        return "redirect:/changeLimits.htm";
+        cardManager.changeCashLimits(diaryLimit, monthlyLimit);
+
+        return "redirect:/hello.htm";
     }
 
     /**
@@ -75,8 +68,8 @@ public class ChangeCashLimitsFormController {
     @RequestMapping(method = RequestMethod.GET)
     protected ChangeLimit formBackingObject(HttpServletRequest request) throws ServletException {
         ChangeLimit changeLimit = new ChangeLimit();
-        changeLimit.setDiaryLimit((int) this.cardManager.findCard(cardId.toString()).getCashLimitDiary());
-        changeLimit.setMonthlyLimit((int) this.cardManager.findCard(cardId.toString()).getCashLimitMonthly());
+        changeLimit.setDiaryLimit((int) this.cardManager.getCard().getCashLimitDiary());
+        changeLimit.setMonthlyLimit((int) this.cardManager.getCard().getCashLimitMonthly());
         return changeLimit;
     }
 

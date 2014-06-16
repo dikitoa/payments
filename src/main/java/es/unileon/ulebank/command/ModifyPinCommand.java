@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import org.apache.log4j.Logger;
 
-import es.unileon.ulebank.domain.Cards;
 import es.unileon.ulebank.handler.Handler;
+import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.exceptions.PaymentException;
 
 /**
@@ -24,7 +24,7 @@ public class ModifyPinCommand implements Command {
 	/**
 	 * Tarjeta cuyo PIN vamos a modificar
 	 */
-	private Cards card;
+	private Card card;
 	/**
 	 * PIN que se va a modificar
 	 */
@@ -41,8 +41,8 @@ public class ModifyPinCommand implements Command {
 	 * @param cardId
 	 * @param newPin
 	 */
-	public ModifyPinCommand(Cards card, String pin) {
-		this.id = card.getGenericHandler();
+	public ModifyPinCommand(Card card, String pin) {
+		this.id = card.getId();
 		this.card = card;
 		this.newPin = pin;
 //		this.cM = cardManager;

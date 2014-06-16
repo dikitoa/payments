@@ -21,6 +21,9 @@
 		<nav class="menu">
 			<ul>
 				<li>
+					<a href="<c:url value="hello.htm"/>">Datos Tarjeta</a>
+				</li>
+				<li>
 					<a href="<c:url value="createcard.htm"/>">Nueva Tarjeta</a>
 				</li>
 				<li>
@@ -45,7 +48,7 @@
     		</div> 	
 		
 			<form:form method="post" commandName="feeChange">
-  				<table width="95%" bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
+  				<table width="95%" border="0" cellspacing="0" cellpadding="5">
 		    		<tr>
       					<td align="right" width="20%">Change Fee:</td>
         				<td width="20%">

@@ -1,13 +1,12 @@
 package es.unileon.ulebank.command;
 
 import java.util.logging.Level;
-
 import java.util.logging.Logger;
 
 import es.unileon.ulebank.command.handler.CommandHandler;
-import es.unileon.ulebank.domain.Cards;
 import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.handler.Handler;
+import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.payments.exceptions.PaymentException;
 
@@ -50,7 +49,7 @@ public class ModifyBuyLimitCommand implements Command {
     /**
      * Objeto tarjeta del que se modificaran los datos
      */
-    private final Cards card;
+    private final Card card;
     /**
      * Cantidad nueva a modificar
      */
@@ -80,7 +79,7 @@ public class ModifyBuyLimitCommand implements Command {
      * @param amount
      * @param type
      */
-    public ModifyBuyLimitCommand(Handler cardId, Cards card, double amount,
+    public ModifyBuyLimitCommand(Handler cardId, Card card, double amount,
             String type) {
         this.id = new CommandHandler(cardId);
         this.card = card;

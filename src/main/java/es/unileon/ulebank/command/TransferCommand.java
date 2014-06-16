@@ -2,11 +2,11 @@ package es.unileon.ulebank.command;
 
 import java.util.logging.Logger;
 
+import es.unileon.ulebank.account.Account;
 import es.unileon.ulebank.command.handler.CommandHandler;
-import es.unileon.ulebank.domain.Accounts;
-import es.unileon.ulebank.domain.Offices;
 import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.handler.Handler;
+import es.unileon.ulebank.office.Office;
 import es.unileon.ulebank.payments.Transfer;
 import es.unileon.ulebank.payments.exceptions.TransferException;
 
@@ -18,143 +18,143 @@ import es.unileon.ulebank.payments.exceptions.TransferException;
  * @brief Command with which can make a transfer between two accounts
  */
 public class TransferCommand implements Command {
-	/**
-	 * Class Logger
-	 */
-	private static final Logger LOG = Logger.getLogger(TransferCommand.class
-			.getName());
-	/**
-	 * Identifier of the command
-	 */
-	private Handler id;
-	/**
-	 * Account which makes the transfer
-	 */
-	private Accounts accountSender;
-	/**
-	 * Account which receives the amount
-	 */
-	private Accounts accountReceiver;
-	/**
-	 * Quantity of the transfer
-	 */
-	private double amount;
-	/**
-	 * Concept of the transfer
-	 */
-	private String concept;
-	/**
-	 * Variable para saber si el comando ha sido ejecutado o no
-	 */
-	private boolean executed = false;
-	/**
-	 * Variable para saber si el comando ha sido deshecho o no
-	 */
-	private boolean undone = false;
+    /**
+     * Class Logger
+     */
+    private static final Logger LOG = Logger
+            .getLogger(TransferCommand.class.getName());
+    /**
+     * String of incorrect undo error
+     */
+    private static final String ERROR_UNDO = "Can't undo because command has not undoned yet.";
+    /**
+     * String of incorrect redo error
+     */
+    private static final String ERROR_REDO = "Can't redo because command has not undoned yet.";
+    /**
+     * Identifier of the command
+     */
+    private Handler id;
+    /**
+     * Account which makes the transfer
+     */
+    private Account accountSender;
+    /**
+     * Account which receives the amount
+     */
+    private Account accountReceiver;
+    /**
+     * Quantity of the transfer
+     */
+    private double amount;
+    /**
+     * Concept of the transfer
+     */
+    private String concept;
+    /**
+     * Variable para saber si el comando ha sido ejecutado o no
+     */
+    private boolean executed = false;
+    /**
+     * Variable para saber si el comando ha sido deshecho o no
+     */
+    private boolean undone = false;
 
-	/**
-	 * Class constructor
-	 * 
-	 * @param ofice
-	 * @param accountSender
-	 * @param dniSender
-	 * @param accountReceiver
-	 * @param dniReceiver
-	 * @param amount
-	 * @throws CommandException
-	 */
-	public TransferCommand(Offices office, Handler accountSender,
-			Handler dniSender, Handler accountReceiver, Handler dniReceiver,
-			double amount, String concept) throws CommandException {
-		this.id = new CommandHandler(accountSender);
-		// this.accountSender = office.searchClient(dniSender).searchAccount(
-		// accountSender);
-		// this.accountReceiver =
-		// office.searchClient(dniReceiver).searchAccount(
-		// accountReceiver);
-		if (amount > 0.00) {
-			this.amount = amount;
-		} else {
-			LOG.info("Amount negative or neutral.");
-			throw new CommandException("Amount negative or neutral.");
-		}
+    /**
+     * Class constructor
+     * 
+     * @param ofice
+     * @param accountSender
+     * @param dniSender
+     * @param accountReceiver
+     * @param dniReceiver
+     * @param amount
+     * @throws CommandException 
+     */
+    public TransferCommand(Office office, Handler accountSender,
+            Handler dniSender, Handler accountReceiver, Handler dniReceiver,
+            double amount, String concept) throws CommandException {
+        this.id = new CommandHandler(accountSender);
+        this.accountSender = office.searchClient(dniSender).searchAccount(accountSender);
+        this.accountReceiver = office.searchClient(dniReceiver).searchAccount(accountReceiver);
+        if (amount > 0.00) {
+            this.amount = amount;
+        } else {
+        	LOG.info("Amount negative or neutral.");
+        	throw new CommandException("Amount negative or neutral.");
+        }
 
-		this.concept = concept;
-	}
+        this.concept = concept;
+    }
 
-	/**
-	 * Metodo que realiza la transferencia
-	 */
-	@Override
-	public void execute() throws CommandException {
-		try {
-			final Transfer transfer = new Transfer(this.accountSender,
-					this.accountReceiver, this.amount);
-			transfer.make(this.concept);
-			this.executed = true;
-		} catch (TransferException e) {
-			LOG.severe(e.getMessage());
-			throw new CommandException(e.getMessage());
-		}
-	}
+    /**
+     * Metodo que realiza la transferencia
+     */
+    @Override
+    public void execute() throws CommandException {
+        try {
+            final Transfer transfer = new Transfer(this.accountSender,this.accountReceiver,
+            		this.amount);
+            transfer.make(this.concept);
+            this.executed = true;
+        } catch (TransferException e) {
+        	LOG.severe(e.getMessage());
+            throw new CommandException(e.getMessage(),e);
+        }
+    }
 
-	/**
-	 * Metodo que deshace la transferencia
-	 * 
-	 * @throws CommandException
-	 */
-	@Override
-	public void undo() throws CommandException {
-		if (this.executed) {
-			try {
-				final Transfer transfer = new Transfer(this.accountReceiver,
-						this.accountSender, this.amount);
-				transfer.make("Return transfer " + this.concept);
-				this.undone = true;
-			} catch (TransferException e) {
-				LOG.severe(e.getMessage());
-				throw new CommandException(e.getMessage());
-			}
-		} else {
-			LOG.severe("Can't undo because command has not executed yet.");
-			throw new CommandException(
-					"Can't undo because command has not executed yet.");
-		}
-	}
+    /**
+     * Metodo que deshace la transferencia
+     * @throws CommandException 
+     */
+    @Override
+    public void undo() throws CommandException {
+        if (this.executed) {
+            try {
+                final Transfer transfer = new Transfer(this.accountReceiver,
+                        this.accountSender, this.amount);
+                transfer.make("Return transfer " + this.concept);
+                this.undone = true;
+            } catch (TransferException e) {
+            	LOG.severe(e.getMessage());
+                throw new CommandException(e.getMessage(),e);
+            }
+        } else {
+        	LOG.severe(TransferCommand.ERROR_UNDO);
+        	throw new CommandException(TransferCommand.ERROR_UNDO);
+        }
+    }
 
-	/**
-	 * Metodo que rehace la transferencia
-	 * 
-	 * @throws CommandException
-	 */
-	@Override
-	public void redo() throws CommandException {
-		if (this.undone) {
-			try {
-				final Transfer transfer = new Transfer(this.accountSender,
-						this.accountReceiver, this.amount);
-				transfer.make(this.concept);
-				this.undone = false;
-			} catch (TransferException e) {
-				LOG.severe(e.getMessage());
-				throw new CommandException(e.getMessage());
-			}
-		} else {
-			LOG.severe("Can't undo because command has not undoned yet.");
-			throw new CommandException(
-					"Can't undo because command has not undoned yet.");
-		}
+    /**
+     * Metodo que rehace la transferencia
+     * @throws CommandException 
+     */
+    @Override
+    public void redo() throws CommandException {
+        if (this.undone) {
+            try {
+                final Transfer transfer = new Transfer(this.accountSender,
+                        this.accountReceiver, this.amount);
+                transfer.make(this.concept);
+                this.undone = false;
+            } catch (TransferException e) {
+            	LOG.severe(e.getMessage());
+                throw new CommandException(e.getMessage(),e);
+            }
+        } else {
+        	LOG.severe(TransferCommand.ERROR_REDO);
+            throw new CommandException(TransferCommand.ERROR_REDO);
+        }
 
-	}
+    }
 
-	/**
-	 * Metodo que devuelve el identificador del comando
-	 * 
-	 * @return command id
-	 */
-	@Override
-	public Handler getID() {
-		return this.id;
-	}
+    /**
+     * Metodo que devuelve el identificador del comando
+     * @return command id
+     */
+    @Override
+    public Handler getID() {
+        return this.id;
+    }
 
 }
