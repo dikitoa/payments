@@ -15,14 +15,13 @@ import org.apache.commons.logging.LogFactory;
 
 import es.unileon.ulebank.command.ChangeFeeCommand;
 import es.unileon.ulebank.command.Command;
-import es.unileon.ulebank.command.ModifyBuyLimitCommand;
 import es.unileon.ulebank.service.CardManager;
 import es.unileon.ulebank.service.FeeChange;
 
 /**
  * 
  * @author David Gomez Riesgo
- *
+ * @brief Clase que controla las peticiones que recibe la direccion feechange.htm
  */
 @Controller
 @RequestMapping(value="/feechange.htm")	

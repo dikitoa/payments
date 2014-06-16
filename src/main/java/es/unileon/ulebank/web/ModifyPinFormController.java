@@ -25,6 +25,13 @@ import es.unileon.ulebank.service.CardManager;
 import es.unileon.ulebank.service.ModifyPin;
 import es.unileon.ulebank.validator.PinValidator;
 
+/**
+ * 
+ * @author Alvaro
+ * @brief Clase ue controla las peticiones que recibe priceincrease.htm 
+ * vista que tiene el formaulario para cambiar el pin de la tarjeta
+ *
+ */
 @Controller
 @RequestMapping(value="/priceincrease.htm")
 public class ModifyPinFormController {
@@ -38,11 +45,25 @@ public class ModifyPinFormController {
     /*@Autowired*/
     private PinValidator pinValidator;
     
+    /**
+     * Tarjeta a la que le cambiamos el pin
+     */
     private Card card;
 
+    /**
+     * Manejador de las tarjetas
+     */
     @Autowired
     private CardManager cardManager;
 
+    /**
+     * Metodo que obtiene los datos del formulario del cambio de pin y ejecuta el comando necesario
+     * @param modifyPin
+     * @param result
+     * @return
+     * @throws IOException
+     * @throws PaymentException
+     */
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView onSubmit(@ModelAttribute("card") ModifyPin modifyPin, BindingResult result) throws IOException, PaymentException
     {
@@ -76,6 +97,12 @@ public class ModifyPinFormController {
 //        return new ModelAndView("hello");
     }
 
+    /**
+     * Metodo que devuelve el modelo y la vista del formulario que modifca el pin
+     * @param request
+     * @return
+     * @throws ServletException
+     */
     @RequestMapping(method = RequestMethod.GET)
     protected ModelAndView formBackingObject(HttpServletRequest request) throws ServletException {
         ModifyPin modifyPin = new ModifyPin();
@@ -85,18 +112,34 @@ public class ModifyPinFormController {
         return new ModelAndView("priceincrease", "card", modifyPin );
     }
 
+    /**
+     * Metodo que establece el manejador de las tarjetas
+     * @param cardManager
+     */
     public void setCardManager(CardManager cardManager) {
         this.cardManager = cardManager;
     }
 
+    /**
+     * Metodo que devuelve el manager de las tarjetas
+     * @return
+     */
     public CardManager getCardManager() {
         return cardManager;
     }
     
+    /**
+     * Setter de la tarjeta
+     * @param card
+     */
     public void setCard(Card card){
     	this.card = card;
     }
     
+    /**
+     * Método que establece el validador del pin
+     * @param pinValidator
+     */
     public void setPinValidator(PinValidator pinValidator){
     	this.pinValidator = pinValidator;
     }

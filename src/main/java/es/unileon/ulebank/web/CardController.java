@@ -19,6 +19,13 @@ import org.springframework.web.servlet.ModelAndView;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.service.CardManager;
 
+/**
+ * Controlador de las tarjetas
+ * @author Isra
+ * @date 16/06/2014
+ * @brief Clase que controla las peticiones que llegan a la direccion hello.htm
+ * vista que muestra los datos de la tarjeta.
+ */
 @Controller
 public class CardController {
 	/**
