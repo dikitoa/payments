@@ -13,6 +13,8 @@ import javax.validation.Valid;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import es.unileon.ulebank.command.Command;
+import es.unileon.ulebank.command.ModifyCashLimitCommand;
 import es.unileon.ulebank.service.CardManager;
 import es.unileon.ulebank.service.ChangeLimit;
 
@@ -54,7 +56,10 @@ public class ChangeCashLimitsFormController {
         logger.info("Modified diary limit: " + diaryLimit + "Euros.");
         logger.info("Modified monthly limit: " + monthlyLimit + "Euros.");
 
-        cardManager.changeCashLimits(diaryLimit, monthlyLimit);
+        Command cashLimitsDiary = new ModifyCashLimitCommand(this.cardManager.getCard().getId(), this.cardManager.getCard(), diaryLimit, "diary");
+		Command cashLimitsMonthly = new ModifyCashLimitCommand(this.cardManager.getCard().getId(), this.cardManager.getCard(), monthlyLimit, "monthly");
+		cashLimitsMonthly.execute();
+		cashLimitsDiary.execute();
 
         return "redirect:/hello.htm";
     }

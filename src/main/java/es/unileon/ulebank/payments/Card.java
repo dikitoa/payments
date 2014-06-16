@@ -211,6 +211,7 @@ public abstract class Card implements Serializable {
         // Comprobamos que el String recibido contiene solo numeros
         if (this.checkStringNumber(pin)) {
             // Si el pin tiene el tamagno adecuado lo cambiamos
+        	System.out.println(CardProperties.getPinSize());
             if (pin.length() == CardProperties.getPinSize()) {
                 this.pin = pin;
                 // Sino lanzamos una excepcion

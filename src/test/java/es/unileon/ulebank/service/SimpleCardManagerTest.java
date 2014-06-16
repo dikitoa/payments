@@ -16,7 +16,6 @@ import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.office.Office;
 import es.unileon.ulebank.payments.Card;
 import es.unileon.ulebank.payments.CreditCard;
-import es.unileon.ulebank.payments.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.payments.handler.CardHandler;
 import es.unileon.ulebank.utils.CardProperties;
 
@@ -68,43 +67,5 @@ public class SimpleCardManagerTest {
         assertNotNull(cardManager.getCard());        
         assertEquals(cardManager.getCard(), this.testCard);
     }
-
-
-    @Test(expected = IncorrectLimitException.class)
-    public void testChangeBuyLimitsWithIncorrectLimits() throws Exception {
-    	this.cardManager.changeBuyLimits(300, 100);       
-    }
     
-    @Test
-    public void testChangeBuyLimitsWithCorrectLimits() throws Exception {
-    	this.cardManager.changeBuyLimits(300, 1000);
-    	assertEquals(this.testCard.getBuyLimitDiary(),300,0.01);
-    	assertEquals(this.testCard.getBuyLimitMonthly(),1000,0.01);
-    }
-    
-    @Test(expected = IncorrectLimitException.class)
-    public void testChangeBuyLimitsWithEqualstLimits() throws Exception {
-    	this.cardManager.changeBuyLimits(1000, 1000);
-    	assertEquals(this.testCard.getBuyLimitDiary(),1000,0.01);
-    	assertEquals(this.testCard.getBuyLimitMonthly(),1000,0.01);
-    }
-    
-    @Test(expected = IncorrectLimitException.class)
-    public void testChangeCahsLimitsWithIncorrectLimits() throws Exception {
-    	this.cardManager.changeCashLimits(300, 100);       
-    }
-    
-    @Test
-    public void testChangeCashLimitsWithCorrectLimits() throws Exception {
-    	this.cardManager.changeCashLimits(300, 1000);
-    	assertEquals(this.testCard.getCashLimitDiary(),300,0.01);
-    	assertEquals(this.testCard.getCashLimitMonthly(),1000,0.01);
-    }
-    
-    @Test(expected = IncorrectLimitException.class)
-    public void testChangeCashLimitsWithEqualstLimits() throws Exception {
-    	this.cardManager.changeBuyLimits(1000, 1000);
-    	assertEquals(this.testCard.getBuyLimitDiary(),1000,0.01);
-    	assertEquals(this.testCard.getBuyLimitMonthly(),1000,0.01);
-    }
 }
