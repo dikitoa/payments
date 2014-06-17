@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import es.unileon.ulebank.domain.Cards;
-import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.service.CardManager;
 
 @Controller
@@ -36,8 +35,6 @@ public class CardController {
     @Autowired
     private CardManager cardManager;
     
-    private Handler cardId;
-
     /**
      * Metodo que crea el modelo y vista para hello.htm
      * @param request
@@ -46,18 +43,24 @@ public class CardController {
      * @throws ServletException
      * @throws IOException
      */
-    @RequestMapping(value="/hello.htm", method = RequestMethod.GET)
+    @RequestMapping(value="/card.htm", method = RequestMethod.GET)
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	card = cardManager.findCard(cardId.toString());
+    	card = cardManager.findCard(request.getParameter("id"));
 
         Map<String, Object> myModel = new HashMap<String, Object>();
         myModel.put("id", this.card.getId());
         myModel.put("pin", this.card.getPin());
+        myModel.put("buyLimitDiary", this.card.getBuyLimitDiary());
+        myModel.put("buyLimitMonthly", this.card.getBuyLimitMonthly());
+        myModel.put("cashLimitDiary", this.card.getCashLimitDiary());
+        myModel.put("cashLimitMonthly", this.card.getCashLimitMonthly());
+        myModel.put("cvv", this.card.getCvv());
         myModel.put("expirationDate", this.card.getExpirationDate());
-        myModel.put("buyLimitDiary",this.card.getBuyLimitDiary());
+        myModel.put("emissionDate",this.card.getEmissionDate());
+        myModel.put("fees", this.card.getFees());
 
-        return new ModelAndView("hello", "card", myModel);
+        return new ModelAndView("card", "card", myModel);
     }
     
     /**

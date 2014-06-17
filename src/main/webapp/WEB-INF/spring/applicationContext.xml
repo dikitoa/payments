@@ -18,6 +18,7 @@
 
 	<bean class="es.unileon.ulebank.validator.CreateCardValidator"></bean>
 	<bean class="es.unileon.ulebank.validator.GenerateCardContractValidator"></bean>
+	<bean class="es.unileon.ulebank.validator.PinValidator"></bean>
 
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">

@@ -78,7 +78,10 @@ public class CreateCardController {
 		}
 		
 		try {
+			//We need a client to create card
 			Person client = new Person(71557005, 'A');
+			client.setName("Pepito");
+			client.setSurnames("Garcia Martinez");
 			Accounts account = this.accountManager.search(bean.getAccountNumber());
 			
 			NewCardCommand command = new NewCardCommand(client, account, bean, cards);

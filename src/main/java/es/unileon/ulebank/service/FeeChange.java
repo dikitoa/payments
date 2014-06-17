@@ -15,22 +15,22 @@ public class FeeChange {
 	protected final Log logger = LogFactory.getLog(getClass());
 
 	@Min(0)
-	private int feeChange;
+	private int fees;
 
 	/**
 	 * 
 	 * @return
 	 */
-	public int getFeeChange() {
-		return feeChange;
+	public int getFees() {
+		return fees;
 	}
 
 	/**
 	 * 
 	 * @param feeChange
 	 */
-	public void setFeeChange(int feeChange) {
-		this.feeChange = feeChange;
+	public void setFees(int fees) {
+		this.fees = fees;
 	}
 
 }

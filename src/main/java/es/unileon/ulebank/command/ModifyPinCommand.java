@@ -4,7 +4,9 @@ import java.io.IOException;
 
 import org.apache.log4j.Logger;
 
+import es.unileon.ulebank.command.handler.CommandHandler;
 import es.unileon.ulebank.domain.Cards;
+import es.unileon.ulebank.handler.GenericHandler;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.payments.exceptions.PaymentException;
 
@@ -33,7 +35,6 @@ public class ModifyPinCommand implements Command {
 	 * PIN antes de modificarlo
 	 */
 	private String oldPin;
-//	private SimpleCardManager cM;
 	
 	/**
 	 * Constructor de la clase
@@ -42,10 +43,9 @@ public class ModifyPinCommand implements Command {
 	 * @param newPin
 	 */
 	public ModifyPinCommand(Cards card, String pin) {
-		this.id = card.getGenericHandler();
+		this.id = new CommandHandler(new GenericHandler(card.getId()));
 		this.card = card;
 		this.newPin = pin;
-//		this.cM = cardManager;
 	}
 	
 	/**

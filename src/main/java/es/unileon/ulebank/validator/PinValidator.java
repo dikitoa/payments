@@ -18,8 +18,6 @@ public class PinValidator {
 		ModifyPin modifyPin = (ModifyPin)object;
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "newPin", "required.pin", "Pin field is necesary");
 		validatePin(modifyPin.getNewPin(), errors);
-//		validatePin(bean.getPin(), errors);
-
 	}
 
 	private void validatePin(String newPin, Errors errors) {

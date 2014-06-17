@@ -61,8 +61,7 @@ public class ChangeFeeCommand implements Command{
  * @param fee
  * @param type
  */
-    public ChangeFeeCommand(Handler cardId, Cards card, int fee,
-            String type) {
+    public ChangeFeeCommand(Handler cardId, Cards card, int fee) {
         this.id = new CommandHandler(cardId);
         this.card = card;
         this.newFee = fee;

@@ -20,34 +20,30 @@
 		<nav class="menu">
 			<ul>
 				<li>
-					<a href="<c:url value="createcard.htm"/>">Nueva Tarjeta</a>
+					<a href="<c:url value="createcard.htm?id=${card.id}"/>">Nueva Tarjeta</a>
 				</li>
 				<li>
-					<a href="<c:url value="priceincrease.htm"/>">Modificar Pin</a>
+					<a href="<c:url value="modifypin.htm?id=${card.id}"/>">Modificar Pin</a>
 				</li>
 				<li>
-					<a href="<c:url value="buyLimits.htm"/> ">Modificar Límites Compra</a>
+					<a href="<c:url value="buyLimits.htm?id=${card.id}"/> ">Modificar Límites Compra</a>
 				</li>
 				<li>
-					<a href="<c:url value="cashLimits.htm"/>">Modificar Límites Efectivo</a>
+					<a href="<c:url value="cashLimits.htm?id=${card.id}"/>">Modificar Límites Efectivo</a>
 				</li>
 				<li>
-					<a href="<c:url value="feechange.htm"/>">Cambiar Comisiones</a>
+					<a href="<c:url value="feechange.htm?id=${card.id}"/>">Cambiar Comisiones</a>
 				</li>
 			</ul>
 		</nav>
 		<div class="content"> 
  			<div class="headerContent"> 
  				<b class="titleContent">
-					<fmt:message key="cardResult"/>
+					<fmt:message key="card"/>
 				</b>
 			</div>
 		
 			<table>
-				<tr>
-					<td>User: </td>
-					<td>${card.client.name} ${card.client.surnames}</td>
-				</tr>
 				<tr>
 					<td>Card Number: </td>
 					<td>${card.id}</td>
@@ -84,8 +80,11 @@
 					<td>Cash Limit Monthly:</td>
 					<td>${card.cashLimitMonthly}</td>
 				</tr>
+				<tr>
+					<td>Fees:</td>
+					<td>${card.fees}</td>
+				</tr>
 			</table>
-			<a href="<c:url value="cards.htm"/>">Home</a>
 		</div>
 	</body>
 </html>
