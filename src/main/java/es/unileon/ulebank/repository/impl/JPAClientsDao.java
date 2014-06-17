@@ -73,7 +73,6 @@ public class JPAClientsDao implements ClientDao{
 		log.debug("getting Clients instance with id: " + id);
 		try {
 			Person instance = entityManager.find(Person.class, id);
-			System.out.println("DNI---->" + id);
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {

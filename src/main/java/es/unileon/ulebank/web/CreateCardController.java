@@ -19,13 +19,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import es.unileon.ulebank.account.AccountHandler;
 import es.unileon.ulebank.client.Person;
 import es.unileon.ulebank.command.NewCardCommand;
 import es.unileon.ulebank.domain.Accounts;
 import es.unileon.ulebank.domain.CardBean;
 import es.unileon.ulebank.domain.Cards;
-import es.unileon.ulebank.domain.GenericHandler;
 import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.handler.MalformedHandlerException;
 import es.unileon.ulebank.payments.CardType;
@@ -80,10 +78,8 @@ public class CreateCardController {
 		}
 		
 		try {
-			Person client = (Person) this.clientManager.searchClient(bean.getDni());
-			client.setGenericHandler(new GenericHandler(bean.getDni()));
+			Person client = new Person(71557005, 'A');
 			Accounts account = this.accountManager.search(bean.getAccountNumber());
-			account.setHandler(new AccountHandler(new GenericHandler(bean.getAccountNumber())));
 			
 			NewCardCommand command = new NewCardCommand(client, account, bean, cards);
 			command.execute();

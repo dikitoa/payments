@@ -14,7 +14,7 @@
 			<a class="optionsHeader assets" href="<c:url value="assets.htm"/>" title="Assets"></a>
 			<a class="optionsHeader brokerage" href="<c:url value="brokerage.htm"/>" title="brokerage"></a>
 			<a class="optionsHeader liabilities" href="<c:url value="liabilities.htm"/>" title="Liabilities"></a>
-			<a class="optionsHeader optionsHeaderSelected payments" href="<c:url value="payments.htm"/>" title="Payments"></a>
+			<a class="optionsHeader optionsHeaderSelected payments" href="<c:url value="cards.htm"/>" title="Payments"></a>
 		</header>
 	
 		<nav class="menu">
@@ -46,15 +46,11 @@
 			<table>
 				<tr>
 					<td>User: </td>
-					<td>${card.owner.name} ${card.owner.surname}</td>
+					<td>${card.client.name} ${card.client.surnames}</td>
 				</tr>
 				<tr>
 					<td>Card Number: </td>
 					<td>${card.id}</td>
-				</tr>
-				<tr>
-					<td>Card Type:</td>
-					<td>${card.cardType}</td>
 				</tr>
 				<tr>
 					<td>PIN: </td>

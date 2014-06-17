@@ -15,6 +15,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.unileon.ulebank.client.Client;
+import es.unileon.ulebank.domain.Accounts;
 import es.unileon.ulebank.domain.Cards;
 import es.unileon.ulebank.repository.CardDao;
 
@@ -37,8 +39,13 @@ public class JPACardsDao implements CardDao {
 		log.debug("persisting Cards instance");
 		try {
 		    entityManager.persist(transientInstance.getGenericHandler());
-		    entityManager.persist(transientInstance.getClient().getGenericHandler());
-		    entityManager.persist(transientInstance.getAccounts().getHandler());
+		    if (entityManager.find(Client.class, transientInstance.getClient().getId()) == null) {
+		    	entityManager.persist(transientInstance.getClient());
+			}
+		    if (entityManager.find(Accounts.class, transientInstance.getAccounts().getAccountNumber()) == null) {
+		    	entityManager.persist(transientInstance.getAccounts());
+			}
+		    
 			entityManager.persist(transientInstance);
 			log.debug("persist successful");
 		} catch (RuntimeException re) {
@@ -85,11 +92,13 @@ public class JPACardsDao implements CardDao {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Transactional (readOnly = true)
 	public List<Cards> getCardClientList(String dni) {
         Query query = entityManager.createQuery("select c from DebitCard c order by c.id");
-        @SuppressWarnings("unchecked")
         List<Cards> cards = query.getResultList();
+        query = entityManager.createQuery("select c from CreditCard c order by c.id");
+        cards.addAll(query.getResultList());
         List<Cards> result = new ArrayList<Cards>();
         for (Cards card : cards) {
 			if (card.getClient().getId().compareTo(dni) == 0) {

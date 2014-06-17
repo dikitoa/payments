@@ -58,6 +58,7 @@ public class Client implements Serializable {
     protected Client(Handler clientHandler) {
         this.accounts = new ArrayList<Accounts>();
         this.genericHandler = clientHandler;
+        this.id = clientHandler.toString();
     }
 
     public Client() {
