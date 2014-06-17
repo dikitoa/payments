@@ -99,26 +99,18 @@
 				
 					<tr>
 						<td>Commission emissionn: </td>
-						<td><form:input path="commissionEmission" size="15"/></td>
-						<td><form:errors path="commissionEmission" cssClass="error"></form:errors></td>
+						<td><form:input path="fee" size="15"/></td>
+						<td><form:errors path="fee" cssClass="error"></form:errors></td>
 					</tr>
-					<tr>
-						<td>Commission maintenance: </td>
-						<td><form:input path="commissionMaintenance" size="15"/></td>
-						<td><form:errors path="commissionMaintenance" cssClass="error"></form:errors></td>
-					</tr>
-					<tr>
-						<td>Commission renovate: </td>
-						<td><form:input path="commissionRenovate" size="15"/></td>
-						<td><form:errors path="commissionRenovate" cssClass="error"></form:errors></td>
-					</tr>
-				
 					<tr>
 						<td>Contract: </td>
 						<td><a href="<c:url value="generatecontract.htm"></c:url>">Terms and conditions</a><br></td>
 						<td><form:checkbox path="contract"></form:checkbox>I acept conditions</td>
 						<td><form:errors path="contract" cssClass="error"></form:errors></td>
 					</tr>
+					
+					<form:hidden path="dni"/>
+					<form:hidden path="accountNumber"/>
 				
 					<tr>
 						<td><input type="submit" value="Create"/></td>
@@ -126,7 +118,6 @@
 					</tr>
 				</table>
 			</form:form>
-			<a href='<c:url value="cards.htm"/>'>Home</a>
 		</div>
 	</body>
 </html>

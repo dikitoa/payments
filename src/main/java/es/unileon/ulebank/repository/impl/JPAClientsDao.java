@@ -2,9 +2,12 @@ package es.unileon.ulebank.repository.impl;
 
 // Generated Jun 15, 2014 1:06:41 AM by Hibernate Tools 3.4.0.CR1
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.unileon.ulebank.client.Client;
+import es.unileon.ulebank.client.Person;
 import es.unileon.ulebank.repository.ClientDao;
 
 /**
@@ -64,15 +68,25 @@ public class JPAClientsDao implements ClientDao{
 		}
 	}
 
+	@Transactional (readOnly = true)
 	public Client findById(String id) {
 		log.debug("getting Clients instance with id: " + id);
 		try {
-			Client instance = entityManager.find(Client.class, id);
+			Person instance = entityManager.find(Person.class, id);
+			System.out.println("DNI---->" + id);
 			log.debug("get successful");
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
 			throw re;
 		}
+	}
+
+	@Override
+	public List<Client> getClientList() {
+		Query query = entityManager.createQuery("select * from Client");
+        @SuppressWarnings("unchecked")
+        List<Client> result = query.getResultList();
+        return result;
 	}
 }

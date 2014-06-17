@@ -21,6 +21,7 @@ import es.unileon.ulebank.client.Client;
 @Table(name = "OFFICES", catalog = "ULEBANK_FINAL")
 public class Offices implements java.io.Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private String officeId;
 	private String bankId;
 	private int localCost;

@@ -22,7 +22,7 @@
 		<nav class="menu">
 			<ul>
 				<li>
-					<a href="<c:url value="searchclient.htm"/>">Search Client</a>
+					<a href="<c:url value="cards.htm"/>">Cards</a>
 				</li>
 			</ul>
 		</nav>

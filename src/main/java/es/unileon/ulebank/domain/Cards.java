@@ -25,7 +25,6 @@ import org.hibernate.annotations.Parameter;
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.payments.exceptions.IncorrectLengthException;
-import es.unileon.ulebank.payments.exceptions.IncorrectLimitException;
 import es.unileon.ulebank.payments.exceptions.PaymentException;
 import es.unileon.ulebank.utils.CardProperties;
 
@@ -37,322 +36,300 @@ import es.unileon.ulebank.utils.CardProperties;
 @DiscriminatorColumn(name = "discriminator", discriminatorType = DiscriminatorType.STRING)
 public class Cards implements java.io.Serializable {
 
-    private static final long serialVersionUID = 1L;
-    private String id;
-    private Client client;
-    private Handler genericHandler;
-    private Accounts accounts;
-    private String pin;
-    private double buyLimitDiary;
-    private double buyLimitMonthly;
-    private double cashLimitDiary;
-    private double cashLimitMonthly;
-    private String emissionDate;
-    private String expirationDate;
-    private String cvv;
-    private int fees;
+	private static final long serialVersionUID = 1L;
+	private String id;
+	private Client client;
+	private Handler genericHandler;
+	private Accounts accounts;
+	private String pin;
+	private double buyLimitDiary;
+	private double buyLimitMonthly;
+	private double cashLimitDiary;
+	private double cashLimitMonthly;
+	private String emissionDate;
+	private String expirationDate;
+	private String cvv;
+	private int fees;
 
-    public Cards() {
-    }
+	public Cards() {
+		this.pin = generatePinCode();
+		this.emissionDate = generateEmissionDate();
+		this.expirationDate = generateExpirationDate();
+	}
 
-    /**
-     * // * Constructor de la clase que crea una nueva tarjeta // * // * @param
-     * properties // * @param cardId // * @param type // * @param buyLimitDiary
-     * // * @param buyLimitMonthly // * @param cashLimitDiary // * @param
-     * cashLimitMonthly // * @param commissionEmission // * @param
-     * commissionMaintenance // * @param commissionRenovate //
-     */
-    public Cards(Handler cardId, Accounts account, Client Client) {
-        this.genericHandler = cardId;
-        this.accounts = account;
-        this.client = Client;
-        this.id = cardId.toString();
-        this.pin = generatePinCode();
-        this.cvv = generateCVV();
-        this.emissionDate = generateEmissionDate();
-        this.expirationDate = generateExpirationDate();
-    }
-    
-    /**
-     * Genera el codigo pin de la tarjeta
-     * 
-     * @return String
-     */
-    public String generatePinCode() {
-        final StringBuilder result = new StringBuilder();
-        // Generamos tantos numeros aleatorios como indique la constante
-        // PIN_SIZE para formar el codigo PIN
-        for (int i = 0; i < CardProperties.getPinSize(); i++) {
-            result.append((int) (Math.random() * 10));
-        }
+	/**
+	 * // * Constructor de la clase que crea una nueva tarjeta // * // * @param
+	 * properties // * @param cardId // * @param type // * @param buyLimitDiary
+	 * // * @param buyLimitMonthly // * @param cashLimitDiary // * @param
+	 * cashLimitMonthly // * @param commissionEmission // * @param
+	 * commissionMaintenance // * @param commissionRenovate //
+	 */
+	public Cards(Handler cardId, Accounts account, Client Client) {
+		this.genericHandler = cardId;
+		this.accounts = account;
+		this.client = Client;
+		this.id = cardId.toString();
+		this.pin = generatePinCode();
+		this.cvv = generateCVV();
+		this.emissionDate = generateEmissionDate();
+		this.expirationDate = generateExpirationDate();
+	}
 
-        return result.toString();
-    }
-    
-    /**
-     * Genera la fecha de emision de la tarjeta
-     * 
-     * @return String
-     */
-    public String generateEmissionDate() {
-        // Generamos la fecha dandole el formato estandar dd/MM/yyyy
-        final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	/**
+	 * Genera el codigo pin de la tarjeta
+	 * 
+	 * @return String
+	 */
+	public String generatePinCode() {
+		final StringBuilder result = new StringBuilder();
+		// Generamos tantos numeros aleatorios como indique la constante
+		// PIN_SIZE para formar el codigo PIN
+		for (int i = 0; i < CardProperties.getPinSize(); i++) {
+			result.append((int) (Math.random() * 10));
+		}
 
-        return dateFormat.format(new Date());
-    }
+		return result.toString();
+	}
 
-    /**
-     * Genera una fecha de caducidad para la tarjeta
-     * 
-     * @return String
-     */
-    public String generateExpirationDate() {
-        // Obtenemos una instancia del calendario
-        final Calendar calendar = Calendar.getInstance();
+	/**
+	 * Genera la fecha de emision de la tarjeta
+	 * 
+	 * @return String
+	 */
+	public String generateEmissionDate() {
+		// Generamos la fecha dandole el formato estandar dd/MM/yyyy
+		final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-        // Obtenemos el mes actual que sera devuelto en forma de int comenzando
-        // en 0 (Enero) por tanto debemos sumarle 1
-        String month = Integer.toString(calendar.get(Calendar.MONTH) + 1);
-        // Si el mes esta entre enero y septiembre agnadimos un 0 delante al
-        // String para que tenga 2 cifras
-        if (month.length() == 1) {
-            month = "0" + month;
-        }
+		return dateFormat.format(new Date());
+	}
 
-        // Obtenemos el agno actual y cortamos el substring para coger
-        // unicamente las dos ultimas cifras
-        final String year = Integer.toString(
-                CardProperties.getExpirationYear()
-                        + calendar.get(Calendar.YEAR)).substring(2);
-        // Devolvemos el String con el formato MM/yy
-        return month + "/" + year;
-    }
+	/**
+	 * Genera una fecha de caducidad para la tarjeta
+	 * 
+	 * @return String
+	 */
+	public String generateExpirationDate() {
+		// Obtenemos una instancia del calendario
+		final Calendar calendar = Calendar.getInstance();
 
-    /**
-     * Genera el codigo de validacion CVV
-     * 
-     * @return String
-     */
-    public String generateCVV() {
-        final StringBuilder result = new StringBuilder();
-        // Generamos tantos numeros aleatorios como indique la constante
-        // CVV_SIZE para formar el codigo CVV
-        for (int i = 0; i < CardProperties.getCvvSize(); i++) {
-            result.append((int) (Math.random() * 10));
-        }
+		// Obtenemos el mes actual que sera devuelto en forma de int comenzando
+		// en 0 (Enero) por tanto debemos sumarle 1
+		String month = Integer.toString(calendar.get(Calendar.MONTH) + 1);
+		// Si el mes esta entre enero y septiembre agnadimos un 0 delante al
+		// String para que tenga 2 cifras
+		if (month.length() == 1) {
+			month = "0" + month;
+		}
 
-        return result.toString();
-    }
+		// Obtenemos el agno actual y cortamos el substring para coger
+		// unicamente las dos ultimas cifras
+		final String year = Integer.toString(
+				CardProperties.getExpirationYear()
+						+ calendar.get(Calendar.YEAR)).substring(2);
+		// Devolvemos el String con el formato MM/yy
+		return month + "/" + year;
+	}
 
-    @GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "genericHandler"))
-    @Id
-    @GeneratedValue(generator = "generator")
-    @Column(name = "id", unique = true, nullable = false, length = 64)
-    public String getId() {
-        return this.id;
-    }
+	/**
+	 * Genera el codigo de validacion CVV
+	 * 
+	 * @return String
+	 */
+	public String generateCVV() {
+		final StringBuilder result = new StringBuilder();
+		// Generamos tantos numeros aleatorios como indique la constante
+		// CVV_SIZE para formar el codigo CVV
+		for (int i = 0; i < CardProperties.getCvvSize(); i++) {
+			result.append((int) (Math.random() * 10));
+		}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+		return result.toString();
+	}
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "client_id", nullable = false)
-    public Client getClient() {
-        return this.client;
-    }
+	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "genericHandler"))
+	@Id
+	@GeneratedValue(generator = "generator")
+	@Column(name = "id", unique = true, nullable = false, length = 64)
+	public String getId() {
+		return this.id;
+	}
 
-    public void setClient(Client Client) {
-        this.client = Client;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @PrimaryKeyJoinColumn
-    public Handler getGenericHandler() {
-        return this.genericHandler;
-    }
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "client_id", nullable = false)
+	public Client getClient() {
+		return this.client;
+	}
 
-    public void setGenericHandler(Handler genericHandler) {
-        this.genericHandler = genericHandler;
-    }
+	public void setClient(Client Client) {
+		this.client = Client;
+	}
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "account_number", nullable = false)
-    public Accounts getAccounts() {
-        return this.accounts;
-    }
+	@OneToOne(fetch = FetchType.EAGER)
+	@PrimaryKeyJoinColumn
+	public Handler getGenericHandler() {
+		return this.genericHandler;
+	}
 
-    public void setAccounts(Accounts accounts) {
-        this.accounts = accounts;
-    }
+	public void setGenericHandler(Handler genericHandler) {
+		this.genericHandler = genericHandler;
+	}
 
-    @Column(name = "pin", nullable = false, length = 64)
-    public String getPin() {
-        return this.pin;
-    }
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "account_number", nullable = false)
+	public Accounts getAccounts() {
+		return this.accounts;
+	}
 
-    public void setPin(String pin) {
-        this.pin = pin;
-    }
-    
-    /**
-     * Comprueba que el pin sea correcto
-     * 
-     * @param pin
-     * @return boolean
-     */
-    public boolean checkPin(String pin) {
+	public void setAccounts(Accounts accounts) {
+		this.accounts = accounts;
+	}
 
-        return pin.equals(this.pin);
-    }
+	@Column(name = "pin", nullable = false, length = 64)
+	public String getPin() {
+		return this.pin;
+	}
 
-    @Column(name = "buy_limit_diary", nullable = false, precision = 22, scale = 0)
-    public double getBuyLimitDiary() {
-        return this.buyLimitDiary;
-    }
+	public void setPin(String pin) {
+		this.pin = pin;
+	}
 
-    public void setBuyLimitDiary(double newAmount) throws IncorrectLimitException {
-        if ((this.buyLimitMonthly > newAmount)
-                && (newAmount >= CardProperties.getMinimumLimit())) {
-            this.buyLimitDiary = newAmount;
-            // en caso contrario lanzamos una excepcion
-        } else {
-            throw new IncorrectLimitException(
-                    "The limit is bigger than current monthly limit or is too small.");
-        }
-    }
-    
-    /**
-     * Comprueba que el precio no exceda el limite de la tarjeta
-     * 
-     * @param price
-     * @return boolean
-     */
-    public boolean checkBuyLimitDiary(double price) {
-        // Si el precio es mayor que el limite de compra diario devuelve false
-        return !(price > this.buyLimitDiary);
-    }
+	/**
+	 * Comprueba que el pin sea correcto
+	 * 
+	 * @param pin
+	 * @return boolean
+	 */
+	public boolean checkPin(String pin) {
 
-    @Column(name = "buy_limit_monthly", nullable = false, precision = 22, scale = 0)
-    public double getBuyLimitMonthly() {
-        return this.buyLimitMonthly;
-    }
+		return pin.equals(this.pin);
+	}
 
-    public void setBuyLimitMonthly(double newAmount) throws IncorrectLimitException {
-        if (newAmount >= this.buyLimitDiary) {
-            this.buyLimitMonthly = newAmount;
-            // sino se lanza una excepcion
-        } else {
-            throw new IncorrectLimitException(
-                    "Monthly limit must be greater than diary limit");
-        }
-    }
+	@Column(name = "buy_limit_diary", nullable = false, precision = 22, scale = 0)
+	public double getBuyLimitDiary() {
+		return this.buyLimitDiary;
+	}
 
-    @Column(name = "cash_limit_diary", nullable = false, precision = 22, scale = 0)
-    public double getCashLimitDiary() {
-        return this.cashLimitDiary;
-    }
-    
-    public void setCashLimitDiary(double newAmount) throws IncorrectLimitException {
-        if ((this.cashLimitMonthly >= newAmount)
-                && (newAmount >= CardProperties.getMinimumLimit())) {
-            this.cashLimitDiary = newAmount;
-            // sino lanzamos una excepcion
-        } else {
-            throw new IncorrectLimitException(
-                    "The limit is bigger than current monthly limit or is too small.");
-        }
-    }
-    
-    /**
-     * Comprueba que la cantidad solicitada para extraer en cajero no exceda el
-     * limite de la tarjeta
-     * 
-     * @param cash
-     * @return boolean
-     */
-    public boolean checkCashLimitDiary(double cash) {
-        return !(cash > this.cashLimitDiary);
-    }
+	public void setBuyLimitDiary(double newAmount) {
+		this.buyLimitDiary = newAmount;
+	}
 
-    @Column(name = "cash_limit_monthly", nullable = false, precision = 22, scale = 0)
-    public double getCashLimitMonthly() {
-        return this.cashLimitMonthly;
-    }
+	/**
+	 * Comprueba que el precio no exceda el limite de la tarjeta
+	 * 
+	 * @param price
+	 * @return boolean
+	 */
+	public boolean checkBuyLimitDiary(double price) {
+		// Si el precio es mayor que el limite de compra diario devuelve false
+		return !(price > this.buyLimitDiary);
+	}
 
-    public void setCashLimitMonthly(double newAmount) throws IncorrectLimitException {
-        if (newAmount >= this.cashLimitDiary) {
-            this.cashLimitMonthly = newAmount;
-            // en caso contrario se lanza una excepcion
-        } else {
-            throw new IncorrectLimitException(
-                    "Monthly limit must be greater than diary limit");
-        }
-    }
+	@Column(name = "buy_limit_monthly", nullable = false, precision = 22, scale = 0)
+	public double getBuyLimitMonthly() {
+		return this.buyLimitMonthly;
+	}
 
-    @Column(name = "emission_date", nullable = false, length = 64)
-    public String getEmissionDate() {
-        return this.emissionDate;
-    }
+	public void setBuyLimitMonthly(double newAmount) {
+		this.buyLimitMonthly = newAmount;
+	}
 
-    public void setEmissionDate(String emissionDate) {
-        this.emissionDate = emissionDate;
-    }
+	@Column(name = "cash_limit_diary", nullable = false, precision = 22, scale = 0)
+	public double getCashLimitDiary() {
+		return this.cashLimitDiary;
+	}
 
-    @Column(name = "expiration_date", nullable = false, length = 64)
-    public String getExpirationDate() {
-        return this.expirationDate;
-    }
+	public void setCashLimitDiary(double newAmount) {
+		this.cashLimitDiary = newAmount;
+	}
 
-    public void setExpirationDate(String expirationDate) {
-        this.expirationDate = expirationDate;
-    }
+	/**
+	 * Comprueba que la cantidad solicitada para extraer en cajero no exceda el
+	 * limite de la tarjeta
+	 * 
+	 * @param cash
+	 * @return boolean
+	 */
+	public boolean checkCashLimitDiary(double cash) {
+		return !(cash > this.cashLimitDiary);
+	}
 
-    @Column(name = "cvv", nullable = false, length = 64)
-    public String getCvv() {
-        return this.cvv;
-    }
+	@Column(name = "cash_limit_monthly", nullable = false, precision = 22, scale = 0)
+	public double getCashLimitMonthly() {
+		return this.cashLimitMonthly;
+	}
 
-    public void setCvv(String cvv) throws IncorrectLengthException {
-        if (this.checkStringNumber(cvv)) {
-            if (cvv.length() == CardProperties.getCvvSize()) {
-                this.cvv = cvv;
-            } else {
-                throw new IncorrectLengthException("Incorrect length");
-            }
-        } else {
-            throw new NumberFormatException("The cvv must only contains numbers");
-        }
-    }
+	public void setCashLimitMonthly(double newAmount) {
+		this.cashLimitMonthly = newAmount;
+	}
 
-    @Column(name = "fees", nullable = false)
-    public int getFees() {
-        return this.fees;
-    }
+	@Column(name = "emission_date", nullable = false, length = 64)
+	public String getEmissionDate() {
+		return this.emissionDate;
+	}
 
-    public void setFees(int fees) {
-        this.fees = fees;
-    }
+	public void setEmissionDate(String emissionDate) {
+		this.emissionDate = emissionDate;
+	}
 
-    public void makeTransaction(double quantity, String payConcept)
-            throws PaymentException {
+	@Column(name = "expiration_date", nullable = false, length = 64)
+	public String getExpirationDate() {
+		return this.expirationDate;
+	}
 
-    }
-    
-    /**
-     * Comprueba que el String recibido sea solo numerico
-     * 
-     * @param string
-     * @return boolean
-     */
-    private boolean checkStringNumber(String string) {
-        // Crea un patron para indicar que solo debe contener numeros
-        final Pattern pattern = Pattern.compile("^[0-9]*$");
-        // Comprueba que el String recibido cumple el patron
-        final Matcher matcher = pattern.matcher(string);
+	public void setExpirationDate(String expirationDate) {
+		this.expirationDate = expirationDate;
+	}
 
-        // Si se cumple el patron devuelve true
-        return matcher.find();
+	@Column(name = "cvv", nullable = false, length = 64)
+	public String getCvv() {
+		return this.cvv;
+	}
 
-    }
+	public void setCvv(String cvv) throws IncorrectLengthException {
+		if (this.checkStringNumber(cvv)) {
+			if (cvv.length() == CardProperties.getCvvSize()) {
+				this.cvv = cvv;
+			} else {
+				throw new IncorrectLengthException("Incorrect length");
+			}
+		} else {
+			throw new NumberFormatException(
+					"The cvv must only contains numbers");
+		}
+	}
+
+	@Column(name = "fees", nullable = false)
+	public int getFees() {
+		return this.fees;
+	}
+
+	public void setFees(int fees) {
+		this.fees = fees;
+	}
+
+	public void makeTransaction(double quantity, String payConcept)
+			throws PaymentException {
+
+	}
+
+	/**
+	 * Comprueba que el String recibido sea solo numerico
+	 * 
+	 * @param string
+	 * @return boolean
+	 */
+	private boolean checkStringNumber(String string) {
+		// Crea un patron para indicar que solo debe contener numeros
+		final Pattern pattern = Pattern.compile("^[0-9]*$");
+		// Comprueba que el String recibido cumple el patron
+		final Matcher matcher = pattern.matcher(string);
+
+		// Si se cumple el patron devuelve true
+		return matcher.find();
+
+	}
 }

@@ -2,6 +2,7 @@ package es.unileon.ulebank.repository.impl;
 
 // Generated Jun 15, 2014 4:26:11 AM by Hibernate Tools 3.4.0.CR1
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -35,7 +36,9 @@ public class JPACardsDao implements CardDao {
 	public void persist(Cards transientInstance) {
 		log.debug("persisting Cards instance");
 		try {
-		    entityManager.persist(transientInstance.getId());
+		    entityManager.persist(transientInstance.getGenericHandler());
+		    entityManager.persist(transientInstance.getClient().getGenericHandler());
+		    entityManager.persist(transientInstance.getAccounts().getHandler());
 			entityManager.persist(transientInstance);
 			log.debug("persist successful");
 		} catch (RuntimeException re) {
@@ -84,9 +87,15 @@ public class JPACardsDao implements CardDao {
 	
 	@Transactional (readOnly = true)
 	public List<Cards> getCardClientList(String dni) {
-        Query query = entityManager.createQuery("select c from DebitCard where client_id=" + dni);
+        Query query = entityManager.createQuery("select c from DebitCard c order by c.id");
         @SuppressWarnings("unchecked")
-        List<Cards> result = query.getResultList();
+        List<Cards> cards = query.getResultList();
+        List<Cards> result = new ArrayList<Cards>();
+        for (Cards card : cards) {
+			if (card.getClient().getId().compareTo(dni) == 0) {
+				result.add(card);
+			}
+		}
         return result;
     }
 

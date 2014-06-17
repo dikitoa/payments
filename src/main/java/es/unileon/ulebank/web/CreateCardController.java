@@ -1,10 +1,13 @@
 package es.unileon.ulebank.web;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.validation.Valid;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,14 +19,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import es.unileon.ulebank.account.AccountHandler;
+import es.unileon.ulebank.client.Person;
 import es.unileon.ulebank.command.NewCardCommand;
+import es.unileon.ulebank.domain.Accounts;
 import es.unileon.ulebank.domain.CardBean;
 import es.unileon.ulebank.domain.Cards;
-import es.unileon.ulebank.domain.Offices;
+import es.unileon.ulebank.domain.GenericHandler;
 import es.unileon.ulebank.exceptions.CommandException;
+import es.unileon.ulebank.handler.MalformedHandlerException;
 import es.unileon.ulebank.payments.CardType;
+import es.unileon.ulebank.service.AccountManager;
 import es.unileon.ulebank.service.CardManager;
+import es.unileon.ulebank.service.ClientManager;
 import es.unileon.ulebank.utils.CardProperties;
+import es.unileon.ulebank.validator.CreateCardValidator;
 
 /**
  * @author Israel
@@ -41,6 +51,15 @@ public class CreateCardController {
 	 */
 	@Autowired
 	private CardManager cardManager;
+	
+	@Autowired
+	private ClientManager clientManager;
+	
+	@Autowired
+	private AccountManager accountManager;
+	
+	@Autowired
+	private CreateCardValidator validator;
 
 	/**
 	 * Gestiona las peticiones POST del formulario de creacion de la tarjeta y recibe
@@ -52,23 +71,28 @@ public class CreateCardController {
 	 * @throws CommandException 
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView submit(@Valid CardBean bean, BindingResult result, SessionStatus status) throws CommandException {
-
+	public ModelAndView submit(@ModelAttribute("newCard") CardBean bean, BindingResult result, SessionStatus status) throws CommandException {
+		this.validator.validate(bean, result);
+		List<Cards> cards = new ArrayList<Cards>();
+		
 		if (result.hasErrors()) {
 			return new ModelAndView("createcard", "newCard", bean);
 		}
 		
-		Offices office = bean.getOffice();
-		Cards card = null;
-		NewCardCommand command = new NewCardCommand(office, bean.getDni(), bean.getAccountNumber(), bean.getCardType(), bean.getCardNumber(), card);
 		try {
+			Person client = (Person) this.clientManager.searchClient(bean.getDni());
+			client.setGenericHandler(new GenericHandler(bean.getDni()));
+			Accounts account = this.accountManager.search(bean.getAccountNumber());
+			account.setHandler(new AccountHandler(new GenericHandler(bean.getAccountNumber())));
+			
+			NewCardCommand command = new NewCardCommand(client, account, bean, cards);
 			command.execute();
-			cardManager.saveCard(card);
-		} catch (NumberFormatException e) {
-			LOG.info(e.getMessage());
-		} 
-
-		return new ModelAndView("result", "card", card);
+			cardManager.saveCard(cards.get(0));
+		} catch (MalformedHandlerException e1) {
+			LOG.log(Level.SEVERE, e1.getMessage());
+		}
+		
+		return new ModelAndView("result", "card", cards.get(0));
 	}
 
 	/**
@@ -77,15 +101,16 @@ public class CreateCardController {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET)
-	public CardBean initForm(ModelMap model) {
+	public CardBean initForm(ModelMap model, HttpServletRequest request) {
 		CardBean bean = new CardBean();
-
+		bean.setAccountNumber("1234567890");
 		bean.setBuyLimitDiary(CardProperties.getBuyLimitDiary());
 		bean.setBuyLimitMonthly(CardProperties.getBuyLimitMonthly());
 		bean.setCashLimitDiary(CardProperties.getCashLimitDiary());
 		bean.setCashLimitMonthly(CardProperties.getCashLimitMonthly());
+		System.out.println(request.getParameter("dni"));
+		bean.setDni(request.getParameter("dni"));
 		model.addAttribute("newCard", bean);
-
 		return bean;
 	}
 

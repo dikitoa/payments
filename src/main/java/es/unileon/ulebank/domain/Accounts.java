@@ -53,7 +53,7 @@ public class Accounts implements java.io.Serializable {
     /**
      * The id in handler format
      */
-    private Handler genericHandler;
+    private Handler handler;
     /**
      * DirectDebit transactions
      */
@@ -135,7 +135,7 @@ public class Accounts implements java.io.Serializable {
             History historyByHistoryId, double balance, Date lastLiquidation,
             int liquidationFrequency, double maxOverdraft) {
         this.historyByFailedHistory = historyByFailedHistory;
-        this.genericHandler = genericHandler;
+        this.handler = genericHandler;
         this.historyByDirectDebitHistory = historyByDirectDebitHistory;
         this.historyByHistoryId = historyByHistoryId;
         this.balance = balance;
@@ -151,7 +151,7 @@ public class Accounts implements java.io.Serializable {
             Set<LiquidationFee> liquidationFees, Set<Client> clientses,
             Set<Client> authorizeds, Set<Cards> cardses) {
         this.historyByFailedHistory = historyByFailedHistory;
-        this.genericHandler = genericHandler;
+        this.handler = genericHandler;
         this.historyByDirectDebitHistory = historyByDirectDebitHistory;
         this.historyByHistoryId = historyByHistoryId;
         this.balance = balance;
@@ -186,15 +186,15 @@ public class Accounts implements java.io.Serializable {
         this.historyByFailedHistory = historyByFailedHistory;
     }
 
-//    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @PrimaryKeyJoinColumn
-//    public Handler getHandler() {
-//        return this.genericHandler;
-//    }
-//
-//    public void setHandler(GenericHandler genericHandler) {
-//        this.genericHandler = genericHandler;
-//    }
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    public Handler getHandler() {
+        return this.handler;
+    }
+
+    public void setHandler(Handler genericHandler) {
+        this.handler = genericHandler;
+    }
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "directDebitHistory", nullable = false)

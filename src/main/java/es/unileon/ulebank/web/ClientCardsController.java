@@ -25,6 +25,7 @@ import es.unileon.ulebank.service.CardManager;
 public class ClientCardsController {
 	@Autowired
 	private CardManager cardManager;
+	
 
 	/**
 	 * Envia los datos a la vista para mostrar la lista de tarjetas del cliente actual
@@ -35,9 +36,10 @@ public class ClientCardsController {
 	@RequestMapping (value = "/cards.htm")
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		String dni = (String) request.getAttribute("dni");
+		//As we need a client we obtain one for database
+		String dni = "71557005A";
 		List<Cards> cards = cardManager.getCardClientList(dni);
-
+		map.put("dni", dni);
 		map.put("cards", cards);
 		return new ModelAndView("cards", "model", map);
 	}

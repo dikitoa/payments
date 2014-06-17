@@ -3,6 +3,10 @@
 
 <html>
 	<head>
+		<style type="text/css">
+			<%@ include file ="/resources/css/style.css" %> 
+			.error { color: red; }
+		</style>
 		<title><fmt:message key="generateCardContractTitle"></fmt:message></title>
 		<style>
 			.error {
@@ -19,6 +23,13 @@
 	</head>
 	
 	<body>
+		<header>
+			<a class="backHome" href="<c:url value="startpage.htm"/>" title="Home"></a>
+			<a class="optionsHeader assets" href="<c:url value="assets.htm"/>" title="Assets"></a>
+			<a class="optionsHeader brokerage" href="<c:url value="brokerage.htm"/>" title="brokerage"></a>
+			<a class="optionsHeader liabilities" href="<c:url value="liabilities.htm"/>" title="Liabilities"></a>
+			<a class="optionsHeader optionsHeaderSelected payments" href="<c:url value="payments.htm"/>" title="Payments"></a>
+		</header>
 		<h1><fmt:message key="contract-heading"/></h1>
 	
 		<form:form method="POST" commandName="Contract">

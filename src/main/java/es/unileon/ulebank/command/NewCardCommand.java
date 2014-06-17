@@ -1,12 +1,14 @@
 package es.unileon.ulebank.command;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.command.handler.CommandHandler;
 import es.unileon.ulebank.domain.Accounts;
+import es.unileon.ulebank.domain.CardBean;
 import es.unileon.ulebank.domain.Cards;
 import es.unileon.ulebank.domain.Offices;
 import es.unileon.ulebank.exceptions.CommandException;
@@ -54,6 +56,10 @@ public class NewCardCommand implements Command {
 	 * Duegno de la tarjeta
 	 */
 	private final Client client;
+	
+	private List<Cards> result;
+	
+	private CardBean bean;
 
 	/**
 	 * Constructor del comando que recibe los datos necesarios para crear una
@@ -67,17 +73,17 @@ public class NewCardCommand implements Command {
 	 * @param cardId
 	 * @throws CommandException
 	 */
-	public NewCardCommand(Offices office, String clientId, String accountNumber,
-			String cardType, String cardId, Cards result) throws CommandException {
-		this.client = office.searchClient(clientId);
-		this.account = client.searchAccount(accountNumber);
-		this.card = result;
+	public NewCardCommand(Client client, Accounts account, CardBean bean, List<Cards> result) throws CommandException {
+		this.client = client;
+		this.account = account;
+		this.result = result;
+		this.bean = bean;
 		try {
-			this.cardHandler = new CardHandler(cardId);
+			this.cardHandler = new CardHandler(bean.getCardNumber());
 		} catch (MalformedHandlerException e) {
 			LOG.log(Level.SEVERE, e.getMessage());
 		}
-		this.cardType = cardType.toString();
+		this.cardType = bean.getCardType();
 		this.id = new CommandHandler(this.cardHandler);
 	}
 
@@ -102,6 +108,13 @@ public class NewCardCommand implements Command {
 				this.card = new DebitCard(this.cardHandler, this.client,
 						this.account);
 			}
+			this.card.setBuyLimitDiary(bean.getBuyLimitDiary());
+			this.card.setBuyLimitMonthly(bean.getBuyLimitMonthly());
+			this.card.setCashLimitDiary(bean.getCashLimitDiary());
+			this.card.setCashLimitMonthly(bean.getCashLimitMonthly());
+			this.card.setFees(bean.getFee());
+			this.card.setClient(client);
+			this.card.setAccounts(account);
 		} catch (NumberFormatException e) {
 			LOG.log(Level.SEVERE, e.getMessage());
 			throw new NumberFormatException(e.getMessage());
@@ -109,6 +122,7 @@ public class NewCardCommand implements Command {
 
 		if (this.card != null) {
 			this.account.addCard(this.card);
+			result.add(card);
 		}
 	}
 

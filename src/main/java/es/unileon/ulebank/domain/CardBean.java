@@ -33,19 +33,7 @@ public class CardBean {
 	/**
 	 * Comision de emision de la tarjeta
 	 */
-	private double commissionEmission;
-	/**
-	 * Comision de mantenimiento de la tarjeta
-	 */
-	private double commissionMaintenance;
-	/**
-	 * Comision de renovacion de la tarjeta
-	 */
-	private double commissionRenovate;
-	/**
-	 * Tipo de tarjeta (credito o debito actualmente)
-	 */
-	private String cardType;
+	private int fee;
 	/**
 	 * Booleano que comprueba que se acepte el contrato de la tarjeta
 	 */
@@ -56,6 +44,8 @@ public class CardBean {
 	private String dni;
 	
 	private Offices office;
+	
+	private String cardType;
 
 	/**
 	 * Devuelve el numero de tarjeta en String
@@ -141,65 +131,19 @@ public class CardBean {
 	 * Devuelve la comision de emision de la tarjeta
 	 * @return
 	 */
-	public double getCommissionEmission() {
-		return this.commissionEmission;
+	public int getFee() {
+		return this.fee;
 	}
 
 	/**
 	 * Cambia la comision de emision por la que se indica
 	 * @param commissionEmission
 	 */
-	public void setCommissionEmission(double commissionEmission) {
-		this.commissionEmission = commissionEmission;
+	public void setFee(int commissionEmission) {
+		this.fee = commissionEmission;
 	}
 
-	/**
-	 * Devuelve la comision de mantenimiento de la tarjeta
-	 * @return
-	 */
-	public double getCommissionMaintenance() {
-		return this.commissionMaintenance;
-	}
 
-	/**
-	 * Cambia la comision de mantenimiento por la que recibe
-	 * @param commissionMaintenance
-	 */
-	public void setCommissionMaintenance(double commissionMaintenance) {
-		this.commissionMaintenance = commissionMaintenance;
-	}
-
-	/**
-	 * Devuelve la comision de renovacion de la tarjeta
-	 * @return
-	 */
-	public double getCommissionRenovate() {
-		return this.commissionRenovate;
-	}
-
-	/**
-	 * Cambia la comison de renovacion por la indicada
-	 * @param commissionRenovate
-	 */
-	public void setCommissionRenovate(double commissionRenovate) {
-		this.commissionRenovate = commissionRenovate;
-	}
-
-	/**
-	 * devuelve el tipo actual de tarjeta
-	 * @return
-	 */
-	public String getCardType() {
-		return this.cardType;
-	}
-
-	/**
-	 * Cambia el tipo de tarjeta por el indicado
-	 * @param cardType
-	 */
-	public void setCardType(String cardType) {
-		this.cardType = cardType;
-	}
 
 	/**
 	 * Devuelve si se ha aceptado el contrato o no
@@ -239,6 +183,14 @@ public class CardBean {
 
 	public void setOffice(Offices office) {
 		this.office = office;
+	}
+
+	public String getCardType() {
+		return cardType;
+	}
+
+	public void setCardType(String cardType) {
+		this.cardType = cardType;
 	}
 	
 }

@@ -20,7 +20,7 @@
 		<nav class="menu">
 			<ul>
 				<li>
-					<a href="<c:url value="createcard.htm"/>">Nueva Tarjeta</a>
+					<a href="<c:url value="createcard.htm?dni=${model.dni}"/>">Nueva Tarjeta</a>
 				</li>
 				<li>
 					<a href="<c:url value="priceincrease.htm"/>">Modificar Pin</a>
@@ -32,7 +32,7 @@
 					<a href="<c:url value="cashLimits.htm"/>">Modificar Límites Efectivo</a>
 				</li>
 				<li>
-					<a href="<c:url value="feechange.htm"/>">Cambiar Comisiones</a>
+					<a href="<c:url value="cards.jsp"/>">Cambiar Comisiones</a>
 				</li>
 			</ul>
 		</nav>
@@ -48,21 +48,14 @@
 				<tr>
 					<td>Card Number: </td>
 					<td><c:out value="${card.id}"></c:out></td>
-					<td><a href="">Delete Card</a></td>
-				</tr>
-				<tr>
-					<td>Type: </td>
-					<td><c:out value="${card.cardType}"></c:out></td>
 				</tr>
 				<tr>
 					<td>PIN: </td>
 					<td><c:out value="${card.pin}"></c:out></td> 
-					<td><a href="">Modify PIN</a></td>
 				</tr>
 				<tr>
 					<td>Buy limit diary: </td>
 					<td><c:out value="${card.buyLimitDiary}"></c:out></td> 
-					<td><a href="buyLimits.htm">Modify Buy Limits</a></td>
 				</tr>
 				<tr>
 					<td>Buy limit monthly: </td>
@@ -71,7 +64,6 @@
 				<tr>
 					<td>Cash limit diary: </td>
 					<td><c:out value="${card.cashLimitDiary}"></c:out></td>
-					<td><a href="cashLimits.htm">Modify Cash Limits</a></td>
 				</tr>
 				<tr>
 					<td>Cash limit monthly: </td>
@@ -79,13 +71,10 @@
 				</tr>
 				<tr>
 					<td>Fees : </td>
-					<td><c:out value="${card.fee}"></c:out></td>
-					<td><a href="feechange.htm">Change Fee</a></td>
+					<td><c:out value="${card.fees}"></c:out></td>
 				</tr>
 				</table>
 			</c:forEach>
-			<br><br>
-			<a href="createcard.htm">New Card</a>
 		</div>
 	</body>
 </html>
