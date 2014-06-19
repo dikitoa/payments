@@ -2,6 +2,9 @@
 -- version 4.1.14
 -- http://www.phpmyadmin.net
 --
+
+GRANT ALL ON ULEBANK_FINAL.* TO root@'%' IDENTIFIED BY 'toor';
+GRANT ALL ON ULEBANK_FINAL.* TO root@localhost IDENTIFIED BY 'toor';
 -- Servidor: localhost
 -- Tiempo de generación: 17-06-2014 a las 04:02:50
 -- Versión del servidor: 5.6.17
@@ -16,6 +19,8 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
 
+CREATE DATABASE IF NOT EXISTS `ULEBANK_FINAL` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `ULEBANK_FINAL`;
 --
 -- Base de datos: `ULEBANK_FINAL`
 --
@@ -25,6 +30,8 @@ SET time_zone = "+00:00";
 --
 -- Estructura de tabla para la tabla `ACCOUNTS`
 --
+
+
 
 CREATE TABLE IF NOT EXISTS `ACCOUNTS` (
   `account_number` varchar(64) COLLATE utf8_bin NOT NULL,
