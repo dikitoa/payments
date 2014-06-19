@@ -50,6 +50,7 @@ public class Cards implements java.io.Serializable {
 	private String expirationDate;
 	private String cvv;
 	private int fees;
+	private String discriminator;
 
 	public Cards() {
 		this.pin = generatePinCode();
@@ -309,6 +310,15 @@ public class Cards implements java.io.Serializable {
 
 	public void setFees(int fees) {
 		this.fees = fees;
+	}
+	
+	@Column (name = "discriminator", nullable = false, insertable=false, updatable=false)
+	public String getDiscriminator() {
+		return discriminator;
+	}
+
+	public void setDiscriminator(String discriminator) {
+		this.discriminator = discriminator;
 	}
 
 	public void makeTransaction(double quantity, String payConcept)

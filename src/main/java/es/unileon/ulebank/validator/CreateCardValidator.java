@@ -23,20 +23,23 @@ public class CreateCardValidator implements Validator {
 	public void validate(Object object, Errors errors) {
 		CardBean bean = (CardBean)object;
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "cardNumber", "required.cardNumber", "Card ID field is necesary");
+		if (bean.getAccountNumber().equalsIgnoreCase("NONE")) {
+			errors.rejectValue("accountNumber", "required.accountNumber");
+		}
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "buyLimitDiary", "required.buyLimitDiary", "Buy Limit Diary field is necesary.");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "buyLimitMonthly", "required.buyLimitMonthly", "Buy Limit Monthly field is necesary.");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "cashLimitDiary", "required.cashLimitDiary", "Cash Limit Diary field is necesary.");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "cashLimitMonthly", "required.cashLimitMonthly", "Cash Limit Monthly field is necesary.");
-		if (bean.getCardType().toString().equalsIgnoreCase("NONE")) {
+		if (bean.getCardType().equalsIgnoreCase("NONE")) {
 			errors.rejectValue("cardType", "required.cardType");
 		}
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "fee", "required.commissionEmission", "Commission Emission field is necesary.");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "fee", "required.fee", "Fee field is necesary.");
 		validateCardNumber(bean.getCardNumber(), errors);
 		validateBuyLimitDiary(bean.getBuyLimitDiary(), errors);
 		validateBuyLimitMonthly(bean.getBuyLimitMonthly(), errors);
 		validateCashLimitDiary(bean.getCashLimitDiary(), errors);
 		validateCashLimitMonthly(bean.getCashLimitMonthly(), errors);
-		validateCommissionEmission(bean.getFee(), errors);
+		validateFee(bean.getFee(), errors);
 		validateContract(bean.isContract(), errors);
 	}
 
@@ -91,9 +94,9 @@ public class CreateCardValidator implements Validator {
 		}
 	}
 
-	private void validateCommissionEmission(double commissionEmission, Errors errors) {
+	private void validateFee(double fee, Errors errors) {
 		if (!errors.hasFieldErrors("fee")) {
-			if (commissionEmission >= Double.MAX_VALUE) {
+			if (fee >= Double.MAX_VALUE) {
 				errors.rejectValue("fee", "max.fee");
 			} 
 		}

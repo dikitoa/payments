@@ -22,11 +22,12 @@ import es.unileon.ulebank.repository.CardDao;
 
 /**
  * Home object for domain model class Cards.
+ * 
  * @see es.unileon.ulebank.domain.Cards
  * @author Hibernate Tools
  */
 @Stateless
-@Repository (value = "cardDao")
+@Repository(value = "cardDao")
 public class JPACardsDao implements CardDao {
 
 	private static final Log log = LogFactory.getLog(JPACardsDao.class);
@@ -34,18 +35,20 @@ public class JPACardsDao implements CardDao {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	@Transactional (readOnly = false)
+	@Transactional(readOnly = false)
 	public void persist(Cards transientInstance) {
 		log.debug("persisting Cards instance");
 		try {
-		    entityManager.persist(transientInstance.getGenericHandler());
-		    if (entityManager.find(Client.class, transientInstance.getClient().getId()) == null) {
-		    	entityManager.persist(transientInstance.getClient());
+			entityManager.persist(transientInstance.getGenericHandler());
+			if (entityManager.find(Client.class, transientInstance.getClient()
+					.getId()) == null) {
+				entityManager.persist(transientInstance.getClient());
 			}
-		    if (entityManager.find(Accounts.class, transientInstance.getAccounts().getAccountNumber()) == null) {
-		    	entityManager.persist(transientInstance.getAccounts());
+			if (entityManager.find(Accounts.class, transientInstance
+					.getAccounts().getAccountNumber()) == null) {
+				entityManager.persist(transientInstance.getAccounts());
 			}
-		    
+
 			entityManager.persist(transientInstance);
 			log.debug("persist successful");
 		} catch (RuntimeException re) {
@@ -54,11 +57,13 @@ public class JPACardsDao implements CardDao {
 		}
 	}
 
-	@Transactional (readOnly = false)
+	@Transactional(readOnly = false)
 	public void remove(Cards persistentInstance) {
 		log.debug("removing Cards instance");
 		try {
-			entityManager.remove(persistentInstance);
+			entityManager
+			.remove(entityManager.contains(persistentInstance) ? persistentInstance
+					: entityManager.merge(persistentInstance));
 			log.debug("remove successful");
 		} catch (RuntimeException re) {
 			log.error("remove failed", re);
@@ -66,7 +71,7 @@ public class JPACardsDao implements CardDao {
 		}
 	}
 
-	@Transactional (readOnly = false)
+	@Transactional(readOnly = false)
 	public Cards merge(Cards detachedInstance) {
 		log.debug("merging Cards instance");
 		try {
@@ -79,7 +84,7 @@ public class JPACardsDao implements CardDao {
 		}
 	}
 
-	@Transactional (readOnly = true)
+	@Transactional(readOnly = true)
 	public Cards findById(String id) {
 		log.debug("getting Cards instance with id: " + id);
 		try {
@@ -91,28 +96,32 @@ public class JPACardsDao implements CardDao {
 			throw re;
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	@Transactional (readOnly = true)
+	@Transactional(readOnly = true)
 	public List<Cards> getCardClientList(String dni) {
-        Query query = entityManager.createQuery("select c from DebitCard c order by c.id");
-        List<Cards> cards = query.getResultList();
-        query = entityManager.createQuery("select c from CreditCard c order by c.id");
-        cards.addAll(query.getResultList());
-        List<Cards> result = new ArrayList<Cards>();
-        for (Cards card : cards) {
+		Query query = entityManager
+				.createQuery("select c from DebitCard c order by c.id");
+		List<Cards> cards = query.getResultList();
+		query = entityManager
+				.createQuery("select c from CreditCard c order by c.id");
+		cards.addAll(query.getResultList());
+		List<Cards> result = new ArrayList<Cards>();
+		for (Cards card : cards) {
 			if (card.getClient().getId().compareTo(dni) == 0) {
 				result.add(card);
 			}
 		}
-        return result;
-    }
+		return result;
+	}
 
-	@Transactional (readOnly = true)
-    public List<Cards> getCardAccountList(String accountNumber) {
-        Query query = entityManager.createQuery("select c from DebitCard where account_number=" + accountNumber);
-        @SuppressWarnings("unchecked")
-        List<Cards> result = query.getResultList();
-        return result;
-    }
+	@Transactional(readOnly = true)
+	public List<Cards> getCardAccountList(String accountNumber) {
+		Query query = entityManager
+				.createQuery("select c from DebitCard where account_number="
+						+ accountNumber);
+		@SuppressWarnings("unchecked")
+		List<Cards> result = query.getResultList();
+		return result;
+	}
 }

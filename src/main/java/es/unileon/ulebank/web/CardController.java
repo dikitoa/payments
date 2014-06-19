@@ -50,6 +50,7 @@ public class CardController {
 
         Map<String, Object> myModel = new HashMap<String, Object>();
         myModel.put("id", this.card.getId());
+        myModel.put("discriminator", this.card.getDiscriminator());
         myModel.put("pin", this.card.getPin());
         myModel.put("buyLimitDiary", this.card.getBuyLimitDiary());
         myModel.put("buyLimitMonthly", this.card.getBuyLimitMonthly());

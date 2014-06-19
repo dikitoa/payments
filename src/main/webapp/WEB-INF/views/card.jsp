@@ -6,7 +6,7 @@
 			<%@ include file ="/resources/css/style.css" %> 
 			.error { color: red; }
 		</style>
-		<title><fmt:message key="showCardResultTitle" /></title>
+		<title><fmt:message key="cardInfo" /></title>
 	</head>
 	<body>
 		<header>
@@ -20,19 +20,19 @@
 		<nav class="menu">
 			<ul>
 				<li>
-					<a href="<c:url value="createcard.htm?id=${card.id}"/>">Nueva Tarjeta</a>
+					<a href='<c:url value="deletecard.htm?id=${card.id}" ></c:url>'>Delete card</a>
 				</li>
 				<li>
-					<a href="<c:url value="modifypin.htm?id=${card.id}"/>">Modificar Pin</a>
+					<a href="<c:url value="modifypin.htm?id=${card.id}"/>">Change PIN</a>
 				</li>
 				<li>
-					<a href="<c:url value="buyLimits.htm?id=${card.id}"/> ">Modificar Límites Compra</a>
+					<a href="<c:url value="buyLimits.htm?id=${card.id}"/> ">Change Buy Limits</a>
 				</li>
 				<li>
-					<a href="<c:url value="cashLimits.htm?id=${card.id}"/>">Modificar Límites Efectivo</a>
+					<a href="<c:url value="cashLimits.htm?id=${card.id}"/>">Change Cash Limits</a>
 				</li>
 				<li>
-					<a href="<c:url value="feechange.htm?id=${card.id}"/>">Cambiar Comisiones</a>
+					<a href="<c:url value="feechange.htm?id=${card.id}"/>">Change Fees</a>
 				</li>
 			</ul>
 		</nav>
@@ -47,6 +47,10 @@
 				<tr>
 					<td>Card Number: </td>
 					<td>${card.id}</td>
+				</tr>
+				<tr>
+					<td>Type: </td>
+					<td>${card.discriminator}</td>
 				</tr>
 				<tr>
 					<td>PIN: </td>

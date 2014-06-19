@@ -52,7 +52,7 @@
 		<div class="content"> 
  			<div class="headerContent"> 
  				<b class="titleContent">
- 					<fmt:message key="heading"/>
+ 					<fmt:message key="cardCreationHeading"/>
     			</b>
     		</div> 	
 		
@@ -64,6 +64,16 @@
 						<td>Card Number: </td>
 						<td><form:input path="cardNumber" maxlength="15" size="20"/></td>
 						<td><form:errors path="cardNumber" cssClass="error"></form:errors></td>
+					</tr>
+					<tr>
+						<td>Account: </td>
+						<td>
+							<form:select path="accountNumber">
+								<form:option value="NONE" label="--select--"></form:option>
+								<form:options items="${accountNumber}"/>
+							</form:select>
+						</td>
+						<td><form:errors path="accountNumber" cssClass="error"/></td>
 					</tr>
 					<tr>
 						<td>Buy limit diary: </td>
@@ -96,7 +106,6 @@
 						</td>
 						<td><form:errors path="cardType" cssClass="error"></form:errors></td>
 					</tr>
-				
 					<tr>
 						<td>Commission emissionn: </td>
 						<td><form:input path="fee" size="15"/></td>
@@ -110,7 +119,6 @@
 					</tr>
 					
 					<form:hidden path="dni"/>
-					<form:hidden path="accountNumber"/>
 				
 					<tr>
 						<td><input type="submit" value="Create"/></td>

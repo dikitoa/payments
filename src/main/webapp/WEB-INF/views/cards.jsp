@@ -6,7 +6,7 @@
 			<%@ include file ="/resources/css/style.css" %> 
 			.error { color: red; }
 		</style>
-		<title><fmt:message key="title" /></title>
+		<title><fmt:message key="cardTitle" /></title>
 	</head>
 	<body>
 		<header>
@@ -36,6 +36,10 @@
 				<tr>
 					<td>Card Number: </td>
 					<td><c:out value="${card.id}"></c:out></td>
+				</tr>
+				<tr>
+					<td>Type: </td>
+					<td><c:out value="${card.discriminator}"></c:out></td>
 				</tr>
 				<tr>
 					<td>PIN: </td>

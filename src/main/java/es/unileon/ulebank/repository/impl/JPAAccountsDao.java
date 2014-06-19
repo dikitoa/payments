@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -244,15 +245,20 @@ public class JPAAccountsDao implements AccountDao{
         }
     }
 
-    @Override
-    public void remove(Handler id) {
-        // TODO Auto-generated method stub
+    @SuppressWarnings("unchecked")
+	@Override
+    public List<Accounts> getAccountList(String id) {
+    	Query query = entityManager.createQuery("select a from Accounts a order by a.accountNumber");
+        List<Accounts> accounts = query.getResultList();
         
-    }
-
-    @Override
-    public List<Accounts> getAccountList() {
-        // TODO Auto-generated method stub
-        return null;
+        for (Accounts account : accounts) {
+        	Set<Client> clients = account.getClientes();
+			for (Client client : clients) {
+				if (client.getId() == id) {
+					accounts.add(account);
+				}
+			}
+		}
+        return accounts;
     }
 }

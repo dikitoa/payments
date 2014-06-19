@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import es.unileon.ulebank.domain.Accounts;
-import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.repository.AccountDao;
 import es.unileon.ulebank.service.AccountManager;
 
@@ -21,8 +20,8 @@ public class SimpleAccountManager implements AccountManager {
 	}
 
 	@Override
-	public void delete(Handler accountHandler) {
-		this.accountDao.remove(accountHandler);
+	public void delete(Accounts account) {
+		this.accountDao.remove(account);
 	}
 
 	@Override
@@ -31,9 +30,7 @@ public class SimpleAccountManager implements AccountManager {
 	}
 
 	@Override
-	public List<Accounts> getAccounts() {
-		return this.accountDao.getAccountList();
+	public List<Accounts> getAccounts(String id) {
+		return this.accountDao.getAccountList(id);
 	}
-	
-	
 }
