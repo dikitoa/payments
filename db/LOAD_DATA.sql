@@ -20,8 +20,8 @@ INSERT INTO `CARDS` (`id`, `pin`, `buy_limit_diary`, `buy_limit_monthly`, `cash_
 -- Volcado de datos para la tabla `CLIENTS`
 --
 
-INSERT INTO `CLIENTS` (`id`, `name`, `surnames`, `address`, `civil_state`, `phone_number1`, `phone_number2`, `profession`, `birth_date`, `enterprise_name`, `discriminator`) VALUES
-('71557005A', 'Manolo', 'Perico Machado', 'calle s/n', 'c', 666666666, 644342124, 'follador', '1993-06-18 07:16:10', ' ', 'Person','9876'),
+INSERT INTO `CLIENTS` (`id`, `name`, `surnames`, `address`, `civil_state`, `phone_number1`, `phone_number2`, `profession`, `birth_date`, `enterprise_name`, `discriminator`, `office`) VALUES
+('71557005A', 'Manolo', 'Perico Machado', 'calle s/n', 'c', 666666666, 644342124, 'camionero', '1993-06-18 07:16:10', ' ', 'Person','9876'),
 ('71560136Y', 'Carlos', 'Mayo de Prado', 'Camino de Santiago 13 24286 HdO', 'd', 657693322, 669696969, 'vividor', '2014-11-10 23:00:00', ' ', 'Person','9876');
 
 --

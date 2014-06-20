@@ -36,16 +36,7 @@
 					<a href="<c:url value="createcard.htm"/>">Nueva Tarjeta</a>
 				</li>
 				<li>
-					<a href="<c:url value="priceincrease.htm"/>">Modificar Pin</a>
-				</li>
-				<li>
-					<a href="<c:url value="buyLimits.htm"/> ">Modificar Límites Compra</a>
-				</li>
-				<li>
-					<a href="<c:url value="cashLimits.htm"/>">Modificar Límites Efectivo</a>
-				</li>
-				<li>
-					<a href="<c:url value="feechange.htm"/>">Cambiar Comisiones</a>
+					<a href="<c:url value="transfer.htm"/>">Realizar Transferencia</a>
 				</li>
 			</ul>
 		</nav>

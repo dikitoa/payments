@@ -29,7 +29,7 @@
 				<p>Are you sure want to delete this card?</p>
 				<p><c:out value="${id}"/></p>
 				<br><br>
-				<input type="submit" name="Yes"/>  <a href='<c:url value="cards.htm"></c:url>'>Home</a>
+				<input type="submit" name="Yes"/>  <a href="<c:url value="cards.htm"></c:url>">Home</a>
 			</form:form>
 		</div>
 	</body>

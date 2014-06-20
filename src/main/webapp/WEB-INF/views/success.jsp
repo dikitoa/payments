@@ -25,7 +25,7 @@
 					<p><fmt:message key="operationSuccess"></fmt:message></p>
 				</li>
 				<li>
-					<a href='<c:url value="card.htm"></c:url>'>Return Home</a>
+					<a href="<c:url value="cards.htm"></c:url>">Return Home</a>
 				</li>
 			</ul>
 		</nav>
