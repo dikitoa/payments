@@ -33,12 +33,33 @@
 				<b class="titleContent"><fmt:message key="searchClient" /></b>
 				<a class="searcherContent" href="<c:url value="searchclient.htm"/>" title="Search client"></a>
 			</div>
-			<ul>
-				<form:form method="post" commandName="searcher">
-					<form:input path="id" />
-					<input type="submit" value="Search">
-				</form:form>
-			</ul>
+			<c:forEach items="${model.clients}" var="client">
+				<table>
+					<tr>
+						<td><i>NIF: </i></td>
+						<td><c:out value="${client.id}" /></td>
+					</tr>
+					<tr>
+						<td><i>Name: </i></td>
+						<td><c:out value="${client.name}" /></td>
+					</tr>
+					<tr>
+						<td><i>Surname: </i></td>
+						<td><c:out value="${client.surnames}"></c:out></td>
+					</tr>
+					<tr>
+						<td><i>Phone Number 1: </i></td>
+						<td><c:out value="${client.phoneNumber1}"></c:out></td>
+					</tr>
+					<tr>
+						<td><i>Address: </i></td>
+						<td><c:out value="${client.address}"></c:out></td>
+					</tr>
+					<tr>
+						<td><a href='<c:url value="client.htm?dni=${client.id}"></c:url>'>View data</a></td>
+					</tr>
+				</table>
+			</c:forEach>
 		</div>
 	</body>
 </html>

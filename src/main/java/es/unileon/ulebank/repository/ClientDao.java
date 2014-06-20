@@ -14,5 +14,5 @@ public interface ClientDao {
 
     public Client findById(String id);
     
-    public List<Client> getClientList();
+    public List<Client> getClientList(String office);
 }

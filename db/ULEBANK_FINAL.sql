@@ -6,9 +6,9 @@
 GRANT ALL ON ULEBANK_FINAL.* TO root@'%' IDENTIFIED BY 'toor';
 GRANT ALL ON ULEBANK_FINAL.* TO root@localhost IDENTIFIED BY 'toor';
 -- Servidor: localhost
--- Tiempo de generación: 17-06-2014 a las 04:02:50
--- Versión del servidor: 5.6.17
--- Versión de PHP: 5.4.24
+-- Tiempo de generacin: 17-06-2014 a las 04:02:50
+-- Versin del servidor: 5.6.17
+-- Versin de PHP: 5.4.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -48,12 +48,6 @@ CREATE TABLE IF NOT EXISTS `ACCOUNTS` (
   KEY `failedHistory` (`failedHistory`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
---
--- Volcado de datos para la tabla `ACCOUNTS`
---
-
-INSERT INTO `ACCOUNTS` (`account_number`, `balance`, `last_liquidation`, `liquidation_frequency`, `max_overdraft`, `historyId`, `directDebitHistory`, `failedHistory`) VALUES
-('1234567890', 12938, '2014-06-17 01:20:52', 3, 2333, '4444', '6666', '3452');
 
 -- --------------------------------------------------------
 
@@ -140,18 +134,6 @@ CREATE TABLE IF NOT EXISTS `CARDS` (
   KEY `account_number` (`account_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
---
--- Volcado de datos para la tabla `CARDS`
---
-
-INSERT INTO `CARDS` (`id`, `pin`, `buy_limit_diary`, `buy_limit_monthly`, `cash_limit_diary`, `cash_limit_monthly`, `emission_date`, `expiration_date`, `discriminator`, `cvv`, `fees`, `account_number`, `client_id`, `month_day`, `transaction_list`) VALUES
-('0009998786763447', '4612', 400, 1000, 400, 1000, '17/06/2014', '06/17', 'CreditCard', '693', 0, '1234567890', '71557005A', NULL, NULL),
-('0987654321', '9231', 1233, 5555, 222, 5422, '12/09/22', '09/23', 'DebitCard', '009', 3, '1234567890', '71557005A', '2014-06-21 22:00:00', 'no va n de palo'),
-('5432654376658788', '4710', 400, 1000, 400, 1000, '17/06/2014', '06/17', 'CreditCard', '655', 0, '1234567890', '71557005A', NULL, NULL),
-('7859656545674570', '8323', 400, 1000, 400, 1000, '17/06/2014', '06/17', 'DebitCard', '993', 0, '1234567890', '71557005A', NULL, NULL),
-('8888888888888888', '5468', 400, 1000, 400, 1000, '17/06/2014', '06/17', 'CreditCard', '711', 0, '1234567890', '71557005A', NULL, NULL),
-('8907345897893570', '3332', 400, 1000, 400, 1000, '17/06/2014', '06/17', 'DebitCard', '127', 0, '1234567890', '71557005A', NULL, NULL),
-('8974095827375549', '9356', 400, 1000, 400, 1000, '17/06/2014', '06/17', 'DebitCard', '118', 0, '1234567890', '71557005A', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -171,16 +153,11 @@ CREATE TABLE IF NOT EXISTS `CLIENTS` (
   `birth_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `enterprise_name` varchar(32) COLLATE utf8_bin DEFAULT NULL,
   `discriminator` varchar(32) COLLATE utf8_bin NOT NULL,
-  PRIMARY KEY (`id`)
+  `office` varchar(64) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `office` (`office`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
---
--- Volcado de datos para la tabla `CLIENTS`
---
-
-INSERT INTO `CLIENTS` (`id`, `name`, `surnames`, `address`, `civil_state`, `phone_number1`, `phone_number2`, `profession`, `birth_date`, `enterprise_name`, `discriminator`) VALUES
-('71557005A', 'Manolo', 'Perico Machado', 'calle s/n', 'c', 666666666, 644342124, 'follador', '1993-06-18 07:16:10', ' ', 'Person'),
-('71560136Y', 'Carlos', 'Mayo de Prado', 'Camino de Santiago 13 24286 HdO', 'd', 657693322, 669696969, 'vividor', '2014-11-10 23:00:00', NULL, 'client');
 
 -- --------------------------------------------------------
 
@@ -259,28 +236,6 @@ CREATE TABLE IF NOT EXISTS `GENERIC_HANDLER` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_bin;
 
---
--- Volcado de datos para la tabla `GENERIC_HANDLER`
---
-
-INSERT INTO `GENERIC_HANDLER` (`id`, `discriminator`) VALUES
-('0000', 'BankHandler'),
-('0009998786763447', 'CardHandler'),
-('0987654321', 'AccountHandler'),
-('1234', 'GenericHandler'),
-('1234567890', 'AccountHandler'),
-('3452', 'GenericHandler'),
-('4444', 'GenericHandler'),
-('5432654376658788', 'CardHandler'),
-('6666', 'GenericHandler'),
-('71557005A', 'PersonHandler'),
-('71560136Y', 'PersonHandler'),
-('7859656545674570', 'CardHandler'),
-('8888888888888888', 'CardHandler'),
-('8907345897893570', 'CardHandler'),
-('8974095827375549', 'CardHandler'),
-('9876', 'OfficeHandler');
-
 -- --------------------------------------------------------
 
 --
@@ -292,16 +247,6 @@ CREATE TABLE IF NOT EXISTS `HISTORY` (
   PRIMARY KEY (`history_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
---
--- Volcado de datos para la tabla `HISTORY`
---
-
-INSERT INTO `HISTORY` (`history_id`) VALUES
-('1234'),
-('3452'),
-('4444'),
-('6666'),
-('9876');
 
 -- --------------------------------------------------------
 
@@ -317,12 +262,6 @@ CREATE TABLE IF NOT EXISTS `HISTORY_TRANSACTIONS` (
   KEY `transaction_id` (`transaction_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
---
--- Volcado de datos para la tabla `HISTORY_TRANSACTIONS`
---
-
-INSERT INTO `HISTORY_TRANSACTIONS` (`history_id`, `transaction_id`) VALUES
-('1234', '12345');
 
 -- --------------------------------------------------------
 
@@ -403,12 +342,6 @@ CREATE TABLE IF NOT EXISTS `OFFICES` (
   KEY `account_number` (`account_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
---
--- Volcado de datos para la tabla `OFFICES`
---
-
-INSERT INTO `OFFICES` (`office_id`, `bank_id`, `local_cost`, `utlities_cost`, `employe_cost`, `total_expenses`, `total_income`, `balance`, `account_number`) VALUES
-('9876', '0000', 1000000, 800000, 100000, 1900000, 100000000, 98100000, '1234567890');
 
 -- --------------------------------------------------------
 
@@ -474,13 +407,6 @@ CREATE TABLE IF NOT EXISTS `TRANSACTIONS` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Volcado de datos para la tabla `TRANSACTIONS`
---
-
-INSERT INTO `TRANSACTIONS` (`id`, `amount`, `subject`, `effective_date`, `date`, `extra_information`, `direct_debit_id`, `related`, `sender_account`, `pack`, `operator`, `discriminator`) VALUES
-('12345', 899, 'gfghfg', '2014-06-17 01:14:50', '2014-06-11 22:00:00', 'holll', 'jaja', 'olla', '1234567890', 3, 'venga va', 'GenericTransaction');
-
---
 -- Restricciones para tablas volcadas
 --
 
@@ -527,6 +453,7 @@ ALTER TABLE `CARDS`
 -- Filtros para la tabla `CLIENTS`
 --
 ALTER TABLE `CLIENTS`
+  ADD CONSTRAINT `CLIENTS_ibfk_2` FOREIGN KEY (`office`) REFERENCES `OFFICES` (`office_id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `CLIENTS_ibfk_1` FOREIGN KEY (`id`) REFERENCES `GENERIC_HANDLER` (`id`) ON UPDATE CASCADE;
 
 --

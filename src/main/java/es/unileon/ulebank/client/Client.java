@@ -49,6 +49,8 @@ public class Client implements Serializable {
      * Accounts where the client appear
      */
     private List<Accounts> accounts;
+    
+    private String office;
 
     /**
      * Constructor of client. Receive the id and initilize the list of accounts
@@ -174,4 +176,11 @@ public class Client implements Serializable {
         this.accounts = accounts;
     }
 
+	public String getOffice() {
+		return office;
+	}
+
+	public void setOffice(String office) {
+		this.office = office;
+	}
 }

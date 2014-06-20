@@ -2,6 +2,7 @@ package es.unileon.ulebank.repository.impl;
 
 // Generated Jun 15, 2014 1:06:41 AM by Hibernate Tools 3.4.0.CR1
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -82,10 +83,17 @@ public class JPAClientsDao implements ClientDao{
 	}
 
 	@Override
-	public List<Client> getClientList() {
-		Query query = entityManager.createQuery("select * from Client");
+	public List<Client> getClientList(String office) {
+		Query query = entityManager.createQuery("select c from Client c order by c.id");
         @SuppressWarnings("unchecked")
-        List<Client> result = query.getResultList();
+        List<Client> clients = query.getResultList();
+        
+        List<Client> result = new ArrayList<Client>();
+        for (Client client : clients) {
+			if (client.getOffice().equals(office)) {
+				result.add(client);
+			}
+		}
         return result;
 	}
 }

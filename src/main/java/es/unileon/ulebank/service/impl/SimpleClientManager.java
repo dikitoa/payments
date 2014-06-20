@@ -15,8 +15,8 @@ public class SimpleClientManager implements ClientManager {
 	private ClientDao clientDao;
 	
 	@Override
-	public List<Client> getClients() {
-		return clientDao.getClientList();
+	public List<Client> getClients(String office) {
+		return clientDao.getClientList(office);
 	}
 
 	@Override
