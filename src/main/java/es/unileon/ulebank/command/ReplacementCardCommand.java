@@ -79,10 +79,8 @@ public class ReplacementCardCommand implements Command {
 	 * @throws CommandException
 	 * @throws ClientNotFoundException
 	 */
-	public ReplacementCardCommand(Handler cardId, Offices office, Handler dni,
-			Handler accountHandler) {
-		this.id = new CommandHandler(cardId);
-		this.cardId = cardId;
+	public ReplacementCardCommand(Cards card) {
+		this.card = card;
 		// this.account =
 		// office.searchClient(dni).searchAccount(accountHandler);
 	}
@@ -96,9 +94,6 @@ public class ReplacementCardCommand implements Command {
 	 */
 	@Override
 	public void execute() throws CommandException {
-		// Buscamos la tarjeta en la cuenta a la que esta asociada a traves
-		// del identificador
-		this.card = this.account.searchCard(this.cardId.toString());
 		// Guardamos el PIN anterior
 		this.oldPin = this.card.getPin();
 		// Generamos el nuevo PIN y lo almacenamos

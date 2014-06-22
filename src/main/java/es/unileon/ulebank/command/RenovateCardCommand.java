@@ -71,10 +71,8 @@ public class RenovateCardCommand implements Command {
 	 * @throws CommandException
 	 * @throws ClientNotFoundException
 	 */
-	public RenovateCardCommand(Handler cardId, Offices office, Handler dni,
-			Handler accountHandler) {
-		this.id = new CommandHandler(cardId);
-		this.cardId = cardId;
+	public RenovateCardCommand(Cards card) {
+		this.card= card;
 		// this.account =
 		// office.searchClient(dni).searchAccount(accountHandler);
 	}
@@ -87,8 +85,7 @@ public class RenovateCardCommand implements Command {
 	 */
 	@Override
 	public void execute() throws CommandException {
-		// Buscamos la tarjeta en la cuenta con el identificador de la misma
-		this.card = this.account.searchCard(this.cardId.toString());
+		
 		// Guardamos el CVV para poder deshacer la operacion
 		this.oldCvv = this.card.getCvv();
 		// Guardamos la fecha de caducidad para poder deshacer la operacion

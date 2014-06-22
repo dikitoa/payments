@@ -23,6 +23,12 @@
 					<a href='<c:url value="deletecard.htm?id=${card.id}" ></c:url>'>Delete card</a>
 				</li>
 				<li>
+					<a href='<c:url value="renovatecard.htm?id=${card.id}" ></c:url>'>Renovate card</a>
+				</li>
+				<li>
+					<a href='<c:url value="replacementcard.htm?id=${card.id}" ></c:url>'>Replacement card</a>
+				</li>
+				<li>
 					<a href="<c:url value="modifypin.htm?id=${card.id}"/>">Change PIN</a>
 				</li>
 				<li>
