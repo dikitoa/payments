@@ -2,9 +2,9 @@ package es.unileon.ulebank.command;
 
 import java.util.logging.Logger;
 
+import es.unileon.ulebank.client.Client;
 import es.unileon.ulebank.command.handler.CommandHandler;
 import es.unileon.ulebank.domain.Accounts;
-import es.unileon.ulebank.domain.Offices;
 import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.payments.Transfer;
@@ -63,15 +63,10 @@ public class TransferCommand implements Command {
 	 * @param amount
 	 * @throws CommandException
 	 */
-	public TransferCommand(Offices office, Handler accountSender,
-			Handler dniSender, Handler accountReceiver, Handler dniReceiver,
+	public TransferCommand(Handler accountSender, Client client, Handler accountReceiver,
 			double amount, String concept) throws CommandException {
 		this.id = new CommandHandler(accountSender);
-		// this.accountSender = office.searchClient(dniSender).searchAccount(
-		// accountSender);
-		// this.accountReceiver =
-		// office.searchClient(dniReceiver).searchAccount(
-		// accountReceiver);
+		this.accountSender = client.searchAccount(accountSender.toString());
 		if (amount > 0.00) {
 			this.amount = amount;
 		} else {

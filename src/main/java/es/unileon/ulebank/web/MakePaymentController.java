@@ -36,7 +36,7 @@ public class MakePaymentController {
     
     /**
      * Method that obtains the data of the form in cardpayment.jsp and save the changes in the card
-     * @param changeLimit
+     * @param form
      * @param result
      * @return
      * @throws Exception 
