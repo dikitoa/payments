@@ -1,12 +1,11 @@
 package es.unileon.ulebank.command;
 
 import java.io.IOException;
+
 import java.util.logging.Logger;
 
-import es.unileon.ulebank.command.handler.CommandHandler;
-import es.unileon.ulebank.domain.Accounts;
+
 import es.unileon.ulebank.domain.Cards;
-import es.unileon.ulebank.domain.Offices;
 import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.payments.exceptions.PaymentException;
@@ -24,17 +23,7 @@ public class RenovateCardCommand implements Command {
 	 * Identificador del comando
 	 */
 	private Handler id;
-	/**
-	 * Identificador de la tarjeta a renovar
-	 */
-	private Handler cardId;
-	/**
-	 * Cuenta a la que esta asociada la tarjeta que se va a renovar
-	 */
-	private Accounts account;
-	/**
-	 * Tarjeta que se va a renovar
-	 */
+
 	private Cards card;
 	/**
 	 * Antiguo CVV antes de realizar la renovacion

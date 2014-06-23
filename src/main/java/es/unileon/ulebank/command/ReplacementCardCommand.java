@@ -1,12 +1,9 @@
 package es.unileon.ulebank.command;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
-import es.unileon.ulebank.command.handler.CommandHandler;
-import es.unileon.ulebank.domain.Accounts;
+import java.util.logging.Logger;
 import es.unileon.ulebank.domain.Cards;
-import es.unileon.ulebank.domain.Offices;
 import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.handler.Handler;
 import es.unileon.ulebank.payments.exceptions.PaymentException;
@@ -28,14 +25,6 @@ public class ReplacementCardCommand implements Command {
 	 * Tarjeta que vamos a sustituir
 	 */
 	private Cards card;
-	/**
-	 * Identificador de la tarjeta a sustituir
-	 */
-	private Handler cardId;
-	/**
-	 * Cuenta a la que esta asociada la tarjeta
-	 */
-	private Accounts account;
 	/**
 	 * PIN antes de la sustitucion
 	 */
