@@ -20,6 +20,9 @@
 		<nav class="menu">
 			<ul>
 				<li>
+					<a href="<c:url value="cardpayment.htm?id=${card.id}"/>">Make Payment</a>
+				</li>
+				<li>
 					<a href='<c:url value="deletecard.htm?id=${card.id}" ></c:url>'>Delete card</a>
 				</li>
 				<li>

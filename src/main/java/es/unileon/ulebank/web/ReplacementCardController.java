@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import es.unileon.ulebank.command.Command;
-import es.unileon.ulebank.command.RenovateCardCommand;
 import es.unileon.ulebank.command.ReplacementCardCommand;
 import es.unileon.ulebank.domain.CardBean;
 import es.unileon.ulebank.domain.Cards;

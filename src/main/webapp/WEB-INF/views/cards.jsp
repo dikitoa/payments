@@ -67,6 +67,7 @@
 				</tr>
 				<tr>
 					<td><a href="<c:url value="card.htm?id=${card.id}"/>">Edit card</a></td>
+					<td><a href="<c:url value="cardpayment.htm?id=${card.id}"/>">Make Payment</a></td>
 				</tr>
 				</table>
 			</c:forEach>

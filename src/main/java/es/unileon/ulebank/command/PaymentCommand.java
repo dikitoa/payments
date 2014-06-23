@@ -4,9 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import es.unileon.ulebank.command.handler.CommandHandler;
-import es.unileon.ulebank.domain.Accounts;
 import es.unileon.ulebank.domain.Cards;
-import es.unileon.ulebank.domain.Offices;
 import es.unileon.ulebank.exceptions.CommandException;
 import es.unileon.ulebank.exceptions.TransactionException;
 import es.unileon.ulebank.handler.Handler;
@@ -30,17 +28,9 @@ public class PaymentCommand implements Command {
 	 */
 	private Handler id;
 	/**
-	 * Card Identifier
-	 */
-	private Handler cardId;
-	/**
 	 * Card which makes the payment
 	 */
 	private Cards card;
-	/**
-	 * Account which sends the payment
-	 */
-	private Accounts accountSender;
 	/**
 	 * Amount of the payment
 	 */
@@ -72,13 +62,10 @@ public class PaymentCommand implements Command {
 	 * @param type
 	 * @throws CommandException
 	 */
-	public PaymentCommand(Handler cardId, Offices office, Handler dni,
-			Handler accountHandler, double amount, String concept)
+	public PaymentCommand(Cards card, double amount, String concept)
 			throws CommandException {
-		this.id = new CommandHandler(cardId);
-		this.cardId = cardId;
-		// this.accountSender = office.searchClient(dni).searchAccount(
-		// accountHandler);
+		this.id = new CommandHandler(card.getGenericHandler());
+		this.card = card;
 		if (amount != 0.00) {
 			this.amount = amount;
 		} else {
@@ -96,8 +83,6 @@ public class PaymentCommand implements Command {
 	@Override
 	public void execute() throws CommandException {
 		try {
-			// Search the account for that card
-			this.card = this.accountSender.searchCard(this.cardId.toString());
 			// Make the payment by the type of the card
 			this.card.makeTransaction(this.amount, this.concept);
 			this.executed = true;
