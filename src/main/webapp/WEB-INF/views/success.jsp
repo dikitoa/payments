@@ -19,16 +19,15 @@
 			<a class="optionsHeader payments" href="<c:url value="cards.htm"/>" title="Payments"></a>
 		</header>
 
-		<nav class="menu">
-			<ul>
-				<li>
-					<p><fmt:message key="operationSuccess"></fmt:message></p>
-				</li>
-				<li>
-					<a href="<c:url value="cards.htm"></c:url>">Return Home</a>
-				</li>
-			</ul>
-		</nav>
+		<div class="content">
+			<div class="headerContent">
+				<b class="titleContent">
+					<fmt:message key="operationSuccess"></fmt:message>
+				</b>
+			</div>
+			<fmt:message key="operationSuccess"></fmt:message>
+			<br><br>
+			<a href="<c:url value="cards.htm"></c:url>">Return Home</a>
+		</div>
 	</body>
-
 </html>

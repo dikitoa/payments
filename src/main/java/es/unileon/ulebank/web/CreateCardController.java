@@ -80,7 +80,7 @@ public class CreateCardController {
 		command.execute();
 		cardManager.saveCard(cards.get(0));
 		
-		return new ModelAndView("result", "card", cards.get(0));
+		return new ModelAndView("cardresult", "card", cards.get(0));
 	}
 
 	/**
