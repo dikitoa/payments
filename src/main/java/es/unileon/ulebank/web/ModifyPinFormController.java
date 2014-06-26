@@ -137,7 +137,7 @@ public class ModifyPinFormController {
     }
     
     /**
-     * Método que establece el validador del pin
+     * Metodo que establece el validador del pin
      * @param pinValidator
      */
     public void setPinValidator(PinValidator pinValidator){
